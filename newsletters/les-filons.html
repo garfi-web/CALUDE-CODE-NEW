@@ -6,9 +6,10 @@
  À lire avant d'envoyer via Brevo :
 
  1. Repérez les blocs marqués ">>> À MODIFIER CHAQUE MOIS" et mettez à jour
-    le mois, l'accroche et les 3 (ou 4) produits. Ne touchez pas au bloc
-    légal/RGPD en bas de page ni au bloc signature sans validation de votre
-    RCCI / conformité ANACOFI.
+    le mois, l'accroche et les 3 ou 4 cases placements (logo, titre,
+    description, durée/coupon/capital, lien). Ne touchez pas au bloc
+    légal/RGPD en bas de page, au bandeau "citron pressé" ni au bloc
+    signature sans validation de votre RCCI / conformité ANACOFI.
  2. Les images sont dans le dossier assets/ à côté de ce fichier (visuel du
     mois, logos partenaires, votre photo). Les chemins relatifs
     "assets/..." ne s'affichent que si vous ouvrez ce fichier dans un
@@ -19,15 +20,23 @@
     Campagnes > Galerie) et remplacez le "src" correspondant par l'URL
     hébergée obtenue, sinon les images n'apparaîtront pas chez le
     destinataire.
+    IMPORTANT : assets/logo-cardif.png est un texte "CARDIF" recréé en
+    image, faute d'avoir le fichier logo officiel — à remplacer par le vrai
+    logo dès que vous me l'envoyez (ou que vous l'ajoutez vous-même, mêmes
+    dimensions).
  3. Les tags {{ mirror }}, {{ unsubscribe }} et {{contact.FIRSTNAME}} sont
     des balises de personnalisation Brevo : elles se remplissent
     automatiquement à l'envoi. Ne pas les modifier.
  4. Dans Brevo : Campagnes > Créer une campagne email > Éditeur de code /
     "Importer un code HTML", collez tout ce fichier, puis lancez un test
     d'envoi et vérifiez le rendu sur mobile + Outlook avant diffusion.
- 5. Objet suggéré : "Les Filons du mois — [Mois Année] : [X] opportunités
+ 5. Objet suggéré : "Les Filons du mois — [Mois Année] : 4 opportunités
     sélectionnées pour vous"
     Préheader : déjà géré dans le fichier (bloc .preheader ci-dessous).
+ 6. Les liens "Je souhaite en savoir plus" sont des liens mailto: vers
+    g.arfi@minleh-conseil.com avec un objet pré-rempli selon le produit :
+    en cliquant, le client ouvre un email déjà adressé et pré-rempli, prêt
+    à être envoyé. Adaptez l'adresse et/ou le sujet si besoin.
 ============================================================================
 -->
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -135,7 +144,7 @@
                 <tr>
                   <td style="background-color:#1E4E45;border-radius:20px;padding:6px 16px;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:0.5px;color:#CFF3DC;">
                     <!-- >>> À MODIFIER CHAQUE MOIS -->
-                    JUIN 2026
+                    SEPTEMBRE 2026
                   </td>
                 </tr>
               </table>
@@ -162,10 +171,13 @@
           Pour en savoir plus ou être rappelé(e) :
         </p>
         <p style="margin:0 0 4px 0;font-size:16px;line-height:24px;">
-          <a href="mailto:contact@minleh-conseil.com" style="color:#0C332E;font-weight:700;text-decoration:none;">contact@minleh-conseil.com</a>
+          <a href="mailto:g.arfi@minleh-conseil.com" style="color:#0C332E;font-weight:700;text-decoration:none;">g.arfi@minleh-conseil.com</a>
         </p>
         <p style="margin:0;font-size:16px;line-height:24px;">
           <a href="tel:+33774444474" style="color:#0C332E;font-weight:700;text-decoration:none;">07 74 44 44 74</a>
+        </p>
+        <p style="margin:4px 0 0 0;font-size:12px;line-height:18px;color:#7C8C86;font-style:italic;">
+          Pas de réponse immédiate ? Envoyez-moi un message, je vous rappelle rapidement.
         </p>
       </td>
     </tr>
@@ -224,7 +236,7 @@
     <!-- =====================================================================
          >>> À MODIFIER CHAQUE MOIS — PRODUIT 1
          Dupliquez ce bloc <tr>...</tr> (jusqu'à "FIN PRODUIT") pour ajouter
-         un produit, ou supprimez-le pour n'en garder que 2.
+         un produit, ou supprimez-le pour n'en garder que 3.
     ====================================================================== -->
     <tr>
       <td class="px-mobile" style="padding:18px 32px 0 32px;">
@@ -235,24 +247,109 @@
             </td>
           </tr>
           <tr>
-            <!-- Logo de la compagnie porteuse du produit — à agrandir/remplacer si le partenaire change. Hauteur d'affichage 56px : le fichier source peut être une largeur quelconque, gardez le ratio d'origine. -->
-            <td style="padding:6px 24px 0 24px;">
-              <img src="assets/logo-abeille.png" height="56" alt="Abeille Assurances" style="display:block;height:56px;width:auto;">
+            <!-- Logo de la compagnie porteuse du produit, dans un encadré blanc pour bien ressortir. Hauteur d'affichage 64px : le fichier source peut être une largeur quelconque, gardez le ratio d'origine. -->
+            <td style="padding:8px 24px 0 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background-color:#FFFFFF;border:1px solid #E4EAE7;border-radius:10px;padding:12px 18px;">
+                    <img src="assets/logo-abeille.png" height="64" alt="Abeille Assurances" style="display:block;height:64px;width:auto;">
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           <tr>
             <td style="padding:16px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;color:#3E8F6A;text-transform:uppercase;">
-              Assurance Vie · Plan Épargne Retraite · Compte-titres — Fonds structuré
+              Placement Assurance Vie, PER ou Compte-titres — Fonds structuré
             </td>
           </tr>
           <tr>
             <td style="padding:8px 24px 0 24px;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:20px;line-height:26px;color:#0C332E;">
-              Fonds structuré indexé Crédit Agricole
+              Phoenix Mémoire Target Tec 10
             </td>
           </tr>
           <tr>
             <td style="padding:10px 24px 4px 24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:22px;color:#333;">
-              Placement dont la performance est liée à l'évolution de l'indice boursier Crédit Agricole, avec mécanisme de protection du capital à l'échéance (hors défaut de l'émetteur). Durée de vie du produit modulable de 1 à 6 ans selon les scénarios de sortie anticipée.
+              Placement en fonction de l'indice boursier Tec 10.
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:14px 24px 0 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#EAF9EF;border-radius:10px;">
+                <tr>
+                  <td class="stat-cell" width="34%" style="padding:14px 12px;text-align:center;border-right:1px solid #D3EFDB;font-family:Arial,Helvetica,sans-serif;">
+                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Durée</div>
+                    <div style="font-size:16px;font-weight:700;color:#0C332E;">1 à 12 ans</div>
+                  </td>
+                  <td class="stat-cell" width="33%" style="padding:14px 12px;text-align:center;border-right:1px solid #D3EFDB;font-family:Arial,Helvetica,sans-serif;">
+                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Coupon annualisé</div>
+                    <div style="font-size:16px;font-weight:700;color:#0C332E;">7&nbsp;%/an</div>
+                  </td>
+                  <td class="stat-cell" width="33%" style="padding:14px 12px;text-align:center;font-family:Arial,Helvetica,sans-serif;">
+                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Capital</div>
+                    <div style="font-size:16px;font-weight:700;color:#0C332E;">Protégé*</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:12px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:20px;color:#5C6D66;">
+              Pour plus d'informations, nous consulter.
+            </td>
+          </tr>
+          <tr>
+            <td align="left" style="padding:16px 24px 24px 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="btn-cta" style="background-color:#A8F7C0;border-radius:24px;">
+                    <a href="mailto:g.arfi@minleh-conseil.com?subject=Phoenix%20M%C3%A9moire%20Target%20Tec%2010%20-%20Je%20souhaite%20en%20savoir%20plus" style="display:inline-block;padding:12px 26px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#0C332E;text-decoration:none;">
+                      Je souhaite en savoir plus →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <!-- =================== FIN PRODUIT 1 =================== -->
+
+    <!-- =================== >>> À MODIFIER CHAQUE MOIS — PRODUIT 2 =================== -->
+    <tr>
+      <td class="px-mobile" style="padding:18px 32px 0 32px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FBFDFC;border:1px solid #E9EFEC;border-radius:14px;">
+          <tr>
+            <td style="padding:20px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;color:#8B9993;text-transform:uppercase;">
+              Produit proposé par
+            </td>
+          </tr>
+          <tr>
+            <!-- Logo de la compagnie porteuse du produit, dans un encadré blanc pour bien ressortir. Hauteur d'affichage 64px : le fichier source peut être une largeur quelconque, gardez le ratio d'origine. -->
+            <td style="padding:8px 24px 0 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background-color:#FFFFFF;border:1px solid #E4EAE7;border-radius:10px;padding:12px 18px;">
+                    <img src="assets/logo-abeille.png" height="64" alt="Abeille Assurances" style="display:block;height:64px;width:auto;">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;color:#3E8F6A;text-transform:uppercase;">
+              Placement Assurance Vie — Fonds structuré (produit de campagne)
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 24px 0 24px;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:20px;line-height:26px;color:#0C332E;">
+              Opti Strike Distribution Siemens Energy
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:10px 24px 4px 24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:22px;color:#333;">
+              Placement en fonction de l'action Siemens Energy.
             </td>
           </tr>
           <tr>
@@ -269,86 +366,23 @@
                   </td>
                   <td class="stat-cell" width="33%" style="padding:14px 12px;text-align:center;font-family:Arial,Helvetica,sans-serif;">
                     <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Capital</div>
-                    <div style="font-size:16px;font-weight:700;color:#0C332E;">Protégé*</div>
+                    <div style="font-size:16px;font-weight:700;color:#0C332E;">Protégé jusqu'à 50&nbsp;%</div>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
           <tr>
-            <td align="left" style="padding:18px 24px 24px 24px;">
+            <td style="padding:12px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:20px;color:#5C6D66;">
+              Pour plus d'informations, nous consulter.
+            </td>
+          </tr>
+          <tr>
+            <td align="left" style="padding:16px 24px 24px 24px;">
               <table role="presentation" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="btn-cta" style="background-color:#A8F7C0;border-radius:24px;">
-                    <a href="mailto:contact@minleh-conseil.com?subject=Fonds%20structur%C3%A9%20Cr%C3%A9dit%20Agricole%20-%20Je%20souhaite%20en%20savoir%20plus" style="display:inline-block;padding:12px 26px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#0C332E;text-decoration:none;">
-                      Je souhaite en savoir plus →
-                    </a>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-    <!-- =================== FIN PRODUIT 1 =================== -->
-
-    <!-- =================== >>> À MODIFIER CHAQUE MOIS — PRODUIT 2 =================== -->
-    <tr>
-      <td class="px-mobile" style="padding:18px 32px 8px 32px;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FBFDFC;border:1px solid #E9EFEC;border-radius:14px;">
-          <tr>
-            <td style="padding:20px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;color:#8B9993;text-transform:uppercase;">
-              Produit proposé par
-            </td>
-          </tr>
-          <tr>
-            <!-- Logo de la compagnie porteuse du produit — à agrandir/remplacer si le partenaire change. Hauteur d'affichage 56px : le fichier source peut être une largeur quelconque, gardez le ratio d'origine. -->
-            <td style="padding:6px 24px 0 24px;">
-              <img src="assets/logo-generali.png" height="56" alt="Generali" style="display:block;height:56px;width:auto;">
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:16px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;color:#3E8F6A;text-transform:uppercase;">
-              Assurance Vie — Fonds structurés
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:8px 24px 0 24px;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:20px;line-height:26px;color:#0C332E;">
-              Fonds structuré multi-indices LVMH / TotalEnergies / Crédit Agricole
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:10px 24px 4px 24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:22px;color:#333;">
-              Performance calculée sur un panier de trois indices boursiers de référence. Mécanisme de protection du capital à l'échéance (hors défaut de l'émetteur), avec possibilité de remboursement anticipé automatique selon les niveaux constatés.
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:14px 24px 0 24px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#EAF9EF;border-radius:10px;">
-                <tr>
-                  <td class="stat-cell" width="34%" style="padding:14px 12px;text-align:center;border-right:1px solid #D3EFDB;font-family:Arial,Helvetica,sans-serif;">
-                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Durée</div>
-                    <div style="font-size:16px;font-weight:700;color:#0C332E;">1 à 5 ans</div>
-                  </td>
-                  <td class="stat-cell" width="33%" style="padding:14px 12px;text-align:center;border-right:1px solid #D3EFDB;font-family:Arial,Helvetica,sans-serif;">
-                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Coupon annualisé</div>
-                    <div style="font-size:16px;font-weight:700;color:#0C332E;">11&nbsp;%/an</div>
-                  </td>
-                  <td class="stat-cell" width="33%" style="padding:14px 12px;text-align:center;font-family:Arial,Helvetica,sans-serif;">
-                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Capital</div>
-                    <div style="font-size:16px;font-weight:700;color:#0C332E;">Protégé*</div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td align="left" style="padding:18px 24px 24px 24px;">
-              <table role="presentation" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td class="btn-cta" style="background-color:#A8F7C0;border-radius:24px;">
-                    <a href="mailto:contact@minleh-conseil.com?subject=Fonds%20structur%C3%A9%20multi-indices%20-%20Je%20souhaite%20en%20savoir%20plus" style="display:inline-block;padding:12px 26px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#0C332E;text-decoration:none;">
+                    <a href="mailto:g.arfi@minleh-conseil.com?subject=Opti%20Strike%20Siemens%20Energy%20-%20Je%20souhaite%20en%20savoir%20plus" style="display:inline-block;padding:12px 26px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#0C332E;text-decoration:none;">
                       Je souhaite en savoir plus →
                     </a>
                   </td>
@@ -361,11 +395,167 @@
     </tr>
     <!-- =================== FIN PRODUIT 2 =================== -->
 
-    <!--
-      Pour ajouter un 3e produit ce mois-ci : dupliquez l'un des blocs
-      PRODUIT 1 / PRODUIT 2 ci-dessus (de <tr> à </tr> inclus), collez-le
-      ici, et remplacez le contenu par le nouveau produit.
-    -->
+    <!-- =================== >>> À MODIFIER CHAQUE MOIS — PRODUIT 3 =================== -->
+    <tr>
+      <td class="px-mobile" style="padding:18px 32px 0 32px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FBFDFC;border:1px solid #E9EFEC;border-radius:14px;">
+          <tr>
+            <td style="padding:20px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;color:#8B9993;text-transform:uppercase;">
+              Produit proposé par
+            </td>
+          </tr>
+          <tr>
+            <!--
+              Logo Cardif : image texte provisoire (le fichier officiel n'a
+              pas encore été fourni) — à remplacer par assets/logo-cardif.png
+              une fois le vrai logo disponible, même hauteur d'affichage 64px.
+            -->
+            <td style="padding:8px 24px 0 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background-color:#FFFFFF;border:1px solid #E4EAE7;border-radius:10px;padding:12px 18px;">
+                    <img src="assets/logo-cardif.png" height="64" alt="Cardif" style="display:block;height:64px;width:auto;">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;color:#3E8F6A;text-transform:uppercase;">
+              Placement Assurance Vie — Note à taux fixe
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 24px 0 24px;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:20px;line-height:26px;color:#0C332E;">
+              Taux Fixe Bonus
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:10px 24px 4px 24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:22px;color:#333;">
+              Placement à taux fixe, sans indice boursier sous-jacent.
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:14px 24px 0 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#EAF9EF;border-radius:10px;">
+                <tr>
+                  <td class="stat-cell" width="34%" style="padding:14px 12px;text-align:center;border-right:1px solid #D3EFDB;font-family:Arial,Helvetica,sans-serif;">
+                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Durée</div>
+                    <div style="font-size:16px;font-weight:700;color:#0C332E;">1 à 12 ans</div>
+                  </td>
+                  <td class="stat-cell" width="33%" style="padding:14px 12px;text-align:center;border-right:1px solid #D3EFDB;font-family:Arial,Helvetica,sans-serif;">
+                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Coupon annualisé</div>
+                    <div style="font-size:16px;font-weight:700;color:#0C332E;">5&nbsp;%/an</div>
+                  </td>
+                  <td class="stat-cell" width="33%" style="padding:14px 12px;text-align:center;font-family:Arial,Helvetica,sans-serif;">
+                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Capital</div>
+                    <div style="font-size:16px;font-weight:700;color:#0C332E;">Protégé*</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:12px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:20px;color:#5C6D66;">
+              6&nbsp;%/an en cas de rappel anticipé. Pour plus d'informations, nous consulter.
+            </td>
+          </tr>
+          <tr>
+            <td align="left" style="padding:16px 24px 24px 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="btn-cta" style="background-color:#A8F7C0;border-radius:24px;">
+                    <a href="mailto:g.arfi@minleh-conseil.com?subject=Taux%20Fixe%20Bonus%20-%20Je%20souhaite%20en%20savoir%20plus" style="display:inline-block;padding:12px 26px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#0C332E;text-decoration:none;">
+                      Je souhaite en savoir plus →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <!-- =================== FIN PRODUIT 3 =================== -->
+
+    <!-- =================== >>> À MODIFIER CHAQUE MOIS — PRODUIT 4 (dupliquer/supprimer pour repasser à 3 produits) =================== -->
+    <tr>
+      <td class="px-mobile" style="padding:18px 32px 8px 32px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FBFDFC;border:1px solid #E9EFEC;border-radius:14px;">
+          <tr>
+            <td style="padding:20px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;color:#8B9993;text-transform:uppercase;">
+              Produit proposé par
+            </td>
+          </tr>
+          <tr>
+            <!-- Logo de la compagnie porteuse du produit, dans un encadré blanc pour bien ressortir. Hauteur d'affichage 64px : le fichier source peut être une largeur quelconque, gardez le ratio d'origine. -->
+            <td style="padding:8px 24px 0 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background-color:#FFFFFF;border:1px solid #E4EAE7;border-radius:10px;padding:12px 18px;">
+                    <img src="assets/logo-generali.png" height="64" alt="Generali" style="display:block;height:64px;width:auto;">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;color:#3E8F6A;text-transform:uppercase;">
+              Placement Assurance Vie — Fonds structuré Autocall
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 24px 0 24px;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:20px;line-height:26px;color:#0C332E;">
+              Athena Airbag Tec 10
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:10px 24px 4px 24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:22px;color:#333;">
+              Placement en fonction de l'indice boursier Tec 10.
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:14px 24px 0 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#EAF9EF;border-radius:10px;">
+                <tr>
+                  <td class="stat-cell" width="34%" style="padding:14px 12px;text-align:center;border-right:1px solid #D3EFDB;font-family:Arial,Helvetica,sans-serif;">
+                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Durée</div>
+                    <div style="font-size:16px;font-weight:700;color:#0C332E;">1 à 12 ans</div>
+                  </td>
+                  <td class="stat-cell" width="33%" style="padding:14px 12px;text-align:center;border-right:1px solid #D3EFDB;font-family:Arial,Helvetica,sans-serif;">
+                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Coupon annualisé</div>
+                    <div style="font-size:16px;font-weight:700;color:#0C332E;">10&nbsp;%/an</div>
+                  </td>
+                  <td class="stat-cell" width="33%" style="padding:14px 12px;text-align:center;font-family:Arial,Helvetica,sans-serif;">
+                    <div style="font-size:11px;color:#4E6B5C;text-transform:uppercase;letter-spacing:0.3px;">Capital</div>
+                    <div style="font-size:16px;font-weight:700;color:#0C332E;">Protégé*</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:12px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:20px;color:#5C6D66;">
+              Pour plus d'informations, nous consulter.
+            </td>
+          </tr>
+          <tr>
+            <td align="left" style="padding:16px 24px 24px 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="btn-cta" style="background-color:#A8F7C0;border-radius:24px;">
+                    <a href="mailto:g.arfi@minleh-conseil.com?subject=Athena%20Airbag%20Tec%2010%20-%20Je%20souhaite%20en%20savoir%20plus" style="display:inline-block;padding:12px 26px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#0C332E;text-decoration:none;">
+                      Je souhaite en savoir plus →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <!-- =================== FIN PRODUIT 4 =================== -->
 
     <!-- ============================ RAPPEL RÉGLEMENTAIRE COURT ============================ -->
     <tr>
@@ -374,6 +564,60 @@
           <tr>
             <td style="padding:16px 20px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:19px;color:#4E6B5C;">
               <strong style="color:#0C332E;">À retenir :</strong> ces informations sont communiquées à titre publicitaire et ne constituent ni un conseil, ni une recommandation personnalisée. Une étude de votre situation patrimoniale est nécessaire avant toute souscription.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- ============================ BANDEAU "CITRON PRESSÉ" — OPTIMISATION FISCALE (élément fixe, ne varie pas chaque mois) ============================ -->
+    <tr>
+      <td class="px-mobile" style="padding:26px 32px 0 32px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FCF3DC;border:1px solid #F0E2B8;border-radius:14px;">
+          <tr>
+            <td align="center" style="padding:26px 24px 6px 24px;">
+              <!-- Illustration citron pressé (SVG, aucune image externe nécessaire) -->
+              <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Citron pressé">
+                <path d="M36 6 C30 1, 21 2, 19 8 C27 11, 33 10, 36 6 Z" fill="#3E8F6A"/>
+                <circle cx="36" cy="40" r="30" fill="#F6C645" stroke="#E0A93A" stroke-width="3"/>
+                <circle cx="36" cy="40" r="23" fill="#FCEFC0"/>
+                <g stroke="#F0C243" stroke-width="2" stroke-linecap="round">
+                  <line x1="36" y1="40" x2="59" y2="40"/>
+                  <line x1="36" y1="40" x2="52" y2="56"/>
+                  <line x1="36" y1="40" x2="36" y2="63"/>
+                  <line x1="36" y1="40" x2="20" y2="56"/>
+                  <line x1="36" y1="40" x2="13" y2="40"/>
+                  <line x1="36" y1="40" x2="20" y2="24"/>
+                  <line x1="36" y1="40" x2="36" y2="17"/>
+                  <line x1="36" y1="40" x2="52" y2="24"/>
+                </g>
+                <circle cx="36" cy="40" r="4" fill="#F6C645"/>
+                <path d="M52 60 C52 64, 58 64, 58 60 C58 56, 55 52, 55 52 C55 52, 52 56, 52 60 Z" fill="#8FCBE0"/>
+                <path d="M62 50 C62 53, 66 53, 66 50 C66 47, 64 45, 64 45 C64 45, 62 47, 62 50 Z" fill="#8FCBE0"/>
+              </svg>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:10px 28px 0 28px;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:19px;line-height:26px;color:#0C332E;">
+              Vous en avez assez d'être pressé comme un citron par l'Urssaf ou les impôts ?
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:10px 28px 0 28px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:21px;color:#5C5334;">
+              Réservez votre rendez-vous pour réduire votre imposition par deux.
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:18px 24px 26px 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="btn-cta" style="background-color:#0C332E;border-radius:24px;">
+                    <a href="mailto:g.arfi@minleh-conseil.com?subject=Je%20r%C3%A9serve%20mon%20rendez-vous%20-%20Optimisation%20fiscale" style="display:inline-block;padding:12px 26px;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#FFFFFF;text-decoration:none;">
+                      Je réserve mon rendez-vous →
+                    </a>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
         </table>
@@ -408,7 +652,7 @@
     <tr>
       <td class="px-mobile" style="padding:20px 32px 0 32px;font-family:Arial,Helvetica,sans-serif;">
         <p style="margin:0 0 10px 0;font-size:11px;line-height:17px;color:#8B9993;text-align:center;">
-          Vous recevez cet email en tant que client, prospect ou apporteur d'affaires de Minleh Conseil. Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition sur vos données personnelles, exerçable à tout moment auprès de <a href="mailto:contact@minleh-conseil.com" style="color:#8B9993;text-decoration:underline;">contact@minleh-conseil.com</a>.
+          Vous recevez cet email en tant que client, prospect ou apporteur d'affaires de Minleh Conseil. Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition sur vos données personnelles, exerçable à tout moment auprès de <a href="mailto:g.arfi@minleh-conseil.com" style="color:#8B9993;text-decoration:underline;">g.arfi@minleh-conseil.com</a>.
         </p>
         <p style="margin:0 0 18px 0;font-size:12px;text-align:center;">
           <a href="{{ unsubscribe }}" style="color:#3E8F6A;text-decoration:underline;">Je me désinscris de cette newsletter</a>

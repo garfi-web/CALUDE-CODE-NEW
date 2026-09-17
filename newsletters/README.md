@@ -21,30 +21,53 @@ venant de vous tout en étant distinguables l'une de l'autre.
 Chaque fichier contient des commentaires `<!-- >>> À MODIFIER CHAQUE MOIS -->`
 qui balisent :
 
-1. Le badge du mois (`JUIN 2026` → à changer).
-2. Le visuel d'en-tête.
+1. Le badge du mois (`SEPTEMBRE 2026` → à changer).
+2. Le visuel d'en-tête (bandeau).
 3. Le paragraphe "Le constat" (l'accroche).
-4. Chaque bloc produit / bien, délimité par
+4. Chaque case placement / bien (3 ou 4 selon le mois), délimitée par
    `<!-- PRODUIT n --> … <!-- FIN PRODUIT n -->` (ou `BIEN n` côté immobilier) :
-   titre, description, chiffres clés (durée/coupon/capital ou
-   prix/rendement/fiscalité), lien du bouton d'appel à l'action.
+   logo de la compagnie, titre, description courte, chiffres clés
+   (durée / coupon annualisé / capital, ou prix / rendement / fiscalité),
+   lien du bouton d'appel à l'action.
 
-Pour ajouter un produit : dupliquez un bloc `<tr>…</tr>` complet entre les
-commentaires "PRODUIT"/"FIN PRODUIT". Pour en retirer un : supprimez le bloc
-en entier. Ne touchez pas aux sections **bloc légal**, **RGPD** et
-**signature** sans repasser par la checklist conformité ci-dessous.
+Seules ces cases placements et le badge du mois sont censés varier d'un
+envoi à l'autre — tout le reste (intro, "Le constat" mis à part, bandeau
+optimisation fiscale, mentions légales, signature) est un élément fixe du
+modèle.
+
+Pour ajouter une case : dupliquez un bloc `<tr>…</tr>` complet entre les
+commentaires "PRODUIT"/"FIN PRODUIT" (`les-filons.html` en compte 4
+actuellement, `les-pepites-immobilieres.html` en compte 3). Pour en
+retirer une : supprimez le bloc en entier. Ne touchez pas aux sections
+**bloc légal**, **RGPD**, **bandeau citron pressé** et **signature** sans
+repasser par la checklist conformité ci-dessous.
+
+Pour chaque case placement, le format simplifié à respecter (validé par
+Grégory) est volontairement minimal pour un premier contact :
+- Nom du placement + type d'enveloppe (assurance vie, PER, compte-titres…)
+- Une phrase : sur quel indice/action il est basé
+- Durée : de 1 an à *X* ans maximum
+- Coupon annualisé : *X* % par an
+- Capital : "Protégé*" (protection à 100 %, hors défaut de l'émetteur) ou
+  "Protégé jusqu'à *X* %" quand la protection est partielle
+- "Pour plus d'informations, nous consulter."
 
 ## Images
 
-- **`les-filons.html`** utilise désormais les vraies images extraites de
-  votre newsletter précédente (dossier `assets/`) : le visuel d'en-tête
+- **`les-filons.html`** utilise les vraies images issues de votre export
+  Canva (dossier `assets/`) : le visuel d'en-tête recadré en bandeau
   (`visuel-juin-2026.jpg`), les logos `logo-abeille.png` et
-  `logo-generali.png` à côté des produits correspondants, et votre photo
-  `photo-gregory-arfi.jpg` dans la signature. Ces chemins relatifs
+  `logo-generali.png` en haute résolution, chacun affiché dans un encadré
+  blanc pour bien ressortir (élément de réassurance important), et votre
+  photo `photo-gregory-arfi.jpg` dans la signature. Ces chemins relatifs
   s'affichent si vous ouvrez le fichier dans un navigateur depuis votre
   ordinateur (le dossier `assets/` doit rester à côté du fichier `.html`),
   mais **ne fonctionnent pas envoyés par email** (Brevo ou autre) : un
   email ne peut pas aller chercher des fichiers sur votre disque.
+  **`logo-cardif.png` est un texte "CARDIF" recréé par mes soins**, faute
+  d'avoir reçu le fichier logo officiel — envoyez-le-moi (ou remplacez le
+  fichier vous-même, mêmes dimensions) dès que possible pour une vraie
+  fidélité de marque.
 - **`les-pepites-immobilieres.html`** utilise encore des espaces réservés
   `placehold.co` en attendant vos photos de biens.
 
@@ -90,6 +113,21 @@ Balises Brevo déjà intégrées, à ne pas modifier :
 - `{{ unsubscribe }}` — lien de désinscription (obligatoire, généré par Brevo)
 - `{{contact.FIRSTNAME}}` — prénom du destinataire
 
+## Où mènent les boutons "Je souhaite en savoir plus" / "Je réserve mon rendez-vous" ?
+
+Ce sont des liens `mailto:` vers **g.arfi@minleh-conseil.com**, avec un objet
+d'email pré-rempli selon le produit (ex. "Phoenix Mémoire Target Tec 10 - Je
+souhaite en savoir plus"). Concrètement : le client clique, son propre
+logiciel de messagerie s'ouvre avec un email déjà adressé et déjà rédigé
+dans l'objet, il n'a plus qu'à cliquer sur "Envoyer". L'adresse email est la
+même partout (intro, chaque case placement, RGPD, bandeau fiscal) : votre
+adresse personnelle `g.arfi@minleh-conseil.com`, plus le rappel juste sous
+le numéro de téléphone ("Pas de réponse immédiate ? Envoyez-moi un message,
+je vous rappelle rapidement.").
+Si vous préférez que ces boutons ouvrent plutôt un appel téléphonique
+(`tel:+33774444474`) ou une page de prise de rendez-vous en ligne (Calendly
+ou autre), dites-le-moi et je remplace tous les liens en une fois.
+
 ## Points de conformité RGPD / CIF — à faire valider avant premier envoi
 
 Ces modèles reprennent les mentions déjà présentes dans votre document
@@ -113,3 +151,10 @@ droits RGPD), mais **vous restez responsable de la conformité finale** :
   votre registre RGPD interne.
 - Conservez la mention "Communication à caractère publicitaire" et
   l'avertissement sur les risques sur toute variante future du modèle.
+- Le bandeau "citron pressé" (optimisation fiscale) en bas de newsletter
+  promet de "réduire votre imposition par deux" : c'est une accroche
+  volontairement forte, mais gardez à l'esprit qu'elle engage — un résultat
+  chiffré aussi précis doit rester défendable au cas par cas selon la
+  situation du client. À vous de juger si la formulation vous convient
+  telle quelle ou si vous préférez une tournure plus prudente (ex. "réduire
+  significativement votre imposition").
