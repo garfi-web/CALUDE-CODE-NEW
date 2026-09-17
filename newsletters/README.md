@@ -36,15 +36,31 @@ en entier. Ne touchez pas aux sections **bloc légal**, **RGPD** et
 
 ## Images
 
-Toutes les images sont actuellement des espaces réservés `placehold.co`
-(pour prévisualiser la mise en page). Avant l'envoi :
+- **`les-filons.html`** utilise désormais les vraies images extraites de
+  votre newsletter précédente (dossier `assets/`) : le visuel d'en-tête
+  (`visuel-juin-2026.jpg`), les logos `logo-abeille.png` et
+  `logo-generali.png` à côté des produits correspondants, et votre photo
+  `photo-gregory-arfi.jpg` dans la signature. Ces chemins relatifs
+  s'affichent si vous ouvrez le fichier dans un navigateur depuis votre
+  ordinateur (le dossier `assets/` doit rester à côté du fichier `.html`),
+  mais **ne fonctionnent pas envoyés par email** (Brevo ou autre) : un
+  email ne peut pas aller chercher des fichiers sur votre disque.
+- **`les-pepites-immobilieres.html`** utilise encore des espaces réservés
+  `placehold.co` en attendant vos photos de biens.
 
-1. Hébergez vos visuels réels : soit dans la bibliothèque d'images de Brevo
-   (Campagnes > Galerie), soit sur minleh-conseil.com.
-2. Remplacez chaque `src="https://placehold.co/..."` par l'URL définitive,
-   en gardant des dimensions proches de celles indiquées en commentaire
-   au-dessus de chaque `<img>` pour ne pas déformer la mise en page.
-3. Le logo Minleh Conseil (écusson + colonne) est recréé en SVG inline à
+Avant tout envoi (test ou groupé) :
+
+1. Hébergez chaque image définitive : uploadez le contenu de `assets/`
+   (et vos futurs visuels) dans la bibliothèque d'images de Brevo
+   (Campagnes > Galerie), ou sur minleh-conseil.com.
+2. Remplacez chaque `src="assets/..."` (ou `src="https://placehold.co/..."`)
+   par l'URL hébergée obtenue, en gardant des dimensions proches de
+   celles indiquées en commentaire au-dessus de chaque `<img>` pour ne pas
+   déformer la mise en page.
+3. Le visuel d'en-tête et les logos partenaires n'ont besoin d'être changés
+   que lorsque le produit ou l'assureur change ce mois-ci ; votre photo et
+   le logo Minleh Conseil peuvent rester d'un mois sur l'autre.
+4. Le logo Minleh Conseil (écusson + colonne) est recréé en SVG inline à
    partir de votre PDF — pratique car il ne dépend d'aucune image externe,
    mais ce n'est pas le fichier vectoriel officiel. Si vous avez le logo
    d'origine en SVG/PNG haute définition, il est préférable de le faire

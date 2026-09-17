@@ -9,9 +9,16 @@
     le mois, l'accroche et les 3 (ou 4) produits. Ne touchez pas au bloc
     légal/RGPD en bas de page ni au bloc signature sans validation de votre
     RCCI / conformité ANACOFI.
- 2. Remplacez chaque URL placehold.co par une image hébergée (site
-    minleh-conseil.com ou bibliothèque d'images Brevo). Gardez les mêmes
-    dimensions pour ne pas casser la mise en page.
+ 2. Les images sont dans le dossier assets/ à côté de ce fichier (visuel du
+    mois, logos partenaires, votre photo). Les chemins relatifs
+    "assets/..." ne s'affichent que si vous ouvrez ce fichier dans un
+    navigateur depuis votre ordinateur (aperçu local, dossier assets/ à
+    côté du fichier HTML). Pour tout envoi par email — y compris un simple
+    test depuis votre messagerie ou un envoi Brevo — uploadez chaque
+    fichier de assets/ dans une bibliothèque d'images en ligne (Brevo :
+    Campagnes > Galerie) et remplacez le "src" correspondant par l'URL
+    hébergée obtenue, sinon les images n'apparaîtront pas chez le
+    destinataire.
  3. Les tags {{ mirror }}, {{ unsubscribe }} et {{contact.FIRSTNAME}} sont
     des balises de personnalisation Brevo : elles se remplissent
     automatiquement à l'envoi. Ne pas les modifier.
@@ -111,10 +118,13 @@
             <td class="px-mobile" style="padding:14px 32px 0 32px;">
               <!--
                 >>> À MODIFIER CHAQUE MOIS : visuel d'illustration.
-                Dimensions conseillées : 1152 x 640 px (ratio 9:5), export
-                depuis Canva au format du thème "filon d'or / marbre".
+                Image reprise de votre newsletter précédente (extraite de
+                votre PDF). Remplacez le fichier assets/visuel-juin-2026.jpg
+                par votre nouveau visuel du mois (dimensions conseillées :
+                1150 x 545 px), en conservant le même nom de fichier ou en
+                mettant à jour le "src" ci-dessous.
               -->
-              <img src="https://placehold.co/1152x640/0c332e/A8F7C0?font=playfair-display&text=Visuel+du+mois" width="576" alt="Illustration Les Filons du mois" style="display:block;width:100%;max-width:576px;height:auto;border-radius:14px;">
+              <img src="assets/visuel-juin-2026.jpg" width="576" alt="Illustration Les Filons du mois" style="display:block;width:100%;max-width:576px;height:auto;border-radius:14px;">
             </td>
           </tr>
           <tr>
@@ -219,8 +229,18 @@
       <td class="px-mobile" style="padding:18px 32px 0 32px;">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FBFDFC;border:1px solid #E9EFEC;border-radius:14px;">
           <tr>
-            <td style="padding:22px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;color:#3E8F6A;text-transform:uppercase;">
-              Assurance Vie · Plan Épargne Retraite · Compte-titres — Fonds structuré
+            <td style="padding:22px 24px 0 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <!-- Logo de la compagnie porteuse du produit — à remplacer si le partenaire change -->
+                  <td width="40" valign="middle" style="padding-right:10px;">
+                    <img src="assets/logo-abeille.png" width="40" height="40" alt="Abeille Assurances" style="display:block;width:40px;height:40px;border-radius:8px;">
+                  </td>
+                  <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;color:#3E8F6A;text-transform:uppercase;">
+                    Assurance Vie · Plan Épargne Retraite · Compte-titres — Fonds structuré
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           <tr>
@@ -276,8 +296,18 @@
       <td class="px-mobile" style="padding:18px 32px 8px 32px;">
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FBFDFC;border:1px solid #E9EFEC;border-radius:14px;">
           <tr>
-            <td style="padding:22px 24px 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;color:#3E8F6A;text-transform:uppercase;">
-              Assurance Vie — Fonds structurés
+            <td style="padding:22px 24px 0 24px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <!-- Logo de la compagnie porteuse du produit — à remplacer si le partenaire change -->
+                  <td width="40" valign="middle" style="padding-right:10px;">
+                    <img src="assets/logo-generali.png" width="40" height="40" alt="Generali" style="display:block;width:40px;height:40px;border-radius:8px;">
+                  </td>
+                  <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;color:#3E8F6A;text-transform:uppercase;">
+                    Assurance Vie — Fonds structurés
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           <tr>
@@ -389,11 +419,11 @@
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E9EFEC;border-radius:14px;overflow:hidden;">
           <tr>
             <!--
-              >>> PHOTO DU CONSEILLER : remplacer par une photo professionnelle
-              hébergée (carrée, min. 300x300 px).
+              Photo reprise de votre newsletter précédente. Pour la changer,
+              remplacez assets/photo-gregory-arfi.jpg (carrée, min. 300x300 px).
             -->
             <td class="sig-photo" width="96" valign="top" style="padding:0;">
-              <img src="https://placehold.co/300x300/1B3A6E/FFFFFF?text=Photo" width="96" height="96" alt="Grégory Arfi" style="display:block;width:96px;height:96px;object-fit:cover;">
+              <img src="assets/photo-gregory-arfi.jpg" width="96" height="96" alt="Grégory Arfi" style="display:block;width:96px;height:96px;object-fit:cover;">
             </td>
             <td class="sig-stack" valign="top" style="padding:18px 20px;">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
