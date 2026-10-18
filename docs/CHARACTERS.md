@@ -82,7 +82,7 @@ Mara: stylized anime 3D character, adult woman warrior, tall, curvy, very long b
 C'est l'homme qui fournit la Red Met à Nathan, et **le moteur des choix moraux du monde réel** : chaque exigence plus monstrueuse que la précédente vient de lui.
 
 - **Apparence :** homme noir africain d'âge mûr, **collier en or**, **dent en or** visible quand il sourit. Il est soigné, calme, sûr de lui, souvent assis. Il n'a jamais besoin d'élever la voix.
-- **Voix :** français avec un accent d'Afrique subsaharienne francophone. Il parle posément, avec une politesse presque paternelle qui rend ses demandes plus glaçantes.
+- **Voix :** français avec un accent **ivoirien** (ElevenLabs « RED MET - Le Dealer », voice_id `JNw5fj1CT1bsksfAG4Fs`). Il parle posément, avec une politesse presque paternelle qui rend ses demandes plus glaçantes.
 - **Ce qui le rend dangereux :** il ne force jamais Nathan. Il **propose** et laisse Nathan choisir. Il présente chaque horreur comme une simple transaction (« le marché fixe les prix, pas moi »), à l'image de L'Avocat qui la présente comme une nécessité.
 - **À développer pour qu'il soit un personnage et non un cliché :** un nom, une histoire, une logique propre (dettes, survie, fournisseurs plus dangereux que lui), de l'intelligence, et au moins une scène où l'on voit ce qu'il protège ou ce qu'il craint.
 
