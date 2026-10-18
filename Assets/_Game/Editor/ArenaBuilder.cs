@@ -158,10 +158,16 @@ public static class ArenaBuilder
     // Ajoute une lumière globale 2D si l'URP est présent, sans en dépendre à la compilation.
     private static void CreateGlobalLight()
     {
-        Type lightType = Type.GetType("UnityEngine.Rendering.Universal.Light2D, Unity.RenderPipelines.Universal.Runtime");
+        // Light2D a changé d'assembly selon les versions de l'URP (Universal.Runtime puis Universal.2D.Runtime).
+        Type lightType = AppDomain.CurrentDomain.GetAssemblies()
+            .Select(assembly => assembly.GetType("UnityEngine.Rendering.Universal.Light2D"))
+            .FirstOrDefault(type => type != null);
 
         if (lightType == null)
+        {
+            Debug.LogWarning("[RED MET] Light2D introuvable : la scène n'aura pas de lumière globale 2D.");
             return;
+        }
 
         try
         {
