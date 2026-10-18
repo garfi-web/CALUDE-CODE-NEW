@@ -77,13 +77,40 @@ Mara: stylized anime 3D character, adult woman warrior, tall, curvy, very long b
 
 ---
 
+## Le dealer de Red Met (le Chimiste)
+
+C'est l'homme qui fournit la Red Met à Nathan, et **le moteur des choix moraux du monde réel** : chaque exigence plus monstrueuse que la précédente vient de lui.
+
+- **Apparence :** homme noir africain d'âge mûr, **collier en or**, **dent en or** visible quand il sourit. Il est soigné, calme, sûr de lui, souvent assis. Il n'a jamais besoin d'élever la voix.
+- **Voix :** français avec un accent d'Afrique subsaharienne francophone. Il parle posément, avec une politesse presque paternelle qui rend ses demandes plus glaçantes.
+- **Ce qui le rend dangereux :** il ne force jamais Nathan. Il **propose** et laisse Nathan choisir. Il présente chaque horreur comme une simple transaction (« le marché fixe les prix, pas moi »), à l'image de L'Avocat qui la présente comme une nécessité.
+- **À développer pour qu'il soit un personnage et non un cliché :** un nom, une histoire, une logique propre (dettes, survie, fournisseurs plus dangereux que lui), de l'intelligence, et au moins une scène où l'on voit ce qu'il protège ou ce qu'il craint.
+
+### L'escalade des demandes
+
+| Ch. | Demande | Choix de Nathan | Conséquences |
+|---|---|---|---|
+| 3–4 | **Se prostituer** pour payer sa dose (scène non explicite) | Refuser, accepter, négocier, demander un autre travail | Image de soi, souvenirs troubles de la nuit, Paranoïa +, Humanité − |
+| 5 | **Rapporter un cœur pour le marché noir**, celui de Marc, son père | Refuser, prévenir Marc, déjouer le réseau, ou tuer | Irréversible : Marc disparaît de l'histoire. Cruauté ++, crise de culpabilité |
+| 7 | **Livrer un enfant au réseau** | Refuser, mettre l'enfant à l'abri, saboter la transaction, ou livrer | Enquête, détresse de la famille, pression policière, rupture morale majeure. Aucun détail pratique |
+
+Après chaque acceptation : scène de culpabilité, puis la dose. Après chaque refus : moins d'argent, pas de dose, et le dealer reste disponible… avec la demande suivante.
+
+```
+Tripo : stylized anime 3D character, mature Black African man, calm confident expression,
+        gold chain necklace, gold tooth, well-groomed short beard, dark open shirt,
+        rings, T-pose, front view, neutral background
+```
+
+---
+
 ## L'Avocat
 
 Il n'a pas de corps fixe. Il se manifeste par :
 - le **reflet** de Nathan qui ne suit plus ses gestes (cf. `niveau-miroir-ch6.webp`) ;
 - des **graffitis** qui apparaissent sur les murs et les miroirs ;
 - au chapitre 8, des menus qui se déforment ;
-- une voix ElevenLabs (3 propositions en attente de choix).
+- une voix ElevenLabs : la proposition 1 (generated_voice_id `S5eI0SqRnF4fZukvJLif`).
 
 ---
 
