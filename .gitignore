@@ -19,3 +19,7 @@
 *.tmp
 crashlytics-buildid.txt
 sysinfo.txt
+
+# Fichiers d'IDE régénérés par Unity
+.vscode/
+*.slnx

@@ -20,10 +20,11 @@ Le contenu de `Assets/_Game/` :
 
 ### Installation
 
-1. Créez un projet Unity 6 avec le modèle **Universal 2D**.
-2. Copiez le dossier `Assets/_Game` de ce dépôt dans le dossier `Assets` du projet.
-3. Dans Unity, cliquez sur **RED MET → Construire l'arène prototype**. Le script crée le layer `Ground`, les sprites provisoires et la scène `Assets/_Game/Scenes/Arena.unity`.
-4. Appuyez sur **Play**. Dans la vue Game, choisissez la résolution 1920×1080.
+Le dépôt contient le projet Unity complet (Unity 6000.6.6f1, URP 2D). Le détail, y compris les MCP et la reprise de session Claude, est dans [`docs/REPRISE.md`](docs/REPRISE.md).
+
+1. Clonez le dépôt et ajoutez le dossier dans Unity Hub (**Add project from disk**).
+2. Ouvrez la scène `Assets/_Game/Scenes/Arena.unity`. Pour la recréer de zéro, utilisez **RED MET → Construire l'arène prototype** : le script crée le layer `Ground`, les sprites provisoires et la scène.
+3. Appuyez sur **Play**. Dans la vue Game, choisissez la résolution 1920×1080.
 
 Les commandes fonctionnent avec le nouvel Input System comme avec l'ancien : aucun réglage des Project Settings n'est nécessaire.
 

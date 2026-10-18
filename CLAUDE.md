@@ -16,3 +16,4 @@ Jeu d'action 2D latéral (Unity 6, URP 2D, C#), dark fantasy et horreur psycholo
 - `blender` : MCP for Blender, avec `generate_3d` pour Tripo, Hunyuan3D et Rodin.
 - ElevenLabs : voix et effets sonores, à ranger dans `Assets/_Game/Audio/Voice`.
 - Après une modification de script, lisez la console Unity pour vérifier la compilation.
+- Reprise du travail, relance des MCP et pièges connus (un seul éditeur Unity ouvert) : `docs/REPRISE.md`.
