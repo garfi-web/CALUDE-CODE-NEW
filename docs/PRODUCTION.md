@@ -86,4 +86,18 @@ Points clés d'Open RAIL++-M :
 - Détourage sans modèle réussi sur un fond coloré uni (tolérance 24).
 - Problème corrigé : accents de la sortie du runner mal encodés sous Windows (`PYTHONIOENCODING=utf-8`).
 - Sortie gardée hors du dépôt (dossier temporaire) : ce n'est pas un asset du jeu.
+### 2026-10-25 — Concept de test : Nathan R0 (lot 1, 3 essais)
+- Outil : ComfyUI + Animagine XL 4.0, 1024×1024, Euler a, 28 étapes, CFG 5 (réglages recommandés par la fiche du modèle). 18 à 24 s par image.
+- Commande : `"C:\RED MET\ai\ComfyUI\.venv\Scripts\python.exe" tools/gen3d/concept.py --character Nathan_R0 --seeds 1001 2002 3003 --prompt "..."`. Les scripts du dépôt n'utilisent que la bibliothèque standard, n'importe quel Python ≥ 3.10 convient.
+- Prompt (tags Animagine, d'après le prompt Tripo R0 de `CHARACTERS.md`) : `1boy, solo, male focus, adult, young man, 18 years old, slightly chubby, plump, rounded shoulders, brown hair, curly hair, messy hair, thick glasses, bifocals, acne, acne on cheeks, acne on forehead, black hoodie, oversized hoodie, grey cargo pants, sneakers, worn sneakers, t-pose, spread arms, arms outstretched, standing, full body, front view, facing viewer, looking at viewer, neutral expression, simple background, grey background` + suffixe `safe, masterpiece, high score, great score, absurdres`.
+- Négatif : `child, kid, chibi, nsfw, lowres, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, cropped, out of frame, multiple views, text, watermark, signature, busy background, shadow on background, worst quality, low quality, low score, bad score, average score, username, error, blurry`.
+- Seeds 1001, 2002, 3003 → `Assets/_Game/Art/Characters/Nathan_R0/Concept/`. Aucune image de référence en entrée.
+- Constats :
+  - Les trois ont les yeux fermés ou masqués par le reflet des lunettes.
+  - Acné à peine visible, double foyer non rendu.
+  - Visage encore juvénile malgré « adult, 18 years old » : à surveiller (CHARACTERS.md : jeune adulte, pas collégien).
+  - 1001 : ombre portée au sol, qui gênerait le détourage.
+  - 2002 : le plus enrobé, mais un faux logo avec du texte sur le hoodie.
+  - 3003 : le plus propre pour la 3D (T-pose nette, fond uni, sans ombre).
+- VRAM : ComfyUI garde le modèle chargé (4,8 Go occupés au repos). **Arrêter ComfyUI avant TripoSG.**
 - Outil du dépôt : `tools/gen3d/` (`generate.py` en bibliothèque standard, `backends.json`, `backends/triposg_runner.py`, `concept.py` pour l'API ComfyUI). Nommé `gen3d` plutôt que `hunyuan` puisque le générateur a changé.

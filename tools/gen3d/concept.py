@@ -97,3 +97,37 @@ def generate(cfg, prompt, negative, seed, out_dir, name, timeout_s=900):
     with open(out_path.with_suffix(".json"), "w", encoding="utf-8") as f:
         json.dump(info, f, ensure_ascii=False, indent=2)
     return out_path, info
+
+
+def main():
+    """Génère seulement des concepts (une image par seed), pour choisir avant la 3D.
+
+    python tools/gen3d/concept.py --character Nathan_R0 --prompt "..." --seeds 101 202 303
+    """
+    import argparse
+    import sys
+
+    tools_dir = Path(__file__).resolve().parent
+    characters_dir = tools_dir.parents[1] / "Assets" / "_Game" / "Art" / "Characters"
+
+    parser = argparse.ArgumentParser(description=main.__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--character", required=True)
+    parser.add_argument("--prompt", required=True)
+    parser.add_argument("--negative", default=None)
+    parser.add_argument("--seeds", type=int, nargs="+", required=True)
+    parser.add_argument("--backend", default=None)
+    args = parser.parse_args()
+
+    with open(tools_dir / "backends.json", encoding="utf-8") as f:
+        backends = json.load(f)
+    cfg = backends["concept"][args.backend or backends["default_concept"]]
+
+    for seed in args.seeds:
+        path, info = generate(cfg, args.prompt, args.negative, seed,
+                              characters_dir / args.character / "Concept", f"{args.character}_concept_s{seed}")
+        print(f"[concept] seed {seed} : {path} ({info['duration_s']} s)", flush=True)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
