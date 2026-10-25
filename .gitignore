@@ -23,3 +23,11 @@ sysinfo.txt
 # Fichiers d'IDE régénérés par Unity
 .vscode/
 *.slnx
+
+# Outils Python : environnements, caches et poids de modèles restent hors du dépôt
+__pycache__/
+*.pyc
+.venv/
+*.safetensors
+*.ckpt
+*.pth

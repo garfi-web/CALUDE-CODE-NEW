@@ -121,7 +121,7 @@ public class EnemyAI : MonoBehaviour
 
         if (target != null && targetHealth != null &&
             Mathf.Abs(target.position.x - transform.position.x) <= attackRange + 0.3f &&
-            targetHealth.TakeDamage(attackDamage) && targetRb != null)
+            targetHealth.TakeDamage(attackDamage) && targetRb != null && !targetHealth.IsDead)
         {
             float direction = Mathf.Sign(target.position.x - transform.position.x);
             targetRb.AddForce(new Vector2(direction * attackKnockback, 2f), ForceMode2D.Impulse);

@@ -142,7 +142,8 @@ public class PlayerCombat : MonoBehaviour
 
         Rigidbody2D targetRb = other.attachedRigidbody;
 
-        if (targetRb != null)
+        // Pas de recul sur un coup mortel : le corps, sans friction, glisserait jusqu'au mur.
+        if (targetRb != null && !target.IsDead)
         {
             float direction = Mathf.Sign(target.transform.position.x - transform.position.x);
 

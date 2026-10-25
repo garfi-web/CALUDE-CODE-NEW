@@ -1,0 +1,27 @@
+{
+  "default_3d": "triposg",
+  "default_concept": "comfyui_animagine",
+  "3d": {
+    "triposg": {
+      "license": "MIT (code et poids VAST-AI/TripoSG). RMBG-1.4 (non commercial) volontairement non utilisé.",
+      "inputs": ["image"],
+      "python": "C:/RED MET/ai/TripoSG/.venv/Scripts/python.exe",
+      "repo": "C:/RED MET/ai/TripoSG",
+      "runner": "backends/triposg_runner.py"
+    }
+  },
+  "concept": {
+    "comfyui_animagine": {
+      "license": "ComfyUI : GPL-3.0. Animagine XL 4.0 : CreativeML Open RAIL++-M (usage commercial permis, restrictions d'usage de l'annexe A).",
+      "url": "http://127.0.0.1:8188",
+      "checkpoint": "animagine-xl-4.0-opt.safetensors",
+      "size": [1024, 1024],
+      "steps": 28,
+      "cfg": 5.0,
+      "sampler": "euler_ancestral",
+      "scheduler": "normal",
+      "prompt_prefix": "",
+      "prompt_suffix": ", safe, masterpiece, high score, great score, absurdres"
+    }
+  }
+}
