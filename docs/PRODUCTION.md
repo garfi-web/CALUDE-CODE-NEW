@@ -3,6 +3,49 @@
 Choix, prompts, seeds, nombre d'essais et problèmes rencontrés, phase par phase.
 Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, animation, rendu toon) → spritesheets PNG → Unity.
 
+## État d'avancement (au 2026-10-25, sauvegarde avant arrêt)
+
+**Phase en cours** : deux chantiers en parallèle.
+- **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
+- **Bestiaire** : phase A (intégration au design) terminée, **en attente du feu vert pour la phase B** (architecture du code des ennemis).
+
+**Décisions prises**
+
+| Sujet | Décision | Raison |
+|---|---|---|
+| Générateur 3D | **TripoSG** (VAST-AI, MIT), local, `C:\RED MET\ai\TripoSG` | Hunyuan3D 2.1 : licence qui exclut l'UE (et ses sorties) et VRAM insuffisante (8 Go pour 10 demandés). **Hunyuan3D n'est pas installé.** |
+| Détourage | Sans modèle, dans `triposg_runner.py` | RMBG-1.4, appelé par le script d'origine de TripoSG, est non commercial : jamais téléchargé |
+| Images de concept | ComfyUI (GPL-3.0) + **Animagine XL 4.0** (Open RAIL++-M, usage commercial permis) | Choix de l'auteur, licence vérifiée et validée avant téléchargement |
+| Morfx 3D | **Abandonné** | Introuvable ; l'auteur a confirmé que ce n'était pas le bon outil |
+| Squelettes | **Rigify** dans Blender, **Mixamo en secours** | Décision de l'auteur |
+| Concepts validés | **Ne plus en dériver de nouvelles images** ; les corrections se font dans Blender | Chaque itération déformait le personnage (R1/R2 rejetés) |
+| Épée de Mara | Modélisée à part dans Blender, Mara générée sans arme | Demande de l'auteur |
+
+**Terminé**
+- Phase 0 : TripoSG + ComfyUI installés, outils `tools/gen3d/` (concepts, inpainting, masques, recadrage, génération 3D), journal.
+- Concepts validés et modèles TripoSG (seed 42, 40 000 faces), tous dans `Assets/_Game/Art/Characters/<Perso>/` :
+
+| Personnage | Concept retenu | Modèle |
+|---|---|---|
+| Nathan R0 | `Nathan_R0_concept_legs_d05_s4303` | `Nathan_R0_triposg_s42.glb` |
+| Nathan R2 | `Nathan_R2_init_R0_jean_noir` (R0 au pantalon teint) | `Nathan_R2_triposg_s42.glb` (corps de R0, à amincir) |
+| Nathan M2 | `Nathan_M2_concept_s7202` (ombre retirée) | `Nathan_M2_triposg_s42.glb` |
+| Nathan M4 | `Nathan_M4_concept_s7602` (peau couleur chair) | `Nathan_M4_triposg_s42.glb` |
+| Mara M-T0 à M-T4 | 8002 (Mara de gauche), 8102, 8201, 8312 (face isolée), 8402, nettoyés sans épée | `Mara_T0`…`T3_triposg_s42.glb`, `Mara_T4_triposg_s7_legsfix.glb` |
+| Épée de Mara | — (modélisée) | `Mara_EnergyBlade.glb` |
+| Le Chimiste | `Chimiste_concept_v2_s10103` | `Chimiste_triposg_s42.glb` |
+
+- Fichier Blender de travail : `ArtSource/Blender/REDMET_personnages.blend` (une collection par personnage, mises à l'échelle : R0/R2 1,70 m, M2/M4 2,05 m, Mara 1,78 m, Chimiste 1,83 m).
+- Bestiaire phase A : `docs/BESTIARY.md` remis en place, `docs/ENEMIES.md` créé, cohérence Dealer / Chimiste et uniforme fictif du Flic.
+- Code : correction du recul sur coup mortel (`PlayerCombat`, `EnemyAI`).
+
+**Reste à faire**
+1. **Bestiaire phase B** (dès le feu vert) : `EnemyArchetype` (ScriptableObject), socle commun, comportements, projectiles, gestionnaire de vagues, `dodgeInvulnerability` à 0,40 s, arène de test (touches 1 à 5). Puis la **sauvegarde demandée avant la phase C**, et la phase C (concepts de l'Acte I).
+2. **Nettoyage des modèles dans Blender** (phase 1) : supprimer les fragments, fermer les trous, origine aux pieds, orientation, réduction, matériaux, vues isolées face/profil/3-4. **R1 et R2 à dériver du modèle R0** (amincissement, cernes, teint), **lunettes de Nathan à modéliser** (double foyer, verres fêlés pour R2).
+3. Personnages sans concept validé : **Nathan M0** (le faible, M0 = corps de R0 sans lunettes d'après `CHARACTERS.md` : à dériver de R0 dans Blender), **Nathan R1**, **Nathan R3**.
+4. Phase 1 point 5 : designs des deux ennemis du monde Red Met, à rapprocher du bestiaire.
+5. Phases 2 à 6 du prototype : Rigify, animations calées sur le code, rendu toon et spritesheets, intégration Unity, décors et éclairage, performance et build.
+
 ## Phase 0 — Générateur 3D local
 
 ### 2026-10-25 — Évaluation de Hunyuan3D 2.1
@@ -201,7 +244,7 @@ Outils : `make_mask.py` (masques), mode inpainting de `concept.py` (seule la zon
 
 ### 2026-10-25 — Épée de Mara (modélisée à part dans Blender)
 - Modélisation procédurale (script Python via le MCP Blender) : poignée gainée noire (0,22 m), pommeau en gemme rouge, garde anguleuse noire avec deux pointes rouges, lame à section en losange en **matériau émissif rouge** (force 12), coque de lueur translucide (alpha 0,25, émission 4). 86 faces, environ 1,3 m. Objet parent `Mara_EnergyBlade` (vide) au centre de la poignée, pour l'attacher à l'os de la main.
-- Fichiers : `Assets/_Game/Art/Characters/Mara/Source/Mara_EnergyBlade.glb`, source `Blender/Mara_EnergyBlade.blend` (dossier `Blender/` à la racine du dépôt, hors de `Assets/` pour qu'Unity n'essaie pas d'importer les `.blend`).
+- Fichiers : `Assets/_Game/Art/Characters/Mara/Source/Mara_EnergyBlade.glb`, source `ArtSource/Blender/Mara_EnergyBlade.blend` (dossier `ArtSource/Blender/` à la racine du dépôt, hors de `Assets/` pour qu'Unity n'essaie pas d'importer les `.blend`).
 - À reprendre en phase 3 : l'émission sature en rose dans l'aperçu matériau. Le rendu toon et le bloom donneront le rouge final.
 
 ### 2026-10-25 — Modèles TripoSG : Nathan M2 et Mara M-T0 à M-T4 (1 essai chacun)

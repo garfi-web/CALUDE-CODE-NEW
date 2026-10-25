@@ -31,3 +31,7 @@ __pycache__/
 *.safetensors
 *.ckpt
 *.pth
+
+# Copies de secours automatiques de Blender
+*.blend1
+*.blend2
