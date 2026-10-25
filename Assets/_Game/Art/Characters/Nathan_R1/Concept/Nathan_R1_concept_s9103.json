@@ -1,0 +1,17 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1boy, solo, male focus, adult, young adult man, 19 years old, tall, long legs, defined jawline, visible neck, brown hair, curly hair, messy hair, thick glasses, black-framed glasses, bifocals, brown eyes, open eyes, slightly chubby, slimmer face, thinner cheeks, light stubble, acne, pimples, acne on cheeks, acne on forehead, dark circles under eyes, tired, nervous, anxious, dilated pupils, sweat, sweating forehead, tense, raised shoulders, clenched hands, plain black hoodie, oversized hoodie, loose hoodie, grey cargo pants, sneakers, t-pose, spread arms, arms outstretched, straight arms, standing, full body, front view, facing viewer, looking at viewer, anime coloring, cel shading, clean lineart, simple background, plain grey background, safe, masterpiece, high score, great score, absurdres",
+  "negative": "obese, muscular, healthy glow, zombie, undead, corpse, grey skin, green skin, wounds, open wounds, blood, gore, empty eyes, blank eyes, white pupils, no pupils, glowing eyes, skeleton, visible ribs, horror, smile, grin, teeth, 2boys, multiple boys, character sheet, turnaround, reference sheet, multiple views, child, kid, shota, young boy, baby face, aged down, female, nsfw, nude, short legs, stubby legs, big head, chibi, drop shadow, floor shadow, shadow, logo, text, letters, emblem, watermark, signature, username, lowres, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, extra arms, cropped, out of frame, busy background, worst quality, low quality, low score, bad score, average score, error, blurry",
+  "seed": 9103,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    832,
+    1216
+  ],
+  "duration_s": 18.3,
+  "init_image": "Assets/_Game/Art/Characters/Nathan_R0/Concept/Nathan_R0_concept_legs_d05_s4303.png",
+  "denoise": 0.65
+}

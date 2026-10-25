@@ -1,0 +1,37 @@
+{
+  "character": "Nathan_M2",
+  "created": "2026-10-25T22:20:07",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 45
+  },
+  "note": "Concept 7202 retenu, ombre au sol retirée (inpainting)",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Nathan_M2/Concept/Nathan_M2_noshadow_s7202.png",
+    "image_sha256": "1f581c11d0981a78af4192344519c270946453ebf79a58b0e908d796d76b2165"
+  },
+  "duration_s": 121.3,
+  "result": {
+    "faces_raw": 1121526,
+    "faces": 40000,
+    "vertices": 20984,
+    "watertight": false,
+    "extents": [
+      1.9,
+      1.8454,
+      0.7576
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.35,
+    "inference_s": 111.4,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Nathan_M2/Source/Nathan_M2_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [204, 196, 183], tolérance 45)",
+    "opaque_ratio": 0.321
+  },
+  "output": "Assets/_Game/Art/Characters/Nathan_M2/Source/Nathan_M2_triposg_s42.glb"
+}

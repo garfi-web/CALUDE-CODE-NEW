@@ -1,0 +1,37 @@
+{
+  "character": "Mara",
+  "created": "2026-10-25T22:25:18",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "8201 retenu, épée retirée en deux passes",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T2_nosword_clean_s8201.png",
+    "image_sha256": "ec703ca7ee53163adbb479fac5fb2a643f159fb4738a11877815a474832a1938"
+  },
+  "duration_s": 92.6,
+  "result": {
+    "faces_raw": 790824,
+    "faces": 40000,
+    "vertices": 19864,
+    "watertight": false,
+    "extents": [
+      1.5321,
+      1.8991,
+      0.6809
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.22,
+    "inference_s": 84.9,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Mara/Source/Mara_T2_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [175, 162, 145], tolérance 24)",
+    "opaque_ratio": 0.147
+  },
+  "output": "Assets/_Game/Art/Characters/Mara/Source/Mara_T2_triposg_s42.glb"
+}

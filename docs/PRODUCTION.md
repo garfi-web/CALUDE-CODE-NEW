@@ -166,3 +166,56 @@ Points clés d'Open RAIL++-M :
     - maillage non étanche.
   - Pistes : relancer avec d'autres seeds et sans réduire, ou réduire moins (`--faces 100000`), selon la règle « une autre seed plutôt qu'une retouche à la main ».
 - Problème corrigé : `generate.py` et `concept.py` forcent maintenant leur sortie en UTF-8 (une « → » faisait planter `print()` sous Windows).
+
+### 2026-10-25 — Choix de l'auteur sur la série 2, puis reclassement R3 → R4
+- Retenus : `Nathan_R0_concept_s4202` (**à clarifier** : le modèle R0 a été fait sur le 4303 retouché, validé plus tôt), `Nathan_M2_concept_s7202`, `Nathan_M4_concept_s7602`, `Mara_T0_concept_s8002`, `Mara_T1_concept_s8102`, `Mara_T2_concept_s8201`, `Mara_T3_back_concept_s8312`, `Mara_T4_concept_s8402`.
+- Consignes : Mara modélisée **sans épée**, épée modélisée à part. **Erreur signalée par l'auteur : trois bras sur certains concepts de Mara.** Vérifié en pleine résolution :
+  - **8002** : deux Mara sur l'image, celle de droite a **trois bras** (deux tendus, un troisième qui tient l'épée). Celle de gauche est correcte.
+  - **8312** : une Mara de dos et une de face, qui **partagent un même bras** au milieu de l'image, et chacune est coupée au bord.
+  - Mes contrôles précédents n'avaient compté ces images que comme « plusieurs personnages ». Désormais, chaque concept est vérifié en pleine résolution, bras et mains comptés, avant d'être présenté.
+- Les concepts R3 « font trop zombie » : renommés `Nathan_R4_concept_s*` et déplacés dans `Assets/_Game/Art/Characters/Nathan_R4/Concept/` (avec leurs `.meta`, `git mv`). Le script de la série 2 écrit désormais en R4.
+
+### 2026-10-25 — Concepts Nathan R1 et R2 (`tools/gen3d/batches/2026-10-25_concepts_r1_r2.sh`)
+- Principe : img2img depuis le concept R0 validé (`Nathan_R0_concept_legs_d05_s4303.png`, 832×1216), pour garder le même visage, la même pose en T et le même cadrage. Négatif anti-mort-vivant : `zombie, undead, corpse, grey skin, green skin, wounds, open wounds, blood, gore, empty eyes, blank eyes, white pupils, no pupils, glowing eyes, skeleton, visible ribs, horror, smile, grin, teeth`.
+- **R1** (denoise 0,65, seeds 9101 à 9104) : 4 variantes réussies du premier coup. Même garçon, joues et ventre affinés, sueur, poings crispés (9104). 9102 : petit point blanc parasite au-dessus de la tête. Acné discrète.
+- **R2**, 4 passes :
+  1. `Nathan_R2_concept_s9201`-`9204` (denoise 0,75) : bons visages amaigris, mais **cargo beige de R0 conservé** (et hoodie noir sur 9202). Gardés pour mémoire.
+  2. Inpainting du pantalon (masque rectangulaire via `make_mask.py`) : **échec**. Raccords visibles aux bords du masque, chaussures coupées, **deux mains en trop sur 9203**, jambes en bâton. Images supprimées.
+  3. Denoise 0,8 + `(worn black jeans:1.4)` et `(cargo pants:1.3)` en négatif : **échec**, le modèle a retiré le pantalon (jambes nues, short) et ajouté du texte sur les hoodies. Images supprimées.
+  4. **Retenue comme proposition** : on noircit d'abord le pantalon de R0 sans modèle (`tools/gen3d/batches/r2_darken_pants.py` : pixels beiges ou plus sombres que le fond dans la zone des jambes, 13,7 % de l'image) → `Nathan_R2_init_R0_jean_noir.png`, puis img2img à 0,75 (seeds 9221 à 9224, `(worn black jeans:1.2)`). Résultat : `Nathan_R2_concept_c_s9221`-`9224`, amaigris, hoodie gris foncé, pantalon sombre, même garçon. Limites : pantalon plus « large » que « jean », manches baissées (rougeurs des avant-bras invisibles), yeux mi-clos sur 9223.
+- La posture voûtée de R2 (bras serrés) est incompatible avec la pose en T demandée pour la 3D : elle est reportée sur l'animation (idle de la phase 2).
+- `docs/CHARACTERS.md` : tableau du monde réel réécrit (R0, R1 « Premières semaines », R2 « Le manque », R3, R4), avec la règle « malade, jamais mort-vivant » de R0 à R2. R3 n'a plus de concept.
+- Outils ajoutés : mode inpainting de `concept.py` (`--mask`, zone hors masque recollée à l'identique), `make_mask.py` (rectangles, polygones, couleur limitée à une zone, aperçu).
+
+### 2026-10-25 — Nettoyage des concepts retenus avant TripoSG
+Outils : `make_mask.py` (masques), mode inpainting de `concept.py` (seule la zone masquée est redessinée, le reste est recollé à l'identique), `crop_center.py` (recadrage et recentrage, option `--at`). Chaque résultat a été vérifié en pleine résolution, bras et mains comptés.
+
+| Concept retenu | Problème | Traitement | Essais | Résultat |
+|---|---|---|---|---|
+| Mara T0 8002 | 2 Mara, celle de droite a **3 bras** et l'épée | Mara de gauche recadrée (`--box 0 0 522 1024`), recentrée ; inpainting de la pointe d'épée restante et des bords de recadrage | 1 | `Mara_T0_clean_s8002.png`. 2 bras, sans épée. Reste un artefact « Aa » minuscule sur le fond. **Combinaison-pantalon, sans la jupe longue fendue de M-T0** |
+| Mara T1 8102 | 2 épées flottantes | Inpainting de polygones autour des lames | 3 | v1 : halo rose et mèches coupées. v2 (masque élargi) : **manche coupée, main flottante**. v3 (bande des bras exclue du masque) : `Mara_T1_nosword_s8102.png`, 2 bras intacts, chevelure continue |
+| Mara T2 8201 | Épée en travers derrière le bras et le torse | Inpainting en 3 segments, bras exclu, puis 2e passe sur les restes (garde, traits de lumière) | 2 | `Mara_T2_nosword_clean_s8201.png`, 2 bras, sans épée |
+| Mara T3 8312 | Planche dos + face, **un bras partagé**, figures coupées au bord | Mara de face recadrée (`--box 380 0 1024 1024`) et décalée (`--at 82 0`) pour que les deux bras tiennent ; inpainting de la fin du bras droit, d'une main au bout du bras gauche et de la lame de l'autre Mara | 2 | `Mara_T3_front_from8312_s8312.png`, une seule Mara de face, 2 bras, 2 mains, pose en T. Gants dépareillés (main gauche nue). La vue de dos de 8312 reste la référence de l'arrière (demi-jupe) |
+| Mara T4 8402 | Épée tenue dans la main gauche | Inpainting de la poignée, de la garde et de la lame, main exclue | 1 | `Mara_T4_nosword_s8402.png`, 2 bras. Main gauche un peu tronquée (petit artefact carré) |
+| Nathan M2 7202 | Ombre bleue au sol | Masque par couleur (36, 73, 108, tolérance 30) limité à la bande du sol, inpainting | 1 | `Nathan_M2_noshadow_s7202.png`. Léger halo clair sous les bottes → TripoSG lancé avec `--bg-tolerance 45` |
+
+### 2026-10-25 — Épée de Mara (modélisée à part dans Blender)
+- Modélisation procédurale (script Python via le MCP Blender) : poignée gainée noire (0,22 m), pommeau en gemme rouge, garde anguleuse noire avec deux pointes rouges, lame à section en losange en **matériau émissif rouge** (force 12), coque de lueur translucide (alpha 0,25, émission 4). 86 faces, environ 1,3 m. Objet parent `Mara_EnergyBlade` (vide) au centre de la poignée, pour l'attacher à l'os de la main.
+- Fichiers : `Assets/_Game/Art/Characters/Mara/Source/Mara_EnergyBlade.glb`, source `Blender/Mara_EnergyBlade.blend` (dossier `Blender/` à la racine du dépôt, hors de `Assets/` pour qu'Unity n'essaie pas d'importer les `.blend`).
+- À reprendre en phase 3 : l'émission sature en rose dans l'aperçu matériau. Le rendu toon et le bloom donneront le rouge final.
+
+### 2026-10-25 — Modèles TripoSG : Nathan M2 et Mara M-T0 à M-T4 (1 essai chacun)
+- Script : `tools/gen3d/batches/2026-10-25_models_m2_mara.sh` (seed 42, 50 étapes, guidance 7, 40 000 faces). ComfyUI arrêté avant, Unity et Blender ouverts.
+
+| Modèle | Faces brutes | Pic VRAM | Calcul | Constat |
+|---|---|---|---|---|
+| `Nathan_M2_triposg_s42` | 1 121 526 | 5,35 Go | 111 s | Colosse fidèle (cape de fourrure, brassards, bottes). Mis à 2,05 m dans Blender |
+| `Mara_T0_triposg_s42` | 965 054 | 5,23 Go | 87 s | Bonne silhouette, chevelure en nappe à l'arrière |
+| `Mara_T1_triposg_s42` | 828 698 | 5,24 Go | 87 s | Bonne silhouette |
+| `Mara_T2_triposg_s42` | 790 824 | 5,22 Go | 85 s | Jupe effilochée, jambes écartées |
+| `Mara_T3_triposg_s42` | 610 990 | 5,21 Go | 80 s | Mèches flottantes |
+| `Mara_T4_triposg_s42` | 1 188 306 | 5,32 Go | 105 s | **Jambes fusionnées** (croisées sur le concept), cheveux et cape en grande nappe : à relancer ou à retoucher avant le squelette |
+
+- Mara est mise à 1,78 m, R0 à 1,70 m (comparaison dans Blender, collections par personnage).
+- Profils en partie masqués par les personnages voisins dans la file : vues isolées à refaire au nettoyage (phase 1).
+- Restent à trancher par l'auteur : `Nathan_R0_concept_s4202` (alors que le modèle R0 a été fait sur le 4303 retouché) et `Nathan_M4_concept_s7602` (version du 1er passage, à peau rose, ou `Nathan_M4_concept_grey_s7602` à peau grise ?). Aucun modèle M4 ni nouveau R0 n'a été lancé.

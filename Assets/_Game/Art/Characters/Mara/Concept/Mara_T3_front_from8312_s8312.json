@@ -1,0 +1,19 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1girl, solo, adult, mature female, t-pose, spread arms, arms outstretched, straight arms, red elbow gloves, open hands, five fingers, revealing armor, minimal armor, red armor pieces, red shoulder armor, black and red bikini armor, thong, thigh boots, very long black hair, red streaks, front view, anime coloring, cel shading, clean lineart, simple background, plain grey background, sensitive, masterpiece, high score, great score, absurdres",
+  "negative": "sword, weapon, blade, glowing, glow, red light, extra arms, extra hands, third arm, multiple girls, 2girls, cropped, nsfw, nude, nipples, child, loli, young, text, logo, drop shadow, worst quality, low quality, low score, bad score, average score, blurry",
+  "seed": 8312,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 20.1,
+  "init_image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T3_front_from8312_crop.png",
+  "denoise": 1.0,
+  "mask_image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T3_front_from8312_mask.png",
+  "mode": "inpainting (VAEEncodeForInpaint, zone hors masque recollée)"
+}

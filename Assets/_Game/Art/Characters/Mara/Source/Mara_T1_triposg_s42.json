@@ -1,0 +1,37 @@
+{
+  "character": "Mara",
+  "created": "2026-10-25T22:23:43",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "8102 retenu, deux épées retirées (inpainting, bras exclus du masque)",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T1_nosword_s8102.png",
+    "image_sha256": "0dc3812e63775c13268e384c9096e7cde8c12263aa73b4ee3b637fc1bfde3506"
+  },
+  "duration_s": 95.4,
+  "result": {
+    "faces_raw": 828698,
+    "faces": 40000,
+    "vertices": 19743,
+    "watertight": false,
+    "extents": [
+      1.457,
+      1.9053,
+      0.6998
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.24,
+    "inference_s": 87.1,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Mara/Source/Mara_T1_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [181, 166, 146], tolérance 24)",
+    "opaque_ratio": 0.194
+  },
+  "output": "Assets/_Game/Art/Characters/Mara/Source/Mara_T1_triposg_s42.glb"
+}

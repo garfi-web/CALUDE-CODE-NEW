@@ -1,0 +1,37 @@
+{
+  "character": "Mara",
+  "created": "2026-10-25T22:22:08",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "8002 retenu : Mara de gauche (la droite avait 3 bras), recadrée, pointe d'épée retirée",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T0_clean_s8002.png",
+    "image_sha256": "db32fd7d646f3abfed3cee6dd88394a3c169af56cc739dc6d7cf3672454bebc8"
+  },
+  "duration_s": 94.8,
+  "result": {
+    "faces_raw": 965054,
+    "faces": 40000,
+    "vertices": 19891,
+    "watertight": false,
+    "extents": [
+      1.2131,
+      1.9061,
+      0.6737
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.23,
+    "inference_s": 87.2,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Mara/Source/Mara_T0_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [172, 157, 145], tolérance 24)",
+    "opaque_ratio": 0.168
+  },
+  "output": "Assets/_Game/Art/Characters/Mara/Source/Mara_T0_triposg_s42.glb"
+}

@@ -75,7 +75,10 @@ def main():
     parser.add_argument("--faces", type=int, default=40000, help="Nombre de faces maximum, -1 pour ne pas réduire")
     parser.add_argument("--steps", type=int, default=50)
     parser.add_argument("--guidance", type=float, default=7.0)
+    parser.add_argument("--bg-tolerance", type=int, default=24,
+                        help="Écart de couleur toléré pour retirer le fond uni (à monter si le fond a des reflets)")
     parser.add_argument("--note", default="", help="Remarque libre, recopiée dans le .json")
+    parser.add_argument("--name", default=None, help="Préfixe du fichier (défaut : le personnage), ex. Mara_T0")
     args = parser.parse_args()
 
     backends = load_backends()
@@ -84,14 +87,14 @@ def main():
 
     out_dir = CHARACTERS_DIR / args.character / "Source"
     out_dir.mkdir(parents=True, exist_ok=True)
-    glb_path = unique_path(out_dir / f"{args.character}_{backend_name}_s{args.seed}.glb")
+    glb_path = unique_path(out_dir / f"{args.name or args.character}_{backend_name}_s{args.seed}.glb")
 
     record = {
         "character": args.character,
         "created": datetime.datetime.now().isoformat(timespec="seconds"),
         "backend": backend_name,
         "seed": args.seed,
-        "params": {"faces": args.faces, "steps": args.steps, "guidance": args.guidance},
+        "params": {"faces": args.faces, "steps": args.steps, "guidance": args.guidance, "bg_tolerance": args.bg_tolerance},
         "note": args.note,
     }
 
@@ -126,6 +129,7 @@ def main():
         "--faces", str(args.faces),
         "--steps", str(args.steps),
         "--guidance", str(args.guidance),
+        "--tolerance", str(args.bg_tolerance),
     ]
     print(f"[gen3d] {backend_name} → {relative(glb_path)}", flush=True)
     start = time.time()

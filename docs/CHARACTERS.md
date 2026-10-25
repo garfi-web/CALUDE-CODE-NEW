@@ -15,13 +15,17 @@ Principe directeur : **le corps réel se vide pendant que le double se remplit**
 
 | Stade | Chapitres | Silhouette | Visage | Tenue | Animation |
 |---|---|---|---|---|---|
-| **R0 — Le garçon invisible** | 1 | Un peu enrobé (chubby), épaules rentrées, ventre mou | Joues rondes, **acné** sur le front et les joues, **lunettes à double foyer** épaisses, cheveux bruns bouclés en bataille | Hoodie noir trop grand, cargo, baskets usées (cf. `nathan-reel-style.webp`) | Regard au sol, mains dans les poches, démarche hésitante |
-| **R1 — Insomnie** | 2–3 | Visage qui s'affine, le ventre fond | Cernes, acné irritée, lunettes de travers | Même hoodie, désormais trop large | Se gratte les avant-bras, bâille |
-| **R2 — Les dents** | 4–5 | Mince, épaules osseuses | Joues creuses, **dents abîmées**, lèvres gercées, peau terne | Hoodie taché, capuche relevée | Mâchoires serrées, tremblements des mains |
-| **R3 — La peau sur les os** | 6–7 | **Émacié**, clavicules et poignets saillants | Dents manquantes, barbe négligée, yeux trop grands, verres fêlés | Vêtements qui pendent, pieds nus ou tongs | Trébuche, tics, mouvements involontaires (cf. `nathan-reel-hallucination.webp`) |
-| **R4 — Corps brisé** | 8–10 | Squelettique, voûté | Teint gris, regard vide ou halluciné | Blouse d'hôpital (épilogue) | Marche saccadée, absences |
+| **R0 — Le garçon invisible** | 1 | Adulte de 18 ans, 1,70 m, un peu enrobé (chubby), épaules rentrées, ventre mou | Mâchoire marquée, barbe naissante, **acné** sur le front et les joues, **lunettes à double foyer** épaisses à monture noire, cheveux bruns bouclés en bataille | Hoodie noir uni trop grand, cargo gris, baskets usées (cf. `nathan-reel-style.webp`) | Regard au sol, mains dans les poches, démarche hésitante |
+| **R1 — Premières semaines** | 2–3 | Même garçon, 18-19 ans. A perdu un peu de ventre, joues affinées, le hoodie noir commence à flotter | Cernes, teint fatigué, regard nerveux, pupilles un peu dilatées, légère transpiration sur le front, acné encore visible, mêmes lunettes | Même hoodie noir et même cargo | Posture tendue, épaules remontées, mains crispées |
+| **R2 — Le manque** | 4–5 | Nettement amaigri mais crédible : cou fin, pas encore la peau sur les os | Visage creusé, pommettes visibles, cernes profonds, teint pâle et terne (peau humaine, pas grise), lèvres sèches, barbe de quelques jours, cheveux gras, lunettes de travers et rayées, un verre fêlé | Hoodie gris foncé usé et trop grand, t-shirt défraîchi, jean noir élimé (pas en lambeaux), vieilles baskets ou bottes. Petites rougeurs de grattage sur les avant-bras et le cou, aux endroits des futures fissures du double. Aucune blessure | Voûté, bras serrés contre le corps comme s'il avait froid : on doit sentir le manque |
+| **R3 — La peau sur les os** | 6–7 | **Émacié**, clavicules et poignets saillants | Dents abîmées, barbe négligée, yeux trop grands, verres fêlés | Vêtements qui pendent | Trébuche, tics, mouvements involontaires (cf. `nathan-reel-hallucination.webp`) |
+| **R4 — Corps brisé** | 8–10 | Squelettique, voûté | Teint gris, regard halluciné, rictus | Hoodie gris taché et trop grand, jean noir en lambeaux, vieilles bottes. Marques rouges sur les avant-bras et le cou. Blouse d'hôpital pour l'épilogue | Marche saccadée, absences |
 
 Ces stades sont une représentation **fictionnelle** de la dépendance, pas un jugement sur l'apparence. Le passage de « chubby » à « maigre » doit se lire comme une **perte de santé**, jamais comme une amélioration.
+
+**De R0 à R2, on doit voir un jeune homme malade et épuisé, jamais un mort-vivant** : peau humaine (pâle, pas grise), aucune plaie ouverte, pas de sang, pas d'yeux vides ni de pupilles blanches. L'aspect « zombie » est réservé à R4 et aux hallucinations.
+
+Concepts : `Assets/_Game/Art/Characters/Nathan_R0/` … `Nathan_R4/`, dans `Concept/`. Les premiers concepts générés pour R3 se lisaient comme trop « zombie » : ils ont été reclassés en R4. **R3 n'a pas encore de concept.**
 
 ### Monde de la Red Met
 

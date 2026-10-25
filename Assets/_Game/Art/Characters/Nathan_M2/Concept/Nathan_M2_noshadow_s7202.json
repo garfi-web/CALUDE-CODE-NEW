@@ -1,0 +1,19 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1boy, solo, adult, barbarian, leather boots, standing, full body, simple background, plain grey background, anime coloring, cel shading, safe, masterpiece, high score, great score, absurdres",
+  "negative": "shadow, drop shadow, floor shadow, cast shadow, ground, floor, extra legs, extra feet, text, logo, worst quality, low quality, blurry",
+  "seed": 7202,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 20.1,
+  "init_image": "Assets/_Game/Art/Characters/Nathan_M2/Concept/Nathan_M2_concept_s7202.png",
+  "denoise": 1.0,
+  "mask_image": "Assets/_Game/Art/Characters/Nathan_M2/Concept/Nathan_M2_s7202_shadow_mask.png",
+  "mode": "inpainting (VAEEncodeForInpaint, zone hors masque recollée)"
+}

@@ -41,9 +41,26 @@ def upload_image(base, path):
         return json.loads(resp.read())["name"]
 
 
-def build_workflow(cfg, prompt, negative, seed, init_image=None, denoise=1.0, size=None):
+def build_workflow(cfg, prompt, negative, seed, init_image=None, denoise=1.0, size=None, mask_image=None):
     width, height = size or cfg.get("size", [1024, 1024])
-    if init_image:
+    output = ["6", 0]
+    if init_image and mask_image:
+        # Inpainting : seule la zone blanche du masque est redessinée, le reste est recollé à l'identique
+        latent_nodes = {
+            "8": {"class_type": "LoadImage", "inputs": {"image": init_image}},
+            "9": {"class_type": "ImageScale", "inputs": {"image": ["8", 0], "upscale_method": "lanczos",
+                                                          "width": width, "height": height, "crop": "disabled"}},
+            "10": {"class_type": "LoadImage", "inputs": {"image": mask_image}},
+            "11": {"class_type": "ImageScale", "inputs": {"image": ["10", 0], "upscale_method": "nearest-exact",
+                                                           "width": width, "height": height, "crop": "disabled"}},
+            "12": {"class_type": "ImageToMask", "inputs": {"image": ["11", 0], "channel": "red"}},
+            "4": {"class_type": "VAEEncodeForInpaint", "inputs": {"pixels": ["9", 0], "vae": ["1", 2],
+                                                                 "mask": ["12", 0], "grow_mask_by": 8}},
+            "13": {"class_type": "ImageCompositeMasked", "inputs": {"destination": ["9", 0], "source": ["6", 0],
+                                                                   "x": 0, "y": 0, "resize_source": False, "mask": ["12", 0]}},
+        }
+        output = ["13", 0]
+    elif init_image:
         # img2img : l'image de départ est mise à la taille voulue puis encodée en latent
         latent_nodes = {
             "8": {"class_type": "LoadImage", "inputs": {"image": init_image}},
@@ -68,11 +85,12 @@ def build_workflow(cfg, prompt, negative, seed, init_image=None, denoise=1.0, si
             },
         },
         "6": {"class_type": "VAEDecode", "inputs": {"samples": ["5", 0], "vae": ["1", 2]}},
-        "7": {"class_type": "SaveImage", "inputs": {"images": ["6", 0], "filename_prefix": "redmet_concept"}},
+        "7": {"class_type": "SaveImage", "inputs": {"images": output, "filename_prefix": "redmet_concept"}},
     }
 
 
-def generate(cfg, prompt, negative, seed, out_dir, name, timeout_s=900, init_image=None, denoise=1.0, size=None):
+def generate(cfg, prompt, negative, seed, out_dir, name, timeout_s=900, init_image=None, denoise=1.0, size=None,
+             mask_image=None):
     """Génère une image, la copie dans out_dir/<name>.png et renvoie (chemin, infos).
 
     Avec init_image, fait un img2img : denoise faible = proche de l'image de départ.
@@ -81,7 +99,8 @@ def generate(cfg, prompt, negative, seed, out_dir, name, timeout_s=900, init_ima
     negative = negative or DEFAULT_NEGATIVE
     full_prompt = cfg.get("prompt_prefix", "") + prompt + cfg.get("prompt_suffix", "")
     uploaded = upload_image(base, init_image) if init_image else None
-    workflow = build_workflow(cfg, full_prompt, negative, seed, uploaded, denoise, size)
+    uploaded_mask = upload_image(base, mask_image) if mask_image else None
+    workflow = build_workflow(cfg, full_prompt, negative, seed, uploaded, denoise, size, uploaded_mask)
 
     prompt_id = json.loads(_request(f"{base}/prompt", {"prompt": workflow, "client_id": str(uuid.uuid4())}))["prompt_id"]
     start = time.time()
@@ -126,6 +145,9 @@ def generate(cfg, prompt, negative, seed, out_dir, name, timeout_s=900, init_ima
     if init_image:
         info["init_image"] = str(init_image)
         info["denoise"] = denoise
+    if mask_image:
+        info["mask_image"] = str(mask_image)
+        info["mode"] = "inpainting (VAEEncodeForInpaint, zone hors masque recollée)"
     with open(out_path.with_suffix(".json"), "w", encoding="utf-8") as f:
         json.dump(info, f, ensure_ascii=False, indent=2)
     return out_path, info
@@ -151,6 +173,7 @@ def main():
     parser.add_argument("--backend", default=None)
     parser.add_argument("--init-image", default=None, help="Image de départ (img2img)")
     parser.add_argument("--denoise", type=float, default=1.0, help="Avec --init-image : 0,3-0,5 garde l'image")
+    parser.add_argument("--mask", default=None, help="Avec --init-image : masque PNG, blanc = zone à redessiner")
     parser.add_argument("--size", type=int, nargs=2, default=None, metavar=("W", "H"))
     parser.add_argument("--name", default=None, help="Préfixe du fichier (défaut : <perso>_concept)")
     args = parser.parse_args()
@@ -163,7 +186,8 @@ def main():
         prefix = args.name or f"{args.character}_concept"
         path, info = generate(cfg, args.prompt, args.negative, seed,
                               characters_dir / args.character / "Concept", f"{prefix}_s{seed}",
-                              init_image=args.init_image, denoise=args.denoise, size=args.size)
+                              init_image=args.init_image, denoise=args.denoise, size=args.size,
+                              mask_image=args.mask)
         print(f"[concept] seed {seed} : {path} ({info['duration_s']} s)", flush=True)
     return 0
 

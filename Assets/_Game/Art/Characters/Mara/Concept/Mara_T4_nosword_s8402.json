@@ -1,0 +1,19 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1girl, solo, adult, mature female, very long hair, black hair, red streaks, hair flowing, clenched hand, no weapon, black armor, cracked armor, glowing red cracks, spiked shoulder armor, armored dress, thigh boots, anime coloring, cel shading, clean lineart, simple background, plain grey background, sensitive, masterpiece, high score, great score, absurdres",
+  "negative": "sword, weapon, blade, hilt, energy blade, glowing sword, light rays, extra arms, extra hands, extra limbs, multiple girls, nsfw, nude, nipples, child, loli, young, text, logo, drop shadow, worst quality, low quality, low score, bad score, average score, blurry",
+  "seed": 8402,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 20.1,
+  "init_image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T4_concept_s8402.png",
+  "denoise": 1.0,
+  "mask_image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T4_s8402_sword_mask.png",
+  "mode": "inpainting (VAEEncodeForInpaint, zone hors masque recollée)"
+}

@@ -23,7 +23,7 @@ run() { # personnage, seeds..., puis --prompt/--negative via variables P et N
 r3() {
   P="1boy, solo, male focus, adult, young adult man, 19 years old, tall, long legs, emaciated, skinny, gaunt, skin and bones, hollow cheeks, sunken cheeks, prominent collarbones, bony wrists, dark circles under eyes, eye bags, tired eyes, grey skin, pale skin, sickly, unhealthy, chapped lips, unkempt stubble, bad teeth, brown hair, curly hair, messy hair, greasy hair, thick glasses, black-framed glasses, bifocals, cracked glasses, crooked glasses, open eyes, brown eyes, red marks on forearms, red marks on neck, dark grey hoodie, oversized hoodie, stained clothes, dirty clothes, sleeves pushed up, worn t-shirt, black jeans, torn jeans, ripped jeans, knee holes, old leather boots, slight slouch, hunched shoulders, sad, exhausted, $POSE, $STYLE, safe"
   N="muscular, healthy, fit, handsome, chubby, fat, clean clothes, $NEG_MALE, $NEG_BASE"
-  run Nathan_R3 6101 6202 6303 6404
+  run Nathan_R4 6101 6202 6303 6404  # générés comme R3, reclassés en R4 (trop « zombie » pour R3)
 }
 
 M2_BODY="1boy, solo, male focus, adult, mature male, barbarian, giant, tall, long legs, huge muscles, muscular male, massive shoulders, broad shoulders, defined abs, pectorals, dominant, angry, furious, glaring, brown eyes, long hair, reddish brown hair, braided hair, partially braided hair, thick beard, full beard, scars, facial scar, scar on chest, fur cape, fur pauldrons, leather straps, leather belt, metal belt buckle, medallion, studded bracers, fur pants, fur boots, topless male, bare chest"
@@ -73,7 +73,7 @@ NEG_SHEET="2boys, 2girls, multiple boys, multiple girls, character sheet, turnar
 retakes() {
   P="1boy, solo, male focus, adult, young adult man, 19 years old, tall, long legs, emaciated, skinny, gaunt, skin and bones, hollow cheeks, sunken cheeks, prominent collarbones, bony wrists, dark circles under eyes, eye bags, tired eyes, grey skin, pale skin, sickly, unhealthy, chapped lips, unkempt stubble, bad teeth, brown hair, curly hair, messy hair, greasy hair, thick glasses, black-framed glasses, bifocals, cracked glasses, crooked glasses, open eyes, brown eyes, red marks on forearms, red marks on neck, dark grey hoodie, oversized hoodie, stained clothes, dirty clothes, sleeves pushed up, worn t-shirt, black jeans, torn jeans, ripped jeans, knee holes, old leather boots, slight slouch, hunched shoulders, sad, exhausted, $POSE, $STYLE, safe"
   N="$NEG_SHEET, smile, grin, muscular, healthy, fit, handsome, chubby, fat, clean clothes, dirt on ground, $NEG_MALE, $NEG_BASE"
-  run Nathan_R3 6505 6606
+  run Nathan_R4 6505 6606
 
   P="$M2_BODY, (grey skin:1.4), (stone skin:1.3), cracked skin, glowing cracks, (glowing red veins:1.2), red veins, glowing red eyes, red eyes, $POSE, $STYLE, safe"
   N="$NEG_SHEET, pink skin, tan skin, peach skin, $NEG_MALE, $NEG_BASE"

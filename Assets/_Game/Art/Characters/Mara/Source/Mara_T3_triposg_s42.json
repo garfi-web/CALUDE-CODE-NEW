@@ -1,0 +1,37 @@
+{
+  "character": "Mara",
+  "created": "2026-10-25T22:26:51",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "8312 retenu (planche dos + face) : Mara de face isolée, recentrée, bras et mains complétés, lame retirée",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T3_front_from8312_s8312.png",
+    "image_sha256": "4f44a7d0e001aaaf1030b555adc786a9eb8b9da8170721e0ef366963deb1105b"
+  },
+  "duration_s": 87.1,
+  "result": {
+    "faces_raw": 610990,
+    "faces": 40000,
+    "vertices": 19888,
+    "watertight": false,
+    "extents": [
+      1.5513,
+      1.8989,
+      0.6117
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.21,
+    "inference_s": 79.6,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Mara/Source/Mara_T3_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [156, 148, 135], tolérance 24)",
+    "opaque_ratio": 0.147
+  },
+  "output": "Assets/_Game/Art/Characters/Mara/Source/Mara_T3_triposg_s42.glb"
+}

@@ -1,0 +1,19 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1girl, solo, adult, mature female, simple background, plain grey background, anime coloring, cel shading, safe, masterpiece, high score, great score, absurdres",
+  "negative": "sword, weapon, blade, glowing, glow, red light, line, border, frame, extra arms, extra hands, text, logo, worst quality, low quality, blurry",
+  "seed": 8002,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 20.1,
+  "init_image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T0_concept_s8002_left.png",
+  "denoise": 1.0,
+  "mask_image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T0_s8002_left_mask.png",
+  "mode": "inpainting (VAEEncodeForInpaint, zone hors masque recollée)"
+}
