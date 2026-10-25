@@ -256,3 +256,8 @@ Outils : `make_mask.py` (masques), mode inpainting de `concept.py` (seule la zon
 | v2_10102 | Coupe rase grisonnante, costume bordeaux, chemise rose, sourire | Élégant et prospère. Sourire large, chemise rose et non noire |
 | v2_10103 | Locks attachées (anneau doré), chemise blanche, pantalon noir | Le plus jeune (30-35 ans), **chemise encore blanche**, légère ombre au sol, yeux très clairs |
 | v2_10104 | Cheveux et barbe gris, chemise bordeaux, double chaîne en or | Correspond le mieux à la tenue demandée, posture posée. Paraît 55-60 ans, yeux très clairs (reflet) |
+
+### 2026-10-25 — Choix de l'auteur : Chimiste v2_10103, R1 et R2
+- **Chimiste : `Chimiste_concept_v2_s10103` retenu.** Copie technique pour la 3D (`Chimiste_concept_v2_s10103_input3d.png`) : les 1 879 pixels de l'ombre qui déborde des chaussures (bande y 993 à 1018, hors des chaussures) sont repeints à la couleur du fond, sans génération ni retouche du personnage. Modèle `Chimiste/Source/Chimiste_triposg_s42.glb` : 100 s, 40 000 faces, pas de socle sous les pieds. Mis à 1,83 m dans Blender.
+- **R1 : aucun concept retenu** (tous trop éloignés du R0 validé). R1 sera fait dans Blender à partir du modèle R0 validé.
+- **R2 : base `Nathan_R2_init_R0_jean_noir.png`** (le R0 validé au pantalon teint en noir, sans génération SDXL). Modèle `Nathan_R2/Source/Nathan_R2_triposg_s42.glb` : 90 s. Comme TripoSG ne produit que la forme, le maillage est quasiment celui de R0 (corps enrobé). **L'amaigrissement de R2 se fera dans Blender.**

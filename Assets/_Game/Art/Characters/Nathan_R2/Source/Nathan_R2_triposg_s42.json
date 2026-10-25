@@ -1,0 +1,37 @@
+{
+  "character": "Nathan_R2",
+  "created": "2026-10-25T23:05:57",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "Base R2 retenue par l'auteur : R0 validé au pantalon teint en noir (aucune génération SDXL). Amaigrissement à faire dans Blender",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Nathan_R2/Concept/Nathan_R2_init_R0_jean_noir.png",
+    "image_sha256": "7072174867ccaf4613b11215f23ccf191fd09459769ba0993be5473764a46998"
+  },
+  "duration_s": 89.6,
+  "result": {
+    "faces_raw": 643404,
+    "faces": 40000,
+    "vertices": 20010,
+    "watertight": false,
+    "extents": [
+      1.4028,
+      1.9033,
+      0.5324
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.22,
+    "inference_s": 82.0,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Nathan_R2/Source/Nathan_R2_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [172, 170, 166], tolérance 24)",
+    "opaque_ratio": 0.317
+  },
+  "output": "Assets/_Game/Art/Characters/Nathan_R2/Source/Nathan_R2_triposg_s42.glb"
+}

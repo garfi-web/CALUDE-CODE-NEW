@@ -1,0 +1,37 @@
+{
+  "character": "Chimiste",
+  "created": "2026-10-25T23:04:17",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "Concept retenu : Chimiste_concept_v2_s10103 ; copie technique sans l'ombre qui déborde des chaussures",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Chimiste/Concept/Chimiste_concept_v2_s10103_input3d.png",
+    "image_sha256": "8addd2fcae4bd50a13f8e93082d716ce781394e9ea94d081a630a017ac4c44b1"
+  },
+  "duration_s": 99.8,
+  "result": {
+    "faces_raw": 624522,
+    "faces": 40000,
+    "vertices": 20002,
+    "watertight": false,
+    "extents": [
+      1.651,
+      1.9011,
+      0.486
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.22,
+    "inference_s": 87.1,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Chimiste/Source/Chimiste_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [147, 149, 150], tolérance 24)",
+    "opaque_ratio": 0.214
+  },
+  "output": "Assets/_Game/Art/Characters/Chimiste/Source/Chimiste_triposg_s42.glb"
+}
