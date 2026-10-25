@@ -76,7 +76,11 @@ Cela commence par des intrusions brèves (ch. 6), puis des absences (ch. 7), de 
 - **L'Avocat** : la voix intérieure, véritable antagoniste après le chapitre 5. Sarcastique, paranoïaque, vulgaire, parfois drôle, puis soudain terrifiante. Elle trouve une justification à chaque atrocité et brise le quatrième mur. Ses accusations contre des boucs émissaires (dont les créateurs LGBTQ+) relèvent **de sa paranoïa, jamais du verdict du scénario**.
 - **Mara** (adulte) : guerrière charismatique et provocante. D'abord méprisante, elle est ensuite attirée par la force de Nathan, puis horrifiée par sa dégradation. Elle peut le sauver, le combattre ou poursuivre ses propres ambitions.
 - **Marc** : le père. Le confronter, le voler ou le tuer sont des choix irréversibles.
-- **Le Chimiste**, le dealer, l'usurier.
+- **Le Chimiste**, le dealer, l'usurier. Le Chimiste est le fournisseur de Red Met, calme, élégant et non combattant (`docs/CHARACTERS.md`) ; les dealers qu'on affronte sont ses lieutenants de rue (ennemi 02 du bestiaire).
+
+## Bestiaire
+
+Les 12 ennemis, répartis en 3 actes (des menaces humaines aux aberrations), sont décrits dans [`docs/BESTIARY.md`](BESTIARY.md). Leurs fiches jouables (PV, dégâts, armements, fenêtres de vulnérabilité, contre-stratégies, valeurs sobre et Red Met) sont dans [`docs/ENEMIES.md`](ENEMIES.md). Règle d'équilibrage : un ennemi ne change pas selon la trajectoire, ce sont les capacités de Nathan qui changent.
 
 ## Lignes directrices des scènes sensibles
 

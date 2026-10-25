@@ -1,6 +1,6 @@
 # RED MET — notes pour Claude
 
-Jeu d'action 2D latéral (Unity 6, URP 2D, C#), dark fantasy et horreur psychologique. Le design est dans `docs/GDD.md`.
+Jeu d'action 2D latéral (Unity 6, URP 2D, C#), dark fantasy et horreur psychologique. Le design est dans `docs/GDD.md`, le bestiaire dans `docs/BESTIARY.md` et les fiches techniques des ennemis dans `docs/ENEMIES.md`.
 
 ## Code
 - Tout le jeu vit dans `Assets/_Game/`. Les scripts sont dans `Scripts/<Domaine>/`, les outils d'éditeur dans `Editor/`.

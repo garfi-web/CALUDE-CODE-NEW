@@ -1,4 +1,4 @@
-type : « Tous les fichiers », encodage UTF-8 # RED MET
+# RED MET
 ## BESTIAIRE — CONCEPTION DES ENNEMIS ET PROGRESSION DES ACTES
 **Document de game design — Version 1.0**
 
@@ -66,6 +66,8 @@ Ils réapparaissent ponctuellement dans les actes suivants sous des versions vis
 
 **Première apparition :** première moitié de l'acte I.
 
+> **Note de cohérence :** le Dealer est un **lieutenant de rue** du réseau du Chimiste, pas le Chimiste lui-même. Le Chimiste reste le personnage narratif calme, élégant et non combattant de `docs/CHARACTERS.md`. Fiche jouable : `docs/ENEMIES.md`.
+
 ### Apparence et direction artistique
 
 Le Dealer affiche une apparence ostentatoire : vêtements de marque, survêtement luxueux ou manteau voyant, bijoux imposants, lunettes teintées et accessoires coûteux.
@@ -101,6 +103,8 @@ Au fil des actes, les intermédiaires deviennent plus inquiétants. Certains sem
 Il porte un uniforme de police contemporain, un gilet de protection et un équipement de service. Son comportement doit le distinguer d'un simple bandit : il est habitué à donner des ordres et à occuper l'espace.
 
 Le design évite toute caricature de l'ensemble des forces de l'ordre. La corruption relève d'individus fictifs du scénario.
+
+> **Note de production :** l'uniforme est fictif. Il ne porte aucun insigne, logo ni nom d'une police réelle ; seul un texte générique « POLICE » est autorisé.
 
 ### Comportement et combat
 
