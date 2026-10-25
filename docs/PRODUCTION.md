@@ -219,3 +219,17 @@ Outils : `make_mask.py` (masques), mode inpainting de `concept.py` (seule la zon
 - Mara est mise à 1,78 m, R0 à 1,70 m (comparaison dans Blender, collections par personnage).
 - Profils en partie masqués par les personnages voisins dans la file : vues isolées à refaire au nettoyage (phase 1).
 - Restent à trancher par l'auteur : `Nathan_R0_concept_s4202` (alors que le modèle R0 a été fait sur le 4303 retouché) et `Nathan_M4_concept_s7602` (version du 1er passage, à peau rose, ou `Nathan_M4_concept_grey_s7602` à peau grise ?). Aucun modèle M4 ni nouveau R0 n'a été lancé.
+
+### 2026-10-25 — Concepts du Chimiste (4 essais)
+- Script : `tools/gen3d/batches/2026-10-25_concepts_chimiste.sh`. Animagine XL 4.0, 1024×1024, réglages habituels. Visage entièrement généré, aucune photo ni personne réelle en référence.
+- Prompt commun : `1boy, solo, male focus, adult, mature male, middle-aged man, 48 years old, dark-skinned male, black man, west african man, tall, long legs, mature face, light wrinkles, calm expression, calculating eyes, slight smile, gold tooth, short beard, well-groomed beard, heavy gold chain necklace, gold ring, wristwatch, dress pants, black leather shoes, elegant, wealthy, composed` + coiffure + chemise + `open collar` + pose et style + `safe`.
+- Négatif : celui de l'auteur (`caricature, exaggerated features, cartoonish lips, mugshot, photo`) + `photorealistic, realistic, street thug, gang, hoodie, tank top, sunglasses, tattoo, weapon, gun` + négatifs habituels (planches, enfants, mains, ombres).
+
+| Seed | Coiffure / chemise demandées | Obtenu | Constats |
+|---|---|---|---|
+| 10101 | Crâne rasé / noire | Crâne rasé, barbe blanche, **chemise blanche** | Paternel et souriant, mais paraît plus de 60 ans, yeux fermés, peau plus claire que demandé |
+| 10102 | Très courts / bordeaux | Coupe rase, **costume bordeaux complet** à revers noirs, chemise blanche | Le plus « prospère et élégant », barbe nette ; paraît 35-40 ans ; yeux plissés |
+| 10103 | Locks attachées / noire | Locks attachées, **chemise blanche**, pantalon noir | Peau la plus foncée, sourire en coin calculateur ; paraît 35 ans, silhouette mince |
+| 10104 | Courts, tempes grises / bordeaux | Cheveux et barbe gris, chemise noire sous veste bordeaux | Le regard le plus « calme et calculateur », yeux ouverts ; paraît 55-60 ans, peau plus claire |
+
+- Défauts communs : **dent en or invisible** à cette échelle (à peindre sur la texture), « black dress shirt » rendu en chemise blanche sur 10101 et 10103. Aucun trait caricatural. Mains correctes (2 bras sur les 4, vérifié).
