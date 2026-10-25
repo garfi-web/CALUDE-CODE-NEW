@@ -1,0 +1,37 @@
+{
+  "character": "Mara",
+  "created": "2026-10-25T22:49:54",
+  "backend": "triposg",
+  "seed": 2026,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "Relance pour séparer les jambes (seed 42 : jambes fusionnées)",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Mara/Concept/Mara_T4_nosword_s8402.png",
+    "image_sha256": "164fe6f73b3d1ea6b4c4025f357b3610915ce4e4a1f8de6071a633eb33d3a017"
+  },
+  "duration_s": 105.5,
+  "result": {
+    "faces_raw": 1162972,
+    "faces": 40000,
+    "vertices": 19973,
+    "watertight": false,
+    "extents": [
+      1.6862,
+      1.8985,
+      0.9672
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.3,
+    "inference_s": 98.0,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Mara/Source/Mara_T4_triposg_s2026_input.png",
+    "background": "fond uni retiré (couleur BGR [174, 161, 149], tolérance 24)",
+    "opaque_ratio": 0.263
+  },
+  "output": "Assets/_Game/Art/Characters/Mara/Source/Mara_T4_triposg_s2026.glb"
+}

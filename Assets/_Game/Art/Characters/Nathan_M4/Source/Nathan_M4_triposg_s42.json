@@ -1,0 +1,37 @@
+{
+  "character": "Nathan_M4",
+  "created": "2026-10-25T22:46:14",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "Concept retenu par l'auteur : 7602, version peau couleur chair",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Nathan_M4/Concept/Nathan_M4_concept_s7602.png",
+    "image_sha256": "4e8b4737ec95132b29144c94b378ac87d5db6ca58850b90c604edddd920c3211"
+  },
+  "duration_s": 115.1,
+  "result": {
+    "faces_raw": 1039076,
+    "faces": 40000,
+    "vertices": 20324,
+    "watertight": false,
+    "extents": [
+      1.7308,
+      1.8981,
+      0.691
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.31,
+    "inference_s": 101.6,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Nathan_M4/Source/Nathan_M4_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [177, 166, 152], tolérance 24)",
+    "opaque_ratio": 0.29
+  },
+  "output": "Assets/_Game/Art/Characters/Nathan_M4/Source/Nathan_M4_triposg_s42.glb"
+}

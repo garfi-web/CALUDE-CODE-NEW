@@ -233,3 +233,26 @@ Outils : `make_mask.py` (masques), mode inpainting de `concept.py` (seule la zon
 | 10104 | Courts, tempes grises / bordeaux | Cheveux et barbe gris, chemise noire sous veste bordeaux | Le regard le plus « calme et calculateur », yeux ouverts ; paraît 55-60 ans, peau plus claire |
 
 - Défauts communs : **dent en or invisible** à cette échelle (à peindre sur la texture), « black dress shirt » rendu en chemise blanche sur 10101 et 10103. Aucun trait caricatural. Mains correctes (2 bras sur les 4, vérifié).
+
+### 2026-10-25 — Retours de l'auteur : concepts R1/R2 rejetés, règle de non-dérive
+- **R1 (9101-9104) et R2 (c_9221-c_9224) rejetés comme médiocres**. Certains Nathan ont pris des traits féminins (cheveux longs, visage adouci), et les proportions se déformaient à chaque passe img2img enchaînée. Le nouveau R0 4202 / 4303 n'est pas retenu non plus : **on garde ce qui a été validé dans le fil** (R0 = `Nathan_R0_concept_legs_d05_s4303.png` et son modèle `Nathan_R0_triposg_s42`).
+- **Règle adoptée** : ne plus dériver de nouvelles images d'un concept validé. Les corrections (lunettes, acné, usure, proportions) se font dans Blender, pas par de nouvelles passes SDXL. Chaque image est vérifiée en pleine résolution (bras, mains, genre lisible) avant d'être montrée.
+- M4 : la version **à peau couleur chair** (`Nathan_M4_concept_s7602`, 1er passage) est retenue.
+
+### 2026-10-25 — Nathan M4 (TripoSG) et correction des jambes de Mara T4
+- `Nathan_M4_triposg_s42.glb` : 115 s, 40 000 faces. Mis à 2,05 m dans Blender.
+- Mara T4 : relancée avec les seeds 7 et 2026 (règle « une autre seed plutôt qu'une retouche »). **Échec** : chevilles toujours fusionnées sur les 3 seeds (coupe à 15 % de la hauteur = un seul bloc), car le concept validé montre les jambes croisées et TripoSG le reproduit. Le concept ne devant plus être retouché, la correction s'est faite **dans Blender**, sur une copie du modèle seed 7 (la seule qui séparait déjà les mollets) :
+  - coupe verticale dans l'axe du corps (x de la médiane des hanches), seulement sous l'entrejambe (46 % de la hauteur), puis séparation des arêtes de la coupe ;
+  - rotation de chaque jambe de 6° vers l'extérieur autour de sa hanche, avec un poids progressif (0 à l'entrejambe, 1 sous 12 % de la hauteur) pour raccorder le bassin sans cassure.
+  - Résultat : 2 jambes distinctes jusqu'aux pieds (coupes à 5 %, 15 % et 25 % = 2 blocs), haut du corps intact. Fichier : `Mara/Source/Mara_T4_triposg_s7_legsfix.glb`. Les seeds 42, 7 et 2026 brutes restent dans `Source/` pour mémoire.
+
+### 2026-10-25 — Chimiste v2 : peau noire foncée et traits africains (4 essais)
+- Retour de l'auteur : peau trop claire. Il faut une peau noire foncée et des traits de visage africains (Côte d'Ivoire).
+- Même script (`2026-10-25_concepts_chimiste.sh v2`), mêmes seeds et coiffures. Ajouts : `(very dark skin:1.4), black skin, dark-skinned male, west african facial features, ivorian man` ; négatif + `light skin, pale skin, tan skin, light brown skin, white man, asian` ; chemises pondérées `(black dress shirt:1.3)` et `(burgundy dress shirt:1.3)`. Négatif anti-caricature conservé.
+
+| Seed | Obtenu | Constats |
+|---|---|---|
+| v2_10101 | Crâne rasé, barbe, long manteau gris, chemise blanche, **plusieurs grosses chaînes** | Peau foncée réussie, visage posé. Trop de bijoux (« bling »), chemise blanche au lieu de noire |
+| v2_10102 | Coupe rase grisonnante, costume bordeaux, chemise rose, sourire | Élégant et prospère. Sourire large, chemise rose et non noire |
+| v2_10103 | Locks attachées (anneau doré), chemise blanche, pantalon noir | Le plus jeune (30-35 ans), **chemise encore blanche**, légère ombre au sol, yeux très clairs |
+| v2_10104 | Cheveux et barbe gris, chemise bordeaux, double chaîne en or | Correspond le mieux à la tenue demandée, posture posée. Paraît 55-60 ans, yeux très clairs (reflet) |
