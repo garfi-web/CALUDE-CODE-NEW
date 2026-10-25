@@ -97,7 +97,16 @@ claude mcp add --scope user blender -- uvx mcp-for-blender
 
 Vérifier dans Claude Code : `/mcp` (état et reconnexion). Unity se déconnecte à chaque recompilation, c'est normal : attendre quelques secondes, puis reconnecter.
 
-## 6. Reprendre la session Claude
+## 6. Sauvegarder ce qui n'est pas sur GitHub
+
+`tools/backup_local.ps1` copie vers un disque externe ou OneDrive la configuration de Claude Code (`.claude.json`), l'historique des conversations (`.claude`) et, avec `-WithModels`, les outils d'IA (`C:\RED MET\ai`, environ 23 Go). Le jeton de connexion n'est pas copié, sauf avec `-IncludeCredentials`.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\backup_local.ps1 -Destination E:\
+powershell -ExecutionPolicy Bypass -File tools\backup_local.ps1 -Destination "$env:OneDrive\Sauvegardes" -WithModels
+```
+
+## 7. Reprendre la session Claude
 
 ```bash
 cd "C:\Users\Home\Unity user templates\REDMET"
