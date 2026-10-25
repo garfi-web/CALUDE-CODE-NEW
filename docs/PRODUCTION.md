@@ -100,4 +100,69 @@ Points clés d'Open RAIL++-M :
   - 2002 : le plus enrobé, mais un faux logo avec du texte sur le hoodie.
   - 3003 : le plus propre pour la 3D (T-pose nette, fond uni, sans ombre).
 - VRAM : ComfyUI garde le modèle chargé (4,8 Go occupés au repos). **Arrêter ComfyUI avant TripoSG.**
+- Verdict de l'auteur : nouveau lot. Garder la propreté de 3003 et la silhouette de 2002 ; visage nettement adulte, yeux ouverts, double foyer lisible, acné visible, hoodie uni.
+
+### 2026-10-25 — Concept Nathan R0, lot 2 (4 essais)
+- Mêmes réglages. Seeds 4101, 4202, 4303, 4404.
+- Prompt : `1boy, solo, male focus, adult, mature male, young adult man, 20 years old, defined jawline, square jaw, light stubble, stubble, visible neck, adam's apple, small head, adult proportions, chubby, plump, belly, rounded shoulders, brown hair, curly hair, messy hair, open eyes, brown eyes, eyes visible through glasses, thick glasses, black-framed glasses, bifocals, acne, pimples, acne on cheeks, acne on forehead, plain black hoodie, oversized hoodie, grey cargo pants, sneakers, t-pose, spread arms, arms outstretched, straight arms, standing, full body, front view, facing viewer, looking at viewer, neutral expression, simple background, plain grey background` + suffixe de qualité.
+- Négatif : `child, kid, shota, young boy, baby face, round face, big head, large head, chibi, aged down, closed eyes, squinting, glasses glare, opaque glasses, logo, text on clothes, print, letters, emblem, drop shadow, floor shadow, shadow,` + négatif de qualité du lot 1.
+- Constats :
+  - Visage adulte obtenu sur les 4 (barbe naissante, mâchoire, cou), yeux ouverts, lunettes épaisses à monture noire, silhouette enrobée.
+  - **Double foyer toujours absent** sur les 4 : SDXL ne dessine pas la ligne du segment inférieur.
+  - Acné présente mais discrète (petits points).
+  - 4101 : très enrobé, mais bras levés paumes vers le haut, légère ombre au sol.
+  - 4202 : bonne T-pose, légère ombre au sol.
+  - 4303 : le plus propre (T-pose droite, fond uni sans ombre visible, hoodie uni).
+  - 4404 : petite marque blanche sur le hoodie, bras en A.
+- Verdict de l'auteur : 4303 retenu, mais **jambes trop courtes**. Le personnage doit mesurer 1,70 m (5'8"), « pas un nain ».
+
+### 2026-10-25 — Concept Nathan R0, lot 3 : proportions d'adulte
+- Mesure automatique sur 4303 (fond retiré, entrejambe = première ligne vide au centre sous la mi-hauteur) : **jambes 28 % de la hauteur, environ 3,9 têtes**. Cible d'un adulte de 1,70 m : jambes à 45-48 %, environ 7 têtes.
+- Essai A, nouveaux tirages (seeds 4303, 5101, 5202, 5303), prompt du lot 2 + `tall, 170cm, long legs, realistic body proportions, 7 heads tall`, négatif + `short legs, stubby legs, dwarf, short stature, long torso`. Les jambes passent à environ 45-48 %, mais le modèle amincit la silhouette et change les cheveux (longs sur 5101 et 5202). Bras irréguliers sur 5202 et 5303. Moins fidèle au 4303 aimé.
+- Essai B, **retouche du 4303** :
+  1. `tools/gen3d/stretch_band.py` étire la bande ourlet → chevilles (lignes 700 à 900) de +448 px, sans toucher à la tête, au torse ni aux chaussures, puis complète le fond au format 832×1216.
+  2. img2img SDXL (seed 4303, 832×1216, prompt du lot 2 + `tall, long legs, long pants`) à denoise 0,35 et 0,5 (`concept.py --init-image --denoise --size`).
+  - Résultat : `Nathan_R0_concept_legs_d035_s4303.png` et `Nathan_R0_concept_legs_d05_s4303.png`. **Jambes à 47-48 %**, environ 5,8 têtes (la tête reste grande, style anime). Visage, silhouette et hoodie du 4303 conservés. d0,5 est plus propre : moins de traces, pas de goutte de sueur.
+  - Petit défaut commun : une mèche sombre en tache sur le front, à gauche.
+- **Verdict de l'auteur : `Nathan_R0_concept_legs_d05_s4303.png` retenu tel quel** (tête non réduite).
+- Incident : premier lancement de l'essai B fait sans prompt (une erreur d'encodage de « → » sous Windows a interrompu la commande avant la définition du prompt). Les deux images ont été supprimées et relancées. Message corrigé en « -> ».
 - Outil du dépôt : `tools/gen3d/` (`generate.py` en bibliothèque standard, `backends.json`, `backends/triposg_runner.py`, `concept.py` pour l'API ComfyUI). Nommé `gen3d` plutôt que `hunyuan` puisque le générateur a changé.
+
+### 2026-10-25 — Série 2 de concepts : Nathan R3, M2, M4 et Mara M-T0 à M-T4
+- Script reproductible : `tools/gen3d/batches/2026-10-25_concepts_serie2.sh` (prompts complets, négatifs et seeds ; `retakes` pour les reprises). Animagine XL 4.0, 1024×1024, Euler a, 28 étapes, CFG 5.
+- Le tag de classement Animagine est sorti du suffixe de `backends.json` et placé dans chaque prompt : `safe` pour Nathan et Mara M-T0, `sensitive` pour Mara M-T1 à M-T4 (tenues révélatrices, non explicites). Négatif de Mara : `nsfw, nude, nipples, areolae, pussy, explicit, child, loli, young, petite, flat chest, aged down, baby face, round face, male`.
+- Références : `docs/references/nathan-reel-amaigri.jpg` demandée mais **absente du dépôt**. R3 s'appuie sur la description et sur `nathan-reel-hallucination.webp`. Aucune référence en entrée du générateur.
+- **29 images, 22 + 7 reprises.**
+
+| Personnage | Seeds | Utilisables | Rejetées (raison) |
+|---|---|---|---|
+| Nathan R3 | 6101, 6202, 6303, 6404, reprises 6505, 6606 | 6202, 6303, 6606 | 6101, 6404, 6505 : plusieurs personnages sur l'image |
+| Nathan M2 | 7101, 7202, 7303, 7404 | les 4 (7202 avec ombre au sol) | — |
+| Nathan M4 | 7501, 7602, reprise `grey` 7501, 7602 | grey_7501, grey_7602 | 1er passage : peau restée rose. Reprise avec `(grey skin:1.4), (stone skin:1.3), (glowing red veins:1.2)` |
+| Mara M-T0 | 8001, 8002, reprise 8003 | 8001, 8003 | 8002 : deux personnages |
+| Mara M-T1 | 8101, 8102 | les 2 (8101 : jupe blanche) | — |
+| Mara M-T2 | 8201, 8202 | les 2 (épée qui casse la pose en T) | — |
+| Mara M-T3 face | 8301, 8302 | 8301 (8302 bras pliés) | — |
+| Mara M-T3 dos | 8311, 8312, reprises 8313, 8314 | 8313, 8314 | 8311 : épée à l'horizontale, pas de pose en T. 8312 : face et dos sur la même image |
+| Mara M-T4 | 8401, 8402 | les 2 | — |
+
+- Négatif des reprises : + `2boys, 2girls, multiple boys, multiple girls, character sheet, turnaround, reference sheet, multiple views`. Pour R3 : + `smile, grin, dirt on ground`. Pour le dos de M-T3 : + `sword pointing down` dans le prompt et `sword across body` dans le négatif.
+- Constats généraux :
+  - **L'épée de Mara gêne la pose en T** et la génération 3D (lame lumineuse, transparente, plaquée contre le corps). Recommandation : modéliser la lame à part dans Blender, et pour TripoSG générer Mara sans arme.
+  - R3 : la posture voûtée ne passe pas en pose en T, ce qui est logique. À rendre dans les animations. Le visage ressemble peu à R0 (style anime plus fin).
+  - M2 : air de famille avec Nathan faible. Bras en « paumes vers le haut » plutôt qu'en vraie pose en T.
+
+### 2026-10-25 — Nathan R0 : premier modèle TripoSG (1 essai)
+- Entrée : `Nathan_R0_concept_legs_d05_s4303.png` (concept validé). Seed 42, 50 étapes, guidance 7, réduction à 40 000 faces.
+- Commande : `"C:\RED MET\ai\TripoSG\.venv\Scripts\python.exe" tools/gen3d/generate.py --character Nathan_R0 --image <concept> --seed 42 --faces 40000`. ComfyUI arrêté avant, pour libérer sa VRAM. Unity et Blender restés ouverts.
+- Résultat : `Assets/_Game/Art/Characters/Nathan_R0/Source/Nathan_R0_triposg_s42.glb` (+ `.json`, + `_input.png` détouré). 651 310 faces brutes réduites à 40 000. **Pic de VRAM 5,23 Go**, 90 s de calcul, 99 s au total.
+- Dans Blender (collection `Nathan_R0`) : mis à l'échelle 1,70 m, pieds au sol (transformations seulement, maillage non modifié). Dimensions 1,28 × 0,47 × 1,70 m.
+- Constats :
+  - **Bon** : silhouette fidèle au concept (ventre, hoodie trop large, cargo à poches, baskets), proportions d'adulte, pose en T propre.
+  - **À reprendre en phase 1** :
+    - cheveux bruités, avec un trou dans le crâne et **22 fragments détachés** (le plus gros fait 144 sommets) ;
+    - visage très simplifié ;
+    - **lunettes réduites à un relief** (ni verres ni branches) : à modéliser à part, ce qui permettra aussi le double foyer et les verres fêlés de R3 ;
+    - maillage non étanche.
+  - Pistes : relancer avec d'autres seeds et sans réduire, ou réduire moins (`--faces 100000`), selon la règle « une autre seed plutôt qu'une retouche à la main ».
+- Problème corrigé : `generate.py` et `concept.py` forcent maintenant leur sortie en UTF-8 (une « → » faisait planter `print()` sous Windows).

@@ -21,7 +21,7 @@
       "sampler": "euler_ancestral",
       "scheduler": "normal",
       "prompt_prefix": "",
-      "prompt_suffix": ", safe, masterpiece, high score, great score, absurdres"
+      "prompt_suffix": ", masterpiece, high score, great score, absurdres"
     }
   }
 }

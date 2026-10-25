@@ -59,6 +59,10 @@ def unique_path(path):
 
 
 def main():
+    # La console Windows est en cp1252 : sans cela, accents et flèches font planter print()
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--character", required=True, help="Dossier du personnage, ex. Nathan_M0")
     source = parser.add_mutually_exclusive_group(required=True)

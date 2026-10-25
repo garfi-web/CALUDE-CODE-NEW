@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1girl, solo, adult, mature female, 28 years old, mature face, cold expression, confident, serious, tall, long legs, voluptuous, large breasts, narrow waist, wide hips, thick thighs, very long hair, black hair, red streaks, streaked hair, multicolored hair, blunt bangs, red eyes, holding sword, glowing red energy sword, energy blade, black bodysuit, latex bodysuit, shiny clothes, high collar, turtleneck, red straps, crossed straps, corset, buckles, long skirt, side slit, thigh boots, fully covered, t-pose, spread arms, arms outstretched, straight arms, standing, full body, front view, facing viewer, looking at viewer, anime coloring, cel shading, clean lineart, simple background, plain grey background, safe, masterpiece, high score, great score, absurdres",
+  "negative": "nsfw, nude, nipples, areolae, pussy, explicit, child, loli, young, petite, flat chest, aged down, baby face, round face, male, drop shadow, floor shadow, shadow, logo, text, letters, emblem, watermark, signature, username, lowres, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, extra arms, cropped, out of frame, multiple views, busy background, short legs, stubby legs, big head, chibi, worst quality, low quality, low score, bad score, average score, error, blurry",
+  "seed": 8001,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 22.1
+}

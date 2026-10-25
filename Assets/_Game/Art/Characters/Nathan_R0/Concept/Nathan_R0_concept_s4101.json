@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1boy, solo, male focus, adult, mature male, young adult man, 20 years old, defined jawline, square jaw, light stubble, stubble, visible neck, adam's apple, small head, adult proportions, chubby, plump, belly, rounded shoulders, brown hair, curly hair, messy hair, open eyes, brown eyes, eyes visible through glasses, thick glasses, black-framed glasses, bifocals, acne, pimples, acne on cheeks, acne on forehead, plain black hoodie, oversized hoodie, grey cargo pants, sneakers, t-pose, spread arms, arms outstretched, straight arms, standing, full body, front view, facing viewer, looking at viewer, neutral expression, simple background, plain grey background, safe, masterpiece, high score, great score, absurdres",
+  "negative": "child, kid, shota, young boy, baby face, round face, big head, large head, chibi, aged down, closed eyes, squinting, glasses glare, opaque glasses, logo, text on clothes, print, letters, emblem, drop shadow, floor shadow, shadow, nsfw, lowres, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, cropped, out of frame, multiple views, text, watermark, signature, busy background, worst quality, low quality, low score, bad score, average score, username, error, blurry",
+  "seed": 4101,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 20.3
+}

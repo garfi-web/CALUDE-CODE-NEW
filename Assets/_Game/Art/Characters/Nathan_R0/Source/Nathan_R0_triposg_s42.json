@@ -1,0 +1,36 @@
+{
+  "character": "Nathan_R0",
+  "created": "2026-10-25T21:38:16",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0
+  },
+  "note": "Concept retenu par l'auteur : 4303 retouché (jambes allongées, img2img denoise 0,5)",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Nathan_R0/Concept/Nathan_R0_concept_legs_d05_s4303.png",
+    "image_sha256": "2ed60def54536ed4dae5f6021f8b6382d16bbd8f6f1bc1dba84c930e9ceac648"
+  },
+  "duration_s": 99.3,
+  "result": {
+    "faces_raw": 651310,
+    "faces": 40000,
+    "vertices": 20030,
+    "watertight": false,
+    "extents": [
+      1.4297,
+      1.9041,
+      0.5234
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.23,
+    "inference_s": 89.6,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Nathan_R0/Source/Nathan_R0_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [172, 170, 166], tolérance 24)",
+    "opaque_ratio": 0.314
+  },
+  "output": "Assets/_Game/Art/Characters/Nathan_R0/Source/Nathan_R0_triposg_s42.glb"
+}

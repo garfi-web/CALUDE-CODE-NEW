@@ -67,6 +67,21 @@ Adulte, guerrière du monde de la Red Met (cf. `mara.webp`).
 - **Arme :** lame à énergie rouge (un sabre lumineux réinterprété en lame forgée dans la Red Met).
 - **Signature visuelle :** une **lune rouge** derrière elle lors de ses apparitions clés.
 - **Évolution :** son armure s'assombrit et se fissure selon la trajectoire de Nathan. Elle reste combattante dans toutes les branches, jamais un trophée.
+- **Commun à toutes les tenues :** femme adulte d'environ 28 ans, visage nettement adulte, expression froide et sûre d'elle. Grande et très voluptueuse (poitrine très généreuse, taille fine, hanches larges, cuisses pleines). Très longs cheveux noirs à mèches rouges, frange, yeux rouges. Lame à énergie rouge.
+
+### Progression des tenues
+
+La tenue de Mara suit la corruption de Nathan. Elle reste toujours une combattante redoutable, jamais une proie. Les scènes restent non explicites (cf. `docs/GDD.md`, lignes directrices des scènes sensibles).
+
+| Stade | Chapitres | Tenue |
+|---|---|---|
+| **M-T0** | 1–2 | La référence (`mara.webp`). Combinaison noire brillante à col montant, sangles rouges croisées, corset à boucles, jupe longue fendue, cuissardes. Entièrement couverte. |
+| **M-T1** | 3–4 | Combinaison ouverte en V sur un décolleté plongeant, fentes de jupe jusqu'aux hanches. |
+| **M-T2** | 5 | Bustier échancré, épaules et ventre nus, jupe courte fendue, porte-jarretelles et cuissardes. |
+| **M-T3** | 6–7 | Tenue de combat minimale : haut très échancré, bas de type string sous une demi-jupe qui découvre les fesses de dos, sangles et pièces d'armure rouges. Concept de dos en plus du concept de face. |
+| **M-T4** | 8–10 (voie immorale) | Armure noire fissurée de veines rouges, plus agressive et provocante, mais habillée. |
+
+Concepts : `Assets/_Game/Art/Characters/Mara/Concept/` (prompts et seeds dans `docs/PRODUCTION.md`). Prompt négatif imposé : `nsfw, nude, child, loli, young`.
 
 ```
 Mara: stylized anime 3D character, adult woman warrior, tall, curvy, very long black hair

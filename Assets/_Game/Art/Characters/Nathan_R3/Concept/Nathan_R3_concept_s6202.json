@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1boy, solo, male focus, adult, young adult man, 19 years old, tall, long legs, emaciated, skinny, gaunt, skin and bones, hollow cheeks, sunken cheeks, prominent collarbones, bony wrists, dark circles under eyes, eye bags, tired eyes, grey skin, pale skin, sickly, unhealthy, chapped lips, unkempt stubble, bad teeth, brown hair, curly hair, messy hair, greasy hair, thick glasses, black-framed glasses, bifocals, cracked glasses, crooked glasses, open eyes, brown eyes, red marks on forearms, red marks on neck, dark grey hoodie, oversized hoodie, stained clothes, dirty clothes, sleeves pushed up, worn t-shirt, black jeans, torn jeans, ripped jeans, knee holes, old leather boots, slight slouch, hunched shoulders, sad, exhausted, t-pose, spread arms, arms outstretched, straight arms, standing, full body, front view, facing viewer, looking at viewer, anime coloring, cel shading, clean lineart, simple background, plain grey background, safe, masterpiece, high score, great score, absurdres",
+  "negative": "muscular, healthy, fit, handsome, chubby, fat, clean clothes, child, kid, shota, young boy, baby face, aged down, female, nsfw, nude, genitals, drop shadow, floor shadow, shadow, logo, text, letters, emblem, watermark, signature, username, lowres, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, extra arms, cropped, out of frame, multiple views, busy background, short legs, stubby legs, big head, chibi, worst quality, low quality, low score, bad score, average score, error, blurry",
+  "seed": 6202,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 19.1
+}

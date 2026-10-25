@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1boy, solo, male focus, adult, mature male, barbarian, giant, tall, long legs, huge muscles, muscular male, massive shoulders, broad shoulders, defined abs, pectorals, dominant, angry, furious, glaring, brown eyes, long hair, reddish brown hair, braided hair, partially braided hair, thick beard, full beard, scars, facial scar, scar on chest, fur cape, fur pauldrons, leather straps, leather belt, metal belt buckle, medallion, studded bracers, fur pants, fur boots, topless male, bare chest, (grey skin:1.4), (stone skin:1.3), cracked skin, glowing cracks, (glowing red veins:1.2), red veins, glowing red eyes, red eyes, t-pose, spread arms, arms outstretched, straight arms, standing, full body, front view, facing viewer, looking at viewer, anime coloring, cel shading, clean lineart, simple background, plain grey background, safe, masterpiece, high score, great score, absurdres",
+  "negative": "2boys, 2girls, multiple boys, multiple girls, character sheet, turnaround, reference sheet, multiple views, pink skin, tan skin, peach skin, child, kid, shota, young boy, baby face, aged down, female, nsfw, nude, genitals, drop shadow, floor shadow, shadow, logo, text, letters, emblem, watermark, signature, username, lowres, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, extra arms, cropped, out of frame, multiple views, busy background, short legs, stubby legs, big head, chibi, worst quality, low quality, low score, bad score, average score, error, blurry",
+  "seed": 7602,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 20.2
+}

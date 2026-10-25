@@ -26,20 +26,45 @@ def _request(url, data=None):
         return resp.read()
 
 
-def build_workflow(cfg, prompt, negative, seed):
-    width, height = cfg.get("size", [1024, 1024])
+def upload_image(base, path):
+    """Envoie une image dans le dossier input de ComfyUI et renvoie son nom côté serveur."""
+    path = Path(path)
+    boundary = uuid.uuid4().hex
+    body = (
+        f"--{boundary}\r\nContent-Disposition: form-data; name=\"overwrite\"\r\n\r\ntrue\r\n"
+        f"--{boundary}\r\nContent-Disposition: form-data; name=\"image\"; filename=\"{path.name}\"\r\n"
+        "Content-Type: image/png\r\n\r\n"
+    ).encode("utf-8") + path.read_bytes() + f"\r\n--{boundary}--\r\n".encode("utf-8")
+    req = urllib.request.Request(f"{base}/upload/image", data=body,
+                                 headers={"Content-Type": f"multipart/form-data; boundary={boundary}"})
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        return json.loads(resp.read())["name"]
+
+
+def build_workflow(cfg, prompt, negative, seed, init_image=None, denoise=1.0, size=None):
+    width, height = size or cfg.get("size", [1024, 1024])
+    if init_image:
+        # img2img : l'image de départ est mise à la taille voulue puis encodée en latent
+        latent_nodes = {
+            "8": {"class_type": "LoadImage", "inputs": {"image": init_image}},
+            "9": {"class_type": "ImageScale", "inputs": {"image": ["8", 0], "upscale_method": "lanczos",
+                                                          "width": width, "height": height, "crop": "disabled"}},
+            "4": {"class_type": "VAEEncode", "inputs": {"pixels": ["9", 0], "vae": ["1", 2]}},
+        }
+    else:
+        latent_nodes = {"4": {"class_type": "EmptyLatentImage", "inputs": {"width": width, "height": height, "batch_size": 1}}}
     return {
+        **latent_nodes,
         "1": {"class_type": "CheckpointLoaderSimple", "inputs": {"ckpt_name": cfg["checkpoint"]}},
         "2": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["1", 1], "text": prompt}},
         "3": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["1", 1], "text": negative}},
-        "4": {"class_type": "EmptyLatentImage", "inputs": {"width": width, "height": height, "batch_size": 1}},
         "5": {
             "class_type": "KSampler",
             "inputs": {
                 "model": ["1", 0], "positive": ["2", 0], "negative": ["3", 0], "latent_image": ["4", 0],
                 "seed": seed, "steps": cfg.get("steps", 28), "cfg": cfg.get("cfg", 5.0),
                 "sampler_name": cfg.get("sampler", "euler_ancestral"), "scheduler": cfg.get("scheduler", "normal"),
-                "denoise": 1.0,
+                "denoise": denoise,
             },
         },
         "6": {"class_type": "VAEDecode", "inputs": {"samples": ["5", 0], "vae": ["1", 2]}},
@@ -47,12 +72,16 @@ def build_workflow(cfg, prompt, negative, seed):
     }
 
 
-def generate(cfg, prompt, negative, seed, out_dir, name, timeout_s=900):
-    """Génère une image, la copie dans out_dir/<name>.png et renvoie (chemin, infos)."""
+def generate(cfg, prompt, negative, seed, out_dir, name, timeout_s=900, init_image=None, denoise=1.0, size=None):
+    """Génère une image, la copie dans out_dir/<name>.png et renvoie (chemin, infos).
+
+    Avec init_image, fait un img2img : denoise faible = proche de l'image de départ.
+    """
     base = cfg["url"].rstrip("/")
     negative = negative or DEFAULT_NEGATIVE
     full_prompt = cfg.get("prompt_prefix", "") + prompt + cfg.get("prompt_suffix", "")
-    workflow = build_workflow(cfg, full_prompt, negative, seed)
+    uploaded = upload_image(base, init_image) if init_image else None
+    workflow = build_workflow(cfg, full_prompt, negative, seed, uploaded, denoise, size)
 
     prompt_id = json.loads(_request(f"{base}/prompt", {"prompt": workflow, "client_id": str(uuid.uuid4())}))["prompt_id"]
     start = time.time()
@@ -91,9 +120,12 @@ def generate(cfg, prompt, negative, seed, out_dir, name, timeout_s=900):
         "steps": workflow["5"]["inputs"]["steps"],
         "cfg": workflow["5"]["inputs"]["cfg"],
         "sampler": workflow["5"]["inputs"]["sampler_name"],
-        "size": cfg.get("size", [1024, 1024]),
+        "size": list(size or cfg.get("size", [1024, 1024])),
         "duration_s": round(time.time() - start, 1),
     }
+    if init_image:
+        info["init_image"] = str(init_image)
+        info["denoise"] = denoise
     with open(out_path.with_suffix(".json"), "w", encoding="utf-8") as f:
         json.dump(info, f, ensure_ascii=False, indent=2)
     return out_path, info
@@ -107,6 +139,7 @@ def main():
     import argparse
     import sys
 
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     tools_dir = Path(__file__).resolve().parent
     characters_dir = tools_dir.parents[1] / "Assets" / "_Game" / "Art" / "Characters"
 
@@ -116,6 +149,10 @@ def main():
     parser.add_argument("--negative", default=None)
     parser.add_argument("--seeds", type=int, nargs="+", required=True)
     parser.add_argument("--backend", default=None)
+    parser.add_argument("--init-image", default=None, help="Image de départ (img2img)")
+    parser.add_argument("--denoise", type=float, default=1.0, help="Avec --init-image : 0,3-0,5 garde l'image")
+    parser.add_argument("--size", type=int, nargs=2, default=None, metavar=("W", "H"))
+    parser.add_argument("--name", default=None, help="Préfixe du fichier (défaut : <perso>_concept)")
     args = parser.parse_args()
 
     with open(tools_dir / "backends.json", encoding="utf-8") as f:
@@ -123,8 +160,10 @@ def main():
     cfg = backends["concept"][args.backend or backends["default_concept"]]
 
     for seed in args.seeds:
+        prefix = args.name or f"{args.character}_concept"
         path, info = generate(cfg, args.prompt, args.negative, seed,
-                              characters_dir / args.character / "Concept", f"{args.character}_concept_s{seed}")
+                              characters_dir / args.character / "Concept", f"{prefix}_s{seed}",
+                              init_image=args.init_image, denoise=args.denoise, size=args.size)
         print(f"[concept] seed {seed} : {path} ({info['duration_s']} s)", flush=True)
     return 0
 
