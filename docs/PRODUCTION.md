@@ -398,3 +398,8 @@ Avant le reste de l'Acte I : une tranche jouable aux graphismes définitifs (Voy
 | 11104 | Athlétique, cheveux bouclés, blouson en cuir marron, jean déchiré | Conforme | 2 bras, 2 mains. **Ombre au sol** sous les pieds (à repeindre avant TripoSG, comme pour le Chimiste) |
 
 En attente du choix de l'auteur.
+
+### 2026-10-26 — Choix de l'auteur : Voyou 11103 (capuche)
+- **Retenu : `Voyou_concept_s11103`.** Ses défauts (faux texte sur le sweat, visage noir sous la capuche) ne gênent pas TripoSG, qui ne génère que la forme ; le visage sera peint ou modélisé sous la capuche à l'étape des textures.
+- Copie technique pour la 3D : `Voyou_concept_s11103_input3d.png`. La ligne de sol (lignes 929 à 937, x 121 à 896) est repeinte à la couleur du fond, sans génération ni retouche du personnage : seuls les pixels qui ont du fond 7 lignes au-dessus et au-dessous sont touchés, ce qui épargne les chaussures (`tools/gen3d/remove_floor_line.py --rows 926 941 --tolerance 10 --gap 7`, 2 250 pixels). Restent des écarts de moins de 10 niveaux, sous le seuil du détourage (24).
+- **Bloqué** : le Contrôle intelligent des applications de Windows (Smart App Control, actif) refuse depuis le 2026-10-26 à 21 h 09 le lanceur non signé `C:\RED MET\ai\TripoSG\.venv\Scripts\python.exe` (journal Code Integrity, événements 3033 et 3077). Celui de ComfyUI passe encore. Décision demandée à l'auteur avant de lancer le modèle TripoSG.
