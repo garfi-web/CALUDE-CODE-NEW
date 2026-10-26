@@ -403,3 +403,8 @@ En attente du choix de l'auteur.
 - **Retenu : `Voyou_concept_s11103`.** Ses défauts (faux texte sur le sweat, visage noir sous la capuche) ne gênent pas TripoSG, qui ne génère que la forme ; le visage sera peint ou modélisé sous la capuche à l'étape des textures.
 - Copie technique pour la 3D : `Voyou_concept_s11103_input3d.png`. La ligne de sol (lignes 929 à 937, x 121 à 896) est repeinte à la couleur du fond, sans génération ni retouche du personnage : seuls les pixels qui ont du fond 7 lignes au-dessus et au-dessous sont touchés, ce qui épargne les chaussures (`tools/gen3d/remove_floor_line.py --rows 926 941 --tolerance 10 --gap 7`, 2 250 pixels). Restent des écarts de moins de 10 niveaux, sous le seuil du détourage (24).
 - **Bloqué** : le Contrôle intelligent des applications de Windows (Smart App Control, actif) refuse depuis le 2026-10-26 à 21 h 09 le lanceur non signé `C:\RED MET\ai\TripoSG\.venv\Scripts\python.exe` (journal Code Integrity, événements 3033 et 3077). Celui de ComfyUI passe encore. Décision demandée à l'auteur avant de lancer le modèle TripoSG.
+
+### 2026-10-26 — Voyou : modèle TripoSG (1 essai)
+- L'auteur a désactivé le Contrôle intelligent des applications : TripoSG fonctionne de nouveau.
+- `Voyou/Source/Voyou_triposg_s42.glb` depuis `Voyou_concept_s11103_input3d.png` : seed 42, 761 032 faces brutes réduites à 40 000, pic de VRAM 5,24 Go, 95 s de calcul. Détourage du fond uni (tolérance 24) sans reste de la ligne de sol.
+- Dans Blender (collection `Voyou`, x = 34) : mis à 1,78 m, pieds au sol. Silhouette fidèle (capuche, sweat bouffant, pantalon resserré, baskets), jambes séparées, pas de socle. 12 morceaux : le corps (19 007 sommets) et 11 fragments (440 sommets au plus) à supprimer au nettoyage.

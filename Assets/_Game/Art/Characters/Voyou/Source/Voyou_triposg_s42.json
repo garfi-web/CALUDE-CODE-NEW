@@ -1,0 +1,37 @@
+{
+  "character": "Voyou",
+  "created": "2026-10-26T21:14:23",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Voyou/Concept/Voyou_concept_s11103_input3d.png",
+    "image_sha256": "2fbf5e4ff49f33355e4e88488f87c9ccea2380fbca7a8431ec5247f25aa443be"
+  },
+  "duration_s": 105.2,
+  "result": {
+    "faces_raw": 761032,
+    "faces": 40000,
+    "vertices": 19998,
+    "watertight": false,
+    "extents": [
+      1.7864,
+      1.9061,
+      0.4482
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.24,
+    "inference_s": 95.5,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Voyou/Source/Voyou_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [216, 218, 218], tolérance 24)",
+    "opaque_ratio": 0.228
+  },
+  "output": "Assets/_Game/Art/Characters/Voyou/Source/Voyou_triposg_s42.glb"
+}
