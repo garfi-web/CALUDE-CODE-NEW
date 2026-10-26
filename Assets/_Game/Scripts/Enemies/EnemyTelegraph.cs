@@ -100,6 +100,26 @@ public class EnemyTelegraph : MonoBehaviour
         if (body == null)
             return;
 
+        // Avec le shader de flash, les annonces sont un voile de couleur sur le sprite :
+        // une teinte multiplicative assombrirait un sprite déjà coloré.
+        if (SpriteFlash.Supports(body))
+        {
+            body.color = dead ? Color.Lerp(baseColor, deadColor, 0.6f) : baseColor;
+
+            if (flashLeft > 0)
+                SpriteFlash.Set(body, 1f, Color.white);
+            else if (dead)
+                SpriteFlash.Set(body, 0f, Color.white);
+            else if (windupColor.HasValue)
+                SpriteFlash.Set(body, 0.55f, windupColor.Value);
+            else if (stateColor.HasValue)
+                SpriteFlash.Set(body, 0.4f, stateColor.Value);
+            else
+                SpriteFlash.Set(body, buffed ? 0.3f : 0f, buffColor);
+
+            return;
+        }
+
         if (flashLeft > 0)
             body.color = Color.white;
         else if (dead)

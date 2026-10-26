@@ -81,18 +81,23 @@ public static class ArenaBuilder
         Sprite square = EnsureSquareSprite();
         PhysicsMaterial2D noFriction = EnsureNoFrictionMaterial();
         Material lineMaterial = EnsureLineMaterial();
+        Material flashMaterial = EnsureFlashMaterial();
+
+        // Sprites animés rendus dans Blender (tranche verticale), s'ils existent.
+        SpriteAnimationBuilder.Result nathanSprites = SpriteAnimationBuilder.Build("Nathan_M0", false);
+        SpriteAnimationBuilder.Result voyouSprites = SpriteAnimationBuilder.Build("Voyou", true);
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
         CreateGlobalLight();
         BuildLevel(square, groundLayer);
 
-        GameObject player = BuildPlayer(square, noFriction, groundLayer, playerLayer, enemyLayer);
+        GameObject player = BuildPlayer(square, noFriction, groundLayer, playerLayer, enemyLayer, flashMaterial, nathanSprites);
 
         Projectile projectilePrefab = BuildProjectilePrefab(square);
         Grenade grenadePrefab = BuildGrenadePrefab(square, lineMaterial);
         Cover coverPrefab = BuildCoverPrefab(square, groundLayer);
-        Enemy enemyPrefab = BuildEnemyPrefab(square, noFriction, lineMaterial, enemyLayer,
+        Enemy enemyPrefab = BuildEnemyPrefab(square, noFriction, lineMaterial, flashMaterial, enemyLayer,
             (1 << playerLayer) | (1 << enemyLayer), projectilePrefab, grenadePrefab);
 
         BuildCamera(player.transform);
@@ -111,7 +116,7 @@ public static class ArenaBuilder
         SetObject(waves, "enemyPrefab", enemyPrefab);
         SetObject(waves, "coverPrefab", coverPrefab);
         SetObject(waves, "target", player.transform);
-        EnemyWave[] waveList = BuildWaves();
+        EnemyWave[] waveList = BuildWaves(voyouSprites);
         SetWaves(waves, waveList);
         SetInt(waves, "startWave", waveList.Length - 1);
 
@@ -249,6 +254,20 @@ public static class ArenaBuilder
         return material;
     }
 
+    // Matériau des personnages : sprite non éclairé avec flash d'impact (RED MET/Sprite Flash).
+    private static Material EnsureFlashMaterial()
+    {
+        const string path = Root + "/Art/Shaders/SpriteFlash.mat";
+        var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+
+        if (material != null)
+            return material;
+
+        material = new Material(Shader.Find("RED MET/Sprite Flash")) { name = "SpriteFlash" };
+        AssetDatabase.CreateAsset(material, path);
+        return material;
+    }
+
     // ----------------------------------------------------------------- Scene
 
     // Ajoute une lumière globale 2D si l'URP est présent, sans en dépendre à la compilation.
@@ -309,13 +328,29 @@ public static class ArenaBuilder
         platform.AddComponent<PlatformEffector2D>().useOneWay = true;
     }
 
-    private static GameObject BuildPlayer(Sprite square, PhysicsMaterial2D noFriction, int groundLayer, int playerLayer, int enemyLayer)
+    private static GameObject BuildPlayer(Sprite square, PhysicsMaterial2D noFriction, int groundLayer, int playerLayer, int enemyLayer,
+        Material flashMaterial, SpriteAnimationBuilder.Result sprites)
     {
         var player = new GameObject("Player") { tag = "Player", layer = playerLayer };
         player.transform.position = new Vector3(-4f, -0.6f, 0f);
 
         GameObject visual = CreateSprite("Visual", player.transform, square, new Color(0.2f, 0.35f, 0.9f), Vector3.zero, new Vector3(0.8f, 1.6f), 5);
-        CreateSprite("Eye", player.transform, square, Color.white, new Vector3(0.22f, 0.45f), new Vector3(0.15f, 0.15f), 6);
+        var visualRenderer = visual.GetComponent<SpriteRenderer>();
+        visualRenderer.sharedMaterial = flashMaterial;
+
+        if (sprites != null)
+        {
+            // Nathan M0 : sprite animé, pivot aux pieds (bas de la capsule de 1,6).
+            visual.transform.localScale = Vector3.one;
+            visual.transform.localPosition = new Vector3(0f, -0.8f, 0f);
+            visualRenderer.sprite = sprites.IdleSprite;
+            visualRenderer.color = Color.white;
+            visual.AddComponent<Animator>().runtimeAnimatorController = sprites.Controller;
+        }
+        else
+        {
+            CreateSprite("Eye", player.transform, square, Color.white, new Vector3(0.22f, 0.45f), new Vector3(0.15f, 0.15f), 6);
+        }
 
         Rigidbody2D rb = AddBody(player, new Vector2(0.8f, 1.6f), noFriction);
         rb.mass = 1f;
@@ -335,6 +370,7 @@ public static class ArenaBuilder
         var reaction = player.AddComponent<HitReaction>();
         SetObject(reaction, "visual", visual.transform);
         SetObject(reaction, "body", visual.GetComponent<SpriteRenderer>());
+        SetBool(reaction, "placeholderPoses", sprites == null);
 
         var controller = player.AddComponent<PlayerController>();
         SetObject(controller, "groundCheck", groundCheck);
@@ -494,12 +530,13 @@ public static class ArenaBuilder
     }
 
     // Ennemi générique : l'archétype règle taille, couleur, PV, poids et comportement à l'apparition.
-    private static Enemy BuildEnemyPrefab(Sprite square, PhysicsMaterial2D noFriction, Material lineMaterial,
+    private static Enemy BuildEnemyPrefab(Sprite square, PhysicsMaterial2D noFriction, Material lineMaterial, Material flashMaterial,
         int enemyLayer, int corpseIgnoredLayers, Projectile projectilePrefab, Grenade grenadePrefab)
     {
         var go = new GameObject("Enemy") { layer = enemyLayer };
 
         GameObject visual = CreateSprite("Visual", go.transform, square, Color.white, Vector3.zero, new Vector3(0.9f, 1.7f), 5);
+        visual.GetComponent<SpriteRenderer>().sharedMaterial = flashMaterial;
         GameObject eye = CreateSprite("Eye", go.transform, square, Color.black, new Vector3(0.25f, 0.5f), new Vector3(0.15f, 0.15f), 6);
         LineRenderer aimLine = CreateLine("AimLine", go.transform, lineMaterial, false);
 
@@ -535,6 +572,18 @@ public static class ArenaBuilder
     private static readonly Color FlashYellow = new(1f, 0.85f, 0.2f);
     private static readonly Color AimRed = new(1f, 0.15f, 0.15f);
 
+    // Apparence animée (réappliquée à chaque construction, même sur un archétype existant).
+    private static void ApplySprites(EnemyArchetype archetype, SpriteAnimationBuilder.Result sprites)
+    {
+        if (sprites == null)
+            return;
+
+        archetype.animator = sprites.Controller;
+        archetype.sprite = sprites.IdleSprite;
+        archetype.bodyColor = Color.white;
+        EditorUtility.SetDirty(archetype);
+    }
+
     private static EnemyArchetype EnsureArchetype(string file, Action<EnemyArchetype> setup)
     {
         string path = $"{ArchetypeFolder}/{file}.asset";
@@ -569,7 +618,7 @@ public static class ArenaBuilder
             a.attacks = new[] { attack };
         });
 
-    private static EnemyWave[] BuildWaves()
+    private static EnemyWave[] BuildWaves(SpriteAnimationBuilder.Result voyouSprites)
     {
         const DamageType blunt = DamageType.Blunt;
         const DamageType blade = DamageType.Blade;
@@ -730,6 +779,10 @@ public static class ArenaBuilder
         });
 
         // Mannequin d'entraînement : ne riposte pas, se fait projeter, rebondir et démembrer.
+        // Les trois Voyous partagent les sprites du Voyou classique (armes à modéliser plus tard).
+        foreach (EnemyArchetype thug in new[] { fists, knife, bar })
+            ApplySprites(thug, voyouSprites);
+
         EnemyArchetype dummy = EnsureArchetype("00_Mannequin", a =>
         {
             a.displayName = "Mannequin";
@@ -974,6 +1027,18 @@ public static class ArenaBuilder
             return;
 
         property.intValue = value;
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetBool(Component component, string field, bool value)
+    {
+        var so = new SerializedObject(component);
+        SerializedProperty property = Find(so, field);
+
+        if (property == null)
+            return;
+
+        property.boolValue = value;
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 

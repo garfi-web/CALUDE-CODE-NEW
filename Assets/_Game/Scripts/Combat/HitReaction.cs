@@ -27,6 +27,8 @@ public class HitReaction : MonoBehaviour
     [SerializeField] private SpriteRenderer body;
     [SerializeField] private int whiteFlashFrames = 3;
     [SerializeField] private int painPoseFrames = 10;
+    [Tooltip("Personnage provisoire (rectangle) : couché par déformation. Un sprite animé a ses propres poses.")]
+    [SerializeField] private bool placeholderPoses = true;
 
     private readonly ContactPoint2D[] contacts = new ContactPoint2D[8];
     private Rigidbody2D rb;
@@ -42,6 +44,7 @@ public class HitReaction : MonoBehaviour
     private bool airborne;
     private bool knockedDown;
     private Vector3 visualScale = Vector3.one;
+    private Vector3 visualPosition;
     private Color flashRestoreColor;
 
     public bool IsInHitstun => hitstunLeft > 0 || airborne || knockedDown;
@@ -75,7 +78,10 @@ public class HitReaction : MonoBehaviour
         health.Hit += OnHit;
 
         if (visual != null)
+        {
             visualScale = visual.localScale;
+            visualPosition = visual.localPosition;
+        }
     }
 
     private void OnDestroy()
@@ -84,7 +90,19 @@ public class HitReaction : MonoBehaviour
             health.Hit -= OnHit;
     }
 
-    // La silhouette peut changer après l'apparition (archétype d'ennemi).
+    // La silhouette peut changer après l'apparition (archétype d'ennemi, sprite animé).
+    public void SetVisual(Vector3 scale, Vector3 position, bool placeholder)
+    {
+        visualScale = scale;
+        visualPosition = position;
+        placeholderPoses = placeholder;
+
+        if (visual != null)
+            visual.localPosition = position;
+
+        SetVisualScale(scale);
+    }
+
     public void SetVisualScale(Vector3 scale)
     {
         visualScale = scale;
@@ -241,6 +259,12 @@ public class HitReaction : MonoBehaviour
         if (body == null)
             return;
 
+        if (SpriteFlash.Supports(body))
+        {
+            SpriteFlash.Set(body, 1f, Color.white);
+            return;
+        }
+
         if (body.color != Color.white)
             flashRestoreColor = body.color;
 
@@ -250,20 +274,25 @@ public class HitReaction : MonoBehaviour
     private void UpdateVisuals()
     {
         if (flashLeft > 0 && --flashLeft == 0 && telegraph == null && body != null)
-            body.color = flashRestoreColor;
+        {
+            if (SpriteFlash.Supports(body))
+                SpriteFlash.Set(body, 0f, Color.white);
+            else
+                body.color = flashRestoreColor;
+        }
 
         if (visual == null)
             return;
 
-        if (knockedDown || (health.IsDead && IsGrounded))
+        if (placeholderPoses && (knockedDown || (health.IsDead && IsGrounded)))
         {
             // Au sol : silhouette couchée.
             visual.localScale = new Vector3(visualScale.y, visualScale.x, 1f);
-            visual.localPosition = new Vector3(0f, -(visualScale.y - visualScale.x) * 0.5f, 0f);
+            visual.localPosition = visualPosition + new Vector3(0f, -(visualScale.y - visualScale.x) * 0.5f, 0f);
             return;
         }
 
-        visual.localPosition = Vector3.zero;
+        visual.localPosition = visualPosition;
 
         // Pose de douleur : écrasé et penché vers l'arrière, puis retour.
         if (poseLeft > 0)
@@ -293,7 +322,7 @@ public class HitReaction : MonoBehaviour
         if (visual != null)
         {
             visual.localScale = visualScale;
-            visual.localPosition = Vector3.zero;
+            visual.localPosition = visualPosition;
             visual.localRotation = Quaternion.identity;
         }
     }

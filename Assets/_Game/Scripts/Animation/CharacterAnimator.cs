@@ -4,7 +4,8 @@ using UnityEngine;
 // Pont entre le gameplay et l'Animator. Le gameplay ne dépend jamais de ce
 // composant : sans Animator, ou sans un paramètre donné, rien ne casse.
 // Paramètres reconnus : Speed, VerticalSpeed (float), Grounded, Dead (bool),
-// ComboStep (int, AttackData.animationId), Attack, Dodge, Dash, Hurt (trigger).
+// Stunned, Down (bool, d'après HitReaction), ComboStep (int, AttackData.animationId),
+// Attack, Dodge, Dash, Hurt (trigger).
 // Pendant un arrêt sur image (HitStop), la vitesse de l'Animator passe à 0.
 public class CharacterAnimator : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class CharacterAnimator : MonoBehaviour
     private static readonly int DodgeHash = Animator.StringToHash("Dodge");
     private static readonly int HurtHash = Animator.StringToHash("Hurt");
     private static readonly int DashHash = Animator.StringToHash("Dash");
+    private static readonly int StunnedHash = Animator.StringToHash("Stunned");
+    private static readonly int DownHash = Animator.StringToHash("Down");
 
     [SerializeField] private Animator animator;
 
@@ -28,6 +31,7 @@ public class CharacterAnimator : MonoBehaviour
     private PlayerDodge dodge;
     private PlayerDash dash;
     private HitStop hitStop;
+    private HitReaction reaction;
     private Enemy enemy;
 
     private void Awake()
@@ -42,13 +46,10 @@ public class CharacterAnimator : MonoBehaviour
         dodge = GetComponent<PlayerDodge>();
         dash = GetComponent<PlayerDash>();
         hitStop = GetComponent<HitStop>();
+        reaction = GetComponent<HitReaction>();
         enemy = GetComponent<Enemy>();
 
-        if (animator != null && animator.runtimeAnimatorController != null)
-        {
-            foreach (AnimatorControllerParameter parameter in animator.parameters)
-                parameters.Add(parameter.nameHash);
-        }
+        CacheParameters();
 
         if (combat != null) combat.AttackStarted += OnPlayerAttack;
         if (enemy != null) enemy.AttackStarted += OnEnemyAttack;
@@ -61,6 +62,24 @@ public class CharacterAnimator : MonoBehaviour
             health.Damaged += OnDamaged;
             health.Died += OnDied;
         }
+    }
+
+    // Animator ajouté après coup (ennemi qui reçoit les sprites de son archétype à l'apparition).
+    public void SetAnimator(Animator newAnimator)
+    {
+        animator = newAnimator;
+        CacheParameters();
+    }
+
+    private void CacheParameters()
+    {
+        parameters.Clear();
+
+        if (animator == null || animator.runtimeAnimatorController == null)
+            return;
+
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+            parameters.Add(parameter.nameHash);
     }
 
     private void OnDestroy()
@@ -92,7 +111,13 @@ public class CharacterAnimator : MonoBehaviour
             animator.SetFloat(VerticalSpeedHash, velocity.y);
 
         if (parameters.Contains(GroundedHash))
-            animator.SetBool(GroundedHash, controller == null || controller.IsGrounded);
+            animator.SetBool(GroundedHash, controller != null ? controller.IsGrounded : reaction == null || reaction.IsGrounded);
+
+        if (reaction != null && parameters.Contains(StunnedHash))
+            animator.SetBool(StunnedHash, reaction.IsInHitstun && !reaction.IsKnockedDown);
+
+        if (reaction != null && parameters.Contains(DownHash))
+            animator.SetBool(DownHash, reaction.IsKnockedDown);
     }
 
     private void OnPlayerAttack(AttackData attack)

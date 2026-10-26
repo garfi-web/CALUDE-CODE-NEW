@@ -118,6 +118,64 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond. Ensuite, reprends la TRANCHE VERTICALE (concept du Voyou, modèle, squelettes, animations, spritesheets, décor de la lune rouge), en respectant CLAUDE.md.
+> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond. Ensuite, reprends la TRANCHE VERTICALE là où elle s'est arrêtée (section « Tranche verticale » de docs/PRODUCTION.md : construire l'arène avec les sprites, tester en Play, puis décor de la lune rouge), en respectant CLAUDE.md, et arrête-toi à la fin de la tranche pour que je valide le style.
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 7** choisissent la vague, F1 à F3 le debug (détail dans le `README.md`).
+
+## 8. Programme à venir (dans l'ordre)
+
+1. **Fin de la phase B** du bestiaire — *fait* (commit `d1abe6c`).
+2. **Sauvegarde** — *faite*.
+3. **Phase combat dynamique** (Dragon Ball FighterZ sans les super-pouvoirs, hitstop, sang au couteau) — *faite* (commit `9766bed`).
+4. **Tranche verticale** Nathan M0 contre le Voyou, graphismes définitifs — **en cours** : Voyou choisi (concept 11103) et modélisé ; Nathan M0 et Voyou nettoyés, coloriés, riggés, animés et rendus en sprites ; intégration Unity écrite et compilée mais pas testée ; décor de la lune rouge à faire. Détail : `docs/PRODUCTION.md`, section « Tranche verticale ».
+5. **Phase C** (reste de l'Acte I, même méthode) — après validation du style par l'auteur sur la tranche verticale.
+
+Outils de la tranche : `tools/blender/redmet_pipeline.py` et `tools/blender/redmet_animation.py` (à exécuter dans Blender par le MCP, avec `exec(open(<chemin>, encoding="utf-8").read())`), `tools/gen3d/remove_floor_line.py`, menu Unity **RED MET → Importer les sprites des personnages**.
+
+### Requête de l'auteur : phase combat dynamique (texte complet)
+
+> APRÈS la phase B et sa sauvegarde, avant la phase C : PHASE COMBAT DYNAMIQUE.
+> Objectif : des combats ultra dynamiques avec le punch, l'impact et la vitesse d'exécution de Dragon Ball FighterZ, SANS reprendre ses super-pouvoirs (pas de téléportation « vanish », pas de rayons d'énergie, pas de transformations). Tout doit marcher dès maintenant avec les personnages provisoires, et s'appliquer ensuite aux vrais sprites. Respecte CLAUDE.md et garde 60 FPS stables.
+>
+> 1. Données d'attaque
+> - Crée un ScriptableObject AttackData : démarrage, frames actives, récupération (en images à 60 FPS), dégâts, hitstop, intensité de tremblement, type de recul (léger, lourd, projection en l'air, rebond au mur, rebond au sol), fenêtre d'annulation vers l'attaque suivante.
+> - Fais passer le combo de Nathan, et les attaques des ennemis de la phase B, sur ce système.
+>
+> 2. Sensation d'impact
+> - Hitstop : les deux combattants se figent 3 à 12 images selon la force du coup (sur leur propre vitesse d'animation, pas sur Time.timeScale global).
+> - Tremblement de caméra proportionnel au coup, zoom bref vers l'impact sur les coups lourds et le coup final du combo.
+> - Images d'impact façon anime : 1 à 2 images de flash (blanc ou contraste inversé) sur les coups lourds, lignes de vitesse, étincelles et ondes de choc au point de contact.
+> - Le personnage touché recule en glissant avec un nuage de poussière, clignote en blanc et marque une brève pose de douleur.
+> - Ralenti de 0,3 s sur le coup qui achève le dernier ennemi d'une vague.
+>
+> 3. Vitesse et fluidité
+> - Attaques rapides : démarrage court sur les coups légers, mémoire des commandes (buffer) d'environ 6 images, annulations coup léger → moyen → lourd.
+> - Ajoute une attaque lourde (touche K) et un lanceur (bas + K) qui projette l'ennemi en l'air, avec des coups aériens et un smash qui le renvoie au sol.
+> - Ajoute un dash rapide au sol et en l'air (double appui sur une direction ou touche dédiée), annulable en attaque.
+> - Le mur et le sol renvoient les ennemis projetés fort (rebond au mur, rebond au sol) pour prolonger les combos.
+> - Mets à jour le README, l'interface et GameInput avec les nouvelles touches (clavier AZERTY et manette).
+>
+> 4. Sang et gore (un peu, quelques démembrements pour l'instant)
+> - Coups de poing et de pied : sueur, salive, étincelles d'impact, pas de sang.
+> - Coups de couteau et armes tranchantes : giclée de sang orientée dans le sens du coup, gouttes qui tombent, petites taches au sol et sur le mur le plus proche, qui s'estompent après quelques secondes. Démembrement possible après 4 coups
+> - Plus de sang sur le coup final et sur les ennemis à terre ; ennemis surnaturels plus tard : sang noir, rouge lumineux ou autre selon leur fiche.
+> - Tout en pool d'objets (pas d'Instantiate/Destroy en combat) et avec un nombre de taches limité pour tenir 60 FPS.
+>
+> 5. Options et accessibilité
+> - Dans un menu Options : niveau de gore (désactivé, réduit, complet), intensité du tremblement de caméra (0 à 100 %), flashs d'impact activés ou non (risque épileptique).
+>
+> 6. Test
+> - Ajoute à l'arène un mannequin d'entraînement qui ne riposte pas, et un affichage de debug activable (touche F1) des frames de démarrage, actives et de récupération.
+> - Lance le mode Play, vérifie les 60 FPS au Profiler pendant un long combo avec beaucoup de sang à l'écran, fais-moi des captures et une courte vidéo ou une suite de captures d'un combo complet.
+> - Puis commite, pousse, et attends mon feu vert pour la phase C.
+
+### Requête de l'auteur : tranche verticale (texte complet)
+
+> Changement de priorité, APRÈS la phase combat dynamique : avant de produire tout l'Acte I, fais une TRANCHE VERTICALE jouable avec des graphismes définitifs :
+> 1. Génère uniquement le concept du Voyou classique (4 variantes, j'en choisis une), puis son modèle TripoSG.
+> 2. Pour Nathan M0 et ce Voyou : squelette, animations complètes (idle, course, saut, attaques du combo, attaque lourde, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégration dans Unity.
+> 3. Décor final de l'arène de la lune rouge : couches en parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres, effets d'impact et de sang de la phase combat dynamique.
+> 4. Lance le mode Play, vérifie les 60 FPS, fais-moi des captures, et dis-moi comment jouer moi-même.
+> Je validerai le style graphique sur cette tranche. Ensuite seulement, tu reprendras la phase C pour le reste de l'Acte I avec la même méthode.
+
+Décisions déjà prises par l'auteur pour la tranche : Voyou `Voyou_concept_s11103` (capuche) ; Contrôle intelligent des applications de Windows désactivé (il bloquait le Python de TripoSG).

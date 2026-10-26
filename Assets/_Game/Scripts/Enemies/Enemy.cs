@@ -177,25 +177,61 @@ public class Enemy : MonoBehaviour, IDamageFilter
         reaction.HitstunScale = archetype.hitstunScale;
 
         Vector2 size = archetype.bodySize;
-        var visualScale = new Vector3(size.x, size.y, 1f);
-
-        if (visual != null)
-            visual.localScale = visualScale;
-
-        reaction.SetVisualScale(visualScale);
-
-        if (eye != null)
-            eye.localPosition = new Vector3(size.x * 0.28f, size.y * 0.3f, 0f);
 
         if (bodyCollider is CapsuleCollider2D capsule)
             capsule.size = size;
 
-        telegraph.SetBaseColor(archetype.bodyColor);
+        if (archetype.animator != null)
+            ApplySprites(size);
+        else
+            ApplyPlaceholder(size);
 
         readyTimes.Clear();
         useCounts.Clear();
         gameObject.name = archetype.displayName;
         AddBehaviour();
+    }
+
+    // Rectangle provisoire de la couleur de l'archétype, avec un œil.
+    private void ApplyPlaceholder(Vector2 size)
+    {
+        var visualScale = new Vector3(size.x, size.y, 1f);
+        reaction.SetVisual(visualScale, Vector3.zero, true);
+
+        if (eye != null)
+        {
+            eye.gameObject.SetActive(true);
+            eye.localPosition = new Vector3(size.x * 0.28f, size.y * 0.3f, 0f);
+        }
+
+        telegraph.SetBaseColor(archetype.bodyColor);
+    }
+
+    // Sprites animés : pivot aux pieds, au bas de la capsule ; l'Animator est piloté par CharacterAnimator.
+    private void ApplySprites(Vector2 size)
+    {
+        if (visual == null)
+            return;
+
+        reaction.SetVisual(Vector3.one, new Vector3(0f, -size.y * 0.5f, 0f), false);
+
+        if (eye != null)
+            eye.gameObject.SetActive(false);
+
+        var spriteRenderer = visual.GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null && archetype.sprite != null)
+            spriteRenderer.sprite = archetype.sprite;
+
+        if (!visual.TryGetComponent(out Animator animator))
+            animator = visual.gameObject.AddComponent<Animator>();
+
+        animator.runtimeAnimatorController = archetype.animator;
+
+        if (TryGetComponent(out CharacterAnimator bridge))
+            bridge.SetAnimator(animator);
+
+        telegraph.SetBaseColor(archetype.bodyColor);
     }
 
     private void AddBehaviour()

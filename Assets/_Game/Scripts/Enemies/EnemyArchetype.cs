@@ -110,9 +110,13 @@ public class EnemyArchetype : ScriptableObject
     [Tooltip("Multiplicateur de l'étourdissement des coups reçus (0 = jamais étourdi).")]
     public float hitstunScale = 1f;
 
-    [Header("Silhouette provisoire")]
+    [Header("Apparence")]
+    [Tooltip("Couleur du rectangle provisoire ; blanc pour un sprite animé.")]
     public Color bodyColor = new(0.8f, 0.15f, 0.15f);
     public Vector2 bodySize = new(0.9f, 1.7f);
+    [Tooltip("Sprites animés (pivot aux pieds). Vide : rectangle provisoire de couleur bodyColor.")]
+    public RuntimeAnimatorController animator;
+    public Sprite sprite;
 
     [Header("Sang")]
     [Tooltip("Rouge pour les humains ; noir, rouge lumineux... pour les ennemis surnaturels.")]
