@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1boy, solo, male focus, adult, young adult man, 25 years old, street thug, delinquent, hostile expression, scowl, realistic body proportions, long legs, sneakers, worn clothes, urban streetwear, stocky build, broad shoulders, heavyset, shaved head, short beard, dark puffer jacket, black hoodie, worn blue jeans, dirty sneakers, t-pose, spread arms, arms outstretched, straight arms, standing, full body, front view, facing viewer, looking at viewer, anime coloring, cel shading, clean lineart, simple background, plain grey background, safe, masterpiece, high score, great score, absurdres",
+  "negative": "weapon, knife, gun, bat, holding, military, armor, helmet, police, badge, logo, text, letters, print, emblem, supernatural, horns, glowing eyes, caricature, exaggerated features, 2boys, multiple boys, character sheet, turnaround, reference sheet, multiple views, child, kid, female, nsfw, nude, extra arms, extra hands, extra fingers, missing fingers, bad hands, bad anatomy, short legs, stubby legs, big head, chibi, drop shadow, floor shadow, shadow, watermark, signature, username, lowres, cropped, out of frame, busy background, worst quality, low quality, low score, bad score, average score, error, blurry",
+  "seed": 11102,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 38.2
+}

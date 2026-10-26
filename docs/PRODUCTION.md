@@ -381,3 +381,20 @@ Objectif de l'auteur : le punch, l'impact et la vitesse d'exécution de Dragon B
 - Pendant les tests, l'auteur jouait dans la vue Game : ses touches se mêlaient aux scripts de test (vagues changées, scène relancée). Les tests ont été refaits en forçant la vague du mannequin.
 
 Captures : `docs/captures/2026-10-26_combat_planche_combo.png` (12 images du combo complet), `..._combat_impact_lame.png`, `..._combat_coup_lourd.png`. Sur ces captures, le membre arraché est encore blanc (prises avant la correction).
+
+## Tranche verticale (demandée le 2026-10-26)
+
+Avant le reste de l'Acte I : une tranche jouable aux graphismes définitifs (Voyou classique, Nathan M0, arène de la lune rouge), sur laquelle l'auteur valide le style.
+
+### 2026-10-26 — Concepts du Voyou classique (4 essais)
+- Script : `tools/gen3d/batches/2026-10-26_concepts_voyou.sh`. Animagine XL 4.0, 1024×1024, réglages habituels. Sans arme (couteau et barre seront modélisés à part), pose en T, visages entièrement générés.
+- Prompt commun : `1boy, solo, male focus, adult, young adult man, 25 years old, street thug, delinquent, hostile expression, scowl, realistic body proportions, long legs, sneakers, worn clothes, urban streetwear` + morphologie et tenue + pose et style + `safe`. Négatif : armes, militaire, police, logos et texte, surnaturel, caricature, planches, anatomie, ombres.
+
+| Seed | Demandé | Obtenu | Constats (vérifiés en pleine résolution) |
+|---|---|---|---|
+| 11101 | Mince, crâne rasé, veste en cuir, sweat gris | Conforme | 2 bras, 2 mains, fond uni, sans ombre. Veste ouverte qui s'écarte en pans (à surveiller en 3D) |
+| 11102 | Trapu, crâne rasé, barbe, doudoune sombre, jean | Conforme | 2 bras, 2 mains, fond uni, sans ombre. Silhouette la plus lisible, la plus « doudoune sombre » du bestiaire |
+| 11103 | Filiforme, capuche relevée, sweat marine | Capuche, visage entièrement noir | **Faux texte sur le sweat** (malgré le négatif), ligne de sol, pas de visage : à écarter pour la 3D |
+| 11104 | Athlétique, cheveux bouclés, blouson en cuir marron, jean déchiré | Conforme | 2 bras, 2 mains. **Ombre au sol** sous les pieds (à repeindre avant TripoSG, comme pour le Chimiste) |
+
+En attente du choix de l'auteur.
