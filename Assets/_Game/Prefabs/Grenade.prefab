@@ -248,8 +248,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Grenade
   zone: {fileID: 889291022934632758}
   gravity: 20
+  apexHeight: 2.5
   radius: 0.12
   maxFlightTime: 3
   zoneSegments: 40
   zoneColor: {r: 1, g: 0.1, b: 0.1, a: 1}
-  knockbackLift: 4

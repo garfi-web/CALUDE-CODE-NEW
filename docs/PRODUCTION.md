@@ -3,11 +3,12 @@
 Choix, prompts, seeds, nombre d'essais et problèmes rencontrés, phase par phase.
 Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, animation, rendu toon) → spritesheets PNG → Unity.
 
-## État d'avancement (au 2026-10-26, sauvegarde de fin de phase B)
+## État d'avancement (au 2026-10-26, fin de la phase Combat dynamique)
 
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
-- **Bestiaire** : phases A et B terminées. **Prochaine étape demandée par l'auteur : la phase « Combat dynamique »** (AttackData en images, hitstop, tremblement, effets d'impact, lanceur et coups aériens, dash, rebonds, sang en pool, options, mannequin, debug F1), avant la phase C (concepts de l'Acte I), qui attend le feu vert.
+- **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
+- **Prochaine étape demandée par l'auteur (2026-10-26) : une TRANCHE VERTICALE jouable aux graphismes définitifs**, avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
 
@@ -41,7 +42,7 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 - **Bestiaire phase B** : architecture du code des ennemis, arène de test avec 6 vagues (touches 1 à 6), esquive à 0,40 s. Détail dans la section « Bestiaire — Phase B » plus bas.
 
 **Reste à faire**
-1. **Phase Combat dynamique** (consignes de l'auteur du 2026-10-26), puis commit, push et **feu vert de l'auteur pour la phase C** (concepts de l'Acte I).
+1. **Tranche verticale** (voir ci-dessus), puis validation du style par l'auteur, puis **phase C** (reste de l'Acte I).
 2. **Nettoyage des modèles dans Blender** (phase 1) : supprimer les fragments, fermer les trous, origine aux pieds, orientation, réduction, matériaux, vues isolées face/profil/3-4. **R1 et R2 à dériver du modèle R0** (amincissement, cernes, teint), **lunettes de Nathan à modéliser** (double foyer, verres fêlés pour R2).
 3. Personnages sans concept validé : **Nathan M0** (le faible, M0 = corps de R0 sans lunettes d'après `CHARACTERS.md` : à dériver de R0 dans Blender), **Nathan R1**, **Nathan R3**.
 4. Phase 1 point 5 : designs des deux ennemis du monde Red Met, à rapprocher du bestiaire.
@@ -347,3 +348,36 @@ Outils : `make_mask.py` (masques), mode inpainting de `concept.py` (seule la zon
 - La capture par l'outil `Camera_Capture` échoue sur ce projet ; `ScreenCapture.CaptureScreenshot` fonctionne.
 
 Capture : `docs/captures/2026-10-26_phaseB_arene_groupe.png` (vague 6 : un Voyou en armement, le Flic qui vise avec sa ligne rouge).
+
+## Phase Combat dynamique (2026-10-26)
+
+Objectif de l'auteur : le punch, l'impact et la vitesse d'exécution de Dragon Ball FighterZ, sans ses super-pouvoirs (ni téléportation, ni rayons, ni transformations), avec les personnages provisoires et 60 FPS stables.
+
+**Ce qui a été fait**
+- **`AttackData`** (ScriptableObject) : démarrage, actif, récupération et fenêtre d'annulation en images à 60 FPS, dégâts, type (contondant, lame, balle, explosion), zone de frappe, élan, hitstop (0 à 12 images), tremblement, zoom, image d'impact, type de recul (léger, lourd, projection, rebond au mur, rebond au sol), étourdissement. Le pas physique passe à **1/60 s** (une image = un pas). 9 attaques pour Nathan (`Data/Attacks/Nathan`), 16 pour les ennemis de la phase B (`Data/Attacks/Enemies`) ; `EnemyAttack` ne garde que ce qui est propre à l'IA.
+- **Impact** : `HitStop` fige les deux combattants sur leur propre horloge (Rigidbody et Animator), jamais `Time.timeScale`. `CameraFollow` : tremblement proportionnel et zoom bref vers l'impact. `CombatVfx` : image d'impact (une image blanche puis une sombre), lignes de vitesse, étincelles, ondes de choc. `HitReaction` : recul glissé avec poussière, flash blanc, pose de douleur, jonglage, au sol couché. Ralenti de 0,3 s (×0,25) sur le coup qui finit une vague (`GameTime`).
+- **Vitesse** : mémoire des commandes de 6 images (gelée pendant le hitstop), annulations léger → moyen → lourd, coup lourd (K, rebond au mur), lanceur (S + K) annulable par un saut, 3 coups aériens et smash (rebond au sol), dash au sol et en l'air (L, LB ou double appui) annulable en attaque.
+- **Sang et gore** : coups contondants = sueur, salive, étincelles ; lames = giclée orientée, gouttes qui tombent et laissent des taches au sol et sur les murs (collisions des particules), qui s'estompent ; démembrement possible après 4 coups de lame (garanti sur le coup final, 2 membres au plus par ennemi) ; plus de sang sur le coup final et sur les ennemis à terre ou en l'air ; couleur du sang par archétype (`bloodColor`, `bloodGlows` pour les ennemis surnaturels). Tout est en réserve : 5 systèmes de particules créés au chargement, 8 anneaux, 60 taches, 8 membres ; balles et grenades passent par `Pool`.
+- **Options** (Échap) : gore désactivé / réduit / complet, tremblement de 0 à 100 %, images d'impact activées ou non. Enregistrées dans les PlayerPrefs.
+- **Test** : mannequin d'entraînement (touche 7, présent au lancement, ne riposte pas, se soigne), debug F1 (frise des images, zone de frappe, phase des ennemis, images par seconde), arme de test F2 (lame), démo de combo F3.
+- Supprimé : `Hitbox` (remplacé par une zone de frappe testée image par image).
+
+**Tests en mode Play** (scripts lancés par le MCP Unity)
+
+| Test | Résultat |
+|---|---|
+| Combo complet sur le mannequin | Jab → direct → lanceur → saut → aériens 1, 2, 3 → smash → jab → direct → crochet → coup lourd : 12 coups d'affilée |
+| Rebond au mur | Coup lourd près du mur droit : rebond en x = 20 |
+| Rebond au sol | Lanceur (mannequin à 3 m), smash : rebond, remonte à 1,3 m |
+| Gore désactivé / complet | 0 goutte de sang / 57 gouttes sur un coup de lame |
+| **60 FPS** (3 combos d'affilée à l'arme tranchante, gore complet) | 5 010 images ; thread principal **2,44 ms en moyenne, 15,4 ms au pire, aucune image au-dessus de 16,6 ms** ; jusqu'à 197 gouttes, 60 taches (plafond) et 2 membres à l'écran |
+| Allocations | environ 9 Ko par image mesurés dans l'éditeur, qui alloue lui-même en mode Play : à mesurer sur un build |
+
+**Problèmes rencontrés**
+- La mémoire du saut (0,1 s en temps réel) expirait pendant le hitstop du lanceur (8 images) : le saut d'annulation ne partait pas. Corrigé : toutes les mémoires de commandes comptent en images de jeu et sont gelées pendant le hitstop.
+- Le membre arraché prenait la couleur du corps en plein flash blanc. Corrigé : couleur de l'archétype.
+- Démo F3 : la première version enchaînait les commandes avant le démarrage de l'attaque suivante. Elle attend maintenant chaque nouvelle attaque.
+- L'outil MCP refuse `AssetDatabase.DeleteAsset` et `File.Delete` (« user interaction ») : les anciens archétypes ont été supprimés depuis le disque.
+- Pendant les tests, l'auteur jouait dans la vue Game : ses touches se mêlaient aux scripts de test (vagues changées, scène relancée). Les tests ont été refaits en forçant la vague du mannequin.
+
+Captures : `docs/captures/2026-10-26_combat_planche_combo.png` (12 images du combo complet), `..._combat_impact_lame.png`, `..._combat_coup_lourd.png`. Sur ces captures, le membre arraché est encore blanc (prises avant la correction).

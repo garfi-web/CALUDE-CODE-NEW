@@ -20,30 +20,29 @@ MonoBehaviour:
   detectionRange: 16
   weight: 1
   superArmor: 0
-  hitStunTime: 0.2
+  hitstunScale: 0.7
   bodyColor: {r: 0.25, g: 0.3, b: 0.22, a: 1}
   bodySize: {x: 0.9, y: 1.7}
+  bloodColor: {r: 0.55, g: 0.02, b: 0.03, a: 1}
+  bloodGlows: 0
+  canBeDismembered: 1
   attacks:
   - name: "Rafale vis\xE9e"
     kind: 1
+    data: {fileID: 11400000, guid: eedf075f16356514bbdad9cadbc1472d, type: 2}
     range: 12
-    windup: 0.8
-    active: 0.25
-    recovery: 0.6
     cooldown: 0.8
     maxUses: 0
     weight: 1
-    damage: 8
-    knockback: 2
     feint: 0
     projectileCount: 3
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 22
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}
@@ -52,24 +51,20 @@ MonoBehaviour:
     aimLineWidth: 0.04
   - name: Grenade
     kind: 2
+    data: {fileID: 11400000, guid: e6c2df4e166422b4ea8a661f6971aa71, type: 2}
     range: 10
-    windup: 0.6
-    active: 0
-    recovery: 0.8
     cooldown: 8
     maxUses: 0
     weight: 1
-    damage: 30
-    knockback: 8
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}
@@ -78,24 +73,20 @@ MonoBehaviour:
     aimLineWidth: 0.04
   - name: Coup de crosse
     kind: 0
+    data: {fileID: 11400000, guid: 2cf6055faaf58e946bbcaaa183d303c8, type: 2}
     range: 1.3
-    windup: 0.4
-    active: 0.1
-    recovery: 0.45
     cooldown: 0.6
     maxUses: 0
     weight: 1
-    damage: 15
-    knockback: 6
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}

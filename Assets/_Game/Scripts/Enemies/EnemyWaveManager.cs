@@ -130,12 +130,12 @@ public class EnemyWaveManager : MonoBehaviour
                 Destroy(cover.gameObject);
         }
 
-        // Balles et grenades encore en vol.
+        // Balles et grenades encore en vol (rendues à leur réserve).
         foreach (Projectile projectile in FindObjectsByType<Projectile>())
-            Destroy(projectile.gameObject);
+            Pool.Release(projectile);
 
         foreach (Grenade grenade in FindObjectsByType<Grenade>())
-            Destroy(grenade.gameObject);
+            Pool.Release(grenade);
 
         enemies.Clear();
         covers.Clear();

@@ -52,7 +52,9 @@ public class PlayerDodge : MonoBehaviour
         if (health != null && health.IsDead)
             return;
 
-        if (GameInput.DodgePressed && !IsDodging && Time.time >= nextDodgeTime)
+        bool canAct = controller == null || controller.CanAct;
+
+        if (GameInput.DodgePressed && canAct && !IsDodging && Time.time >= nextDodgeTime)
             StartCoroutine(DodgeRoutine());
     }
 

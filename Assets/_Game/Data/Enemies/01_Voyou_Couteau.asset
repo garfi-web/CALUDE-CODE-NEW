@@ -20,30 +20,29 @@ MonoBehaviour:
   detectionRange: 9
   weight: 0
   superArmor: 0
-  hitStunTime: 0.3
+  hitstunScale: 1
   bodyColor: {r: 0.7, g: 0.12, b: 0.25, a: 1}
   bodySize: {x: 0.9, y: 1.7}
+  bloodColor: {r: 0.55, g: 0.02, b: 0.03, a: 1}
+  bloodGlows: 0
+  canBeDismembered: 1
   attacks:
   - name: Coup de couteau
     kind: 0
+    data: {fileID: 11400000, guid: f957ff205290263439d2f1467e484489, type: 2}
     range: 1.4
-    windup: 0.45
-    active: 0.08
-    recovery: 0.45
     cooldown: 0.6
     maxUses: 0
     weight: 1
-    damage: 15
-    knockback: 4
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}

@@ -14,7 +14,12 @@ public class Health : MonoBehaviour
 
     public event Action<int, int> HealthChanged;
     public event Action<int> Damaged;
+    // Coup encaissé, avec ses données (recul, effets). Levé avant Died.
+    public event Action<DamageInfo> Hit;
     public event Action Died;
+
+    // Tous les coups encaissés de la scène (caméra, effets d'impact, sang).
+    public static event Action<Health, DamageInfo> AnyHit;
 
     private IDamageFilter[] filters;
     private float invulnerableUntil;
@@ -56,12 +61,17 @@ public class Health : MonoBehaviour
         GrantInvulnerability(invulnerabilityTime);
         HealthChanged?.Invoke(CurrentHealth, maxHealth);
         Damaged?.Invoke(damage);
+        Hit?.Invoke(info);
+        AnyHit?.Invoke(this, info);
 
         if (IsDead)
             Died?.Invoke();
 
         return true;
     }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics() => AnyHit = null;
 
     public void GrantInvulnerability(float duration)
     {

@@ -4,7 +4,8 @@ using UnityEngine;
 // Pont entre le gameplay et l'Animator. Le gameplay ne dépend jamais de ce
 // composant : sans Animator, ou sans un paramètre donné, rien ne casse.
 // Paramètres reconnus : Speed, VerticalSpeed (float), Grounded, Dead (bool),
-// ComboStep (int), Attack, Dodge, Hurt (trigger).
+// ComboStep (int, AttackData.animationId), Attack, Dodge, Dash, Hurt (trigger).
+// Pendant un arrêt sur image (HitStop), la vitesse de l'Animator passe à 0.
 public class CharacterAnimator : MonoBehaviour
 {
     private static readonly int SpeedHash = Animator.StringToHash("Speed");
@@ -15,6 +16,7 @@ public class CharacterAnimator : MonoBehaviour
     private static readonly int AttackHash = Animator.StringToHash("Attack");
     private static readonly int DodgeHash = Animator.StringToHash("Dodge");
     private static readonly int HurtHash = Animator.StringToHash("Hurt");
+    private static readonly int DashHash = Animator.StringToHash("Dash");
 
     [SerializeField] private Animator animator;
 
@@ -24,6 +26,8 @@ public class CharacterAnimator : MonoBehaviour
     private PlayerController controller;
     private PlayerCombat combat;
     private PlayerDodge dodge;
+    private PlayerDash dash;
+    private HitStop hitStop;
     private Enemy enemy;
 
     private void Awake()
@@ -36,6 +40,8 @@ public class CharacterAnimator : MonoBehaviour
         controller = GetComponent<PlayerController>();
         combat = GetComponent<PlayerCombat>();
         dodge = GetComponent<PlayerDodge>();
+        dash = GetComponent<PlayerDash>();
+        hitStop = GetComponent<HitStop>();
         enemy = GetComponent<Enemy>();
 
         if (animator != null && animator.runtimeAnimatorController != null)
@@ -47,6 +53,8 @@ public class CharacterAnimator : MonoBehaviour
         if (combat != null) combat.AttackStarted += OnPlayerAttack;
         if (enemy != null) enemy.AttackStarted += OnEnemyAttack;
         if (dodge != null) dodge.DodgeStarted += OnDodge;
+        if (dash != null) dash.DashStarted += OnDash;
+        if (hitStop != null) hitStop.FrozenChanged += OnFrozenChanged;
 
         if (health != null)
         {
@@ -60,6 +68,8 @@ public class CharacterAnimator : MonoBehaviour
         if (combat != null) combat.AttackStarted -= OnPlayerAttack;
         if (enemy != null) enemy.AttackStarted -= OnEnemyAttack;
         if (dodge != null) dodge.DodgeStarted -= OnDodge;
+        if (dash != null) dash.DashStarted -= OnDash;
+        if (hitStop != null) hitStop.FrozenChanged -= OnFrozenChanged;
 
         if (health != null)
         {
@@ -85,10 +95,10 @@ public class CharacterAnimator : MonoBehaviour
             animator.SetBool(GroundedHash, controller == null || controller.IsGrounded);
     }
 
-    private void OnPlayerAttack(int step)
+    private void OnPlayerAttack(AttackData attack)
     {
         if (parameters.Contains(ComboStepHash))
-            animator.SetInteger(ComboStepHash, step);
+            animator.SetInteger(ComboStepHash, attack.animationId);
 
         Trigger(AttackHash);
     }
@@ -96,6 +106,14 @@ public class CharacterAnimator : MonoBehaviour
     private void OnEnemyAttack(EnemyAttack attack) => Trigger(AttackHash);
 
     private void OnDodge() => Trigger(DodgeHash);
+
+    private void OnDash() => Trigger(DashHash);
+
+    private void OnFrozenChanged(bool frozen)
+    {
+        if (animator != null)
+            animator.speed = frozen ? 0f : 1f;
+    }
 
     private void OnDamaged(int damage) => Trigger(HurtHash);
 

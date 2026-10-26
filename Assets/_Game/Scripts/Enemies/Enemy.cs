@@ -4,18 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Socle commun des ennemis : applique l'archétype, gère le déplacement, le cycle d'attaque
-// (armement annoncé, actif, récupération), l'étourdissement, la super-armure, les jetons
-// d'attaque et l'abri. Le comportement (EnemyBehaviour) décide quoi faire quand l'ennemi est libre.
+// (armement annoncé, actif, récupération) en images à 60 FPS, l'interruption, la super-armure,
+// les jetons d'attaque et l'abri. Les coups reçus (recul, étourdissement, jonglage) passent par
+// HitReaction, l'arrêt sur image par HitStop. Le comportement (EnemyBehaviour) décide quoi faire
+// quand l'ennemi est libre.
 [RequireComponent(typeof(Rigidbody2D), typeof(Health), typeof(EnemyTelegraph))]
+[RequireComponent(typeof(HitStop), typeof(HitReaction))]
 public class Enemy : MonoBehaviour, IDamageFilter
 {
-    private enum Phase { None, Windup, Active, Recovery }
+    public enum Phase { None, Windup, Active, Recovery }
 
     private const float WallNormal = 0.7f;
-    private const float KnockbackLift = 2f;
 
     // Ennemis vivants de la scène (ordres du Dealer, alerte de groupe).
     public static readonly List<Enemy> Living = new();
+
+    private static readonly WaitForFixedUpdate FixedStep = new();
 
     [SerializeField] private EnemyArchetype archetype;
     [SerializeField] private Transform target;
@@ -26,12 +30,14 @@ public class Enemy : MonoBehaviour, IDamageFilter
     [SerializeField] private EnemyTelegraph telegraph;
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private Grenade grenadePrefab;
+    [Tooltip("Layers que le corps traverse une fois mort (Nathan, ennemis).")]
+    [SerializeField] private LayerMask corpseIgnoredLayers;
 
     [Header("Réglages communs")]
     [SerializeField] private float coverRangedMultiplier = 0.25f;
     [SerializeField] private float hopSpeed = 12f;
     [SerializeField] private float maxHopHeight = 2f;
-    [SerializeField] private float feintRecovery = 0.2f;
+    [SerializeField] private int feintRecoveryFrames = 12;
     [SerializeField] private Color stunnedColor = new(0.45f, 0.5f, 0.75f);
 
     private readonly Dictionary<EnemyAttack, float> readyTimes = new();
@@ -40,14 +46,13 @@ public class Enemy : MonoBehaviour, IDamageFilter
     private Rigidbody2D rb;
     private Collider2D bodyCollider;
     private Health health;
+    private HitStop hitStop;
+    private HitReaction reaction;
     private Health targetHealth;
-    private Rigidbody2D targetRb;
     private Collider2D targetCollider;
     private EnemyBehaviour behaviour;
     private Coroutine actionRoutine;
     private EnemyAttack currentAttack;
-    private Phase phase;
-    private float stunnedUntil;
     private float windupMultiplier = 1f;
     private float buffUntil;
     private bool chargeHitWall;
@@ -57,7 +62,8 @@ public class Enemy : MonoBehaviour, IDamageFilter
     public Transform Target => target;
     public bool IsAlerted { get; private set; }
     public bool IsBusy => actionRoutine != null;
-    public bool IsStunned => Time.time < stunnedUntil;
+    public bool IsStunned => reaction.IsInHitstun;
+    public bool IsFrozen => hitStop.IsFrozen;
     public bool IsDead => health != null && health.IsDead;
     public float Facing => transform.localScale.x >= 0f ? 1f : -1f;
     public Cover CurrentCover { get; private set; }
@@ -68,6 +74,12 @@ public class Enemy : MonoBehaviour, IDamageFilter
     public float DirectionToTarget => Mathf.Sign(DeltaToTarget);
     public float HealthRatio => health.MaxHealth > 0 ? (float)health.CurrentHealth / health.MaxHealth : 0f;
     public bool TargetIsDead => targetHealth != null && targetHealth.IsDead;
+
+    // Lecture pour l'affichage de debug (F1).
+    public Phase CurrentPhase { get; private set; }
+    public EnemyAttack CurrentAttack => currentAttack;
+    public int PhaseFrame { get; private set; }
+    public int PhaseLength { get; private set; }
 
     private Vector2 Muzzle => Position + new Vector2(Facing * BodySize.x * 0.5f, BodySize.y * 0.15f);
     private Vector2 BodySize => archetype != null ? archetype.bodySize : Vector2.one;
@@ -83,11 +95,13 @@ public class Enemy : MonoBehaviour, IDamageFilter
         rb = GetComponent<Rigidbody2D>();
         bodyCollider = GetComponent<Collider2D>();
         health = GetComponent<Health>();
+        hitStop = GetComponent<HitStop>();
+        reaction = GetComponent<HitReaction>();
 
         if (telegraph == null)
             telegraph = GetComponent<EnemyTelegraph>();
 
-        health.Damaged += OnDamaged;
+        health.Hit += OnHit;
         health.Died += OnDied;
 
         if (archetype != null)
@@ -125,7 +139,7 @@ public class Enemy : MonoBehaviour, IDamageFilter
     {
         if (health != null)
         {
-            health.Damaged -= OnDamaged;
+            health.Hit -= OnHit;
             health.Died -= OnDied;
         }
 
@@ -144,7 +158,6 @@ public class Enemy : MonoBehaviour, IDamageFilter
     {
         target = newTarget;
         targetHealth = target != null ? target.GetComponent<Health>() : null;
-        targetRb = target != null ? target.GetComponent<Rigidbody2D>() : null;
         targetCollider = target != null ? target.GetComponent<Collider2D>() : null;
     }
 
@@ -152,7 +165,7 @@ public class Enemy : MonoBehaviour, IDamageFilter
     {
         health.SetMaxHealth(archetype.maxHealth);
 
-        // Le poids passe par la masse : le recul des coups de Nathan est une impulsion.
+        // La masse règle la poussée entre les corps ; le recul des coups passe par HitReaction.
         rb.mass = archetype.weight switch
         {
             EnemyWeight.Light => 1f,
@@ -160,10 +173,16 @@ public class Enemy : MonoBehaviour, IDamageFilter
             _ => 1000f,
         };
 
+        reaction.KnockbackScale = archetype.KnockbackScale;
+        reaction.HitstunScale = archetype.hitstunScale;
+
         Vector2 size = archetype.bodySize;
+        var visualScale = new Vector3(size.x, size.y, 1f);
 
         if (visual != null)
-            visual.localScale = new Vector3(size.x, size.y, 1f);
+            visual.localScale = visualScale;
+
+        reaction.SetVisualScale(visualScale);
 
         if (eye != null)
             eye.localPosition = new Vector3(size.x * 0.28f, size.y * 0.3f, 0f);
@@ -171,8 +190,7 @@ public class Enemy : MonoBehaviour, IDamageFilter
         if (bodyCollider is CapsuleCollider2D capsule)
             capsule.size = size;
 
-        if (telegraph != null)
-            telegraph.SetBaseColor(archetype.bodyColor);
+        telegraph.SetBaseColor(archetype.bodyColor);
 
         readyTimes.Clear();
         useCounts.Clear();
@@ -191,6 +209,7 @@ public class Enemy : MonoBehaviour, IDamageFilter
             EnemyBehaviourType.Ambusher => typeof(Ambusher),
             EnemyBehaviourType.Feinter => typeof(Feinter),
             EnemyBehaviourType.Trickster => typeof(Trickster),
+            EnemyBehaviourType.TrainingDummy => typeof(TrainingDummy),
             _ => typeof(MeleeAggressive),
         };
 
@@ -214,6 +233,10 @@ public class Enemy : MonoBehaviour, IDamageFilter
             telegraph.SetBuffed(false);
         }
 
+        // Figé ou étourdi : le recul, la glissade et le jonglage s'appliquent seuls.
+        if (IsFrozen || IsStunned)
+            return;
+
         if (target == null || TargetIsDead)
         {
             if (!IsBusy)
@@ -233,8 +256,7 @@ public class Enemy : MonoBehaviour, IDamageFilter
             Alert();
         }
 
-        // Pendant l'étourdissement, on laisse le recul s'appliquer.
-        if (IsStunned || IsBusy)
+        if (IsBusy)
             return;
 
         if (behaviour != null && behaviour.enabled)
@@ -445,7 +467,7 @@ public class Enemy : MonoBehaviour, IDamageFilter
     public void Hold(float duration, Color color)
     {
         if (!IsBusy)
-            actionRoutine = StartCoroutine(HoldRoutine(duration, color));
+            actionRoutine = StartCoroutine(HoldRoutine(Mathf.RoundToInt(duration * AttackData.FrameRate), color));
     }
 
     public void ApplyWindupBuff(float multiplier, float duration)
@@ -461,22 +483,29 @@ public class Enemy : MonoBehaviour, IDamageFilter
     private IEnumerator AttackRoutine(EnemyAttack attack)
     {
         currentAttack = attack;
-        phase = Phase.Windup;
         AttackStarted?.Invoke(attack);
 
         // L'ordre du Dealer raccourcit l'armement, jamais sous le minimum commun.
-        float windup = Mathf.Max(EnemyAttack.MinWindup, attack.windup * windupMultiplier);
+        int windup = Mathf.Max(EnemyAttack.MinWindupFrames, Mathf.RoundToInt(attack.WindupFrames * windupMultiplier));
         float direction = DirectionToTarget;
         Vector2 aimPoint = TargetPoint;
         telegraph.ShowWindup(attack.telegraphColor);
+        BeginPhase(Phase.Windup, windup);
 
-        for (float t = 0f; t < windup; t += Time.fixedDeltaTime)
+        while (PhaseFrame < windup)
         {
+            yield return FixedStep;
+
+            if (IsFrozen)
+                continue;
+
+            PhaseFrame++;
+
             if (!IsStunned)
                 Stop();
 
-            // La charge cesse de suivre la cible après trackingTime.
-            if (attack.kind != EnemyAttackKind.Charge || t < attack.trackingTime)
+            // La charge cesse de suivre la cible après trackingFrames.
+            if (attack.kind != EnemyAttackKind.Charge || PhaseFrame <= attack.trackingFrames)
             {
                 FaceTarget();
                 direction = DirectionToTarget;
@@ -485,8 +514,6 @@ public class Enemy : MonoBehaviour, IDamageFilter
 
             if (attack.aimLine)
                 telegraph.ShowAim(Muzzle, aimPoint, attack.telegraphColor, attack.aimLineWidth);
-
-            yield return new WaitForFixedUpdate();
         }
 
         telegraph.HideWindup();
@@ -494,15 +521,15 @@ public class Enemy : MonoBehaviour, IDamageFilter
 
         if (attack.feint)
         {
-            phase = Phase.Recovery;
-            yield return Wait(feintRecovery);
+            BeginPhase(Phase.Recovery, feintRecoveryFrames);
+            yield return Frames(feintRecoveryFrames);
             EndAttack(attack);
             yield break;
         }
 
-        phase = Phase.Active;
+        BeginPhase(Phase.Active, attack.ActiveFrames);
         useCounts[attack] = useCounts.TryGetValue(attack, out int uses) ? uses + 1 : 1;
-        float recovery = attack.recovery;
+        int recovery = attack.RecoveryFrames;
 
         switch (attack.kind)
         {
@@ -527,7 +554,7 @@ public class Enemy : MonoBehaviour, IDamageFilter
 
                 if (chargeHitWall)
                 {
-                    recovery = attack.wallRecovery;
+                    recovery = attack.wallRecoveryFrames;
                     telegraph.SetState(stunnedColor);
                 }
                 break;
@@ -547,34 +574,37 @@ public class Enemy : MonoBehaviour, IDamageFilter
         }
 
         // Le jeton est rendu dès la récupération : un autre ennemi peut enchaîner.
-        phase = Phase.Recovery;
+        BeginPhase(Phase.Recovery, recovery);
         AttackTokens.Release(this);
-        yield return Wait(recovery);
+        yield return Frames(recovery);
         EndAttack(attack);
     }
 
-    private IEnumerator HoldRoutine(float duration, Color color)
+    private IEnumerator HoldRoutine(int frames, Color color)
     {
-        phase = Phase.Recovery;
+        BeginPhase(Phase.Recovery, frames);
         telegraph.SetState(color);
-        yield return Wait(duration);
+        yield return Frames(frames);
         EndAttack(null);
     }
 
-    // Un seul coup par attaque, pendant toute la durée de l'actif.
+    // Un seul coup par attaque, pendant toutes les images actives.
     private IEnumerator StrikeRoutine(EnemyAttack attack, Func<bool> inReach)
     {
-        float end = Time.time + attack.active;
         bool hit = false;
 
-        do
+        while (PhaseFrame < attack.ActiveFrames)
         {
-            if (!hit && inReach())
-                hit = HitTarget(attack, DamageKind.Melee);
+            if (!IsFrozen)
+            {
+                if (!hit && inReach())
+                    hit = HitTarget(attack, DamageKind.Melee);
 
-            yield return new WaitForFixedUpdate();
+                PhaseFrame++;
+            }
+
+            yield return FixedStep;
         }
-        while (Time.time < end);
     }
 
     private IEnumerator FireRoutine(EnemyAttack attack, Vector2 aimPoint)
@@ -589,12 +619,12 @@ public class Enemy : MonoBehaviour, IDamageFilter
                 Vector2 direction = aimPoint - muzzle;
                 direction = direction.sqrMagnitude > 0.001f ? direction.normalized : new Vector2(Facing, 0f);
 
-                Projectile projectile = Instantiate(projectilePrefab, muzzle, Quaternion.identity);
-                projectile.Launch(gameObject, direction, attack.projectileSpeed, attack.damage, attack.knockback);
+                Projectile projectile = Pool.Get(projectilePrefab, muzzle);
+                projectile.Launch(gameObject, direction, attack.projectileSpeed, attack.data);
             }
 
             if (i < count - 1)
-                yield return Wait(attack.shotInterval);
+                yield return Frames(attack.shotIntervalFrames);
         }
     }
 
@@ -606,8 +636,8 @@ public class Enemy : MonoBehaviour, IDamageFilter
         // Lancée par-dessus la tête : elle ne part pas dans l'abri derrière lequel il se poste.
         float groundY = targetCollider != null ? targetCollider.bounds.min.y : aimPoint.y;
         Vector2 hand = Position + new Vector2(0f, BodySize.y * 0.65f);
-        Grenade grenade = Instantiate(grenadePrefab, hand, Quaternion.identity);
-        grenade.Launch(gameObject, new Vector2(aimPoint.x, groundY), attack.damage, attack.areaRadius, attack.fuse, attack.knockback);
+        Grenade grenade = Pool.Get(grenadePrefab, hand);
+        grenade.Launch(gameObject, new Vector2(aimPoint.x, groundY), attack.data, attack.areaRadius, attack.fuse);
     }
 
     private IEnumerator ChargeRoutine(EnemyAttack attack, float direction)
@@ -615,10 +645,16 @@ public class Enemy : MonoBehaviour, IDamageFilter
         chargeHitWall = false;
         Face(direction);
         float reach = BodySize.x * 0.5f + 0.5f;
-        float end = Time.time + attack.active;
 
-        while (Time.time < end)
+        while (PhaseFrame < attack.ActiveFrames)
         {
+            yield return FixedStep;
+
+            if (IsFrozen)
+                continue;
+
+            PhaseFrame++;
+
             if (IsBlocked(direction, 0.05f + attack.chargeSpeed * Time.fixedDeltaTime))
             {
                 chargeHitWall = true;
@@ -630,40 +666,45 @@ public class Enemy : MonoBehaviour, IDamageFilter
             // La charge s'arrête sur Nathan ; s'il esquive à travers, elle continue jusqu'au mur.
             if (TargetInReach(reach) && HitTarget(attack, DamageKind.Melee))
                 break;
-
-            yield return new WaitForFixedUpdate();
         }
 
         Stop();
     }
 
-    // Attente qui maintient l'ennemi sur place, sauf pendant le recul d'un coup reçu.
-    private IEnumerator Wait(float duration)
+    // Attente en images (le hitstop ne les fait pas avancer), sur place sauf pendant un recul.
+    private IEnumerator Frames(int count)
     {
-        float end = Time.time + duration;
-
-        while (Time.time < end)
+        for (int frame = 0; frame < count;)
         {
+            yield return FixedStep;
+
+            if (IsFrozen)
+                continue;
+
             if (!IsStunned)
                 Stop();
 
-            yield return new WaitForFixedUpdate();
+            frame++;
+            PhaseFrame++;
         }
+    }
+
+    private void BeginPhase(Phase phase, int length)
+    {
+        CurrentPhase = phase;
+        PhaseFrame = 0;
+        PhaseLength = length;
     }
 
     private void EndAttack(EnemyAttack attack)
     {
-        phase = Phase.None;
+        BeginPhase(Phase.None, 0);
         currentAttack = null;
         actionRoutine = null;
         AttackTokens.Release(this);
-
-        if (telegraph != null)
-        {
-            telegraph.HideWindup();
-            telegraph.HideAim();
-            telegraph.SetState(null);
-        }
+        telegraph.HideWindup();
+        telegraph.HideAim();
+        telegraph.SetState(null);
 
         if (attack != null)
             readyTimes[attack] = Time.time + attack.cooldown;
@@ -698,38 +739,30 @@ public class Enemy : MonoBehaviour, IDamageFilter
 
     private bool HitTarget(EnemyAttack attack, DamageKind kind)
     {
-        if (targetHealth == null || !targetHealth.TakeDamage(new DamageInfo(attack.damage, kind, Position)))
+        if (targetHealth == null)
             return false;
 
-        if (targetRb != null && !targetHealth.IsDead)
-        {
-            float direction = Mathf.Sign(TargetPoint.x - Position.x);
-            targetRb.AddForce(new Vector2(direction * attack.knockback, KnockbackLift), ForceMode2D.Impulse);
-        }
-
-        return true;
+        Vector2 point = targetCollider != null ? targetCollider.ClosestPoint(Position) : TargetPoint;
+        return Combat.Strike(gameObject, targetHealth, attack.data, point, Mathf.Sign(TargetPoint.x - Position.x), kind);
     }
 
     // ------------------------------------------------------- Coups reçus
 
-    private void OnDamaged(int damage)
+    private void OnHit(DamageInfo info)
     {
         Alert();
 
-        // Super-armure : l'armement continue et l'ennemi n'est pas étourdi.
-        if (phase == Phase.Windup && archetype.superArmor)
+        // Super-armure : l'armement continue.
+        if (CurrentPhase == Phase.Windup && archetype.superArmor)
             return;
 
         // Une charge lancée ne s'arrête pas sur un coup.
-        if (phase == Phase.Active && currentAttack != null && currentAttack.kind == EnemyAttackKind.Charge)
+        if (CurrentPhase == Phase.Active && currentAttack != null && currentAttack.kind == EnemyAttackKind.Charge)
             return;
 
-        // Un coup reçu pendant l'armement l'interrompt.
-        if (phase == Phase.Windup)
+        // Un coup pendant l'armement l'interrompt ; un coup qui étourdit coupe aussi la récupération.
+        if (CurrentPhase == Phase.Windup || (IsBusy && archetype.hitstunScale > 0f))
             Interrupt();
-
-        if (archetype.hitStunTime > 0f)
-            stunnedUntil = Time.time + archetype.hitStunTime;
     }
 
     private void OnDied()
@@ -738,11 +771,8 @@ public class Enemy : MonoBehaviour, IDamageFilter
         EndAttack(null);
         LeaveCover();
 
-        // Le corps reste visible mais ne bloque plus personne.
-        rb.linearVelocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Kinematic;
-        bodyCollider.enabled = false;
-
+        // Le corps est projeté par le dernier coup, puis reste au sol sans bloquer personne.
+        rb.excludeLayers = corpseIgnoredLayers;
         telegraph.SetDead();
 
         if (behaviour != null)

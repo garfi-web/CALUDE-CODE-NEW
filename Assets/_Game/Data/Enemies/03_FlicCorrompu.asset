@@ -20,30 +20,29 @@ MonoBehaviour:
   detectionRange: 14
   weight: 1
   superArmor: 0
-  hitStunTime: 0.25
+  hitstunScale: 0.8
   bodyColor: {r: 0.15, g: 0.25, b: 0.55, a: 1}
   bodySize: {x: 0.9, y: 1.7}
+  bloodColor: {r: 0.55, g: 0.02, b: 0.03, a: 1}
+  bloodGlows: 0
+  canBeDismembered: 1
   attacks:
   - name: "Tir vis\xE9"
     kind: 1
+    data: {fileID: 11400000, guid: 35d8ae51f362add45b3eff2e7254838e, type: 2}
     range: 9
-    windup: 0.7
-    active: 0.05
-    recovery: 0.4
     cooldown: 0.3
     maxUses: 0
     weight: 3
-    damage: 14
-    knockback: 3
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}
@@ -52,24 +51,20 @@ MonoBehaviour:
     aimLineWidth: 0.03
   - name: Rafale de 3
     kind: 1
+    data: {fileID: 11400000, guid: 2f746da24b9984741bc54e53089fb623, type: 2}
     range: 9
-    windup: 0.9
-    active: 0.3
-    recovery: 0.7
     cooldown: 0.3
     maxUses: 0
     weight: 1
-    damage: 10
-    knockback: 2
     feint: 0
     projectileCount: 3
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}
@@ -78,24 +73,20 @@ MonoBehaviour:
     aimLineWidth: 0.1
   - name: Coup de matraque
     kind: 0
+    data: {fileID: 11400000, guid: 7c66b818d96e27443b8d9746ad5d38c9, type: 2}
     range: 1.5
-    windup: 0.45
-    active: 0.12
-    recovery: 0.5
     cooldown: 0.6
     maxUses: 0
     weight: 1
-    damage: 12
-    knockback: 5
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}
@@ -104,24 +95,20 @@ MonoBehaviour:
     aimLineWidth: 0.04
   - name: Appel radio
     kind: 6
+    data: {fileID: 11400000, guid: 0084e748006e0924b9da8751ed721bdb, type: 2}
     range: 1.2
-    windup: 1.2
-    active: 0
-    recovery: 0.3
     cooldown: 0.6
     maxUses: 1
     weight: 1
-    damage: 10
-    knockback: 5
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 11400000, guid: 4c9064971c10a1f4ebd3ccdb5105cf65, type: 2}

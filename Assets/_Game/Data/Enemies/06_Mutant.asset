@@ -20,30 +20,29 @@ MonoBehaviour:
   detectionRange: 10
   weight: 2
   superArmor: 1
-  hitStunTime: 0
+  hitstunScale: 0
   bodyColor: {r: 0.45, g: 0.55, b: 0.3, a: 1}
   bodySize: {x: 1.4, y: 2.4}
+  bloodColor: {r: 0.3, g: 0.35, b: 0.05, a: 1}
+  bloodGlows: 0
+  canBeDismembered: 1
   attacks:
   - name: Charge
     kind: 3
+    data: {fileID: 11400000, guid: 270bdaacb1fa7f240b5afe7eb0e38888, type: 2}
     range: 10
-    windup: 1
-    active: 1.2
-    recovery: 1.5
     cooldown: 3
     maxUses: 0
     weight: 1
-    damage: 30
-    knockback: 10
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}
@@ -52,24 +51,20 @@ MonoBehaviour:
     aimLineWidth: 0.04
   - name: Frappe au sol
     kind: 4
+    data: {fileID: 11400000, guid: 2df5a45df0298294bba43824c3d40101, type: 2}
     range: 3.5
-    windup: 0.9
-    active: 0.2
-    recovery: 1.2
     cooldown: 2.5
     maxUses: 0
     weight: 1
-    damage: 22
-    knockback: 7
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}
@@ -78,24 +73,20 @@ MonoBehaviour:
     aimLineWidth: 0.04
   - name: Balayage
     kind: 0
+    data: {fileID: 11400000, guid: 6ee4c29b1718e23428acef76e0058a15, type: 2}
     range: 2
-    windup: 0.7
-    active: 0.15
-    recovery: 0.8
     cooldown: 1
     maxUses: 0
     weight: 1
-    damage: 18
-    knockback: 8
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}

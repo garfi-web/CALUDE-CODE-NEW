@@ -2,28 +2,23 @@ using UnityEngine;
 
 // Balle : avance en ligne droite et teste sa trajectoire à chaque pas (pas de Rigidbody).
 // Elle ne touche pas les personnages du même camp (même tag que le tireur).
-// Si la cible est invulnérable (esquive), la balle la traverse.
+// Si la cible est invulnérable (esquive), la balle la traverse. Objet en réserve (Pool).
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float radius = 0.08f;
     [SerializeField] private float lifetime = 3f;
-    [SerializeField] private float knockbackLift = 1f;
 
     private readonly RaycastHit2D[] hits = new RaycastHit2D[8];
     private GameObject owner;
+    private AttackData attack;
     private Vector2 velocity;
-    private Vector2 origin;
-    private int damage;
-    private float knockback;
     private float dieTime;
 
-    public void Launch(GameObject shooter, Vector2 direction, float speed, int hitDamage, float hitKnockback)
+    public void Launch(GameObject shooter, Vector2 direction, float speed, AttackData data)
     {
         owner = shooter;
+        attack = data;
         velocity = direction.normalized * speed;
-        origin = transform.position;
-        damage = hitDamage;
-        knockback = hitKnockback;
         dieTime = Time.time + lifetime;
         transform.right = direction;
     }
@@ -32,7 +27,7 @@ public class Projectile : MonoBehaviour
     {
         if (Time.time >= dieTime)
         {
-            Destroy(gameObject);
+            Pool.Release(this);
             return;
         }
 
@@ -45,9 +40,9 @@ public class Projectile : MonoBehaviour
         // Physics2D.CircleCast trie les contacts du plus proche au plus lointain.
         for (int i = 0; i < count; i++)
         {
-            if (HandleHit(hits[i].collider))
+            if (HandleHit(hits[i].collider, hits[i].point))
             {
-                Destroy(gameObject);
+                Pool.Release(this);
                 return;
             }
         }
@@ -56,7 +51,7 @@ public class Projectile : MonoBehaviour
     }
 
     // Renvoie vrai si la balle s'arrête.
-    private bool HandleHit(Collider2D other)
+    private bool HandleHit(Collider2D other, Vector2 point)
     {
         if (owner != null && other.transform.IsChildOf(owner.transform))
             return false;
@@ -71,15 +66,7 @@ public class Projectile : MonoBehaviour
             if (owner != null && health.CompareTag(owner.tag))
                 return false;
 
-            if (!health.TakeDamage(new DamageInfo(damage, DamageKind.Ranged, origin)))
-                return false;
-
-            Rigidbody2D body = other.attachedRigidbody;
-
-            if (body != null && !health.IsDead)
-                body.AddForce(new Vector2(Mathf.Sign(velocity.x) * knockback, knockbackLift), ForceMode2D.Impulse);
-
-            return true;
+            return Combat.Strike(owner, health, attack, point, Mathf.Sign(velocity.x), DamageKind.Ranged, false);
         }
 
         Cover cover = other.GetComponent<Cover>();

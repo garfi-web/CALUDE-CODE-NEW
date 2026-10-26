@@ -233,7 +233,7 @@ Sur la voie sobre, le niveau offre des abris et des chemins de fuite en plus ; l
 
 | Fiche | Code |
 |---|---|
-| Statistiques et attaques | `Assets/_Game/Data/Enemies/*.asset` (`EnemyArchetype`), un fichier par ennemi et par variante d'arme du Voyou |
+| Statistiques et attaques | `Assets/_Game/Data/Enemies/*.asset` (`EnemyArchetype`), un fichier par ennemi et par variante d'arme du Voyou ; images (armement, actif, récupération), dégâts, impact et recul dans `Data/Attacks/Enemies/*.asset` (`AttackData`, 60 FPS : 0,35 s = 21 images) |
 | Règles communes (armement minimal, interruption, super-armure, récupération, jetons) | `Scripts/Enemies/Enemy.cs`, `AttackTokens.cs` |
 | Comportements | `MeleeAggressive`, `Commander`, `CoverShooter`, `Tactical`, `HeavyCharger` ; `Ambusher`, `Feinter`, `Trickster` se battent encore comme des Voyous |
 | Abri (25 % des dégâts à distance de face) | `Cover.cs` + `Enemy.Filter` |

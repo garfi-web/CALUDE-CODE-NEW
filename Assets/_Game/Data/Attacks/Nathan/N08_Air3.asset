@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99fbc6718fc8a824f9af31580e5cd45d, type: 3}
+  m_Name: N08_Air3
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  displayName: "A\xE9rien 3"
+  animationId: 7
+  startup: 6
+  active: 4
+  recovery: 12
+  cancelWindow: {x: 7, y: 20}
+  damage: 14
+  damageType: 0
+  hitboxOffset: {x: 0.8, y: 0}
+  hitboxSize: {x: 1.2, y: 1}
+  lunge: 0
+  hitstop: 7
+  shake: 0.2
+  zoom: 0
+  impactFlash: 0
+  knockback: 0
+  knockbackVelocity: {x: 2.5, y: 8}
+  hitstun: 32

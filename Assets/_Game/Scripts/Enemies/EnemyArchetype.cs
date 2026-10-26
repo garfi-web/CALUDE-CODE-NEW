@@ -19,6 +19,7 @@ public enum EnemyBehaviourType
     Ambusher,
     Feinter,
     Trickster,
+    TrainingDummy,
 }
 
 public enum EnemyAttackKind
@@ -32,49 +33,46 @@ public enum EnemyAttackKind
     Summon,     // appelle un renfort
 }
 
-// Une attaque telle que décrite dans docs/ENEMIES.md.
+// Une attaque d'ennemi telle que décrite dans docs/ENEMIES.md. Les images (démarrage = armement,
+// actif, récupération), les dégâts, l'impact et le recul sont dans l'AttackData ; ici, ce qui
+// est propre à l'IA (portée, recharge, tirage) et aux attaques spéciales.
 [Serializable]
 public class EnemyAttack
 {
-    // Règle commune : aucune attaque ne frappe plus vite (docs/ENEMIES.md, section 0).
-    public const float MinWindup = 0.35f;
+    // Règle commune : aucune attaque ne frappe plus vite que 0,35 s (docs/ENEMIES.md, section 0).
+    public const int MinWindupFrames = 21;
 
     public string name = "Attaque";
     public EnemyAttackKind kind = EnemyAttackKind.Melee;
+    public AttackData data;
 
-    [Header("Timing (secondes)")]
+    [Header("IA")]
     public float range = 1.2f;
-    public float windup = 0.35f;
-    public float active = 0.1f;
-    public float recovery = 0.35f;
-    [Tooltip("Délai minimal entre deux utilisations de cette attaque, compté à la fin de la récupération.")]
+    [Tooltip("Délai minimal (s) entre deux utilisations de cette attaque, compté à la fin de la récupération.")]
     public float cooldown = 0.6f;
     [Tooltip("Nombre d'utilisations par combat (0 = illimité).")]
     public int maxUses;
     [Tooltip("Poids du tirage quand plusieurs attaques du même type sont prêtes.")]
     public float weight = 1f;
-
-    [Header("Effet")]
-    public int damage = 10;
-    public float knockback = 5f;
     [Tooltip("Feinte : l'armement s'annule sans frapper. L'annonce doit avoir une couleur propre.")]
     public bool feint;
 
     [Header("Projectiles et grenades")]
     public int projectileCount = 1;
-    public float shotInterval = 0.1f;
+    [Tooltip("Images entre deux tirs d'une rafale.")]
+    public int shotIntervalFrames = 6;
     public float projectileSpeed = 18f;
     [Tooltip("Grenade : rayon de la zone. Onde au sol : la portée sert de rayon.")]
     public float areaRadius = 2.5f;
-    [Tooltip("Grenade : délai entre l'impact et l'explosion.")]
+    [Tooltip("Grenade : délai (s) entre l'impact et l'explosion.")]
     public float fuse = 1.2f;
 
     [Header("Charge")]
     public float chargeSpeed = 11f;
-    [Tooltip("Pendant ce temps au début de l'armement, la charge suit la cible.")]
-    public float trackingTime = 0.6f;
-    [Tooltip("Récupération quand la charge finit dans un mur (ennemi sonné).")]
-    public float wallRecovery = 2.5f;
+    [Tooltip("Images, au début de l'armement, pendant lesquelles la charge suit la cible.")]
+    public int trackingFrames = 36;
+    [Tooltip("Récupération (images) quand la charge finit dans un mur (ennemi sonné).")]
+    public int wallRecoveryFrames = 150;
 
     [Header("Ordre et renfort")]
     public float buffWindupMultiplier = 0.8f;
@@ -88,6 +86,9 @@ public class EnemyAttack
     public float aimLineWidth = 0.04f;
 
     public bool IsRanged => kind is EnemyAttackKind.Projectile or EnemyAttackKind.Grenade;
+    public int WindupFrames => data != null ? data.startup : MinWindupFrames;
+    public int ActiveFrames => data != null ? data.active : 1;
+    public int RecoveryFrames => data != null ? data.recovery : 0;
 }
 
 // Fiche d'un ennemi : statistiques identiques sur les deux trajectoires (BESTIARY.md, section 6).
@@ -106,11 +107,26 @@ public class EnemyArchetype : ScriptableObject
     public EnemyWeight weight = EnemyWeight.Light;
     [Tooltip("Les coups reçus pendant l'armement ne l'interrompent pas.")]
     public bool superArmor;
-    public float hitStunTime = 0.3f;
+    [Tooltip("Multiplicateur de l'étourdissement des coups reçus (0 = jamais étourdi).")]
+    public float hitstunScale = 1f;
 
     [Header("Silhouette provisoire")]
     public Color bodyColor = new(0.8f, 0.15f, 0.15f);
     public Vector2 bodySize = new(0.9f, 1.7f);
 
+    [Header("Sang")]
+    [Tooltip("Rouge pour les humains ; noir, rouge lumineux... pour les ennemis surnaturels.")]
+    public Color bloodColor = new(0.55f, 0.02f, 0.03f);
+    [Tooltip("Sang lumineux (ennemis surnaturels).")]
+    public bool bloodGlows;
+    public bool canBeDismembered = true;
+
     public EnemyAttack[] attacks = Array.Empty<EnemyAttack>();
+
+    public float KnockbackScale => weight switch
+    {
+        EnemyWeight.Light => 1f,
+        EnemyWeight.Medium => 0.5f,
+        _ => 0f,
+    };
 }

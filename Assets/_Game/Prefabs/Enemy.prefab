@@ -245,6 +245,8 @@ GameObject:
   - component: {fileID: 7977575630748792525}
   - component: {fileID: 2912679488315626369}
   - component: {fileID: 6566347060233642539}
+  - component: {fileID: 5433569687264271202}
+  - component: {fileID: 9120198392263221061}
   - component: {fileID: 783758776838910002}
   - component: {fileID: 2496305039570759472}
   m_Layer: 10
@@ -349,7 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 100
-  invulnerabilityTime: 0.15
+  invulnerabilityTime: 0
 --- !u!114 &6566347060233642539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +368,42 @@ MonoBehaviour:
   aimLine: {fileID: 9163644344502322443}
   buffColor: {r: 1, g: 0.45, b: 0.1, a: 1}
   deadColor: {r: 0.25, g: 0.2, b: 0.2, a: 1}
+--- !u!114 &5433569687264271202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3127361022150110903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13fc0f1e0bf884e4b9aae735aa0995d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStop
+--- !u!114 &9120198392263221061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3127361022150110903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30304be0799bc634f831d8b51c21974c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitReaction
+  knockbackScale: 1
+  hitstunScale: 1
+  groundFriction: 28
+  knockdownFrames: 36
+  wallBounceSpeed: 7
+  wallBounceLift: 9
+  groundBounceLift: 11
+  minBounceSpeed: 6
+  visual: {fileID: 8403466909212124525}
+  body: {fileID: 3037765738706679625}
+  whiteFlashFrames: 3
+  painPoseFrames: 10
 --- !u!114 &783758776838910002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,10 +423,13 @@ MonoBehaviour:
   telegraph: {fileID: 6566347060233642539}
   projectilePrefab: {fileID: 7740019179549782449, guid: 7d6cd6d9b0ac1d3449bf17c174ec273f, type: 3}
   grenadePrefab: {fileID: 8126775393886930362, guid: 9eb9c828b3d747b47bb2c14cf46b9f45, type: 3}
+  corpseIgnoredLayers:
+    serializedVersion: 2
+    m_Bits: 1536
   coverRangedMultiplier: 0.25
   hopSpeed: 12
   maxHopHeight: 2
-  feintRecovery: 0.2
+  feintRecoveryFrames: 12
   stunnedColor: {r: 0.45, g: 0.5, b: 0.75, a: 1}
 --- !u!114 &2496305039570759472
 MonoBehaviour:

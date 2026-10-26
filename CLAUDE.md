@@ -6,6 +6,8 @@ Jeu d'action 2D latéral (Unity 6, URP 2D, C#), dark fantasy et horreur psycholo
 - Tout le jeu vit dans `Assets/_Game/`. Les scripts sont dans `Scripts/<Domaine>/`, les outils d'éditeur dans `Editor/`.
 - Le gameplay ne dépend jamais des animations : l'Animator est piloté par `CharacterAnimator` via des événements (`AttackStarted`, `DodgeStarted`, `Health.Damaged`, `Health.Died`).
 - Tous les dégâts passent par `Health.TakeDamage` (avec un `DamageInfo` pour les tirs et les explosions). L'invulnérabilité passe par `Health.GrantInvulnerability`.
+- Combat : toute attaque (Nathan et ennemis) est un `AttackData` en images à 60 FPS ; le pas physique vaut 1/60 s. Les coups passent par `Combat.Strike`. Un compteur d'images de combat n'avance jamais pendant un `HitStop` (arrêt sur image par combattant, jamais `Time.timeScale`). Seul `GameTime` touche à `Time.timeScale` (pause, ralenti).
+- Effets de combat et gore : dans `CombatVfx`, en réserve (`Pool`, particules par `Emit`), jamais d'`Instantiate` ou de `Destroy` pendant un combat ; ils respectent `GameOptions` (gore, tremblement, flashs).
 - Ennemis : les valeurs sont dans les archétypes (`Data/Enemies/*.asset`, `EnemyArchetype`), jamais en dur dans un comportement. Les règles communes (armement minimal 0,35 s, interruption, super-armure, jetons) vivent dans `Enemy` ; un comportement ne fait que choisir quoi faire.
 - Les commandes passent par `GameInput`, jamais par `Input` ou `Keyboard` directement.
 - Mouvement physique : `Rigidbody2D.linearVelocity`. Un script qui impose une vitesse temporaire (esquive, recul) appelle `PlayerController.LockMovement`.

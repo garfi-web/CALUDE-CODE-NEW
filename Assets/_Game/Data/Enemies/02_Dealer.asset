@@ -20,30 +20,29 @@ MonoBehaviour:
   detectionRange: 12
   weight: 1
   superArmor: 0
-  hitStunTime: 0.25
+  hitstunScale: 0.8
   bodyColor: {r: 0.55, g: 0.2, b: 0.65, a: 1}
   bodySize: {x: 0.9, y: 1.7}
+  bloodColor: {r: 0.55, g: 0.02, b: 0.03, a: 1}
+  bloodGlows: 0
+  canBeDismembered: 1
   attacks:
   - name: "Ordre \xAB Chopez-le \xBB"
     kind: 5
+    data: {fileID: 11400000, guid: c2675725b7f63d948b8d66ab8536f558, type: 2}
     range: 1.2
-    windup: 1
-    active: 0
-    recovery: 0.5
     cooldown: 8
     maxUses: 0
     weight: 1
-    damage: 10
-    knockback: 5
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}
@@ -52,24 +51,20 @@ MonoBehaviour:
     aimLineWidth: 0.04
   - name: Tir au pistolet
     kind: 1
+    data: {fileID: 11400000, guid: 338b18cee6595dc40aebd851e0c42003, type: 2}
     range: 8
-    windup: 0.6
-    active: 0.1
-    recovery: 0.9
     cooldown: 1.2
     maxUses: 0
     weight: 1
-    damage: 14
-    knockback: 3
     feint: 0
     projectileCount: 2
-    shotInterval: 0.25
+    shotIntervalFrames: 15
     projectileSpeed: 16
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}
@@ -78,24 +73,20 @@ MonoBehaviour:
     aimLineWidth: 0.04
   - name: Coup de crosse
     kind: 0
+    data: {fileID: 11400000, guid: 7f85ff3bfc4be314c88451201181a67c, type: 2}
     range: 1.1
-    windup: 0.4
-    active: 0.1
-    recovery: 0.5
     cooldown: 0.6
     maxUses: 0
     weight: 1
-    damage: 10
-    knockback: 5
     feint: 0
     projectileCount: 1
-    shotInterval: 0.1
+    shotIntervalFrames: 6
     projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingTime: 0.6
-    wallRecovery: 2.5
+    trackingFrames: 36
+    wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}

@@ -1,7 +1,8 @@
 using UnityEngine;
 
 // Annonce visuelle des attaques : couleur du corps pendant l'armement, ligne de visée,
-// état (sonné, rechargement), renfort d'un ordre. Priorité : mort > armement > état > renfort.
+// état (sonné, rechargement), renfort d'un ordre, flash blanc quand il est touché.
+// Priorité : flash > mort > armement > état > renfort.
 // En attendant les animations, c'est la seule lecture des attaques : rien ne frappe sans elle.
 public class EnemyTelegraph : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class EnemyTelegraph : MonoBehaviour
     private Color? stateColor;
     private bool buffed;
     private bool dead;
+    private int flashLeft;
 
     private void Awake()
     {
@@ -22,6 +24,13 @@ public class EnemyTelegraph : MonoBehaviour
             body = GetComponentInChildren<SpriteRenderer>();
 
         HideAim();
+    }
+
+    // Le flash compte les images même pendant l'arrêt sur image : c'est là qu'il se voit.
+    private void FixedUpdate()
+    {
+        if (flashLeft > 0 && --flashLeft == 0)
+            Refresh();
     }
 
     public void SetBaseColor(Color color)
@@ -61,6 +70,12 @@ public class EnemyTelegraph : MonoBehaviour
         Refresh();
     }
 
+    public void Flash(int frames)
+    {
+        flashLeft = Mathf.Max(flashLeft, frames);
+        Refresh();
+    }
+
     public void ShowAim(Vector2 from, Vector2 to, Color color, float width)
     {
         if (aimLine == null)
@@ -85,7 +100,9 @@ public class EnemyTelegraph : MonoBehaviour
         if (body == null)
             return;
 
-        if (dead)
+        if (flashLeft > 0)
+            body.color = Color.white;
+        else if (dead)
             body.color = deadColor;
         else if (windupColor.HasValue)
             body.color = windupColor.Value;

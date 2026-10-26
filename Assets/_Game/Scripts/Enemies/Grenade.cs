@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Grenade : lancer en cloche vers un point, puis cercle rouge au sol pendant la fusée,
-// puis explosion qui touche tout personnage de l'autre camp dans le rayon.
+// puis explosion qui touche tout personnage de l'autre camp dans le rayon. Objet en réserve (Pool).
 public class Grenade : MonoBehaviour
 {
     [SerializeField] private LineRenderer zone;
@@ -13,26 +13,27 @@ public class Grenade : MonoBehaviour
     [SerializeField] private float maxFlightTime = 3f;
     [SerializeField] private int zoneSegments = 40;
     [SerializeField] private Color zoneColor = new(1f, 0.1f, 0.1f);
-    [SerializeField] private float knockbackLift = 4f;
 
     private readonly RaycastHit2D[] hits = new RaycastHit2D[8];
+    private readonly Collider2D[] overlaps = new Collider2D[16];
+    private readonly HashSet<Health> damaged = new();
     private GameObject owner;
+    private AttackData attack;
     private Vector2 velocity;
-    private int damage;
     private float areaRadius;
     private float fuse;
-    private float knockback;
     private float launchTime;
     private bool landed;
 
-    public void Launch(GameObject thrower, Vector2 targetPoint, int hitDamage, float area, float fuseTime, float hitKnockback)
+    public void Launch(GameObject thrower, Vector2 targetPoint, AttackData data, float area, float fuseTime)
     {
         owner = thrower;
-        damage = hitDamage;
+        attack = data;
         areaRadius = area;
         fuse = fuseTime;
-        knockback = hitKnockback;
         launchTime = Time.time;
+        landed = false;
+        StopAllCoroutines();
 
         // Cloche de hauteur fixe au-dessus du point le plus haut, pour passer par-dessus les abris :
         // montée jusqu'au sommet, puis chute jusqu'au point visé.
@@ -68,7 +69,7 @@ public class Grenade : MonoBehaviour
         {
             Collider2D other = hits[i].collider;
 
-            // Elle passe à travers les personnages et rebondit sur rien : elle s'arrête au sol ou au mur.
+            // Elle passe à travers les personnages : elle s'arrête au sol, sur un abri ou au mur.
             if (other.GetComponentInParent<Health>() != null)
                 continue;
 
@@ -105,31 +106,30 @@ public class Grenade : MonoBehaviour
         Explode();
         DrawZone(0.25f);
         yield return new WaitForSeconds(0.12f);
-        Destroy(gameObject);
+        Pool.Release(this);
     }
 
     private void Explode()
     {
-        var damaged = new HashSet<Health>();
+        damaged.Clear();
+        var filter = ContactFilter2D.noFilter;
+        filter.useTriggers = false;
+        int count = Physics2D.OverlapCircle(transform.position, areaRadius, filter, overlaps);
 
-        foreach (Collider2D other in Physics2D.OverlapCircleAll(transform.position, areaRadius))
+        for (int i = 0; i < count; i++)
         {
-            Health health = other.GetComponentInParent<Health>();
+            Health health = overlaps[i].GetComponentInParent<Health>();
 
             if (health == null || !damaged.Add(health) || (owner != null && health.CompareTag(owner.tag)))
                 continue;
 
-            if (!health.TakeDamage(new DamageInfo(damage, DamageKind.Explosion, transform.position)))
-                continue;
-
-            Rigidbody2D body = other.attachedRigidbody;
-
-            if (body != null && !health.IsDead)
-            {
-                float direction = Mathf.Sign(body.position.x - transform.position.x);
-                body.AddForce(new Vector2(direction * knockback, knockbackLift), ForceMode2D.Impulse);
-            }
+            float direction = Mathf.Sign(health.transform.position.x - transform.position.x);
+            Combat.Strike(owner, health, attack, overlaps[i].ClosestPoint(transform.position), direction,
+                DamageKind.Explosion, false);
         }
+
+        if (CombatVfx.Instance != null)
+            CombatVfx.Instance.Explosion(transform.position, areaRadius);
     }
 
     private void DrawZone(float width)

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99fbc6718fc8a824f9af31580e5cd45d, type: 3}
+  m_Name: E06_Mutant_Charge
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  displayName: Charge
+  animationId: 0
+  startup: 60
+  active: 72
+  recovery: 90
+  cancelWindow: {x: 0, y: 0}
+  damage: 30
+  damageType: 0
+  hitboxOffset: {x: 0.9, y: 0.1}
+  hitboxSize: {x: 1.2, y: 0.9}
+  lunge: 2
+  hitstop: 10
+  shake: 0.6
+  zoom: 0
+  impactFlash: 0
+  knockback: 1
+  knockbackVelocity: {x: 10, y: 5}
+  hitstun: 30

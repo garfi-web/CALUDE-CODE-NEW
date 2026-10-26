@@ -107,4 +107,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   radius: 0.08
   lifetime: 3
-  knockbackLift: 1
