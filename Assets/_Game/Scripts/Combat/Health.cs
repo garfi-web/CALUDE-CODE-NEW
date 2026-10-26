@@ -16,16 +16,40 @@ public class Health : MonoBehaviour
     public event Action<int> Damaged;
     public event Action Died;
 
+    private IDamageFilter[] filters;
     private float invulnerableUntil;
 
     private void Awake()
     {
         CurrentHealth = maxHealth;
+        filters = GetComponents<IDamageFilter>();
     }
 
-    public bool TakeDamage(int damage)
+    // Change le maximum (archétype d'ennemi appliqué après l'instanciation) et remet la vie au plein.
+    public void SetMaxHealth(int value)
     {
-        if (IsDead || IsInvulnerable || damage <= 0)
+        maxHealth = Mathf.Max(1, value);
+        CurrentHealth = maxHealth;
+        filters = GetComponents<IDamageFilter>();
+        HealthChanged?.Invoke(CurrentHealth, maxHealth);
+    }
+
+    public bool TakeDamage(int damage) => TakeDamage(new DamageInfo(damage));
+
+    public bool TakeDamage(DamageInfo info)
+    {
+        if (IsDead || IsInvulnerable)
+            return false;
+
+        if (filters != null)
+        {
+            foreach (IDamageFilter filter in filters)
+                info = filter.Filter(info);
+        }
+
+        int damage = info.Amount;
+
+        if (damage <= 0)
             return false;
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - damage);

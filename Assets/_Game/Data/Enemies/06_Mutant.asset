@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550505bf99551364da6d51d401e32404, type: 3}
+  m_Name: 06_Mutant
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyArchetype
+  displayName: Mutant
+  behaviour: 4
+  maxHealth: 260
+  moveSpeed: 2
+  altSpeed: 4.5
+  detectionRange: 10
+  weight: 2
+  superArmor: 1
+  hitStunTime: 0
+  bodyColor: {r: 0.45, g: 0.55, b: 0.3, a: 1}
+  bodySize: {x: 1.4, y: 2.4}
+  attacks:
+  - name: Charge
+    kind: 3
+    range: 10
+    windup: 1
+    active: 1.2
+    recovery: 1.5
+    cooldown: 3
+    maxUses: 0
+    weight: 1
+    damage: 30
+    knockback: 10
+    feint: 0
+    projectileCount: 1
+    shotInterval: 0.1
+    projectileSpeed: 18
+    areaRadius: 2.5
+    fuse: 1.2
+    chargeSpeed: 11
+    trackingTime: 0.6
+    wallRecovery: 2.5
+    buffWindupMultiplier: 0.8
+    buffDuration: 5
+    summon: {fileID: 0}
+    telegraphColor: {r: 1, g: 0.35, b: 0.1, a: 1}
+    aimLine: 0
+    aimLineWidth: 0.04
+  - name: Frappe au sol
+    kind: 4
+    range: 3.5
+    windup: 0.9
+    active: 0.2
+    recovery: 1.2
+    cooldown: 2.5
+    maxUses: 0
+    weight: 1
+    damage: 22
+    knockback: 7
+    feint: 0
+    projectileCount: 1
+    shotInterval: 0.1
+    projectileSpeed: 18
+    areaRadius: 2.5
+    fuse: 1.2
+    chargeSpeed: 11
+    trackingTime: 0.6
+    wallRecovery: 2.5
+    buffWindupMultiplier: 0.8
+    buffDuration: 5
+    summon: {fileID: 0}
+    telegraphColor: {r: 1, g: 0.7, b: 0.3, a: 1}
+    aimLine: 0
+    aimLineWidth: 0.04
+  - name: Balayage
+    kind: 0
+    range: 2
+    windup: 0.7
+    active: 0.15
+    recovery: 0.8
+    cooldown: 1
+    maxUses: 0
+    weight: 1
+    damage: 18
+    knockback: 8
+    feint: 0
+    projectileCount: 1
+    shotInterval: 0.1
+    projectileSpeed: 18
+    areaRadius: 2.5
+    fuse: 1.2
+    chargeSpeed: 11
+    trackingTime: 0.6
+    wallRecovery: 2.5
+    buffWindupMultiplier: 0.8
+    buffDuration: 5
+    summon: {fileID: 0}
+    telegraphColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+    aimLine: 0
+    aimLineWidth: 0.04

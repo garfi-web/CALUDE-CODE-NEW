@@ -95,7 +95,7 @@ claude mcp add --scope user unity-mcp -- "C:\Users\Home\.unity\relay\relay_win.e
 claude mcp add --scope user blender -- uvx mcp-for-blender
 ```
 
-Vérifier dans Claude Code : `/mcp` (état et reconnexion). Unity se déconnecte à chaque recompilation, c'est normal : attendre quelques secondes, puis reconnecter.
+Vérifier dans Claude Code : `/mcp` (état et reconnexion). Unity se déconnecte à chaque recompilation, c'est normal : attendre quelques secondes, puis reconnecter. Le relais s'arrête aussi seul après 3 minutes sans requête (« Auto-shutdown timer fired ») : la requête suivante le relance, il suffit parfois de la refaire. Le journal de l'éditeur est dans `Logs/Editor.log` (dans le projet).
 
 ## 6. Sauvegarder ce qui n'est pas sur GitHub
 
@@ -118,4 +118,6 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond. Ensuite, attaque la PHASE B du bestiaire (architecture du code des ennemis) telle que décrite dans docs/ENEMIES.md, en respectant CLAUDE.md, et arrête-toi à la fin de la phase pour me montrer le résultat.
+> Lis CLAUDE.md, docs/REPRISE.md et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond. Ensuite, reprends la PHASE COMBAT DYNAMIQUE (consignes de l'auteur dans la conversation du 2026-10-26), en respectant CLAUDE.md, puis commite, pousse et attends mon feu vert pour la phase C.
+
+L'arène de test de la phase B se lance avec **Play** ; les touches **1 à 6** choisissent la vague (détail dans le `README.md`).

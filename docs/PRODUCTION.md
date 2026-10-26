@@ -3,11 +3,11 @@
 Choix, prompts, seeds, nombre d'essais et problèmes rencontrés, phase par phase.
 Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, animation, rendu toon) → spritesheets PNG → Unity.
 
-## État d'avancement (au 2026-10-25, sauvegarde avant arrêt)
+## État d'avancement (au 2026-10-26, sauvegarde de fin de phase B)
 
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
-- **Bestiaire** : phase A (intégration au design) terminée, **en attente du feu vert pour la phase B** (architecture du code des ennemis).
+- **Bestiaire** : phases A et B terminées. **Prochaine étape demandée par l'auteur : la phase « Combat dynamique »** (AttackData en images, hitstop, tremblement, effets d'impact, lanceur et coups aériens, dash, rebonds, sang en pool, options, mannequin, debug F1), avant la phase C (concepts de l'Acte I), qui attend le feu vert.
 
 **Décisions prises**
 
@@ -38,9 +38,10 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 - Fichier Blender de travail : `ArtSource/Blender/REDMET_personnages.blend` (une collection par personnage, mises à l'échelle : R0/R2 1,70 m, M2/M4 2,05 m, Mara 1,78 m, Chimiste 1,83 m).
 - Bestiaire phase A : `docs/BESTIARY.md` remis en place, `docs/ENEMIES.md` créé, cohérence Dealer / Chimiste et uniforme fictif du Flic.
 - Code : correction du recul sur coup mortel (`PlayerCombat`, `EnemyAI`).
+- **Bestiaire phase B** : architecture du code des ennemis, arène de test avec 6 vagues (touches 1 à 6), esquive à 0,40 s. Détail dans la section « Bestiaire — Phase B » plus bas.
 
 **Reste à faire**
-1. **Bestiaire phase B** (dès le feu vert) : `EnemyArchetype` (ScriptableObject), socle commun, comportements, projectiles, gestionnaire de vagues, `dodgeInvulnerability` à 0,40 s, arène de test (touches 1 à 5). Puis la **sauvegarde demandée avant la phase C**, et la phase C (concepts de l'Acte I).
+1. **Phase Combat dynamique** (consignes de l'auteur du 2026-10-26), puis commit, push et **feu vert de l'auteur pour la phase C** (concepts de l'Acte I).
 2. **Nettoyage des modèles dans Blender** (phase 1) : supprimer les fragments, fermer les trous, origine aux pieds, orientation, réduction, matériaux, vues isolées face/profil/3-4. **R1 et R2 à dériver du modèle R0** (amincissement, cernes, teint), **lunettes de Nathan à modéliser** (double foyer, verres fêlés pour R2).
 3. Personnages sans concept validé : **Nathan M0** (le faible, M0 = corps de R0 sans lunettes d'après `CHARACTERS.md` : à dériver de R0 dans Blender), **Nathan R1**, **Nathan R3**.
 4. Phase 1 point 5 : designs des deux ennemis du monde Red Met, à rapprocher du bestiaire.
@@ -314,3 +315,35 @@ Outils : `make_mask.py` (masques), mode inpainting de `concept.py` (seule la zon
   - **Constat pour la phase B** : `dodgeInvulnerability` (0,25 s) est plus court que l'armement minimal (0,35 s). Proposition : le passer à 0,40 s.
 - **Dealer (ennemi 02) ≠ Chimiste** : précisé dans `ENEMIES.md`, dans une note de `BESTIARY.md`, dans `CHARACTERS.md` (fiche du Chimiste, avec le concept retenu v2_10103) et dans `GDD.md`.
 - **Flic corrompu** : uniforme fictif, sans insigne, logo ni nom d'une police réelle, texte générique « POLICE » seulement. Précisé dans `ENEMIES.md` et dans une note de `BESTIARY.md`.
+
+## Bestiaire — Phase B : architecture du code des ennemis (2026-10-26)
+
+**Architecture** (`Assets/_Game/Scripts/Enemies/`)
+- `EnemyArchetype` (ScriptableObject) : PV, vitesses, détection, poids (léger, moyen, lourd), super-armure, étourdissement, silhouette provisoire, liste d'`EnemyAttack` (type, portée, armement, actif, récupération, recharge, utilisations, dégâts, recul, projectiles, zone, charge, ordre, renfort, couleur d'annonce, ligne de visée, feinte).
+- `Enemy` (socle) : applique l'archétype au prefab générique, détection et alerte de groupe, déplacement (avec saut par-dessus les abris), cycle armement → actif → récupération, interruption pendant l'armement, super-armure, charge qui sonne contre un mur, ordre (armement −20 %, jamais sous 0,35 s), renfort, filtre de dégâts derrière un abri. Le poids passe par la masse du Rigidbody2D (recul complet, moitié, nul).
+- `EnemyTelegraph` (couleur d'armement, ligne de visée, états), `AttackTokens` (2 au contact, 1 tireur), `Projectile` et `Grenade` (trajectoires testées par CircleCast, sans Rigidbody), `Cover`, `EnemyWaveManager`.
+- Comportements : `MeleeAggressive`, `Commander`, `CoverShooter`, `Tactical`, `HeavyCharger`. Points d'extension : `Ambusher`, `Feinter`, `Trickster` (Acte II) et les interfaces de l'Acte III (`EnemyExtensions.cs`).
+- `Health.TakeDamage(DamageInfo)` (corps à corps, tir, explosion, origine) avec des filtres `IDamageFilter` ; `TakeDamage(int)` reste valable. `EnemyAI` est supprimé.
+- `PlayerDodge` : invulnérabilité à **0,40 s**, et Nathan traverse les ennemis pendant l'esquive (layers `Player` et `Enemy`).
+- `ArenaBuilder` : layers `Player` et `Enemy` (collision Ennemi/Ennemi désactivée), prefabs `Enemy`, `Projectile`, `Grenade`, `Cover`, archétypes dans `Assets/_Game/Data/Enemies/` (créés seulement s'ils manquent), 6 vagues, HUD (PV cumulés de la vague).
+
+**Tests en mode Play** (banc de test lancé par le MCP Unity, dégâts et positions relevés dans la console)
+
+| Test | Résultat |
+|---|---|
+| Voyou : armement 0,35 s, coup à 10 | OK |
+| Coup reçu pendant l'armement | Attaque interrompue (Voyou) ; super-armure du Mutant : l'armement continue |
+| Ordre du Dealer | Couteau armé en 0,36 s au lieu de 0,45 ; le Dealer reste à 6-9 unités |
+| Jetons | 2 Voyous occupés au plus en même temps (vague 6) |
+| Flic | Gagne l'abri en x = 8 ; tir de face sur lui à l'abri : 5 dégâts sur 20 ; de flanc : 20 ; radio sous 50 % → un Voyou arrive (un premier appel interrompu par un coup, puis réussi) |
+| Soldat | Rafales arrêtées par l'abri libre ; grenade lancée quand Nathan se cache, explosion à 30 |
+| Mutant | Charge à 30, frappe au sol à 22 ; esquive tardive à travers la charge sans dégât ; charge dans le mur → sonné 2,49 s (couleur bleue) |
+
+**Problèmes rencontrés**
+- La grenade partait à hauteur de poitrine et heurtait l'abri derrière lequel le Soldat se poste. Corrigé : lancer par-dessus la tête, cloche de 2,5 unités au-dessus du point le plus haut.
+- Une esquive simulée trop tôt laissait la charge toucher : c'est la règle « esquiver tard » de la fiche, pas un défaut.
+- Avertissements d'API dépréciées d'Unity 6.6 (`ContactFilter2D.NoFilter`, `FindObjectsSortMode`) corrigés.
+- Le relais MCP d'Unity se coupe après 3 minutes d'inactivité : une nouvelle requête le relance.
+- La capture par l'outil `Camera_Capture` échoue sur ce projet ; `ScreenCapture.CaptureScreenshot` fonctionne.
+
+Capture : `docs/captures/2026-10-26_phaseB_arene_groupe.png` (vague 6 : un Voyou en armement, le Flic qui vise avec sa ligne rouge).

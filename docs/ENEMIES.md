@@ -22,7 +22,8 @@ Le GDD demande qu'un ennemi standard réclame **environ 4 fois plus d'actions of
 **Lisibilité et esquive**
 - **Toute attaque est annoncée** avant de frapper : posture d'armement, couleur, ligne de visée ou zone au sol. Pas de dégât sans annonce.
 - **Armement minimal : 0,35 s.** Aucune attaque ne frappe plus vite.
-- **L'esquive doit toujours pouvoir l'éviter.** Aujourd'hui, `dodgeInvulnerability` = 0,25 s, ce qui est plus court que l'armement minimal (0,35 s) : une esquive lancée au tout début de l'annonce prend le coup (constaté en test le 2026-10-25). **Phase B : passer `dodgeInvulnerability` à 0,40 s**, pour couvrir l'armement le plus court, quel que soit le moment où le joueur réagit pendant l'annonce.
+- **L'esquive doit toujours pouvoir l'éviter.** `dodgeInvulnerability` était de 0,25 s, plus court que l'armement minimal (0,35 s) : une esquive lancée au tout début de l'annonce prenait le coup (constaté en test le 2026-10-25). **Passé à 0,40 s en phase B**, pour couvrir l'armement le plus court quel que soit le moment où le joueur réagit. Pendant l'esquive, Nathan traverse aussi les ennemis : sans cela, la charge du Mutant ne s'évite pas en 2D.
+- **L'ordre du Dealer ne descend jamais sous 0,35 s** : l'armement réduit de 20 % est plafonné à l'armement minimal (coup de poing : 0,35 s, couteau : 0,45 → 0,36 s).
 - **Fenêtre de punition** : après chaque attaque, une récupération pendant laquelle l'ennemi ne peut ni attaquer ni bloquer.
 - **Étourdissement** : un coup reçu pendant l'armement l'interrompt (comportement actuel de `EnemyAI`), sauf pour les ennemis lourds (« super-armure » indiquée dans la fiche).
 
@@ -227,3 +228,15 @@ Valeurs indicatives. Les mécaniques (zones dangereuses, téléportation, illusi
 | (groupe) | 3 Voyous (couteau, barre, mains nues) + 1 Flic | Mixte : corps à corps couvert par un tireur |
 
 Sur la voie sobre, le niveau offre des abris et des chemins de fuite en plus ; les vagues sont les mêmes.
+
+## Implémentation (phase B)
+
+| Fiche | Code |
+|---|---|
+| Statistiques et attaques | `Assets/_Game/Data/Enemies/*.asset` (`EnemyArchetype`), un fichier par ennemi et par variante d'arme du Voyou |
+| Règles communes (armement minimal, interruption, super-armure, récupération, jetons) | `Scripts/Enemies/Enemy.cs`, `AttackTokens.cs` |
+| Comportements | `MeleeAggressive`, `Commander`, `CoverShooter`, `Tactical`, `HeavyCharger` ; `Ambusher`, `Feinter`, `Trickster` se battent encore comme des Voyous |
+| Abri (25 % des dégâts à distance de face) | `Cover.cs` + `Enemy.Filter` |
+| Points d'extension de l'Acte III | `Scripts/Enemies/EnemyExtensions.cs` (interfaces) |
+
+Choix faits là où la fiche ne tranchait pas : le Flic appelle la radio quand il passe sous 50 % de ses PV ; le renfort est un Voyou mains nues ; un abri libre arrête tous les tirs (Nathan s'en sert) et un abri occupé les laisse passer ; la charge s'arrête sur Nathan si elle le touche ; le jeton de tir unique vaut pour tous les tireurs.

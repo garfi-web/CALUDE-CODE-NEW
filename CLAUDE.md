@@ -5,7 +5,8 @@ Jeu d'action 2D latéral (Unity 6, URP 2D, C#), dark fantasy et horreur psycholo
 ## Code
 - Tout le jeu vit dans `Assets/_Game/`. Les scripts sont dans `Scripts/<Domaine>/`, les outils d'éditeur dans `Editor/`.
 - Le gameplay ne dépend jamais des animations : l'Animator est piloté par `CharacterAnimator` via des événements (`AttackStarted`, `DodgeStarted`, `Health.Damaged`, `Health.Died`).
-- Tous les dégâts passent par `Health.TakeDamage`. L'invulnérabilité passe par `Health.GrantInvulnerability`.
+- Tous les dégâts passent par `Health.TakeDamage` (avec un `DamageInfo` pour les tirs et les explosions). L'invulnérabilité passe par `Health.GrantInvulnerability`.
+- Ennemis : les valeurs sont dans les archétypes (`Data/Enemies/*.asset`, `EnemyArchetype`), jamais en dur dans un comportement. Les règles communes (armement minimal 0,35 s, interruption, super-armure, jetons) vivent dans `Enemy` ; un comportement ne fait que choisir quoi faire.
 - Les commandes passent par `GameInput`, jamais par `Input` ou `Keyboard` directement.
 - Mouvement physique : `Rigidbody2D.linearVelocity`. Un script qui impose une vitesse temporaire (esquive, recul) appelle `PlayerController.LockMovement`.
 - Les commentaires sont en français, le code (noms) en anglais.

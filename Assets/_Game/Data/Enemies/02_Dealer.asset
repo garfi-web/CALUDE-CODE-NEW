@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550505bf99551364da6d51d401e32404, type: 3}
+  m_Name: 02_Dealer
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyArchetype
+  displayName: Dealer
+  behaviour: 1
+  maxHealth: 90
+  moveSpeed: 2.5
+  altSpeed: 4.5
+  detectionRange: 12
+  weight: 1
+  superArmor: 0
+  hitStunTime: 0.25
+  bodyColor: {r: 0.55, g: 0.2, b: 0.65, a: 1}
+  bodySize: {x: 0.9, y: 1.7}
+  attacks:
+  - name: "Ordre \xAB Chopez-le \xBB"
+    kind: 5
+    range: 1.2
+    windup: 1
+    active: 0
+    recovery: 0.5
+    cooldown: 8
+    maxUses: 0
+    weight: 1
+    damage: 10
+    knockback: 5
+    feint: 0
+    projectileCount: 1
+    shotInterval: 0.1
+    projectileSpeed: 18
+    areaRadius: 2.5
+    fuse: 1.2
+    chargeSpeed: 11
+    trackingTime: 0.6
+    wallRecovery: 2.5
+    buffWindupMultiplier: 0.8
+    buffDuration: 5
+    summon: {fileID: 0}
+    telegraphColor: {r: 1, g: 0.3, b: 0.9, a: 1}
+    aimLine: 0
+    aimLineWidth: 0.04
+  - name: Tir au pistolet
+    kind: 1
+    range: 8
+    windup: 0.6
+    active: 0.1
+    recovery: 0.9
+    cooldown: 1.2
+    maxUses: 0
+    weight: 1
+    damage: 14
+    knockback: 3
+    feint: 0
+    projectileCount: 2
+    shotInterval: 0.25
+    projectileSpeed: 16
+    areaRadius: 2.5
+    fuse: 1.2
+    chargeSpeed: 11
+    trackingTime: 0.6
+    wallRecovery: 2.5
+    buffWindupMultiplier: 0.8
+    buffDuration: 5
+    summon: {fileID: 0}
+    telegraphColor: {r: 1, g: 0.15, b: 0.15, a: 1}
+    aimLine: 1
+    aimLineWidth: 0.04
+  - name: Coup de crosse
+    kind: 0
+    range: 1.1
+    windup: 0.4
+    active: 0.1
+    recovery: 0.5
+    cooldown: 0.6
+    maxUses: 0
+    weight: 1
+    damage: 10
+    knockback: 5
+    feint: 0
+    projectileCount: 1
+    shotInterval: 0.1
+    projectileSpeed: 18
+    areaRadius: 2.5
+    fuse: 1.2
+    chargeSpeed: 11
+    trackingTime: 0.6
+    wallRecovery: 2.5
+    buffWindupMultiplier: 0.8
+    buffDuration: 5
+    summon: {fileID: 0}
+    telegraphColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+    aimLine: 0
+    aimLineWidth: 0.04

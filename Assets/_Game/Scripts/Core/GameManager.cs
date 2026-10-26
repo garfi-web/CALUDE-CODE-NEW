@@ -1,33 +1,29 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// Victoire quand tous les ennemis sont morts, défaite à la mort du joueur.
-// R (ou Start à la manette) relance l'arène une fois la partie terminée.
+// Arène de test : chaque vague lancée remet Nathan à pleine vie.
+// Message à la fin d'une vague, défaite à la mort du joueur.
+// R (ou Start à la manette) relance l'arène après une défaite.
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Health player;
-    [SerializeField] private Health[] enemies;
+    [SerializeField] private EnemyWaveManager waves;
     [SerializeField] private CombatHUD hud;
 
-    private int enemiesRemaining;
     private bool gameOver;
 
-    private void Start()
+    private void Awake()
     {
+        // Abonnement avant le Start du gestionnaire de vagues, qui lance la première vague.
         if (player != null)
             player.Died += OnPlayerDied;
 
-        foreach (Health enemy in enemies)
+        if (waves != null)
         {
-            if (enemy == null)
-                continue;
-
-            enemy.Died += OnEnemyDied;
-            enemiesRemaining++;
+            waves.WaveStarted += OnWaveStarted;
+            waves.WaveCleared += OnWaveCleared;
+            waves.HealthChanged += OnEnemiesHealthChanged;
         }
-
-        if (hud != null)
-            hud.ShowMessage(string.Empty);
     }
 
     private void OnDestroy()
@@ -35,10 +31,11 @@ public class GameManager : MonoBehaviour
         if (player != null)
             player.Died -= OnPlayerDied;
 
-        foreach (Health enemy in enemies)
+        if (waves != null)
         {
-            if (enemy != null)
-                enemy.Died -= OnEnemyDied;
+            waves.WaveStarted -= OnWaveStarted;
+            waves.WaveCleared -= OnWaveCleared;
+            waves.HealthChanged -= OnEnemiesHealthChanged;
         }
     }
 
@@ -46,6 +43,30 @@ public class GameManager : MonoBehaviour
     {
         if (gameOver && GameInput.RestartPressed)
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnWaveStarted(string waveName)
+    {
+        if (player != null)
+            player.Heal(player.MaxHealth);
+
+        if (hud != null)
+        {
+            hud.SetEnemyLabel(waveName.ToUpperInvariant());
+            hud.ShowMessage(string.Empty);
+        }
+    }
+
+    private void OnWaveCleared()
+    {
+        if (!gameOver && hud != null)
+            hud.ShowMessage("VAGUE TERMINÉE\n1 à 6 : lancer une vague");
+    }
+
+    private void OnEnemiesHealthChanged(int current, int max)
+    {
+        if (hud != null)
+            hud.SetEnemyHealth(current, max);
     }
 
     private void OnPlayerDied()
@@ -57,18 +78,5 @@ public class GameManager : MonoBehaviour
 
         if (hud != null)
             hud.ShowMessage("DÉFAITE\nAppuie sur R pour recommencer");
-    }
-
-    private void OnEnemyDied()
-    {
-        enemiesRemaining--;
-
-        if (gameOver || enemiesRemaining > 0)
-            return;
-
-        gameOver = true;
-
-        if (hud != null)
-            hud.ShowMessage("VICTOIRE\nAppuie sur R pour recommencer");
     }
 }

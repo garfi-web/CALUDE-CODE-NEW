@@ -7,16 +7,24 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // Menu RED MET > Construire l'arène prototype.
-// Crée les dossiers, le layer Ground, des sprites provisoires et la scène
-// Assets/_Game/Scenes/Arena.unity avec joueur, ennemi, caméra et interface.
-// Relancer la commande reconstruit la scène de zéro.
+// Crée les dossiers, les layers Ground, Player et Enemy, des sprites provisoires, les prefabs
+// des ennemis (Enemy, Projectile, Grenade, Cover), les archétypes du bestiaire et la scène
+// Assets/_Game/Scenes/Arena.unity avec joueur, vagues de test, caméra et interface.
+// Relancer la commande reconstruit la scène et les prefabs de zéro. Les archétypes existants
+// sont conservés, pour garder les réglages faits dans l'inspecteur : supprimez-en un pour
+// le recréer avec les valeurs de docs/ENEMIES.md.
 public static class ArenaBuilder
 {
     private const string Root = "Assets/_Game";
     private const string ScenePath = Root + "/Scenes/Arena.unity";
     private const string SpritePath = Root + "/Art/Placeholder/Square.png";
     private const string NoFrictionPath = Root + "/Settings/NoFriction.physicsMaterial2D";
+    private const string LineMaterialPath = Root + "/Art/VFX/TelegraphLine.mat";
+    private const string PrefabFolder = Root + "/Prefabs";
+    private const string ArchetypeFolder = Root + "/Data/Enemies";
     private const string GroundLayerName = "Ground";
+    private const string PlayerLayerName = "Player";
+    private const string EnemyLayerName = "Enemy";
 
     private static readonly string[] Folders =
     {
@@ -29,6 +37,7 @@ public static class ArenaBuilder
         Root + "/Scenes",
         Root + "/Settings",
         Root + "/Audio/Voice",
+        ArchetypeFolder,
     };
 
     [MenuItem("RED MET/Construire l'arène prototype")]
@@ -41,34 +50,49 @@ public static class ArenaBuilder
             EnsureFolder(folder);
 
         int groundLayer = EnsureLayer(GroundLayerName);
+        int playerLayer = EnsureLayer(PlayerLayerName);
+        int enemyLayer = EnsureLayer(EnemyLayerName);
 
-        if (groundLayer < 0)
+        if (groundLayer < 0 || playerLayer < 0 || enemyLayer < 0)
         {
-            Debug.LogError("[RED MET] Aucun emplacement libre pour créer le layer Ground.");
+            Debug.LogError("[RED MET] Pas assez d'emplacements libres pour créer les layers Ground, Player et Enemy.");
             return;
         }
 
+        // Les ennemis se croisent sans se bloquer (groupes, renforts, Dealer derrière ses gardes).
+        Physics2D.IgnoreLayerCollision(enemyLayer, enemyLayer, true);
+
         Sprite square = EnsureSquareSprite();
         PhysicsMaterial2D noFriction = EnsureNoFrictionMaterial();
+        Material lineMaterial = EnsureLineMaterial();
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
         CreateGlobalLight();
         BuildLevel(square, groundLayer);
 
-        GameObject player = BuildPlayer(square, noFriction, groundLayer);
-        GameObject enemy = BuildEnemy(square, noFriction, player.transform);
+        GameObject player = BuildPlayer(square, noFriction, groundLayer, playerLayer);
+
+        Projectile projectilePrefab = BuildProjectilePrefab(square);
+        Grenade grenadePrefab = BuildGrenadePrefab(square, lineMaterial);
+        Cover coverPrefab = BuildCoverPrefab(square, groundLayer);
+        Enemy enemyPrefab = BuildEnemyPrefab(square, noFriction, lineMaterial, enemyLayer, projectilePrefab, grenadePrefab);
 
         BuildCamera(player.transform);
 
         Health playerHealth = player.GetComponent<Health>();
-        Health enemyHealth = enemy.GetComponent<Health>();
-        CombatHUD hud = BuildHud(playerHealth, enemyHealth);
+        CombatHUD hud = BuildHud(playerHealth);
+
+        var waves = new GameObject("Waves").AddComponent<EnemyWaveManager>();
+        SetObject(waves, "enemyPrefab", enemyPrefab);
+        SetObject(waves, "coverPrefab", coverPrefab);
+        SetObject(waves, "target", player.transform);
+        SetWaves(waves, BuildWaves());
 
         var manager = new GameObject("GameManager").AddComponent<GameManager>();
         SetObject(manager, "player", playerHealth);
+        SetObject(manager, "waves", waves);
         SetObject(manager, "hud", hud);
-        SetArray(manager, "enemies", enemyHealth);
 
         EditorSceneManager.SaveScene(scene, ScenePath);
         AddSceneToBuildSettings(ScenePath);
@@ -153,6 +177,24 @@ public static class ArenaBuilder
         return material;
     }
 
+    // Matériau des lignes d'annonce (visée, zone de grenade) : couleur par sommet, sans lumière.
+    private static Material EnsureLineMaterial()
+    {
+        var material = AssetDatabase.LoadAssetAtPath<Material>(LineMaterialPath);
+
+        if (material != null)
+            return material;
+
+        Shader shader = Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default");
+
+        if (shader == null)
+            shader = Shader.Find("Sprites/Default");
+
+        material = new Material(shader) { name = "TelegraphLine" };
+        AssetDatabase.CreateAsset(material, LineMaterialPath);
+        return material;
+    }
+
     // ----------------------------------------------------------------- Scene
 
     // Ajoute une lumière globale 2D si l'URP est présent, sans en dépendre à la compilation.
@@ -213,9 +255,9 @@ public static class ArenaBuilder
         platform.AddComponent<PlatformEffector2D>().useOneWay = true;
     }
 
-    private static GameObject BuildPlayer(Sprite square, PhysicsMaterial2D noFriction, int groundLayer)
+    private static GameObject BuildPlayer(Sprite square, PhysicsMaterial2D noFriction, int groundLayer, int playerLayer)
     {
-        var player = new GameObject("Player") { tag = "Player" };
+        var player = new GameObject("Player") { tag = "Player", layer = playerLayer };
         player.transform.position = new Vector3(-4f, -0.6f, 0f);
 
         GameObject visual = CreateSprite("Visual", player.transform, square, new Color(0.2f, 0.35f, 0.9f), Vector3.zero, new Vector3(0.8f, 1.6f), 5);
@@ -255,30 +297,314 @@ public static class ArenaBuilder
         var dodge = player.AddComponent<PlayerDodge>();
         SetObject(dodge, "controller", controller);
         SetObject(dodge, "spriteRenderer", visual.GetComponent<SpriteRenderer>());
+        SetFloat(dodge, "dodgeInvulnerability", 0.4f);
 
         player.AddComponent<CharacterAnimator>();
         return player;
     }
 
-    private static GameObject BuildEnemy(Sprite square, PhysicsMaterial2D noFriction, Transform target)
+    // --------------------------------------------------------------- Prefabs
+
+    private static T SavePrefab<T>(GameObject go) where T : Component
     {
-        var enemy = new GameObject("Enemy");
-        enemy.transform.position = new Vector3(7f, -0.55f, 0f);
+        EnsureFolder(PrefabFolder);
+        GameObject asset = PrefabUtility.SaveAsPrefabAsset(go, $"{PrefabFolder}/{go.name}.prefab");
+        UnityEngine.Object.DestroyImmediate(go);
+        return asset.GetComponent<T>();
+    }
 
-        GameObject visual = CreateSprite("Visual", enemy.transform, square, new Color(0.8f, 0.15f, 0.15f), Vector3.zero, new Vector3(0.9f, 1.7f), 5);
-        CreateSprite("Eye", enemy.transform, square, Color.black, new Vector3(0.25f, 0.5f), new Vector3(0.15f, 0.15f), 6);
+    private static LineRenderer CreateLine(string name, Transform parent, Material material, bool loop)
+    {
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
 
-        AddBody(enemy, new Vector2(0.9f, 1.7f), noFriction);
+        var line = go.AddComponent<LineRenderer>();
+        line.sharedMaterial = material;
+        line.useWorldSpace = true;
+        line.loop = loop;
+        line.positionCount = 0;
+        line.sortingOrder = 9;
+        line.enabled = false;
+        return line;
+    }
 
-        var health = enemy.AddComponent<Health>();
-        SetInt(health, "maxHealth", 60);
+    private static Projectile BuildProjectilePrefab(Sprite square)
+    {
+        GameObject go = CreateSprite("Projectile", null, square, new Color(1f, 0.9f, 0.45f), Vector3.zero, new Vector3(0.3f, 0.1f), 8);
+        go.AddComponent<Projectile>();
+        return SavePrefab<Projectile>(go);
+    }
 
-        var ai = enemy.AddComponent<EnemyAI>();
-        SetObject(ai, "target", target);
-        SetObject(ai, "spriteRenderer", visual.GetComponent<SpriteRenderer>());
+    private static Grenade BuildGrenadePrefab(Sprite square, Material lineMaterial)
+    {
+        GameObject go = CreateSprite("Grenade", null, square, new Color(0.3f, 0.4f, 0.2f), Vector3.zero, new Vector3(0.25f, 0.25f), 8);
+        LineRenderer zone = CreateLine("Zone", go.transform, lineMaterial, true);
+        SetObject(go.AddComponent<Grenade>(), "zone", zone);
+        return SavePrefab<Grenade>(go);
+    }
 
-        enemy.AddComponent<CharacterAnimator>();
-        return enemy;
+    // Abri de 1,4 unité de haut : il cache Nathan (1,6) des tirs et s'enjambe d'un saut.
+    private static Cover BuildCoverPrefab(Sprite square, int groundLayer)
+    {
+        GameObject go = CreateSprite("Cover", null, square, new Color(0.38f, 0.33f, 0.3f), Vector3.zero, new Vector3(1f, 1.4f), 1);
+        go.layer = groundLayer;
+        go.AddComponent<BoxCollider2D>();
+        go.AddComponent<Cover>();
+        return SavePrefab<Cover>(go);
+    }
+
+    // Ennemi générique : l'archétype règle taille, couleur, PV, poids et comportement à l'apparition.
+    private static Enemy BuildEnemyPrefab(Sprite square, PhysicsMaterial2D noFriction, Material lineMaterial,
+        int enemyLayer, Projectile projectilePrefab, Grenade grenadePrefab)
+    {
+        var go = new GameObject("Enemy") { layer = enemyLayer };
+
+        GameObject visual = CreateSprite("Visual", go.transform, square, Color.white, Vector3.zero, new Vector3(0.9f, 1.7f), 5);
+        GameObject eye = CreateSprite("Eye", go.transform, square, Color.black, new Vector3(0.25f, 0.5f), new Vector3(0.15f, 0.15f), 6);
+        LineRenderer aimLine = CreateLine("AimLine", go.transform, lineMaterial, false);
+
+        AddBody(go, new Vector2(0.9f, 1.7f), noFriction);
+        go.AddComponent<Health>();
+
+        var telegraph = go.AddComponent<EnemyTelegraph>();
+        SetObject(telegraph, "body", visual.GetComponent<SpriteRenderer>());
+        SetObject(telegraph, "aimLine", aimLine);
+
+        var enemy = go.AddComponent<Enemy>();
+        SetObject(enemy, "visual", visual.transform);
+        SetObject(enemy, "eye", eye.transform);
+        SetObject(enemy, "telegraph", telegraph);
+        SetObject(enemy, "projectilePrefab", projectilePrefab);
+        SetObject(enemy, "grenadePrefab", grenadePrefab);
+
+        go.AddComponent<CharacterAnimator>();
+        return SavePrefab<Enemy>(go);
+    }
+
+    // ----------------------------------------------------- Bestiaire (ENEMIES.md)
+
+    private static readonly Color FlashYellow = new(1f, 0.85f, 0.2f);
+    private static readonly Color AimRed = new(1f, 0.15f, 0.15f);
+
+    private static EnemyArchetype EnsureArchetype(string file, Action<EnemyArchetype> setup)
+    {
+        string path = $"{ArchetypeFolder}/{file}.asset";
+        var archetype = AssetDatabase.LoadAssetAtPath<EnemyArchetype>(path);
+
+        if (archetype != null)
+            return archetype;
+
+        archetype = ScriptableObject.CreateInstance<EnemyArchetype>();
+        setup(archetype);
+        AssetDatabase.CreateAsset(archetype, path);
+        return archetype;
+    }
+
+    // 01 — Voyou, trois variantes d'arme.
+    private static EnemyArchetype Thug(string file, string displayName, Color color, EnemyAttack attack) =>
+        EnsureArchetype(file, a =>
+        {
+            a.displayName = displayName;
+            a.behaviour = EnemyBehaviourType.MeleeAggressive;
+            a.maxHealth = 60;
+            a.moveSpeed = 3.5f;
+            a.detectionRange = 9f;
+            a.weight = EnemyWeight.Light;
+            a.hitStunTime = 0.3f;
+            a.bodyColor = color;
+            a.attacks = new[] { attack };
+        });
+
+    private static EnemyWave[] BuildWaves()
+    {
+        EnemyArchetype fists = Thug("01_Voyou_MainsNues", "Voyou", new Color(0.8f, 0.15f, 0.15f), new EnemyAttack
+        {
+            name = "Coup de poing", range = 1.2f, windup = 0.35f, active = 0.1f, recovery = 0.35f,
+            cooldown = 0.5f, damage = 10, knockback = 5f, telegraphColor = FlashYellow,
+        });
+
+        EnemyArchetype knife = Thug("01_Voyou_Couteau", "Voyou au couteau", new Color(0.7f, 0.12f, 0.25f), new EnemyAttack
+        {
+            name = "Coup de couteau", range = 1.4f, windup = 0.45f, active = 0.08f, recovery = 0.45f,
+            cooldown = 0.6f, damage = 15, knockback = 4f, telegraphColor = new Color(0.85f, 0.95f, 1f),
+        });
+
+        EnemyArchetype bar = Thug("01_Voyou_Barre", "Voyou à la barre", new Color(0.6f, 0.2f, 0.1f), new EnemyAttack
+        {
+            name = "Balayage à la barre", range = 1.8f, windup = 0.6f, active = 0.15f, recovery = 0.6f,
+            cooldown = 0.8f, damage = 18, knockback = 7f, telegraphColor = new Color(1f, 0.55f, 0.15f),
+        });
+
+        EnemyArchetype dealer = EnsureArchetype("02_Dealer", a =>
+        {
+            a.displayName = "Dealer";
+            a.behaviour = EnemyBehaviourType.Commander;
+            a.maxHealth = 90;
+            a.moveSpeed = 2.5f;
+            a.altSpeed = 4.5f;
+            a.detectionRange = 12f;
+            a.weight = EnemyWeight.Medium;
+            a.hitStunTime = 0.25f;
+            a.bodyColor = new Color(0.55f, 0.2f, 0.65f);
+            a.attacks = new[]
+            {
+                new EnemyAttack
+                {
+                    name = "Ordre « Chopez-le »", kind = EnemyAttackKind.Order, windup = 1f, active = 0f, recovery = 0.5f,
+                    cooldown = 8f, buffWindupMultiplier = 0.8f, buffDuration = 5f, telegraphColor = new Color(1f, 0.3f, 0.9f),
+                },
+                new EnemyAttack
+                {
+                    name = "Tir au pistolet", kind = EnemyAttackKind.Projectile, range = 8f, windup = 0.6f, recovery = 0.9f,
+                    cooldown = 1.2f, damage = 14, knockback = 3f, projectileCount = 2, shotInterval = 0.25f,
+                    projectileSpeed = 16f, aimLine = true, telegraphColor = AimRed,
+                },
+                new EnemyAttack
+                {
+                    name = "Coup de crosse", range = 1.1f, windup = 0.4f, active = 0.1f, recovery = 0.5f,
+                    cooldown = 0.6f, damage = 10, knockback = 5f, telegraphColor = FlashYellow,
+                },
+            };
+        });
+
+        EnemyArchetype cop = EnsureArchetype("03_FlicCorrompu", a =>
+        {
+            a.displayName = "Flic corrompu";
+            a.behaviour = EnemyBehaviourType.CoverShooter;
+            a.maxHealth = 80;
+            a.moveSpeed = 3f;
+            a.detectionRange = 14f;
+            a.weight = EnemyWeight.Medium;
+            a.hitStunTime = 0.25f;
+            a.bodyColor = new Color(0.15f, 0.25f, 0.55f);
+            a.attacks = new[]
+            {
+                new EnemyAttack
+                {
+                    name = "Tir visé", kind = EnemyAttackKind.Projectile, range = 9f, windup = 0.7f, active = 0.05f,
+                    recovery = 0.4f, cooldown = 0.3f, weight = 3f, damage = 14, knockback = 3f, projectileSpeed = 18f,
+                    aimLine = true, aimLineWidth = 0.03f, telegraphColor = AimRed,
+                },
+                new EnemyAttack
+                {
+                    name = "Rafale de 3", kind = EnemyAttackKind.Projectile, range = 9f, windup = 0.9f, active = 0.3f,
+                    recovery = 0.7f, cooldown = 0.3f, weight = 1f, damage = 10, knockback = 2f, projectileCount = 3,
+                    shotInterval = 0.1f, projectileSpeed = 18f, aimLine = true, aimLineWidth = 0.1f, telegraphColor = AimRed,
+                },
+                new EnemyAttack
+                {
+                    name = "Coup de matraque", range = 1.5f, windup = 0.45f, active = 0.12f, recovery = 0.5f,
+                    cooldown = 0.6f, damage = 12, knockback = 5f, telegraphColor = FlashYellow,
+                },
+                new EnemyAttack
+                {
+                    name = "Appel radio", kind = EnemyAttackKind.Summon, windup = 1.2f, active = 0f, recovery = 0.3f,
+                    maxUses = 1, summon = fists, telegraphColor = new Color(0.3f, 0.9f, 1f),
+                },
+            };
+        });
+
+        EnemyArchetype soldier = EnsureArchetype("04_SoldatPrive", a =>
+        {
+            a.displayName = "Soldat privé";
+            a.behaviour = EnemyBehaviourType.Tactical;
+            a.maxHealth = 110;
+            a.moveSpeed = 3.2f;
+            a.detectionRange = 16f;
+            a.weight = EnemyWeight.Medium;
+            a.hitStunTime = 0.2f;
+            a.bodyColor = new Color(0.25f, 0.3f, 0.22f);
+            a.attacks = new[]
+            {
+                new EnemyAttack
+                {
+                    name = "Rafale visée", kind = EnemyAttackKind.Projectile, range = 12f, windup = 0.8f, active = 0.25f,
+                    recovery = 0.6f, cooldown = 0.8f, damage = 8, knockback = 2f, projectileCount = 3, shotInterval = 0.1f,
+                    projectileSpeed = 22f, aimLine = true, telegraphColor = AimRed,
+                },
+                new EnemyAttack
+                {
+                    name = "Grenade", kind = EnemyAttackKind.Grenade, range = 10f, windup = 0.6f, active = 0f,
+                    recovery = 0.8f, cooldown = 8f, damage = 30, knockback = 8f, areaRadius = 2.5f, fuse = 1.2f,
+                    telegraphColor = new Color(1f, 0.25f, 0.1f),
+                },
+                new EnemyAttack
+                {
+                    name = "Coup de crosse", range = 1.3f, windup = 0.4f, active = 0.1f, recovery = 0.45f,
+                    cooldown = 0.6f, damage = 15, knockback = 6f, telegraphColor = FlashYellow,
+                },
+            };
+        });
+
+        EnemyArchetype mutant = EnsureArchetype("06_Mutant", a =>
+        {
+            a.displayName = "Mutant";
+            a.behaviour = EnemyBehaviourType.HeavyCharger;
+            a.maxHealth = 260;
+            a.moveSpeed = 2f;
+            a.detectionRange = 10f;
+            a.weight = EnemyWeight.Heavy;
+            a.superArmor = true;
+            a.hitStunTime = 0f;
+            a.bodyColor = new Color(0.45f, 0.55f, 0.3f);
+            a.bodySize = new Vector2(1.4f, 2.4f);
+            a.attacks = new[]
+            {
+                new EnemyAttack
+                {
+                    name = "Charge", kind = EnemyAttackKind.Charge, range = 10f, windup = 1f, active = 1.2f,
+                    recovery = 1.5f, wallRecovery = 2.5f, cooldown = 3f, damage = 30, knockback = 10f,
+                    chargeSpeed = 11f, trackingTime = 0.6f, telegraphColor = new Color(1f, 0.35f, 0.1f),
+                },
+                new EnemyAttack
+                {
+                    name = "Frappe au sol", kind = EnemyAttackKind.Shockwave, range = 3.5f, windup = 0.9f, active = 0.2f,
+                    recovery = 1.2f, cooldown = 2.5f, damage = 22, knockback = 7f, telegraphColor = new Color(1f, 0.7f, 0.3f),
+                },
+                new EnemyAttack
+                {
+                    name = "Balayage", range = 2f, windup = 0.7f, active = 0.15f, recovery = 0.8f,
+                    cooldown = 1f, damage = 18, knockback = 8f, telegraphColor = FlashYellow,
+                },
+            };
+        });
+
+        AssetDatabase.SaveAssets();
+
+        // Touches 1 à 6 (docs/ENEMIES.md, « Composition des rencontres de l'arène de test »).
+        return new[]
+        {
+            Wave("1 Voyou", Array.Empty<float>(), (fists, 6f)),
+            Wave("Dealer + 2 Voyous", Array.Empty<float>(), (fists, 5f), (knife, 7f), (dealer, 13f)),
+            Wave("Flic corrompu", new[] { 0f, 8f }, (cop, 12f)),
+            Wave("Soldat privé", new[] { -1f, 7f }, (soldier, 13f)),
+            Wave("Mutant", Array.Empty<float>(), (mutant, 8f)),
+            Wave("Groupe mixte", Array.Empty<float>(), (fists, 5f), (knife, 6.5f), (bar, 8f), (cop, 14f)),
+        };
+    }
+
+    private static EnemyWave Wave(string name, float[] covers, params (EnemyArchetype archetype, float x)[] enemies) =>
+        new()
+        {
+            name = name,
+            covers = covers,
+            enemies = enemies.Select(e => new EnemySpawn { archetype = e.archetype, x = e.x }).ToArray(),
+        };
+
+    private static void SetWaves(EnemyWaveManager manager, EnemyWave[] waves)
+    {
+        var so = new SerializedObject(manager);
+        SerializedProperty property = Find(so, "waves");
+
+        if (property == null)
+            return;
+
+        property.arraySize = waves.Length;
+
+        for (int i = 0; i < waves.Length; i++)
+            property.GetArrayElementAtIndex(i).boxedValue = waves[i];
+
+        so.ApplyModifiedPropertiesWithoutUndo();
     }
 
     private static Rigidbody2D AddBody(GameObject go, Vector2 size, PhysicsMaterial2D material)
@@ -310,7 +636,7 @@ public static class ArenaBuilder
         SetObject(cameraGo.AddComponent<CameraFollow>(), "target", target);
     }
 
-    private static CombatHUD BuildHud(Health playerHealth, Health enemyHealth)
+    private static CombatHUD BuildHud(Health playerHealth)
     {
         var canvasGo = new GameObject("CombatHUD", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
         canvasGo.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
@@ -327,17 +653,17 @@ public static class ArenaBuilder
         RectTransform enemyFill = CreateBar(canvas, "EnemyHealth", new Vector2(1f, 1f), new Vector2(-40f, -60f), new Color(0.9f, 0.2f, 0.2f));
 
         CreateText(canvas, "PlayerLabel", "NATHAN", font, 28, new Vector2(0f, 1f), new Vector2(40f, -20f), new Vector2(500f, 40f), TextAnchor.MiddleLeft);
-        CreateText(canvas, "EnemyLabel", "ENNEMI", font, 28, new Vector2(1f, 1f), new Vector2(-40f, -20f), new Vector2(500f, 40f), TextAnchor.MiddleRight);
-        CreateText(canvas, "Controls", "Q / D : se déplacer   ·   Espace : sauter   ·   J : attaquer (x3)   ·   Maj gauche : esquiver",
+        Text enemyLabel = CreateText(canvas, "EnemyLabel", "ENNEMIS", font, 28, new Vector2(1f, 1f), new Vector2(-40f, -20f), new Vector2(500f, 40f), TextAnchor.MiddleRight);
+        CreateText(canvas, "Controls", "Q / D : se déplacer   ·   Espace : sauter   ·   J : attaquer (x3)   ·   Maj gauche : esquiver   ·   1 à 6 : vagues de test",
             font, 24, new Vector2(0.5f, 0f), new Vector2(0f, 30f), new Vector2(1600f, 40f), TextAnchor.MiddleCenter);
         Text message = CreateText(canvas, "Message", string.Empty, font, 72, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1400f, 300f), TextAnchor.MiddleCenter);
         message.enabled = false;
 
         var hud = canvasGo.AddComponent<CombatHUD>();
         SetObject(hud, "playerHealth", playerHealth);
-        SetObject(hud, "enemyHealth", enemyHealth);
         SetObject(hud, "playerFill", playerFill);
         SetObject(hud, "enemyFill", enemyFill);
+        SetObject(hud, "enemyLabel", enemyLabel);
         SetObject(hud, "messageText", message);
         return hud;
     }
@@ -447,7 +773,7 @@ public static class ArenaBuilder
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 
-    private static void SetArray(Component component, string field, params UnityEngine.Object[] values)
+    private static void SetFloat(Component component, string field, float value)
     {
         var so = new SerializedObject(component);
         SerializedProperty property = Find(so, field);
@@ -455,11 +781,7 @@ public static class ArenaBuilder
         if (property == null)
             return;
 
-        property.arraySize = values.Length;
-
-        for (int i = 0; i < values.Length; i++)
-            property.GetArrayElementAtIndex(i).objectReferenceValue = values[i];
-
+        property.floatValue = value;
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 }

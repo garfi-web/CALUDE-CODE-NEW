@@ -9,10 +9,13 @@ public class PlayerDodge : MonoBehaviour
     [SerializeField] private PlayerController controller;
     [SerializeField] private float dodgeSpeed = 15f;
     [SerializeField] private float dodgeDuration = 0.18f;
-    [SerializeField] private float dodgeInvulnerability = 0.25f;
+    // Couvre l'armement le plus court des ennemis (0,35 s, docs/ENEMIES.md).
+    [SerializeField] private float dodgeInvulnerability = 0.4f;
     [SerializeField] private float cooldown = 0.65f;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private float blinkInterval = 0.05f;
+
+    private const string EnemyLayerName = "Enemy";
 
     private Rigidbody2D rb;
     private Health health;
@@ -35,6 +38,9 @@ public class PlayerDodge : MonoBehaviour
 
     private void OnDisable()
     {
+        if (IsDodging)
+            SetPassThroughEnemies(false);
+
         IsDodging = false;
 
         if (spriteRenderer != null)
@@ -70,6 +76,8 @@ public class PlayerDodge : MonoBehaviour
         if (controller != null)
             controller.LockMovement(dodgeDuration);
 
+        // Nathan traverse les ennemis pendant l'esquive (charge du Mutant, pris entre deux Voyous).
+        SetPassThroughEnemies(true);
         DodgeStarted?.Invoke();
 
         float endTime = Time.time + dodgeDuration;
@@ -93,6 +101,15 @@ public class PlayerDodge : MonoBehaviour
         if (spriteRenderer != null)
             spriteRenderer.enabled = true;
 
+        SetPassThroughEnemies(false);
         IsDodging = false;
+    }
+
+    private void SetPassThroughEnemies(bool value)
+    {
+        int enemyLayer = LayerMask.NameToLayer(EnemyLayerName);
+
+        if (enemyLayer >= 0 && gameObject.layer != 0)
+            Physics2D.IgnoreLayerCollision(gameObject.layer, enemyLayer, value);
     }
 }

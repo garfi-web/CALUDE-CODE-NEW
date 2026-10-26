@@ -24,7 +24,7 @@ public class CharacterAnimator : MonoBehaviour
     private PlayerController controller;
     private PlayerCombat combat;
     private PlayerDodge dodge;
-    private EnemyAI enemy;
+    private Enemy enemy;
 
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class CharacterAnimator : MonoBehaviour
         controller = GetComponent<PlayerController>();
         combat = GetComponent<PlayerCombat>();
         dodge = GetComponent<PlayerDodge>();
-        enemy = GetComponent<EnemyAI>();
+        enemy = GetComponent<Enemy>();
 
         if (animator != null && animator.runtimeAnimatorController != null)
         {
@@ -93,7 +93,7 @@ public class CharacterAnimator : MonoBehaviour
         Trigger(AttackHash);
     }
 
-    private void OnEnemyAttack() => Trigger(AttackHash);
+    private void OnEnemyAttack(EnemyAttack attack) => Trigger(AttackHash);
 
     private void OnDodge() => Trigger(DodgeHash);
 

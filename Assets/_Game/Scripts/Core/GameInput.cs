@@ -56,9 +56,24 @@ public static class GameInput
     public static bool RestartPressed =>
         Pressed(Keyboard.current?.rKey) || Pressed(Gamepad.current?.startButton);
 
+    // Arène de test : touches 1 à 9 de la rangée du haut ou du pavé numérique.
+    // Touche physique : sur AZERTY, c'est la touche « & / 1 », sans Maj.
+    public static bool WavePressed(int index)
+    {
+        Keyboard kb = Keyboard.current;
+
+        if (kb == null || index < 0 || index > 8)
+            return false;
+
+        return kb[Key.Digit1 + index].wasPressedThisFrame || kb[Key.Numpad1 + index].wasPressedThisFrame;
+    }
+
     private static bool Pressed(UnityEngine.InputSystem.Controls.ButtonControl button) =>
         button != null && button.wasPressedThisFrame;
 #else
+    public static bool WavePressed(int index) =>
+        index >= 0 && index <= 8 &&
+        (Input.GetKeyDown(KeyCode.Alpha1 + index) || Input.GetKeyDown(KeyCode.Keypad1 + index));
     public static float Horizontal => Input.GetAxisRaw("Horizontal");
     public static bool JumpPressed => Input.GetButtonDown("Jump");
     public static bool AttackPressed => Input.GetKeyDown(KeyCode.J);
