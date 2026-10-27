@@ -41,6 +41,9 @@ def _apply_ops(rig, ops):
         elif axis == "S":
             # Étirement le long de l'os (Y local), hérité par les os enfants.
             pb.matrix = pb.matrix @ Matrix.Scale(value, 4, Vector((0, 1, 0)))
+        elif axis == "H":
+            # Accessoire caché (os d'arme réduit à rien) ; value est ignorée.
+            pb.matrix = pb.matrix @ Matrix.Scale(0.001, 4)
         else:
             pivot = pb.head.copy()
             rotation = Matrix.Rotation(math.radians(value), 4, AXES[axis])
@@ -204,15 +207,108 @@ def clips(drop=0.8):
     }
 
 
-def build_actions(rig, prefix, drop=0.8, only=None, stretch=1.0):
+# ------------------------------------------------------------ Flic corrompu
+
+# Os d'accessoires (redmet_props.add_prop_bone) : une arme à la fois dans la main droite, côté caméra.
+HIDE_GUN = [("prop_gun", "H", 0)]
+HIDE_BATON = [("prop_baton", "H", 0)]
+
+
+def low_ready(breathe=0):
+    """Garde du Flic : la visée (bras dans l'axe, canon devant) abaissée de 45°, poing gauche en garde.
+    Partir de la visée garde le canon vers l'avant ; un bras plié autrement le tourne vers l'arrière."""
+    return punch("R", lean=6, legs=legs_stance()) + [("upper_arm.R", "X", 45), ("spine.004", "X", breathe)]
+
+
+def gun_raised():
+    """Annonce du tir : bras tendu levé vers le ciel, arme bien visible au-dessus de la tête."""
+    return punch("R", lean=2, legs=legs_stance()) + [("upper_arm.R", "X", -45)]
+
+
+def aim(recoil=0, two_hands=False):
+    """Bras droit tendu vers la cible, dans l'axe de la caméra ; recoil (degrés) relève l'arme et
+    recule le buste au moment du coup de feu. À deux mains (rafale) : fente, buste penché, bras gauche tendu."""
+    if two_hands:
+        ops = punch("R", lean=14, legs=legs_lunge()) + [("upper_arm.L", "X", -60), ("forearm.L", "X", -30)]
+    else:
+        ops = punch("R", lean=6, legs=legs_stance())
+
+    return ops + [("forearm.R", "X", -recoil), ("spine.001", "X", -0.3 * recoil)]
+
+
+def baton_raised(lift=1.0):
+    """Annonce du coup de matraque : bras levé au-dessus de l'épaule, matraque vers l'arrière."""
+    return arms_down() + [
+        ("spine.001", "X", -8 * lift), ("spine.002", "Z", -15 * lift),
+        ("upper_arm.R", "X", -150 * lift), ("forearm.R", "X", -40 * lift),
+        ("upper_arm.L", "X", -30), ("forearm.L", "X", -90),
+    ] + legs_stance()
+
+
+def baton_strike():
+    """Coup de matraque abattu devant lui, en fente."""
+    return arms_down() + [
+        ("spine.001", "X", 30), ("spine.002", "Z", 40),
+        ("upper_arm.R", "X", -75), ("forearm.R", "X", -10), ("upper_arm.R", "Z", 30), ("hand.R", "X", 70),
+        ("upper_arm.L", "X", -30), ("forearm.L", "X", -90),
+    ] + legs_lunge()
+
+
+def radio_call(tilt=0):
+    """Appel radio : coude gauche levé, main au micro de l'épaule, tête penchée, pistolet tenu bas."""
+    return low_ready() + [("upper_arm.L", "X", -50), ("spine.005", "X", 12 + tilt)]
+
+
+def reload_pose(step):
+    """Rechargement, depuis la garde : pistolet ramené au buste ; main gauche 0 en garde,
+    1 au ceinturon (chargeur), 2 sur la culasse."""
+    left = {0: [], 1: [("upper_arm.L", "X", 45), ("forearm.L", "X", 55)], 2: [("upper_arm.L", "X", 15)]}[step]
+    return low_ready() + [("forearm.R", "X", -80), ("spine.005", "X", 15)] + left
+
+
+def cop_clips(drop=0.8):
+    """Clips du Flic corrompu, aux durées de ses AttackData (docs/ENEMIES.md), rendus à 30 FPS.
+    Le coup de feu (recul) tombe sur la première image active ; l'annonce (arme levée puis visée
+    tenue, avec la ligne de visée du jeu) occupe tout l'armement."""
+    base = clips(drop)
+    idle = low_ready()
+    gun = {
+        "idle": ([(0, idle), (6, low_ready(breathe=4)), (12, idle)], True),
+        "run": base["run"], "jump": base["jump"], "hurt": base["hurt"], "death": base["death"],
+        "dash": base["dash"], "dodge": base["dodge"],
+        # Tir visé : armement 42 (21 à 30 FPS), actif 3, récupération 24 (12).
+        "enemy_shot": ([(0, idle), (5, gun_raised()), (10, aim()), (20, aim()), (21, aim(recoil=22)),
+                        (23, aim()), (30, aim()), (35, idle)], False),
+        # Rafale de 3 : armement 54 (27), tirs toutes les 6 images (3), récupération 42 (21).
+        "enemy_burst": ([(0, idle), (6, gun_raised()), (12, aim(two_hands=True)), (26, aim(two_hands=True)),
+                         (27, aim(18, True)), (28, aim(two_hands=True)), (30, aim(18, True)), (31, aim(two_hands=True)),
+                         (33, aim(18, True)), (34, aim(two_hands=True)), (46, aim(two_hands=True)), (56, idle)], False),
+        # Appel radio : armement 72 (36), récupération 18 (9).
+        "enemy_radio": ([(0, idle), (6, radio_call()), (20, radio_call(6)), (36, radio_call()), (44, idle)], False),
+        # Rechargement (Enemy.Hold, 1,5 s) : 45 images.
+        "enemy_hold": ([(0, idle), (5, reload_pose(0)), (12, reload_pose(1)), (18, reload_pose(1)), (24, reload_pose(0)),
+                        (30, reload_pose(2)), (34, reload_pose(0)), (44, idle)], False),
+    }
+    # Coup de matraque : armement 27 (coup tendu à l'image 13), actif 7, récupération 30 (fin à 32).
+    baton = {
+        "enemy_baton": ([(0, idle), (4, baton_raised()), (11, baton_raised(1.05)), (13, baton_strike()),
+                         (17, baton_strike()), (31, idle)], False),
+    }
+    result = {name: ([(f, ops + HIDE_BATON) for f, ops in keys], loop) for name, (keys, loop) in gun.items()}
+    result.update({name: ([(f, ops + HIDE_GUN) for f, ops in keys], loop) for name, (keys, loop) in baton.items()})
+    return result
+
+
+def build_actions(rig, prefix, drop=0.8, only=None, stretch=1.0, clip_set=None):
     """Crée une action par clip pour ce squelette (« <prefix>_<clip> ») ; only limite aux clips nommés,
-    stretch règle l'étirement des bras au sommet des coups (PUNCH_STRETCH)."""
+    stretch règle l'étirement des bras au sommet des coups (PUNCH_STRETCH), clip_set choisit
+    les clips (clips par défaut, cop_clips pour le Flic)."""
     global PUNCH_STRETCH
     PUNCH_STRETCH = stretch
     actions = {}
     rig.animation_data_create()
 
-    for name, (keys, loop) in clips(drop).items():
+    for name, (keys, loop) in (clip_set or clips)(drop).items():
         if only is not None and name not in only:
             continue
 
@@ -264,11 +360,12 @@ def lowest_point(mesh, frame):
     return float(z.min() - mesh.matrix_world.translation.z)
 
 
-def fit_death_drop(rig, mesh, prefix, drop=0.8):
+def fit_death_drop(rig, mesh, prefix, drop=0.8, clip_set=None):
     """Pose de mort posée au sol : la descente du bassin est réduite jusqu'à ce que le point le plus
     bas du corps couché touche le sol (sinon une partie du corps passe sous la ligne du sol)."""
     for _ in range(3):
-        rig.animation_data.action = build_actions(rig, prefix, drop, only={"death"}, stretch=PUNCH_STRETCH)["death"]
+        rig.animation_data.action = build_actions(rig, prefix, drop, only={"death"}, stretch=PUNCH_STRETCH,
+                                                  clip_set=clip_set)["death"]
         low = lowest_point(mesh, 14)
 
         if abs(low) < 0.005:
@@ -474,18 +571,19 @@ def setup_render_scene(name="RM_Sprites", size=512, ortho=2.6, center_z=1.0):
     return scene, cam
 
 
-def render_clips(scene, cam, rig, mesh, actions, out_dir, prefix, frames_dir=None):
+def render_clips(scene, cam, rig, mesh, actions, out_dir, prefix, frames_dir=None, extras=()):
     """Rend chaque clip image par image et l'assemble en bande horizontale <prefix>_<clip>.png.
-    Les images intermédiaires vont dans frames_dir (hors du projet Unity de préférence)."""
+    Les images intermédiaires vont dans frames_dir (hors du projet Unity de préférence).
+    extras : accessoires rendus avec le personnage (armes accrochées au squelette)."""
     os.makedirs(out_dir, exist_ok=True)
     frames_dir = frames_dir or os.path.join(out_dir, "_frames")
 
-    for obj in (rig, mesh):
+    for obj in (rig, mesh, *extras):
         if obj.name not in scene.collection.objects:
             scene.collection.objects.link(obj)
 
     # Seul ce personnage est rendu : les autres maillages de la scène sont masqués le temps du rendu.
-    hidden = [o for o in scene.objects if o.type == 'MESH' and o != mesh and not o.hide_render]
+    hidden = [o for o in scene.objects if o.type == 'MESH' and o != mesh and o not in extras and not o.hide_render]
 
     for o in hidden:
         o.hide_render = True

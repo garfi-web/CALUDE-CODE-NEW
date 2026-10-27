@@ -1,0 +1,139 @@
+{
+  "fps": 30,
+  "pixels_per_meter": 196.9230769230769,
+  "feet_from_bottom_m": 0.3,
+  "clips": [
+    {
+      "name": "dash",
+      "frames": 6,
+      "columns": 6,
+      "rows": 1,
+      "size": [
+        512,
+        512
+      ],
+      "loop": false
+    },
+    {
+      "name": "death",
+      "frames": 15,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        512,
+        512
+      ],
+      "loop": false
+    },
+    {
+      "name": "dodge",
+      "frames": 7,
+      "columns": 7,
+      "rows": 1,
+      "size": [
+        512,
+        512
+      ],
+      "loop": false
+    },
+    {
+      "name": "enemy_baton",
+      "frames": 32,
+      "columns": 8,
+      "rows": 4,
+      "size": [
+        512,
+        512
+      ],
+      "loop": false
+    },
+    {
+      "name": "enemy_burst",
+      "frames": 57,
+      "columns": 8,
+      "rows": 8,
+      "size": [
+        512,
+        512
+      ],
+      "loop": false
+    },
+    {
+      "name": "enemy_hold",
+      "frames": 45,
+      "columns": 8,
+      "rows": 6,
+      "size": [
+        512,
+        512
+      ],
+      "loop": false
+    },
+    {
+      "name": "enemy_radio",
+      "frames": 45,
+      "columns": 8,
+      "rows": 6,
+      "size": [
+        512,
+        512
+      ],
+      "loop": false
+    },
+    {
+      "name": "enemy_shot",
+      "frames": 36,
+      "columns": 8,
+      "rows": 5,
+      "size": [
+        512,
+        512
+      ],
+      "loop": false
+    },
+    {
+      "name": "hurt",
+      "frames": 6,
+      "columns": 6,
+      "rows": 1,
+      "size": [
+        512,
+        512
+      ],
+      "loop": false
+    },
+    {
+      "name": "idle",
+      "frames": 12,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        512,
+        512
+      ],
+      "loop": true
+    },
+    {
+      "name": "jump",
+      "frames": 5,
+      "columns": 5,
+      "rows": 1,
+      "size": [
+        512,
+        512
+      ],
+      "loop": false
+    },
+    {
+      "name": "run",
+      "frames": 8,
+      "columns": 8,
+      "rows": 1,
+      "size": [
+        512,
+        512
+      ],
+      "loop": true
+    }
+  ]
+}

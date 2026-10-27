@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1boy, solo, male focus, adult man, drug dealer, street boss, flashy expensive clothes, gold jewelry, tinted sunglasses, confident smirk, calm arrogant expression, realistic body proportions, long legs, 40 years old, heavyset, bald head, trimmed beard, rectangular tinted glasses, gold rings, cream suit jacket open over a patterned silk shirt with open collar, gold chains, cream trousers, brown loafers, t-pose, spread arms, arms outstretched, straight arms, standing, full body, front view, facing viewer, looking at viewer, anime coloring, cel shading, clean lineart, simple background, plain grey background, safe, masterpiece, high score, great score, absurdres",
+  "negative": "weapon, gun, pistol, knife, holding, money, cigarette, logo, brand logo, text, letters, words, print, emblem, badge, name tag, police, military, armor, helmet, supernatural, glowing eyes, caricature, exaggerated features, 2boys, multiple boys, character sheet, turnaround, reference sheet, multiple views, child, kid, female, nsfw, nude, extra arms, extra hands, extra fingers, missing fingers, bad hands, bad anatomy, short legs, stubby legs, big head, chibi, drop shadow, floor shadow, shadow, watermark, signature, username, lowres, cropped, out of frame, busy background, worst quality, low quality, low score, bad score, average score, error, blurry",
+  "seed": 14103,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 20.3
+}

@@ -114,6 +114,9 @@ public class EnemyArchetype : ScriptableObject
     [Tooltip("Couleur du rectangle provisoire ; blanc pour un sprite animé.")]
     public Color bodyColor = new(0.8f, 0.15f, 0.15f);
     public Vector2 bodySize = new(0.9f, 1.7f);
+    [Tooltip("Bout du canon (tirs, ligne de visée), depuis les pieds, vers l'avant : à caler sur la pose de visée des sprites. " +
+             "Zéro : bord avant du corps, aux deux tiers de la hauteur.")]
+    public Vector2 muzzleOffset;
     [Tooltip("Sprites animés (pivot aux pieds). Vide : rectangle provisoire de couleur bodyColor.")]
     public RuntimeAnimatorController animator;
     public Sprite sprite;

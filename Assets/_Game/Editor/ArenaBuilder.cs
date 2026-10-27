@@ -86,6 +86,7 @@ public static class ArenaBuilder
         // Sprites animés rendus dans Blender (tranche verticale), s'ils existent.
         SpriteAnimationBuilder.Result nathanSprites = SpriteAnimationBuilder.Build("Nathan_M0", false);
         SpriteAnimationBuilder.Result voyouSprites = SpriteAnimationBuilder.Build("Voyou", true);
+        SpriteAnimationBuilder.Result copSprites = SpriteAnimationBuilder.Build("Flic", true);
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
@@ -117,7 +118,7 @@ public static class ArenaBuilder
         SetObject(waves, "enemyPrefab", enemyPrefab);
         SetObject(waves, "coverPrefab", coverPrefab);
         SetObject(waves, "target", player.transform);
-        EnemyWave[] waveList = BuildWaves(voyouSprites);
+        EnemyWave[] waveList = BuildWaves(voyouSprites, copSprites);
         SetWaves(waves, waveList);
         SetInt(waves, "startWave", waveList.Length - 1);
 
@@ -658,7 +659,36 @@ public static class ArenaBuilder
             a.attacks = new[] { attack };
         });
 
-    private static EnemyWave[] BuildWaves(SpriteAnimationBuilder.Result voyouSprites)
+    // Flic corrompu en sprites (phase C) : un clip par attaque (SpriteAnimationBuilder.EnemyAttackClips),
+    // 1,85 m, canon calé sur la pose de visée (0,9 m devant les pieds, 1,55 m de haut ; mesuré dans Blender).
+    // Réappliqué à chaque construction, comme ApplySprites.
+    private static void ApplyCopSprites(EnemyArchetype cop, SpriteAnimationBuilder.Result sprites)
+    {
+        if (sprites == null)
+            return;
+
+        ApplySprites(cop, sprites, new Color(0.14f, 0.16f, 0.28f));
+        cop.bodySize = new Vector2(0.9f, 1.85f);
+        cop.muzzleOffset = new Vector2(0.9f, 1.55f);
+
+        string[] clips = { "Tir visé", "Rafale de 3", "Coup de matraque", "Appel radio" };
+        int[] ids = { 1, 2, 3, 4 };
+
+        foreach (EnemyAttack attack in cop.attacks)
+        {
+            int index = Array.IndexOf(clips, attack.name);
+
+            if (index < 0 || attack.data == null)
+                continue;
+
+            attack.data.animationId = ids[index];
+            EditorUtility.SetDirty(attack.data);
+        }
+
+        EditorUtility.SetDirty(cop);
+    }
+
+    private static EnemyWave[] BuildWaves(SpriteAnimationBuilder.Result voyouSprites, SpriteAnimationBuilder.Result copSprites)
     {
         const DamageType blunt = DamageType.Blunt;
         const DamageType blade = DamageType.Blade;
@@ -822,6 +852,8 @@ public static class ArenaBuilder
         // Les trois Voyous partagent les sprites du Voyou classique (armes à modéliser plus tard).
         foreach (EnemyArchetype thug in new[] { fists, knife, bar })
             ApplySprites(thug, voyouSprites, new Color(0.16f, 0.19f, 0.32f));
+
+        ApplyCopSprites(cop, copSprites);
 
         EnemyArchetype dummy = EnsureArchetype("00_Mannequin", a =>
         {

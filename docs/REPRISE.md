@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond. Ensuite, reprends la PHASE C là où elle s'est arrêtée (section « Phase C » de docs/PRODUCTION.md) : vérifie d'abord en Play le crochet allongé (F1, J J J) et le nouveau sol, puis relance ComfyUI et termine les concepts du Flic corrompu (seeds 13103 et 13104 du lot tools/gen3d/batches/2026-10-27_concepts_flic.sh, les deux premiers sont faits), montre-moi les 4 concepts et arrête-toi pour que je choisisse, en respectant CLAUDE.md.
+> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, reprends la PHASE C là où elle s'est arrêtée (section « Phase C » de docs/PRODUCTION.md) : montre-moi les 4 concepts du Dealer lieutenant (Art/Characters/Dealer/Concept, seeds 14101 à 14104) et attends mon choix, puis fais sa phase D comme pour le Flic, en respectant CLAUDE.md.
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 7** choisissent la vague, F1 à F3 le debug (détail dans le `README.md`).
 
@@ -128,11 +128,16 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 2. **Sauvegarde** — *faite*.
 3. **Phase combat dynamique** (Dragon Ball FighterZ sans les super-pouvoirs, hitstop, sang au couteau) — *faite* (commit `9766bed`).
 4. **Tranche verticale** Nathan M0 contre le Voyou, graphismes définitifs — *faite et validée par l'auteur le 2026-10-27* (commits `ccee514` à `5bddd2b`, puis la sauvegarde de fin de session) : cel-shading, allonge des coups, mannequin, décor peint (ComfyUI + Animagine), pose de mort, liseré rouge, 60 FPS mesurés dans un build Windows. Dernières retouches demandées après validation : sol redessiné en toon et crochet allongé (0,9 m) — faites et vérifiées en Play le 2026-10-27 (le crochet touche à 0,87 m dès sa 1re image active). Détail : `docs/PRODUCTION.md`, section « Tranche verticale ».
-5. **Phase C** (reste de l'Acte I, même méthode) — **en cours**. Un ennemi à la fois, en commençant par le **Flic corrompu** : 4 concepts faits (13101 à 13104), l'auteur a choisi **13103**, modèle TripoSG fait (`Flic_triposg_s42.glb`, collection `Flic` du fichier Blender, 1,85 m) ; reste la phase D (TripoSG, squelette, animations, sprites, intégration). Puis le Dealer lieutenant, le Soldat privé et le Mutant, un à la fois, avec arrêt après chaque série de concepts pour le choix de l'auteur.
+5. **Phase C** (reste de l'Acte I, même méthode) — **en cours**. Un ennemi à la fois :
+   - **Flic corrompu terminé** : concept 13103, 1,85 m, phase D faite (armes, animations de tir avec annonce, sprites), vague 3 de l'arène.
+   - **Dealer lieutenant** : 4 concepts faits (14101 à 14104), **en attente du choix de l'auteur**, puis sa phase D.
+   - Puis le Soldat privé et le Mutant, un à la fois, avec arrêt après chaque série de concepts pour le choix de l'auteur.
+
+   Tailles de tous les ennemis : `docs/ENEMIES.md`, section « Tailles ».
 
 Piège : l'outil `RunCommand` du MCP Unity refuse `File.Delete` et `AssetDatabase.DeleteAsset` (« user interaction ») ; pour mesurer les FPS, ne lancer aucune commande MCP pendant l'enregistrement (la compilation du script de test fausse la mesure).
 
-Outils de la tranche : `tools/blender/redmet_pipeline.py`, `tools/blender/redmet_animation.py` et `tools/blender/redmet_props.py` (mannequin), `tools/gen3d/background.py` (décor peint, ComfyUI doit tourner), menu Unity **RED MET → Build Windows** et banc d'essai `Builds/Windows/REDMET.exe -redmet-benchmark` (rapport `benchmark.txt` à côté de l'exécutable) ; (à exécuter dans Blender par le MCP, avec `exec(open(<chemin>, encoding="utf-8").read())`), `tools/gen3d/remove_floor_line.py`, menu Unity **RED MET → Importer les sprites des personnages**.
+Outils de la tranche : `tools/blender/redmet_pipeline.py`, `tools/blender/redmet_animation.py` et `tools/blender/redmet_props.py` (mannequin, pistolet, matraque ; `cop_clips` de `redmet_animation.py` pour les clips d'un tireur), `tools/gen3d/background.py` (décor peint, ComfyUI doit tourner), menu Unity **RED MET → Build Windows** et banc d'essai `Builds/Windows/REDMET.exe -redmet-benchmark` (rapport `benchmark.txt` à côté de l'exécutable) ; (à exécuter dans Blender par le MCP, avec `exec(open(<chemin>, encoding="utf-8").read())`), `tools/gen3d/remove_floor_line.py`, menu Unity **RED MET → Importer les sprites des personnages**.
 
 ### Requête de l'auteur : phase combat dynamique (texte complet)
 

@@ -5,7 +5,7 @@ using UnityEngine;
 // composant : sans Animator, ou sans un paramètre donné, rien ne casse.
 // Paramètres reconnus : Speed, VerticalSpeed (float), Grounded, Dead (bool),
 // Stunned, Down (bool, d'après HitReaction), ComboStep (int, AttackData.animationId),
-// Attack, Dodge, Dash, Hurt (trigger).
+// Attack, Dodge, Dash, Hurt, Hold (trigger). Pour un ennemi, ComboStep vaut l'animationId de son attaque.
 // Pendant un arrêt sur image (HitStop), la vitesse de l'Animator passe à 0.
 public class CharacterAnimator : MonoBehaviour
 {
@@ -20,6 +20,7 @@ public class CharacterAnimator : MonoBehaviour
     private static readonly int DashHash = Animator.StringToHash("Dash");
     private static readonly int StunnedHash = Animator.StringToHash("Stunned");
     private static readonly int DownHash = Animator.StringToHash("Down");
+    private static readonly int HoldHash = Animator.StringToHash("Hold");
 
     [SerializeField] private Animator animator;
 
@@ -53,6 +54,7 @@ public class CharacterAnimator : MonoBehaviour
 
         if (combat != null) combat.AttackStarted += OnPlayerAttack;
         if (enemy != null) enemy.AttackStarted += OnEnemyAttack;
+        if (enemy != null) enemy.HoldStarted += OnEnemyHold;
         if (dodge != null) dodge.DodgeStarted += OnDodge;
         if (dash != null) dash.DashStarted += OnDash;
         if (hitStop != null) hitStop.FrozenChanged += OnFrozenChanged;
@@ -86,6 +88,7 @@ public class CharacterAnimator : MonoBehaviour
     {
         if (combat != null) combat.AttackStarted -= OnPlayerAttack;
         if (enemy != null) enemy.AttackStarted -= OnEnemyAttack;
+        if (enemy != null) enemy.HoldStarted -= OnEnemyHold;
         if (dodge != null) dodge.DodgeStarted -= OnDodge;
         if (dash != null) dash.DashStarted -= OnDash;
         if (hitStop != null) hitStop.FrozenChanged -= OnFrozenChanged;
@@ -128,7 +131,16 @@ public class CharacterAnimator : MonoBehaviour
         Trigger(AttackHash);
     }
 
-    private void OnEnemyAttack(EnemyAttack attack) => Trigger(AttackHash);
+    // L'attaque d'un ennemi choisit son clip par son AttackData.animationId, comme le combo de Nathan.
+    private void OnEnemyAttack(EnemyAttack attack)
+    {
+        if (parameters.Contains(ComboStepHash))
+            animator.SetInteger(ComboStepHash, attack.data != null ? attack.data.animationId : 0);
+
+        Trigger(AttackHash);
+    }
+
+    private void OnEnemyHold() => Trigger(HoldHash);
 
     private void OnDodge() => Trigger(DodgeHash);
 

@@ -8,7 +8,7 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
-- **PHASE C EN COURS (2026-10-27)** : Flic corrompu : concept 13103 choisi par l'auteur, modèle TripoSG fait et placé dans Blender ; phase D (nettoyage, couleurs, squelette, animations, sprites) à faire (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
+- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant : 4 concepts faits (14101 à 14104), en attente du choix de l'auteur** (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
 - TRANCHE VERTICALE terminée le 2026-10-27 (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
@@ -554,3 +554,52 @@ Méthode de la tranche verticale, un ennemi à la fois : 4 concepts (l'auteur en
 - `Flic/Source/Flic_triposg_s42.glb` depuis le concept tel quel : seed 42, 535 084 faces brutes réduites à 40 000, pic de VRAM 5,21 Go, 83 s de calcul (97 s en tout). Fond blanc cassé retiré (tolérance 24), bottes et doigts intacts.
 - Dans Blender (collection `Flic`, x = 46, car x = 42 est pris par le mannequin) : mis à **1,85 m** (choix provisoire, plus grand que le Voyou à 1,78 m pour sa carrure ; aucune taille dans `ENEMIES.md`), pieds au sol. Silhouette fidèle (gilet à plaques, ceinturon et étuis, bras massifs, bottes hautes), jambes séparées, pas de socle. 2 morceaux : le corps (19 982 sommets) et un fragment de 11 sommets à supprimer au nettoyage.
 - Suite (phase D) : nettoyage (`redmet_pipeline.clean_mesh`), couleurs par zone, squelette Rigify, animations, sprites, intégration Unity ; pistolet et matraque modélisés à part.
+- L'auteur valide 1,85 m et demande les tailles de tous les ennemis : tableau « Tailles » ajouté en tête de `docs/ENEMIES.md` (Voyou 1,78 et Flic 1,85 faits, les autres proposés).
+
+### 2026-10-27 — Flic corrompu : phase D (nettoyage, couleurs, squelette, armes, animations, sprites, Unity)
+Même méthode et même style que la tranche verticale (cel-shading à 3 aplats, contour noir de 2,4 cm, liseré rouge côté lune du shader `Sprite Flash`).
+
+**Blender** (`ArtSource/Blender/REDMET_personnages.blend`, collection `Flic`) :
+- `Flic_M` : `clean_mesh` à 20 000 faces visées (23 555 obtenues), puis un fragment de 8 sommets resté dans la tête supprimé.
+- Couleurs : zones propres au Flic, mesurées sur l'image d'entrée. Les zones par défaut habilleraient ses bras, or ils sont nus à partir de 30 % de l'envergure. Zones : bottes sous 23,5 % de la hauteur, pantalon jusqu'à 55 %, bras nus au-delà de 31 % de l'envergure, tête (3 teintes), buste (3 teintes : gilet noir, chemise bleu marine, ceinturon). `clean_colors` ramène à 6 teintes ; `smooth_shading`, `setup_toon`.
+- Squelette `Flic_Rig` (`add_rig`), aucun sommet sans poids ; armature remise avant le contour dans la pile.
+- **Armes** (`redmet_props.py`) : `build_pistol` (pistolet générique, ni marque ni inscription) et `build_baton` (matraque droite de 60 cm), construits dans le repère de la main au repos (canon le long du bras, dessus de l'arme côté pouce). Ils sont accrochés aux os `prop_gun` et `prop_baton`, enfants de `hand.R` (`add_prop_bone`, `attach_to_bone`), avec un contour de 8 mm. La main droite est côté caméra. Une seule arme est visible à la fois : la nouvelle opération « H » de `redmet_animation` réduit l'os de l'autre arme à rien.
+- **Animations** (`cop_clips`, aux durées des AttackData du Flic, à 30 FPS) :
+  - idle (garde basse, pistolet devant), course, saut, coup reçu, mort (descente 0,757 m), dash, esquive ;
+  - `enemy_shot`, tir visé : annonce bras levé vers le ciel (image 5), visée tenue de l'image 10 à 20, recul à l'image 21 (première image active), retour à 35 ;
+  - `enemy_burst`, rafale : arme levée, puis fente à deux mains, buste penché ; trois reculs aux images 27, 30 et 33 ;
+  - `enemy_baton`, matraque : bras levé, matraque vers l'arrière (images 4 à 11), coup porté à l'image 13, en fente ;
+  - `enemy_radio`, appel radio : coude gauche levé, main au micro, tête penchée, 45 images ;
+  - `enemy_hold`, rechargement (1,5 s) : pistolet au buste, main gauche au ceinturon, puis culasse tirée.
+  - La garde, la radio et le rechargement partent de la pose de visée. Avec un bras plié autrement, le canon pointait vers l'arrière (constaté sur la première planche de contrôle).
+- Rendu : 274 images en 140 s, 12 feuilles dans `Art/Characters/Flic/Sprites/` ; images intermédiaires hors du projet. `render_clips` prend maintenant `extras` (les armes).
+- Canon mesuré en visée : 0,9 m devant les pieds, de 1,50 à 1,59 m de haut.
+
+**Unity** :
+- `EnemyArchetype.muzzleOffset` : bout du canon depuis les pieds (Flic : 0,9 ; 1,55). La ligne de visée et les balles partent de l'arme du sprite. Les autres ennemis gardent l'ancien calcul (valeur nulle).
+- `CombatVfx.MuzzleFlash` : gerbe d'étincelles brève devant le canon à chaque balle (`Enemy.FireRoutine`), sans flash d'écran.
+- `Enemy.HoldStarted` : un événement au début d'une immobilisation (le rechargement du Flic).
+- `CharacterAnimator` : pour un ennemi, `ComboStep` vaut l'`animationId` de son attaque ; nouveau déclencheur `Hold`.
+- `SpriteAnimationBuilder` : un état par clip d'attaque d'ennemi (`EnemyAttackClips` : `enemy_punch` 0, `enemy_shot` 1, `enemy_burst` 2, `enemy_baton` 3, `enemy_radio` 4). Un identifiant sans clip joue la première attaque disponible : le Voyou ne change pas. Un état `Hold` est créé si le clip `enemy_hold` existe.
+- `ArenaBuilder.ApplyCopSprites`, réappliqué à chaque construction : sprites et Animator, zone de collision de 0,9 × 1,85, canon, `animationId` 1 à 4 sur les AttackData du Flic, teinte des membres bleu marine.
+
+**Test en Play, vague 3** (Nathan placé à 7 m, soigné en continu par le script de test) :
+- Le cycle suit la fiche : tir visé, rafale, rechargement après 6 balles (90 images, 1,5 s), puis il reprend ; il tire depuis l'abri.
+- Collé à Nathan, il passe à la matraque. Sous la moitié de ses PV, il appelle la radio (un Voyou arrive).
+- Chaque attaque joue son clip, avec sa teinte d'annonce : rouge et ligne de visée pour le tir, ligne épaisse pour la rafale, jaune pour la matraque, cyan pour la radio, gris pour le rechargement.
+- La ligne de visée part du pistolet.
+- Restes :
+  - le bras gauche levé de la radio est du côté opposé à la caméra et se voit peu (la couleur cyan porte l'annonce) ;
+  - la capture « annonce » est prise à l'image 3 du clip, avant que le bras soit levé.
+- Au premier essai, le Flic ne tirait pas : Nathan, au point de départ (x = -4), était à 16 m, au-delà de sa détection (14 m). C'est le comportement prévu.
+- 60 FPS (éditeur, vague du Flic, 600 images) : 3,07 ms en moyenne, 4,72 ms au 99e centile. Une image à 165 ms, due à la compilation du script de mesure (piège connu).
+- Captures : `docs/captures/2026-10-27_flic_en_jeu.png` (tir, rafale, matraque armée et portée, rechargement, radio) et `..._flic_poses.png` (planche Blender des poses clés).
+
+### 2026-10-27 — Concepts du Dealer lieutenant (4 sur 4, EN ATTENTE DU CHOIX DE L'AUTEUR)
+- Lot `tools/gen3d/batches/2026-10-27_concepts_dealer.sh` : Animagine XL 4.0, 1024 × 1024, pose en T, sans arme. Le pistolet sera celui du Flic.
+- Tenue voyante, bijoux en or, lunettes teintées, assurance tranquille. Aucune marque, aucun logo ni texte, ni origine imposée (pour éviter le cliché du dealer). Taille prévue : 1,80 m.
+- Examen en pleine résolution : deux bras et deux mains partout, un seul homme adulte.
+  - **14101** : 32 ans, mince, cheveux plaqués, lunettes rondes, chaînes en or. Cuir noir verni au lieu du manteau bordeaux demandé, veste courte et pantalon de cuir. Très sombre : il risque de se perdre sur le fond rouge sombre, comme le gilet noir du Flic.
+  - **14102** : 27 ans, athlétique, cheveux décolorés, lunettes d'aviateur jaunes, survêtement blanc à bandes dorées, bracelets en or, baskets blanches. Le plus lisible sur le décor. Ombre portée au sol à effacer avant TripoSG (`remove_floor_line.py`).
+  - **14103** : costume crème, chaînes en or (une sorte de col en maille dorée), mocassins, barbe blanche. Paraît bien plus âgé que les 40 ans demandés. Son élégance le rapproche du Chimiste, que le bestiaire veut distinct.
+  - **14104** : 35 ans, queue de cheval, lunettes violettes, survêtement violet à col de fourrure, chaînes en or. Petit faux logo sur la poitrine (à effacer dans Blender), ombre au sol. Le manteau long demandé n'est pas rendu.

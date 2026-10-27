@@ -81,10 +81,15 @@ public class Enemy : MonoBehaviour, IDamageFilter
     public int PhaseFrame { get; private set; }
     public int PhaseLength { get; private set; }
 
-    private Vector2 Muzzle => Position + new Vector2(Facing * BodySize.x * 0.5f, BodySize.y * 0.15f);
+    // Position est le centre du corps ; muzzleOffset se compte depuis les pieds.
+    private Vector2 Muzzle => archetype != null && archetype.muzzleOffset != Vector2.zero
+        ? Position + new Vector2(Facing * archetype.muzzleOffset.x, archetype.muzzleOffset.y - BodySize.y * 0.5f)
+        : Position + new Vector2(Facing * BodySize.x * 0.5f, BodySize.y * 0.15f);
     private Vector2 BodySize => archetype != null ? archetype.bodySize : Vector2.one;
 
     public event Action<EnemyAttack> AttackStarted;
+    // Immobilisation volontaire (rechargement du Flic) : l'Animator peut la jouer (état Hold).
+    public event Action HoldStarted;
     public event Action<Enemy, EnemyArchetype> ReinforcementRequested;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -503,8 +508,11 @@ public class Enemy : MonoBehaviour, IDamageFilter
     // Immobile pendant un temps (rechargement...) : une fenêtre de vulnérabilité.
     public void Hold(float duration, Color color)
     {
-        if (!IsBusy)
-            actionRoutine = StartCoroutine(HoldRoutine(Mathf.RoundToInt(duration * AttackData.FrameRate), color));
+        if (IsBusy)
+            return;
+
+        actionRoutine = StartCoroutine(HoldRoutine(Mathf.RoundToInt(duration * AttackData.FrameRate), color));
+        HoldStarted?.Invoke();
     }
 
     public void ApplyWindupBuff(float multiplier, float duration)
@@ -658,6 +666,9 @@ public class Enemy : MonoBehaviour, IDamageFilter
 
                 Projectile projectile = Pool.Get(projectilePrefab, muzzle);
                 projectile.Launch(gameObject, direction, attack.projectileSpeed, attack.data);
+
+                if (CombatVfx.Instance != null)
+                    CombatVfx.Instance.MuzzleFlash(muzzle, Mathf.Sign(direction.x));
             }
 
             if (i < count - 1)

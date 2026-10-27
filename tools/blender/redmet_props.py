@@ -163,6 +163,116 @@ def build_training_dummy(name="Mannequin_M", location=(42.0, 0.0, 0.0)):
     return obj
 
 
+# ------------------------------------------------------------- Armes du Flic
+
+GUN_METAL = (0.30, 0.31, 0.34)
+GUN_DARK = (0.10, 0.10, 0.11)
+BATON_BLACK = (0.07, 0.07, 0.08)
+BATON_GRIP = (0.20, 0.20, 0.22)
+
+
+def _new_prop(name, collection):
+    old = bpy.data.objects.get(name)
+
+    if old is not None:
+        bpy.data.objects.remove(old)
+
+    mesh = bpy.data.meshes.new(name)
+    obj = bpy.data.objects.new(name, mesh)
+    collection.objects.link(obj)
+    bm = bmesh.new()
+    bm.loops.layers.color.new("Col")
+    return obj, bm
+
+
+def _finish_prop(obj, bm):
+    bm.to_mesh(obj.data)
+    bm.free()
+
+    for polygon in obj.data.polygons:
+        polygon.use_smooth = False
+
+    return obj
+
+
+def _hand_frame(rig, side="R"):
+    """Repère de la main au repos (pose en T, paume vers le bas) : poing, axe du bras vers la main,
+    côté du pouce (vers l'avant, -Y). Une arme tenue suit le pouce : canon le long du bras,
+    dessus de l'arme côté pouce, crosse côté auriculaire."""
+    bone = rig.data.bones[f"hand.{side}"]
+    head = rig.matrix_world @ bone.head_local
+    tail = rig.matrix_world @ bone.tail_local
+    along = (tail - head).normalized()
+    fist = head + (tail - head) * 0.55
+    return fist, along, Vector((0, -1, 0))
+
+
+def _frame_matrix(origin, x_axis, y_axis):
+    """Matrice d'un repère local : X = x_axis, Y = y_axis, Z = X × Y, origine origin."""
+    z_axis = x_axis.cross(y_axis)
+    m = Matrix((x_axis, y_axis, z_axis)).transposed().to_4x4()
+    m.translation = origin
+    return m
+
+
+def build_pistol(rig, collection, name="Flic_Pistol", side="R"):
+    """Pistolet générique (ni marque ni inscription) : culasse, canon, crosse inclinée, pontet.
+    Repère local : X = canon (vers l'avant de l'arme), Y = dessus de l'arme."""
+    obj, bm = _new_prop(name, collection)
+    _part(bm, _box(0.20, 0.034, 0.030), GUN_METAL, Matrix.Translation((0.04, 0.045, 0)))
+    _part(bm, _box(0.03, 0.022, 0.022), GUN_DARK, Matrix.Translation((0.15, 0.040, 0)))
+    _part(bm, _box(0.12, 0.024, 0.026), GUN_DARK, Matrix.Translation((0.03, 0.018, 0)))
+    _part(bm, _box(0.036, 0.11, 0.030), GUN_DARK,
+          Matrix.Translation((-0.035, -0.035, 0)) @ Matrix.Rotation(math.radians(-14), 4, "Z"))
+    _part(bm, _box(0.05, 0.008, 0.012), GUN_DARK, Matrix.Translation((0.03, -0.012, 0)))
+    _finish_prop(obj, bm)
+
+    fist, along, thumb = _hand_frame(rig, side)
+    obj.matrix_world = _frame_matrix(fist, along, thumb)
+    return obj
+
+
+def build_baton(rig, collection, name="Flic_Baton", side="R"):
+    """Matraque droite de 60 cm : poignée gainée, pommeau, tige noire. Elle sort du poing côté pouce.
+    Repère local : Y = la tige."""
+    obj, bm = _new_prop(name, collection)
+    _part(bm, _cylinder(0.018, 0.16, 12), BATON_GRIP, Matrix.Translation((0, 0.02, 0)) @ Matrix.Rotation(math.radians(-90), 4, "X"))
+    _part(bm, _cylinder(0.026, 0.02, 12), BATON_GRIP, Matrix.Translation((0, -0.07, 0)) @ Matrix.Rotation(math.radians(-90), 4, "X"))
+    _part(bm, _cylinder(0.014, 0.46, 12), BATON_BLACK, Matrix.Translation((0, 0.33, 0)) @ Matrix.Rotation(math.radians(-90), 4, "X"))
+    _finish_prop(obj, bm)
+
+    fist, along, thumb = _hand_frame(rig, side)
+    obj.matrix_world = _frame_matrix(fist, along, thumb)
+    return obj
+
+
+def add_prop_bone(rig, bone_name, side="R"):
+    """Os sans déformation, enfant de la main : porte une arme. Son échelle permet de la cacher
+    dans les animations (opération « H » de redmet_animation)."""
+    bpy.context.view_layer.objects.active = rig
+    bpy.ops.object.mode_set(mode='EDIT')
+    eb = rig.data.edit_bones
+    hand = eb[f"hand.{side}"]
+    bone = eb.get(bone_name) or eb.new(bone_name)
+    bone.head = hand.head.copy()
+    bone.tail = hand.tail.copy()
+    bone.roll = hand.roll
+    bone.parent = hand
+    bone.use_connect = False
+    bpy.ops.object.mode_set(mode='OBJECT')
+    rig.data.bones[bone_name].use_deform = False
+
+
+def attach_to_bone(obj, rig, bone_name):
+    """Accroche l'objet à l'os en gardant sa place au repos."""
+    world = obj.matrix_world.copy()
+    obj.parent = rig
+    obj.parent_type = 'BONE'
+    obj.parent_bone = bone_name
+    bpy.context.view_layer.update()
+    obj.matrix_world = world
+
+
 def render_still(scene, cam, obj, path):
     """Une image du mêmes cadrage que les sprites des personnages (pieds à feet_from_bottom)."""
     if obj.name not in scene.collection.objects:

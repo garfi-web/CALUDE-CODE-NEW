@@ -3,6 +3,28 @@
 Traduction jouable de [`docs/BESTIARY.md`](BESTIARY.md) pour un jeu d'action 2D latéral. Valeurs **de départ**, à ajuster au test.
 Unités : 1 unité Unity ≈ 1 m (Nathan mesure environ 1,6 unité de haut), temps en secondes, vitesses en unités par seconde.
 
+## Tailles
+
+Hauteur debout, du sol au sommet du crâne, à laquelle chaque modèle est mis dans Blender (`ArtSource/Blender/REDMET_personnages.blend`) avant le rendu des sprites. Repère : Nathan R0 et M0 mesurent 1,70 m, M2 et M4 2,05 m. Les tailles **proposées** seront confirmées par l'auteur au moment des concepts de chaque ennemi.
+
+| # | Ennemi | Taille | État |
+|---|---|---|---|
+| 01 | Voyou classique | 1,78 m | Modèle et sprites faits (tranche verticale) |
+| 02 | Dealer (lieutenant) | 1,80 m | Proposée |
+| 03 | Flic corrompu | **1,85 m** | Validée par l'auteur le 2026-10-27, modèle et sprites faits |
+| 04 | Soldat privé | 1,88 m | Proposée (casque compris) |
+| 05 | Chasseur | 1,83 m | Proposée |
+| 06 | Mutant | 2,40 m | Proposée (zone de collision actuelle : 2,4 unités) |
+| 07 | Psycho | 1,75 m | Proposée |
+| 08 | Clown tueur | 1,90 m | Proposée |
+| 09 | Démon techno | 2,10 m | Proposée |
+| 10 | Spectre | 2,00 m | Proposée (flotte au-dessus du sol) |
+| 11 | Géant de chair (mini-boss) | 4,50 m | Proposée |
+| 12 | Porteur de l'aberration (boss final) | 3,00 m (forme de départ) | Proposée, change selon les phases |
+| — | Mannequin d'entraînement | 1,75 m | Fait (accessoire) |
+
+La zone de collision (`EnemyArchetype.bodySize`) suit la taille du modèle quand l'ennemi passe en sprites (Flic : 0,9 × 1,85).
+
 ## 0. Règles communes
 
 **Équilibrage (BESTIARY.md, section 6) : l'ennemi ne change pas selon la trajectoire.** Ses PV, ses dégâts, ses temps d'armement et son comportement sont identiques sur la voie sobre et sur la voie Red Met. Ce qui change :

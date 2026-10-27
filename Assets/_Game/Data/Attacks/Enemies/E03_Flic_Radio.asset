@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: E03_Flic_Radio
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   displayName: Appel radio
-  animationId: 0
+  animationId: 4
   startup: 72
   active: 1
   recovery: 18
@@ -22,7 +22,7 @@ MonoBehaviour:
   damageType: 0
   hitboxOffset: {x: 0.9, y: 0.1}
   hitboxSize: {x: 1.2, y: 0.9}
-  lunge: 2
+  step: 0.3
   hitstop: 0
   shake: 0
   zoom: 0

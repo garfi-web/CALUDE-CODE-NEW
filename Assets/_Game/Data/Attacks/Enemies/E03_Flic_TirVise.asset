@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: E03_Flic_TirVise
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   displayName: "Tir vis\xE9"
-  animationId: 0
+  animationId: 1
   startup: 42
   active: 3
   recovery: 24
@@ -22,7 +22,7 @@ MonoBehaviour:
   damageType: 2
   hitboxOffset: {x: 0.9, y: 0.1}
   hitboxSize: {x: 1.2, y: 0.9}
-  lunge: 2
+  step: 0.3
   hitstop: 3
   shake: 0.1
   zoom: 0

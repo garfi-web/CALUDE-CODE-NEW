@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: E03_Flic_Rafale
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   displayName: Rafale de 3
-  animationId: 0
+  animationId: 2
   startup: 54
   active: 18
   recovery: 42
@@ -22,7 +22,7 @@ MonoBehaviour:
   damageType: 2
   hitboxOffset: {x: 0.9, y: 0.1}
   hitboxSize: {x: 1.2, y: 0.9}
-  lunge: 2
+  step: 0.3
   hitstop: 2
   shake: 0.08
   zoom: 0

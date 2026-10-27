@@ -387,6 +387,10 @@ public class CombatVfx : MonoBehaviour
             CameraFollow.Main.Shake(0.5f);
     }
 
+    // Coup de feu : gerbe d'étincelles brève et serrée devant le canon (aucun flash d'écran).
+    public void MuzzleFlash(Vector2 point, float direction) =>
+        Emit(sparks, point, 7, direction, 6f, 12f, 18f, 0.1f, 0.2f, SparkColor, 0.04f, 0.08f);
+
     private void EmitSpeedLines(Vector2 point)
     {
         var parameters = new ParticleSystem.EmitParams { applyShapeToPosition = false };

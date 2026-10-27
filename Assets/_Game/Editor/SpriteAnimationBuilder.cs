@@ -20,6 +20,10 @@ public static class SpriteAnimationBuilder
     // Ordre des attaques de Nathan : AttackData.animationId → clip.
     private static readonly string[] AttackClips = { "jab", "cross", "hook", "heavy", "launcher", "air1", "air2", "air3", "smash" };
 
+    // Attaques des ennemis : AttackData.animationId → clip. Un ennemi n'a que les clips de ses attaques ;
+    // un animationId sans clip joue la première attaque disponible.
+    private static readonly string[] EnemyAttackClips = { "enemy_punch", "enemy_shot", "enemy_burst", "enemy_baton", "enemy_radio" };
+
     [Serializable]
     private class SheetInfo
     {
@@ -58,7 +62,7 @@ public static class SpriteAnimationBuilder
         }
     }
 
-    // enemy : l'attaque joue « enemy_punch » quel que soit ComboStep.
+    // enemy : l'attaque joue le clip EnemyAttackClips[ComboStep] (animationId de l'attaque).
     public static Result Build(string character, bool enemy)
     {
         string sheetFolder = $"{CharactersRoot}/{character}/Sprites";
@@ -189,7 +193,7 @@ public static class SpriteAnimationBuilder
                      ("Stunned", AnimatorControllerParameterType.Bool), ("Down", AnimatorControllerParameterType.Bool),
                      ("ComboStep", AnimatorControllerParameterType.Int), ("Attack", AnimatorControllerParameterType.Trigger),
                      ("Dodge", AnimatorControllerParameterType.Trigger), ("Dash", AnimatorControllerParameterType.Trigger),
-                     ("Hurt", AnimatorControllerParameterType.Trigger),
+                     ("Hurt", AnimatorControllerParameterType.Trigger), ("Hold", AnimatorControllerParameterType.Trigger),
                  })
         {
             controller.AddParameter(name, type);
@@ -213,9 +217,25 @@ public static class SpriteAnimationBuilder
 
         if (enemy)
         {
-            AnimatorState attack = AddState(sm, "Attack", clips["enemy_punch"]);
-            AnyTo(sm, attack, true).AddCondition(AnimatorConditionMode.If, 0, "Attack");
-            Leave(attack, idle, true);
+            string fallback = EnemyAttackClips.First(clips.ContainsKey);
+
+            for (int i = 0; i < EnemyAttackClips.Length; i++)
+            {
+                string clipName = clips.ContainsKey(EnemyAttackClips[i]) ? EnemyAttackClips[i] : fallback;
+                AnimatorState attack = AddState(sm, "Attack_" + EnemyAttackClips[i], clips[clipName]);
+                AnimatorStateTransition into = AnyTo(sm, attack, true);
+                into.AddCondition(AnimatorConditionMode.If, 0, "Attack");
+                into.AddCondition(AnimatorConditionMode.Equals, i, "ComboStep");
+                Leave(attack, idle, true);
+            }
+
+            // Immobilisation (rechargement du Flic), si le personnage a ce clip.
+            if (clips.TryGetValue("enemy_hold", out AnimationClip holdClip))
+            {
+                AnimatorState hold = AddState(sm, "Hold", holdClip);
+                AnyTo(sm, hold, true).AddCondition(AnimatorConditionMode.If, 0, "Hold");
+                Leave(hold, idle, true);
+            }
         }
         else
         {

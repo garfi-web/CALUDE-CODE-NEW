@@ -21,8 +21,12 @@ MonoBehaviour:
   weight: 1
   superArmor: 0
   hitstunScale: 0.8
-  bodyColor: {r: 0.15, g: 0.25, b: 0.55, a: 1}
-  bodySize: {x: 0.9, y: 1.7}
+  bodyColor: {r: 1, g: 1, b: 1, a: 1}
+  bodySize: {x: 0.9, y: 1.85}
+  muzzleOffset: {x: 0.9, y: 1.55}
+  animator: {fileID: 9100000, guid: f5402c8ec81ba66479bd5701b41b963a, type: 2}
+  sprite: {fileID: 1945923233, guid: 89cacddc3b458514db5730b8f49ec2fc, type: 3}
+  limbColor: {r: 0.14, g: 0.16, b: 0.28, a: 1}
   bloodColor: {r: 0.55, g: 0.02, b: 0.03, a: 1}
   bloodGlows: 0
   canBeDismembered: 1
