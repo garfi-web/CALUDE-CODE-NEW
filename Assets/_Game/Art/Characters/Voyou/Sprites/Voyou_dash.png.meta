@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 147.6923
+  spritePixelsToUnits: 196.92308
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,17 +117,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f43bb1afb02e2e144863dff20fe65f95
+      spriteID: 7bcb7600e9fc7174b97392ad8612bbf6
       internalID: -1752607604
       vertices: []
       indices: 
@@ -137,19 +137,19 @@ TextureImporter:
       name: Voyou_dash_01
       rect:
         serializedVersion: 2
-        x: 384
+        x: 512
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0ad58ff2fd80644187cb7db1206e8c9
+      spriteID: 7f6fe1f74e69d0a4a897c8cedf03a040
       internalID: -1112322137
       vertices: []
       indices: 
@@ -159,19 +159,19 @@ TextureImporter:
       name: Voyou_dash_02
       rect:
         serializedVersion: 2
-        x: 768
+        x: 1024
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec87e187f57dcc84eade79abeee3a9db
+      spriteID: f3c0d5bc38527ab449140110b8898db2
       internalID: 1754119057
       vertices: []
       indices: 
@@ -181,19 +181,19 @@ TextureImporter:
       name: Voyou_dash_03
       rect:
         serializedVersion: 2
-        x: 1152
+        x: 1536
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c466d41a5f50f184897cc444ff221c0c
+      spriteID: cd9e741f908f9e34ea4dad47e9ed70af
       internalID: 1708414166
       vertices: []
       indices: 
@@ -203,19 +203,19 @@ TextureImporter:
       name: Voyou_dash_04
       rect:
         serializedVersion: 2
-        x: 1536
+        x: 2048
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b98c847d94d9a34db51fcbf89d6288b
+      spriteID: 2f740dc6e5d64e444906403006984ef1
       internalID: 55123626
       vertices: []
       indices: 
@@ -225,19 +225,19 @@ TextureImporter:
       name: Voyou_dash_05
       rect:
         serializedVersion: 2
-        x: 1920
+        x: 2560
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90a22a58ea6ef2744959b774e4adcb29
+      spriteID: f22a02c7b82e9c04f8f9843fe099c7f6
       internalID: 1603639489
       vertices: []
       indices: 

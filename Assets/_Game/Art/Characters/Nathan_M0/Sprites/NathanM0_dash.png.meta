@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 147.6923
+  spritePixelsToUnits: 196.92308
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,17 +117,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e369d6bc06c16e844a540e2ebb36bc0e
+      spriteID: dcbeceed231a5fe43b84a9d1e762492c
       internalID: 362376089
       vertices: []
       indices: 
@@ -137,19 +137,19 @@ TextureImporter:
       name: NathanM0_dash_01
       rect:
         serializedVersion: 2
-        x: 384
+        x: 512
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd908f2d7a2bf0a4688a0b8ef6f0f6fc
+      spriteID: 1d4929f7650ee824583f548ae22a63b9
       internalID: 284036501
       vertices: []
       indices: 
@@ -159,19 +159,19 @@ TextureImporter:
       name: NathanM0_dash_02
       rect:
         serializedVersion: 2
-        x: 768
+        x: 1024
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 356a1186dcbea1643982a614368bb9ba
+      spriteID: 3002c391ab8761340a90a95e3cc8819a
       internalID: 440397774
       vertices: []
       indices: 
@@ -181,19 +181,19 @@ TextureImporter:
       name: NathanM0_dash_03
       rect:
         serializedVersion: 2
-        x: 1152
+        x: 1536
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d6ca96207211534f8625ab62e6157cb
+      spriteID: 19a3780f865ffd445a600be20e309d7c
       internalID: -1479826599
       vertices: []
       indices: 
@@ -203,19 +203,19 @@ TextureImporter:
       name: NathanM0_dash_04
       rect:
         serializedVersion: 2
-        x: 1536
+        x: 2048
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a9e786c23aef5345828f60d67469687
+      spriteID: 18aee4f803299b2458fbf25282944d0f
       internalID: 1629065222
       vertices: []
       indices: 
@@ -225,19 +225,19 @@ TextureImporter:
       name: NathanM0_dash_05
       rect:
         serializedVersion: 2
-        x: 1920
+        x: 2560
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 64968bc3fabd89b4391a1aacc5c02c5e
+      spriteID: 0306358ed0b5d0047bd1cb6402100bf1
       internalID: -240617734
       vertices: []
       indices: 

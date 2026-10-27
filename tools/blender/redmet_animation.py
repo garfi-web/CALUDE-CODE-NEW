@@ -245,7 +245,46 @@ def toon_material(name="RM_Toon", steps=(0.0, 0.08, 0.5), tones=(0.38, 0.66, 1.0
     return mat
 
 
-def outline_material(name="RM_Outline", color=(0.02, 0.01, 0.015)):
+def clean_colors(mesh, merge=0.07, iterations=3):
+    """Aplats nets : fusionne les teintes presque identiques (deux noirs du sweat, deux tons de peau),
+    puis filtre majoritaire entre voisins, qui efface les petits îlots de couleur projetés depuis le concept."""
+    import numpy as np
+
+    attribute = mesh.data.color_attributes["Col"]
+    colors = np.zeros(len(attribute.data) * 4, dtype=np.float32)
+    attribute.data.foreach_get("color", colors)
+    colors = colors.reshape(-1, 4)
+
+    palette, index, counts = np.unique(np.round(colors[:, :3], 3), axis=0, return_inverse=True, return_counts=True)
+    index = index.ravel()
+
+    # Chaque teinte rejoint la plus fréquente de celles qui lui sont proches.
+    target = np.arange(len(palette))
+
+    for i in np.argsort(-counts):
+        for j in range(len(palette)):
+            if target[j] == j and j != i and counts[i] >= counts[j] and np.linalg.norm(palette[i] - palette[j]) < merge:
+                target[j] = target[i]
+
+    index = target[index]
+
+    edges = np.zeros(len(mesh.data.edges) * 2, dtype=np.int64)
+    mesh.data.edges.foreach_get("vertices", edges)
+    edges = edges.reshape(-1, 2)
+    pairs = np.concatenate([edges, edges[:, ::-1], np.repeat(np.arange(len(index))[:, None], 2, axis=1)])
+
+    for _ in range(iterations):
+        votes = np.zeros((len(index), len(palette)), dtype=np.int32)
+        np.add.at(votes, (pairs[:, 0], index[pairs[:, 1]]), 1)
+        index = votes.argmax(axis=1)
+
+    colors[:, :3] = palette[index]
+    attribute.data.foreach_set("color", colors.ravel())
+    mesh.data.update()
+    return len(np.unique(index))
+
+
+def outline_material(name="RM_Outline", color=(0.0, 0.0, 0.0)):
     mat = bpy.data.materials.get(name) or bpy.data.materials.new(name)
     mat.use_nodes = True
     nt = mat.node_tree
@@ -272,43 +311,51 @@ def setup_toon(obj, thickness=0.024):
     solid.use_rim = False
 
 
-def smooth_shading(mesh, iterations=40):
-    """Ombrage sur les grandes formes : les normales viennent d'une copie très lissée du maillage
-    (même squelette), transférées sur le vrai maillage. La silhouette ne change pas, mais les
-    petites bosses du modèle TripoSG ne tachettent plus les aplats."""
-    name = mesh.name + "_NormalSrc"
-    src = bpy.data.objects.get(name)
+def smooth_shading(mesh, iterations=300):
+    """Ombrage sur les grandes formes : les normales viennent d'une copie très lissée du maillage,
+    transférées en pose de repos puis enregistrées dans le maillage (normales personnalisées, qui
+    suivent ensuite la déformation du squelette). La silhouette ne change pas, mais les petites
+    bosses du modèle TripoSG ne tachettent plus les aplats. Relancer recalcule depuis la géométrie."""
+    for modifier in [m for m in mesh.modifiers if m.type == 'DATA_TRANSFER']:
+        mesh.modifiers.remove(modifier)
 
-    if src is None:
-        src = mesh.copy()
-        src.data = mesh.data.copy()
-        src.name = name
+    old = bpy.data.objects.get(mesh.name + "_NormalSrc")
 
-        for collection in mesh.users_collection:
-            collection.objects.link(src)
+    if old is not None:
+        bpy.data.objects.remove(old)
 
+    src = mesh.copy()
+    src.data = mesh.data.copy()
     src.modifiers.clear()
+
+    for collection in mesh.users_collection:
+        collection.objects.link(src)
+
+    # La copie repart des normales de la géométrie, pas de celles d'un passage précédent.
+    if "custom_normal" in src.data.attributes:
+        src.data.attributes.remove(src.data.attributes["custom_normal"])
+
     smooth = src.modifiers.new("Smooth", 'SMOOTH')
     smooth.factor = 1.0
     smooth.iterations = iterations
-    armature = next(m for m in mesh.modifiers if m.type == 'ARMATURE')
-    deform = src.modifiers.new("Armature", 'ARMATURE')
-    deform.object = armature.object
-    src.hide_render = True
-    src.hide_viewport = True
 
-    transfer = mesh.modifiers.get("SmoothNormals") or mesh.modifiers.new("SmoothNormals", 'DATA_TRANSFER')
+    transfer = mesh.modifiers.new("SmoothNormals", 'DATA_TRANSFER')
     transfer.object = src
     transfer.use_loop_data = True
     transfer.data_types_loops = {'CUSTOM_NORMAL'}
     transfer.loop_mapping = 'POLYINTERP_NEAREST'
 
-    # Ordre : squelette, normales lissées, puis contour.
-    for i, modifier_name in enumerate((armature.name, "SmoothNormals")):
-        with bpy.context.temp_override(object=mesh):
-            bpy.ops.object.modifier_move_to_index(modifier=modifier_name, index=i)
+    # La copie lissée doit être évaluée avant l'application, sinon le transfert ne copie rien.
+    bpy.context.view_layer.update()
 
-    return src
+    # En tête de pile (pose de repos), puis appliqué : le maillage garde les normales lissées.
+    with bpy.context.temp_override(object=mesh, active_object=mesh):
+        bpy.ops.object.modifier_move_to_index(modifier=transfer.name, index=0)
+        bpy.ops.object.modifier_apply(modifier=transfer.name)
+
+    src_data = src.data
+    bpy.data.objects.remove(src)
+    bpy.data.meshes.remove(src_data)
 
 
 def setup_render_scene(name="RM_Sprites", size=512, ortho=2.6, center_z=1.0):

@@ -147,7 +147,8 @@ public static class SpriteAnimationBuilder
 
     private static AnimationClip SaveClip(string path, Sprite[] sprites, float fps, bool loop)
     {
-        var clip = new AnimationClip { frameRate = fps };
+        // Le nom suit le fichier : CopySerialized le recopie sur le clip existant.
+        var clip = new AnimationClip { frameRate = fps, name = Path.GetFileNameWithoutExtension(path) };
         var binding = EditorCurveBinding.PPtrCurve(string.Empty, typeof(SpriteRenderer), "m_Sprite");
         var keys = new ObjectReferenceKeyframe[sprites.Length + 1];
 

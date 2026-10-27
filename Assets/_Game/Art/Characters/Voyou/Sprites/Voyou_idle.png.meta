@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 147.6923
+  spritePixelsToUnits: 196.92308
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,18 +116,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 384
-        width: 384
-        height: 384
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ead81bd79b308944b9ee77fd3ecb6fc
+      spriteID: acc9c8fc6914f4a4d9245e3dc7e7b849
       internalID: -277771691
       vertices: []
       indices: 
@@ -137,19 +137,19 @@ TextureImporter:
       name: Voyou_idle_01
       rect:
         serializedVersion: 2
-        x: 384
-        y: 384
-        width: 384
-        height: 384
+        x: 512
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 456a0a06c846dd944bf18aa681650161
+      spriteID: 1207913d259581b45aa9b41e8547cdb4
       internalID: 1413645556
       vertices: []
       indices: 
@@ -159,19 +159,19 @@ TextureImporter:
       name: Voyou_idle_02
       rect:
         serializedVersion: 2
-        x: 768
-        y: 384
-        width: 384
-        height: 384
+        x: 1024
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1dc0d00678c5694a9c1bca233747e4d
+      spriteID: 38a0cdb175f5f7c4f863696f14d0b031
       internalID: 1392238533
       vertices: []
       indices: 
@@ -181,19 +181,19 @@ TextureImporter:
       name: Voyou_idle_03
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 384
-        width: 384
-        height: 384
+        x: 1536
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 747ac7392696f9643a9a96395553d23a
+      spriteID: 211555e90ea49a749b5de9f57bce052a
       internalID: 577619483
       vertices: []
       indices: 
@@ -203,19 +203,19 @@ TextureImporter:
       name: Voyou_idle_04
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 384
-        width: 384
-        height: 384
+        x: 2048
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 087ebaae41b02a843a69b39176c3e2e0
+      spriteID: b0ea6f2a263ec5247ba30e78a80bceda
       internalID: -166279908
       vertices: []
       indices: 
@@ -225,19 +225,19 @@ TextureImporter:
       name: Voyou_idle_05
       rect:
         serializedVersion: 2
-        x: 1920
-        y: 384
-        width: 384
-        height: 384
+        x: 2560
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9dd5f98ba929cd47b930bebd72b2175
+      spriteID: 46e9c1eca354c654facc2128f61192fd
       internalID: -47966370
       vertices: []
       indices: 
@@ -247,19 +247,19 @@ TextureImporter:
       name: Voyou_idle_06
       rect:
         serializedVersion: 2
-        x: 2304
-        y: 384
-        width: 384
-        height: 384
+        x: 3072
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ba0d8510a393a5439f835a1bf57b1e2
+      spriteID: ac83b1c0694c5f2428eb55784a5ebf9e
       internalID: 833678556
       vertices: []
       indices: 
@@ -269,19 +269,19 @@ TextureImporter:
       name: Voyou_idle_07
       rect:
         serializedVersion: 2
-        x: 2688
-        y: 384
-        width: 384
-        height: 384
+        x: 3584
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24d4d9b2d8586624ba8ac556c426b7ab
+      spriteID: 137acc7b494f10d43944b9abe9dbe107
       internalID: 260130444
       vertices: []
       indices: 
@@ -293,17 +293,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32102783afcd7884b90a02d173f586f8
+      spriteID: 2e344da7a77fcb944b6f94183064e68b
       internalID: 2061360813
       vertices: []
       indices: 
@@ -313,19 +313,19 @@ TextureImporter:
       name: Voyou_idle_09
       rect:
         serializedVersion: 2
-        x: 384
+        x: 512
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8b024a1ab83bdf4080ba64adfe4af69
+      spriteID: 479506dc927008d4c93c50f0da7aba12
       internalID: -1895607168
       vertices: []
       indices: 
@@ -335,19 +335,19 @@ TextureImporter:
       name: Voyou_idle_10
       rect:
         serializedVersion: 2
-        x: 768
+        x: 1024
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a833d3df09ef7794da6abb6b415905dc
+      spriteID: 7db44d21458456e4fa5f2bf4c4594ed9
       internalID: -1101122929
       vertices: []
       indices: 
@@ -357,19 +357,19 @@ TextureImporter:
       name: Voyou_idle_11
       rect:
         serializedVersion: 2
-        x: 1152
+        x: 1536
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8964f541646fec84da81ffaa3088814f
+      spriteID: b89bab6bd48459146a1482c6b13afac8
       internalID: 2147233868
       vertices: []
       indices: 

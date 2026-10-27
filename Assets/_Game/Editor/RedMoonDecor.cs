@@ -594,7 +594,7 @@ public static class RedMoonDecor
         for (int k = 0; k < 5; k++)
         {
             float x = (k + 0.5f + 0.3f * (Hash(k, 26) - 0.5f)) * w / 5f;
-            Branch(mask, w, h, new Vector2(x, 80f), 90f + 16f * (Hash(k, 27) - 0.5f), 120f + 60f * Hash(k, 28), 9f, 4, 30 + k * 13);
+            Branch(mask, w, h, new Vector2(x, 80f), 90f + 16f * (Hash(k, 27) - 0.5f), 80f + 40f * Hash(k, 28), 18f, 3, 30 + k * 13);
         }
 
         return Colorize(mask, w, h, new Color(0.075f, 0.015f, 0.022f), new Color(0.38f, 0.06f, 0.05f), 2);

@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 147.6923
+  spritePixelsToUnits: 196.92308
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,18 +116,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 384
-        width: 384
-        height: 384
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fa9b5d10e0c082f489ca1479c954e3d7
+      spriteID: 6648711b799a0a8469e92f8161faf091
       internalID: 418786369
       vertices: []
       indices: 
@@ -137,19 +137,19 @@ TextureImporter:
       name: Voyou_death_01
       rect:
         serializedVersion: 2
-        x: 384
-        y: 384
-        width: 384
-        height: 384
+        x: 512
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad55c90ce8fbddd45b43375e1daf1211
+      spriteID: 859b11ab01e9438408daa3a4c9620546
       internalID: -1509743148
       vertices: []
       indices: 
@@ -159,19 +159,19 @@ TextureImporter:
       name: Voyou_death_02
       rect:
         serializedVersion: 2
-        x: 768
-        y: 384
-        width: 384
-        height: 384
+        x: 1024
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ddd1511cbed3810418305358252f905e
+      spriteID: dc854df080311b642a3889d38bc7fe7c
       internalID: -944686723
       vertices: []
       indices: 
@@ -181,19 +181,19 @@ TextureImporter:
       name: Voyou_death_03
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 384
-        width: 384
-        height: 384
+        x: 1536
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9991ef897baee304b8d095dfb092cc0f
+      spriteID: 541996d90039ebf4e96cbb0b779c58b6
       internalID: -146240442
       vertices: []
       indices: 
@@ -203,19 +203,19 @@ TextureImporter:
       name: Voyou_death_04
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 384
-        width: 384
-        height: 384
+        x: 2048
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d07e1addba2e8c41900aa8f580ffb32
+      spriteID: 8deda1f71e01bbf47acb841a33b751c1
       internalID: -1812868611
       vertices: []
       indices: 
@@ -225,19 +225,19 @@ TextureImporter:
       name: Voyou_death_05
       rect:
         serializedVersion: 2
-        x: 1920
-        y: 384
-        width: 384
-        height: 384
+        x: 2560
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38720c05060a2fd45a15bf270cee8f62
+      spriteID: bf34c759550664a42ae818f814750ad5
       internalID: -1848155802
       vertices: []
       indices: 
@@ -247,19 +247,19 @@ TextureImporter:
       name: Voyou_death_06
       rect:
         serializedVersion: 2
-        x: 2304
-        y: 384
-        width: 384
-        height: 384
+        x: 3072
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0492de272a7864b41bd84c2ef3c4d759
+      spriteID: b43da6f1532f509428e0dc2dadc8309b
       internalID: 1498622704
       vertices: []
       indices: 
@@ -269,19 +269,19 @@ TextureImporter:
       name: Voyou_death_07
       rect:
         serializedVersion: 2
-        x: 2688
-        y: 384
-        width: 384
-        height: 384
+        x: 3584
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3062cc77074f90242b84bfd53da08efe
+      spriteID: 5dabd7b579ef8d04fbf1ebeb008389aa
       internalID: -291599018
       vertices: []
       indices: 
@@ -293,17 +293,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5f5f178f999de04bbe7063181e4c498
+      spriteID: 2d3ee569be151284281de1cfff1694c3
       internalID: -293916302
       vertices: []
       indices: 
@@ -313,19 +313,19 @@ TextureImporter:
       name: Voyou_death_09
       rect:
         serializedVersion: 2
-        x: 384
+        x: 512
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 82422071d1d55614391dced578fcdd3e
+      spriteID: 527f7cf941544ba4dabab7e072c828d7
       internalID: -1030225251
       vertices: []
       indices: 
@@ -335,19 +335,19 @@ TextureImporter:
       name: Voyou_death_10
       rect:
         serializedVersion: 2
-        x: 768
+        x: 1024
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0f6f12cbb24d664b9083546a11586e1
+      spriteID: f3667802c5cfa95439eb9ef37056acef
       internalID: -1006360710
       vertices: []
       indices: 
@@ -357,19 +357,19 @@ TextureImporter:
       name: Voyou_death_11
       rect:
         serializedVersion: 2
-        x: 1152
+        x: 1536
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01ab2edbafe40634fbffce8e12113508
+      spriteID: 50788f3bfb3601a4aa785e127787baa1
       internalID: 94577752
       vertices: []
       indices: 
@@ -379,19 +379,19 @@ TextureImporter:
       name: Voyou_death_12
       rect:
         serializedVersion: 2
-        x: 1536
+        x: 2048
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ce4927a59578374e8e4ff514c85bd76
+      spriteID: cb0341cfd34ab9b45847af884ed39f96
       internalID: 378124858
       vertices: []
       indices: 
@@ -401,19 +401,19 @@ TextureImporter:
       name: Voyou_death_13
       rect:
         serializedVersion: 2
-        x: 1920
+        x: 2560
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47f9113906e992f4e8463217ca07d280
+      spriteID: be962356a10a8f643b3da4ccc5d0b05e
       internalID: -1289090722
       vertices: []
       indices: 
@@ -423,19 +423,19 @@ TextureImporter:
       name: Voyou_death_14
       rect:
         serializedVersion: 2
-        x: 2304
+        x: 3072
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: acc1cad414cc215409c5cda4e64dd46b
+      spriteID: dd0c806a05623144ab33b6b400671337
       internalID: -1912913371
       vertices: []
       indices: 

@@ -29,8 +29,8 @@ Shader "RED MET/Sprite Flash"
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
 
+            // Pas de _MainTex_ST : le SRP Batcher 2D refuse les matériaux qui en ont.
             CBUFFER_START(UnityPerMaterial)
-                float4 _MainTex_ST;
                 float _Flash;
                 float4 _FlashColor;
             CBUFFER_END
@@ -53,7 +53,7 @@ Shader "RED MET/Sprite Flash"
             {
                 Varyings output;
                 output.positionCS = TransformObjectToHClip(input.positionOS.xyz);
-                output.uv = TRANSFORM_TEX(input.uv, _MainTex);
+                output.uv = input.uv;
                 output.color = input.color;
                 return output;
             }

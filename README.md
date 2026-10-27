@@ -20,7 +20,21 @@ Le contenu de `Assets/_Game/` :
 | `Prefabs` | `Enemy`, `Projectile`, `Grenade`, `Cover` (générés par l'ArenaBuilder) |
 | `Scripts/Animation` | `CharacterAnimator` (pont optionnel vers l'Animator) |
 | `Scripts/UI`, `Scripts/Core`, `Scripts/CameraSystem` | HUD, menu Options, debug des images (F1), démo de combo (F3), GameManager, commandes, options, réserve d'objets (`Pool`), temps de jeu (pause, ralenti), caméra (suivi, tremblement, zoom d'impact) |
+| `Scripts/Environment` | `ParallaxLayer` (couches de décor en parallaxe) |
 | `Editor/ArenaBuilder.cs` | Menu **RED MET → Construire l'arène prototype** |
+| `Editor/RedMoonDecor.cs` | Décor de l'arène de la lune rouge (images calculées, parallaxe, lumière 2D, post-traitement, cendres et braises) ; menu **RED MET → Régénérer le décor de la lune rouge** |
+| `Editor/SpriteAnimationBuilder.cs` | Menu **RED MET → Importer les sprites des personnages** (découpe, clips, Animator Controllers) |
+
+### Tranche verticale : jouer soi-même
+
+Nathan M0 contre le Voyou à capuche, dans l'arène de la lune rouge, aux graphismes définitifs.
+
+1. Ouvrez `Assets/_Game/Scenes/Arena.unity` (ou **RED MET → Construire l'arène prototype** pour la refaire), réglez la vue Game en 1920×1080, puis **Play**.
+2. Cliquez dans la vue Game pour lui donner les commandes. Le mannequin d'entraînement est présent au lancement ; appuyez sur **1** pour faire venir le Voyou.
+3. Commandes et combos : tableaux ci-dessous. Pour un premier essai : **J J J** au contact, puis **S + K** (lanceur), **Espace**, **J J J** en l'air et **K** (smash). **Maj gauche** pour esquiver la frappe du Voyou (annoncée par un voile coloré), **L** pour le dash.
+4. **F2** donne une lame de test (sang, démembrement), **F3** joue le combo complet tout seul, **F1** affiche le debug des images et les images par seconde, **Échap** ouvre les options (gore, tremblement, flashs).
+
+Les sprites viennent de Blender (`tools/blender/redmet_animation.py`) ; après un nouveau rendu, relancez **RED MET → Construire l'arène prototype**, qui les réimporte.
 
 ### Installation
 

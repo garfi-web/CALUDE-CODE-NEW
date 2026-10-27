@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 147.6923
+  spritePixelsToUnits: 196.92308
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,18 +116,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 768
-        width: 384
-        height: 384
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c78f5e8921a2c7a40bef9f7d5e0608ce
+      spriteID: a33402635e6518f4a9de7fef46a7fe31
       internalID: 1865873179
       vertices: []
       indices: 
@@ -137,19 +137,19 @@ TextureImporter:
       name: Voyou_heavy_01
       rect:
         serializedVersion: 2
-        x: 384
-        y: 768
-        width: 384
-        height: 384
+        x: 512
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3e82a7891d20d249a09b1fdd654fc9e
+      spriteID: 7db9f8a81cca13a478c4068c29207323
       internalID: 1923609013
       vertices: []
       indices: 
@@ -159,19 +159,19 @@ TextureImporter:
       name: Voyou_heavy_02
       rect:
         serializedVersion: 2
-        x: 768
-        y: 768
-        width: 384
-        height: 384
+        x: 1024
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66fff569792f17942ac6535c596195ad
+      spriteID: 676a0f1390fab5c4eae5a83c0dab81b4
       internalID: -925715058
       vertices: []
       indices: 
@@ -181,19 +181,19 @@ TextureImporter:
       name: Voyou_heavy_03
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 768
-        width: 384
-        height: 384
+        x: 1536
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 657946c63d26c2944946716d3d704480
+      spriteID: 2ef5b7e7ee2668d4aa1760b3748a7732
       internalID: 1909635402
       vertices: []
       indices: 
@@ -203,19 +203,19 @@ TextureImporter:
       name: Voyou_heavy_04
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 768
-        width: 384
-        height: 384
+        x: 2048
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e7e0b838a2315a49a38343f24842d98
+      spriteID: fa9846746f8546b46ad6636415670237
       internalID: 1073129379
       vertices: []
       indices: 
@@ -225,19 +225,19 @@ TextureImporter:
       name: Voyou_heavy_05
       rect:
         serializedVersion: 2
-        x: 1920
-        y: 768
-        width: 384
-        height: 384
+        x: 2560
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f12f1e17a45b3364bb109e3e182d4592
+      spriteID: 774ae3451685b344faeb7adef07fc376
       internalID: 1158647847
       vertices: []
       indices: 
@@ -247,19 +247,19 @@ TextureImporter:
       name: Voyou_heavy_06
       rect:
         serializedVersion: 2
-        x: 2304
-        y: 768
-        width: 384
-        height: 384
+        x: 3072
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 53f7d41d654b60943ba6a470ec9d61e2
+      spriteID: a6bb8df283b012c4f8d78d7bce586ee0
       internalID: -488565850
       vertices: []
       indices: 
@@ -269,19 +269,19 @@ TextureImporter:
       name: Voyou_heavy_07
       rect:
         serializedVersion: 2
-        x: 2688
-        y: 768
-        width: 384
-        height: 384
+        x: 3584
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9f7c353a3afcd4458347af6708573d0
+      spriteID: 58e6caa992e8d204e87df93027a03217
       internalID: -60641512
       vertices: []
       indices: 
@@ -292,18 +292,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 384
-        width: 384
-        height: 384
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 605e11d0a371d514f91b81ef2cc70ef3
+      spriteID: ba26b9abe7dbc784ea055f9b76fa1cfe
       internalID: -760648835
       vertices: []
       indices: 
@@ -313,19 +313,19 @@ TextureImporter:
       name: Voyou_heavy_09
       rect:
         serializedVersion: 2
-        x: 384
-        y: 384
-        width: 384
-        height: 384
+        x: 512
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1142eb389d56d942af316bba1c14cff
+      spriteID: 1e1c623287c1a864bb4b548581ff7a7b
       internalID: -792700140
       vertices: []
       indices: 
@@ -335,19 +335,19 @@ TextureImporter:
       name: Voyou_heavy_10
       rect:
         serializedVersion: 2
-        x: 768
-        y: 384
-        width: 384
-        height: 384
+        x: 1024
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 333afa6ff0b65fe43954a434e14b4cac
+      spriteID: fe6277cfcbbc0b043acb5802d4958249
       internalID: 1243593777
       vertices: []
       indices: 
@@ -357,19 +357,19 @@ TextureImporter:
       name: Voyou_heavy_11
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 384
-        width: 384
-        height: 384
+        x: 1536
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 829857121b9eed5498b466ef481e2754
+      spriteID: 3258f654ad4b6a24db0cfe512e71e296
       internalID: -1185150984
       vertices: []
       indices: 
@@ -379,19 +379,19 @@ TextureImporter:
       name: Voyou_heavy_12
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 384
-        width: 384
-        height: 384
+        x: 2048
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbc6460010d6c714fae8f6be4c3ee0c7
+      spriteID: a7e7ab0b28f3d7440a37171b0d8cf8b8
       internalID: 705345189
       vertices: []
       indices: 
@@ -401,19 +401,19 @@ TextureImporter:
       name: Voyou_heavy_13
       rect:
         serializedVersion: 2
-        x: 1920
-        y: 384
-        width: 384
-        height: 384
+        x: 2560
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbc793ebb05edfa4694bdafd773a6ec4
+      spriteID: edf09263ef3125b49a84633a43492a9f
       internalID: 662042173
       vertices: []
       indices: 
@@ -423,19 +423,19 @@ TextureImporter:
       name: Voyou_heavy_14
       rect:
         serializedVersion: 2
-        x: 2304
-        y: 384
-        width: 384
-        height: 384
+        x: 3072
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 955fe78428d035d44ab5be77b4ddac56
+      spriteID: 87b9e2510f4af004bacb9d2f47089bd0
       internalID: -1066347976
       vertices: []
       indices: 
@@ -445,19 +445,19 @@ TextureImporter:
       name: Voyou_heavy_15
       rect:
         serializedVersion: 2
-        x: 2688
-        y: 384
-        width: 384
-        height: 384
+        x: 3584
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b56cb0733d4c2d4b8d6e178a1edac8d
+      spriteID: fbf7714bbe703a2479c0d974c4e3e73c
       internalID: -477935898
       vertices: []
       indices: 
@@ -469,17 +469,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 294e1a5910675de408e069b7cf5ec35e
+      spriteID: d3b8eec640cdfb94b9c98bd86b6a190b
       internalID: -578732321
       vertices: []
       indices: 
@@ -489,19 +489,19 @@ TextureImporter:
       name: Voyou_heavy_17
       rect:
         serializedVersion: 2
-        x: 384
+        x: 512
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6dedb35ce7c503b4ebf7ba6766933cfb
+      spriteID: 16b2725a4c61e9f40b0ec192f16a79e4
       internalID: -167919008
       vertices: []
       indices: 

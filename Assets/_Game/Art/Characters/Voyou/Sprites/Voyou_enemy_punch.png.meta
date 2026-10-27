@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 147.6923
+  spritePixelsToUnits: 196.92308
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,18 +116,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 1152
-        width: 384
-        height: 384
+        y: 1536
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b9fe015bf47f28429b36eef1e13a816
+      spriteID: 2bba711e67fd4c4489dd95cabef84a62
       internalID: 312829740
       vertices: []
       indices: 
@@ -137,19 +137,19 @@ TextureImporter:
       name: Voyou_enemy_punch_01
       rect:
         serializedVersion: 2
-        x: 384
-        y: 1152
-        width: 384
-        height: 384
+        x: 512
+        y: 1536
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db4bdf1278a052c4dbb11fdf1b508558
+      spriteID: e66d5a007a3ac4c489d5f1919c5416d9
       internalID: -1019823794
       vertices: []
       indices: 
@@ -159,19 +159,19 @@ TextureImporter:
       name: Voyou_enemy_punch_02
       rect:
         serializedVersion: 2
-        x: 768
-        y: 1152
-        width: 384
-        height: 384
+        x: 1024
+        y: 1536
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 248d8abeae0bd0149bad54114beae19b
+      spriteID: 29beb891878578546a14e546ffce4f8e
       internalID: -2067098751
       vertices: []
       indices: 
@@ -181,19 +181,19 @@ TextureImporter:
       name: Voyou_enemy_punch_03
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 1152
-        width: 384
-        height: 384
+        x: 1536
+        y: 1536
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f71c9116019f71944934a983479ba005
+      spriteID: 3a7ba742e0ac4f94586cc9b8ab0873e6
       internalID: 105212803
       vertices: []
       indices: 
@@ -203,19 +203,19 @@ TextureImporter:
       name: Voyou_enemy_punch_04
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 1152
-        width: 384
-        height: 384
+        x: 2048
+        y: 1536
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7cd3f3df901ec2c48b29f4bbf545d197
+      spriteID: b117beb606f236f4da46ff739e5eb9f3
       internalID: -1313655307
       vertices: []
       indices: 
@@ -225,19 +225,19 @@ TextureImporter:
       name: Voyou_enemy_punch_05
       rect:
         serializedVersion: 2
-        x: 1920
-        y: 1152
-        width: 384
-        height: 384
+        x: 2560
+        y: 1536
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f20b7364887cb94bba0247e37750f7a
+      spriteID: f5272aed5c46f67438bb7c7a94c69623
       internalID: -745633231
       vertices: []
       indices: 
@@ -247,19 +247,19 @@ TextureImporter:
       name: Voyou_enemy_punch_06
       rect:
         serializedVersion: 2
-        x: 2304
-        y: 1152
-        width: 384
-        height: 384
+        x: 3072
+        y: 1536
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5089e80bd1ac20549953a1985391ea34
+      spriteID: 0f27bc85b0257a64f88549e53d3a9f39
       internalID: -786762108
       vertices: []
       indices: 
@@ -269,19 +269,19 @@ TextureImporter:
       name: Voyou_enemy_punch_07
       rect:
         serializedVersion: 2
-        x: 2688
-        y: 1152
-        width: 384
-        height: 384
+        x: 3584
+        y: 1536
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d18c16d9bc8a2a244982d8833db4d16e
+      spriteID: dcbb3fb234428f847bbcdba828e27c39
       internalID: -1735630763
       vertices: []
       indices: 
@@ -292,18 +292,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 768
-        width: 384
-        height: 384
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c1f2afce21455a4e97b7a0a3e8d07b1
+      spriteID: 4250205eddbabef4bad5bcd55547ec38
       internalID: -1075015250
       vertices: []
       indices: 
@@ -313,19 +313,19 @@ TextureImporter:
       name: Voyou_enemy_punch_09
       rect:
         serializedVersion: 2
-        x: 384
-        y: 768
-        width: 384
-        height: 384
+        x: 512
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55c373c95ff1edf478c6be9cec8da84d
+      spriteID: 31095707fc1a1dd4e8d8a6c8af32940c
       internalID: 2107651961
       vertices: []
       indices: 
@@ -335,19 +335,19 @@ TextureImporter:
       name: Voyou_enemy_punch_10
       rect:
         serializedVersion: 2
-        x: 768
-        y: 768
-        width: 384
-        height: 384
+        x: 1024
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3cf0f51a2ea1ba4bb1adaf4850cc7d8
+      spriteID: 4df28665a2c6888429959b4ed9742ce9
       internalID: 1613984703
       vertices: []
       indices: 
@@ -357,19 +357,19 @@ TextureImporter:
       name: Voyou_enemy_punch_11
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 768
-        width: 384
-        height: 384
+        x: 1536
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db347e6076f89cb4ab4ce57780d36b36
+      spriteID: f290107c511585c40abba37511705e0b
       internalID: -1493395932
       vertices: []
       indices: 
@@ -379,19 +379,19 @@ TextureImporter:
       name: Voyou_enemy_punch_12
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 768
-        width: 384
-        height: 384
+        x: 2048
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bfa40cca4fe90d34ea8fdf75d166ad61
+      spriteID: 7da86a51159c5df4eb5a418bceb57194
       internalID: 1065146224
       vertices: []
       indices: 
@@ -401,19 +401,19 @@ TextureImporter:
       name: Voyou_enemy_punch_13
       rect:
         serializedVersion: 2
-        x: 1920
-        y: 768
-        width: 384
-        height: 384
+        x: 2560
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dba381a0002ff804cbc75e70ea34b090
+      spriteID: 3947cb7a40ca1ff44ba9252e6e2ecaea
       internalID: 678787339
       vertices: []
       indices: 
@@ -423,19 +423,19 @@ TextureImporter:
       name: Voyou_enemy_punch_14
       rect:
         serializedVersion: 2
-        x: 2304
-        y: 768
-        width: 384
-        height: 384
+        x: 3072
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74eec20f8e466b741b464b0935d00fc4
+      spriteID: 1b008085b0128cb498d3ec0613df0dc3
       internalID: 1930897277
       vertices: []
       indices: 
@@ -445,19 +445,19 @@ TextureImporter:
       name: Voyou_enemy_punch_15
       rect:
         serializedVersion: 2
-        x: 2688
-        y: 768
-        width: 384
-        height: 384
+        x: 3584
+        y: 1024
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: feb7e4b8640fbd64ea939a64d6359d5f
+      spriteID: 6ae2b4cde1a360845b2029c1dbb67e71
       internalID: 1427636654
       vertices: []
       indices: 
@@ -468,18 +468,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 384
-        width: 384
-        height: 384
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a80bd52386307d844a4a1391fb1ad1a9
+      spriteID: 7de56cee8b1510745b20bca3c9f51683
       internalID: 1669783985
       vertices: []
       indices: 
@@ -489,19 +489,19 @@ TextureImporter:
       name: Voyou_enemy_punch_17
       rect:
         serializedVersion: 2
-        x: 384
-        y: 384
-        width: 384
-        height: 384
+        x: 512
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba2b9eaa53b94f3468bcc5427af23910
+      spriteID: 7d2fd2b631ab7ab419e1a824217e6a66
       internalID: 2047264867
       vertices: []
       indices: 
@@ -511,19 +511,19 @@ TextureImporter:
       name: Voyou_enemy_punch_18
       rect:
         serializedVersion: 2
-        x: 768
-        y: 384
-        width: 384
-        height: 384
+        x: 1024
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e3250f0eec01da4ba749030ff0632fe
+      spriteID: 94c50546930b19e46bd6ce06b70a4fc0
       internalID: 903621562
       vertices: []
       indices: 
@@ -533,19 +533,19 @@ TextureImporter:
       name: Voyou_enemy_punch_19
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 384
-        width: 384
-        height: 384
+        x: 1536
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91eceaf301a74ea4781c568346318348
+      spriteID: a74e3e698d753844682c1e2a2ae0496c
       internalID: -1387486278
       vertices: []
       indices: 
@@ -555,19 +555,19 @@ TextureImporter:
       name: Voyou_enemy_punch_20
       rect:
         serializedVersion: 2
-        x: 1536
-        y: 384
-        width: 384
-        height: 384
+        x: 2048
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38f39340c7db29341a0049c1ebf432f7
+      spriteID: 2f58b9beda0dbfb4f96afbecbc1d93fe
       internalID: 2034877720
       vertices: []
       indices: 
@@ -577,19 +577,19 @@ TextureImporter:
       name: Voyou_enemy_punch_21
       rect:
         serializedVersion: 2
-        x: 1920
-        y: 384
-        width: 384
-        height: 384
+        x: 2560
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 024e2482a2615f64daf73fc0163dbb58
+      spriteID: 06c33e96380300d499bdb21be4167496
       internalID: 1612777986
       vertices: []
       indices: 
@@ -599,19 +599,19 @@ TextureImporter:
       name: Voyou_enemy_punch_22
       rect:
         serializedVersion: 2
-        x: 2304
-        y: 384
-        width: 384
-        height: 384
+        x: 3072
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d0c05b18c2911647b1fa416c21bfb37
+      spriteID: 571e26534bbc00a408ce973e26562ee0
       internalID: 372270895
       vertices: []
       indices: 
@@ -621,19 +621,19 @@ TextureImporter:
       name: Voyou_enemy_punch_23
       rect:
         serializedVersion: 2
-        x: 2688
-        y: 384
-        width: 384
-        height: 384
+        x: 3584
+        y: 512
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee260e945865f174ab7c15977ca5b530
+      spriteID: 7dab988b8b0e30340970e5d96661ef92
       internalID: -1483395922
       vertices: []
       indices: 
@@ -645,17 +645,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 794bef9601cf31d49b28f09247642342
+      spriteID: 6ad54d62f9445dd4dbeacb1f3e8241c4
       internalID: -978130822
       vertices: []
       indices: 
@@ -665,19 +665,19 @@ TextureImporter:
       name: Voyou_enemy_punch_25
       rect:
         serializedVersion: 2
-        x: 384
+        x: 512
         y: 0
-        width: 384
-        height: 384
+        width: 512
+        height: 512
       alignment: 9
-      pivot: {x: 0.5, y: 0.115384616}
+      pivot: {x: 0.5, y: 0.11538462}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf3e34120d866ed4c99c0c9d9c4b8cb8
+      spriteID: 918facc752cb3464cab831176d9400a7
       internalID: -2042887687
       vertices: []
       indices: 

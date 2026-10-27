@@ -8,7 +8,7 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
-- **EN COURS (2026-10-26) : la TRANCHE VERTICALE jouable aux graphismes définitifs** (voir la section « Tranche verticale » plus bas : Voyou 11103 modélisé ; Nathan M0 et Voyou riggés, animés et rendus en sprites ; intégration Unity écrite mais pas encore testée ; décor à faire), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
+- **TRANCHE VERTICALE terminée le 2026-10-27, EN ATTENTE DE LA VALIDATION DU STYLE PAR L'AUTEUR** (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
 
@@ -416,4 +416,43 @@ En attente du choix de l'auteur.
 - Rendu : 177 images pour Nathan M0, 203 pour le Voyou, dans `Assets/_Game/Art/Characters/<Perso>/Sprites/`. Problèmes corrigés : avant-bras de 7 cm (coude mal placé) ; les deux personnages apparaissaient sur chaque image (les autres maillages sont maintenant masqués au rendu) ; bande de 9 984 px (au-delà de 8 192) repaquée en grilles.
 - Unity (compilé, PAS ENCORE TESTÉ en jeu) : shader `RED MET/Sprite Flash` (flash d'impact et voiles d'annonce par MaterialPropertyBlock), `SpriteFlash`, `HitReaction` (position du visuel conservée, poses de rectangle seulement pour les personnages provisoires), `EnemyArchetype.animator/sprite`, `Enemy.ApplySprites`, `CharacterAnimator.SetAnimator` + paramètres Stunned et Down, outil d'éditeur `SpriteAnimationBuilder` (menu RED MET → Importer les sprites des personnages : découpe, clips, Animator Controllers), `ArenaBuilder` branché sur ces sprites (Nathan joueur, trois Voyous).
 
-**Reste à faire pour la tranche verticale** : lancer RED MET → Construire l'arène prototype (qui importe les sprites), vérifier en mode Play (orientation, pivot aux pieds, transitions, flash), puis décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres), test à 60 FPS, captures et mode d'emploi pour l'auteur.
+### 2026-10-27 — Premier test en jeu, retours de l'auteur, cel-shading renforcé, décor de la lune rouge
+- Premier test en Play : sprites, animations, orientation (le Voyou se tourne vers Nathan) et pivot aux pieds corrects.
+- **Retours de l'auteur** : Nathan ressemble à un rendu 3D réaliste, pas à de l'anime ; demande d'un cel-shading franc (2 à 3 aplats, ombres nettes), de contours noirs épais et de personnages plus grands (un quart de la hauteur de l'écran).
+- **Causes trouvées** : les taches ne venaient ni des ombres portées ni des couleurs seules, mais (1) du relief irrégulier du maillage TripoSG, dont chaque bosse franchit le seuil d'ombre, et (2) de teintes presque identiques mélangées par la projection des couleurs (deux noirs du sweat, deux tons de peau).
+- **Corrections** (`tools/blender/redmet_animation.py`) :
+  - `toon_material` : 3 aplats (0,38 / 0,66 / 1,0), ombre légèrement violette ;
+  - soleil à bord net (diamètre apparent nul), de trois quarts ;
+  - contour noir pur, coque de 2,4 cm au lieu de 1,2 ;
+  - images de 512 px au lieu de 384 ;
+  - `smooth_shading` : normales d'une copie lissée 300 fois, transférées en pose de repos et enregistrées dans le maillage (elles suivent ensuite le squelette) ;
+  - `clean_colors` : fusion des teintes à moins de 0,07 d'écart, puis filtre majoritaire entre voisins ; 7 teintes ramenées à 5 pour chaque personnage.
+- Pièges : une copie source masquée au rendu ne garantit pas le transfert ; d'anciennes normales personnalisées survivent au lissage de la copie (l'attribut `custom_normal` est maintenant retiré) ; dans Blender 5, les normales de sommets évaluées suivent les normales personnalisées, il faut comparer modificateur actif et inactif pour mesurer l'effet.
+- Nouveau rendu : 177 images (Nathan M0, 80 s) et 203 (Voyou, 97 s). Comparaison : `docs/captures/2026-10-27_toon_avant_apres.png`.
+- **Caméra** : taille orthographique 3,4 (vue de 6,8 m de haut), bornes ±14 m, hauteur minimale 0,9 m.
+- **Décor** (`Editor/RedMoonDecor.cs`) : images calculées sans IA (bruit périodique à graine fixe, aplats et liseré clair sur les crêtes) :
+  - ciel en 7 bandes, lune de 3,7 m (deux tons de mers, croissant éclairé) et halo ;
+  - montagnes, brume d'horizon, piliers brisés et arbres morts, dunes de cendres avec des épées plantées ;
+  - sol de cendres avec des fissures de Red Met lumineuses, rochers au premier plan, dalles de pierre pour les plateformes.
+  - Parallaxe (`ParallaxLayer`) de 1 (ciel) à -0,35 (premier plan). Lumière 2D rouge sur la lune, cendres et braises (systèmes de particules fixes, attachés à la caméra), post-traitement (bloom, vignette, contraste, grain) avec le shader `RED MET/Sprite Glow` pour les éléments lumineux.
+  - Le Renderer 2D n'avait pas de `PostProcessData` : aucun effet ne pouvait s'afficher, c'est corrigé par l'outil.
+- Shaders `Sprite Flash` et `Sprite Glow` sans `_MainTex_ST`, pour rester compatibles avec le SRP Batcher 2D.
+- `SpriteAnimationBuilder` : les clips gardent leur nom quand ils sont réimportés (avertissements « Main Object Name » supprimés).
+
+**Tests en mode Play** (scripts lancés par le MCP Unity, Unity en arrière-plan avec `Application.runInBackground` le temps du test)
+
+| Test | Résultat |
+|---|---|
+| Sprites, orientation, pivot | Nathan et le Voyou animés, tournés l'un vers l'autre, pieds sur la ligne du sol ; Nathan court et frappe dans le bon sens |
+| Taille à l'écran | Environ 270 px sur 1 080 (un quart de la hauteur) |
+| Combo complet (démo F3, lame, gore complet) | Course, jab, direct, lanceur, aériens, smash, rebond au sol : effets d'impact, flash blanc, sang et taches sur les nouveaux sprites et le nouveau décor |
+| **60 FPS** (combo à la lame, gore complet, décor complet, aucune commande MCP pendant la mesure) | 4 327 images ; thread principal **2,97 ms en moyenne**, 6,2 ms au 99e centile, **une image à 17,9 ms** (éditeur) ; avant le décor : 2,44 ms en moyenne |
+| Console | Aucune erreur après compilation, construction de l'arène et Play |
+
+Une première mesure, faite pendant que les scripts de test tournaient (compilation, captures 1080p encodées en PNG), montrait des pics de 326 et 84 ms : ils viennent de ces commandes, pas du jeu.
+
+Captures : `docs/captures/2026-10-27_tranche_nathan_voyou.png`, `..._tranche_coup_lame.png`, `..._tranche_planche_combo.png` (24 images du combo, toutes les 0,2 s), `..._toon_avant_apres.png`.
+
+**Restes connus** : la pose de mort fait passer une partie du corps sous la ligne du sol (pose à remonter dans Blender) ; le mannequin reste un rectangle provisoire ; les personnages sont sombres sur le fond sombre (un liseré rouge de contre-jour, côté lune, les détacherait mieux) ; la mesure de 60 FPS est faite dans l'éditeur, à refaire sur un build.
+
+**Tranche verticale prête pour la validation du style par l'auteur.**

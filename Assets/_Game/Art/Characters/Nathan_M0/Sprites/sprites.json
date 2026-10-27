@@ -1,6 +1,6 @@
 {
   "fps": 30,
-  "pixels_per_meter": 147.69230769230768,
+  "pixels_per_meter": 196.9230769230769,
   "feet_from_bottom_m": 0.3,
   "clips": [
     {
@@ -9,8 +9,8 @@
       "columns": 8,
       "rows": 2,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -20,8 +20,8 @@
       "columns": 8,
       "rows": 2,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -31,8 +31,8 @@
       "columns": 8,
       "rows": 2,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -42,8 +42,8 @@
       "columns": 8,
       "rows": 2,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -53,8 +53,8 @@
       "columns": 6,
       "rows": 1,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -64,8 +64,8 @@
       "columns": 8,
       "rows": 2,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -75,8 +75,8 @@
       "columns": 7,
       "rows": 1,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -86,8 +86,8 @@
       "columns": 8,
       "rows": 3,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -97,8 +97,8 @@
       "columns": 8,
       "rows": 2,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -108,8 +108,8 @@
       "columns": 6,
       "rows": 1,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -119,8 +119,8 @@
       "columns": 8,
       "rows": 2,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": true
     },
@@ -130,8 +130,8 @@
       "columns": 8,
       "rows": 2,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -141,8 +141,8 @@
       "columns": 5,
       "rows": 1,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -152,8 +152,8 @@
       "columns": 8,
       "rows": 3,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     },
@@ -163,8 +163,8 @@
       "columns": 8,
       "rows": 1,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": true
     },
@@ -174,8 +174,8 @@
       "columns": 8,
       "rows": 2,
       "size": [
-        384,
-        384
+        512,
+        512
       ],
       "loop": false
     }
