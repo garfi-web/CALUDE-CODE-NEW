@@ -127,12 +127,12 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 1. **Fin de la phase B** du bestiaire — *fait* (commit `d1abe6c`).
 2. **Sauvegarde** — *faite*.
 3. **Phase combat dynamique** (Dragon Ball FighterZ sans les super-pouvoirs, hitstop, sang au couteau) — *faite* (commit `9766bed`).
-4. **Tranche verticale** Nathan M0 contre le Voyou, graphismes définitifs — **faite le 2026-10-27, en attente de la validation du style par l'auteur** : cel-shading renforcé (3 aplats, contour noir épais, normales lissées, couleurs nettoyées), personnages au quart de l'écran, décor de la lune rouge (`Editor/RedMoonDecor.cs`), 60 FPS vérifiés dans l'éditeur, captures dans `docs/captures/2026-10-27_*`, mode d'emploi dans le `README.md`. Détail : `docs/PRODUCTION.md`, section « Tranche verticale ».
-5. **Phase C** (reste de l'Acte I, même méthode) — après validation du style par l'auteur sur la tranche verticale.
+4. **Tranche verticale** Nathan M0 contre le Voyou, graphismes définitifs — faite le 2026-10-27, puis 2e série de retours appliquée le même jour : allonge des coups, mannequin modélisé, décor peint (ComfyUI + Animagine, `tools/gen3d/background.py`), pose de mort, liseré rouge, 60 FPS mesurés dans un build Windows. **En attente de la validation du décor par l'auteur.** Détail : `docs/PRODUCTION.md`, section « Tranche verticale ».
+5. **Phase C** (reste de l'Acte I, même méthode) — après validation du décor par l'auteur. Un ennemi à la fois, en commençant par le **Flic corrompu** : 4 concepts, l'auteur en choisit un, puis phase D (TripoSG, squelette, animations, sprites, intégration). Puis le Dealer lieutenant, le Soldat privé et le Mutant.
 
 Piège : l'outil `RunCommand` du MCP Unity refuse `File.Delete` et `AssetDatabase.DeleteAsset` (« user interaction ») ; pour mesurer les FPS, ne lancer aucune commande MCP pendant l'enregistrement (la compilation du script de test fausse la mesure).
 
-Outils de la tranche : `tools/blender/redmet_pipeline.py` et `tools/blender/redmet_animation.py` (à exécuter dans Blender par le MCP, avec `exec(open(<chemin>, encoding="utf-8").read())`), `tools/gen3d/remove_floor_line.py`, menu Unity **RED MET → Importer les sprites des personnages**.
+Outils de la tranche : `tools/blender/redmet_pipeline.py`, `tools/blender/redmet_animation.py` et `tools/blender/redmet_props.py` (mannequin), `tools/gen3d/background.py` (décor peint, ComfyUI doit tourner), menu Unity **RED MET → Build Windows** et banc d'essai `Builds/Windows/REDMET.exe -redmet-benchmark` (rapport `benchmark.txt` à côté de l'exécutable) ; (à exécuter dans Blender par le MCP, avec `exec(open(<chemin>, encoding="utf-8").read())`), `tools/gen3d/remove_floor_line.py`, menu Unity **RED MET → Importer les sprites des personnages**.
 
 ### Requête de l'auteur : phase combat dynamique (texte complet)
 

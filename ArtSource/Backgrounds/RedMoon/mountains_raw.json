@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "distant jagged mountain range silhouette, sharp rocky peaks, volcanic mountains, dark crimson haze, side view, wide panorama, dark silhouette against a bright glowing red sky, backlit, flat bright red background, simple background, uniform red sky, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, cropped, clouds, moon, sun, stars, fog, mist, water, reflection, dark sky, night sky, green",
+  "seed": 5104,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1536,
+    640
+  ],
+  "duration_s": 21.1
+}

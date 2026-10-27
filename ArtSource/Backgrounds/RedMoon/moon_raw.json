@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "huge full moon, fully lit bright crimson moon surface, detailed craters and maria, glowing red moon, centered, black background, simple background, space, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, cropped, lens flare, light streak, horizon, ground, eclipse, dark side, crescent",
+  "seed": 5112,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 19.2
+}

@@ -462,7 +462,7 @@ public class CombatVfx : MonoBehaviour
         // Couleur de la fiche : le corps est peut-être en plein flash blanc d'impact.
         Enemy enemy = target.GetComponent<Enemy>();
         SpriteRenderer body = target.GetComponentInChildren<SpriteRenderer>();
-        limb.Color = enemy != null && enemy.Archetype != null ? enemy.Archetype.bodyColor
+        limb.Color = enemy != null && enemy.Archetype != null ? enemy.Archetype.LimbColor
             : body != null ? body.color : Color.gray;
         limb.BloodColor = BloodColorOf(target);
         limb.Renderer.color = limb.Color;

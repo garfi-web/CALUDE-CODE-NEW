@@ -133,6 +133,7 @@ public static class ArenaBuilder
         var overlay = debug.AddComponent<CombatDebugOverlay>();
         SetObject(overlay, "player", player.GetComponent<PlayerCombat>());
         SetObject(overlay, "demo", demo);
+        debug.AddComponent<BenchmarkRunner>();
 
         EditorSceneManager.SaveScene(scene, ScenePath);
         AddSceneToBuildSettings(ScenePath);
@@ -579,7 +580,7 @@ public static class ArenaBuilder
     private static readonly Color AimRed = new(1f, 0.15f, 0.15f);
 
     // Apparence animée (réappliquée à chaque construction, même sur un archétype existant).
-    private static void ApplySprites(EnemyArchetype archetype, SpriteAnimationBuilder.Result sprites)
+    private static void ApplySprites(EnemyArchetype archetype, SpriteAnimationBuilder.Result sprites, Color clothes)
     {
         if (sprites == null)
             return;
@@ -587,6 +588,7 @@ public static class ArenaBuilder
         archetype.animator = sprites.Controller;
         archetype.sprite = sprites.IdleSprite;
         archetype.bodyColor = Color.white;
+        archetype.limbColor = clothes;
         EditorUtility.SetDirty(archetype);
     }
 
@@ -618,6 +620,7 @@ public static class ArenaBuilder
         archetype.animator = null;
         archetype.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
         archetype.bodyColor = Color.white;
+        archetype.limbColor = new Color(0.62f, 0.52f, 0.36f);
         EditorUtility.SetDirty(archetype);
     }
 
@@ -818,7 +821,7 @@ public static class ArenaBuilder
         // Mannequin d'entraînement : ne riposte pas, se fait projeter, rebondir et démembrer.
         // Les trois Voyous partagent les sprites du Voyou classique (armes à modéliser plus tard).
         foreach (EnemyArchetype thug in new[] { fists, knife, bar })
-            ApplySprites(thug, voyouSprites);
+            ApplySprites(thug, voyouSprites, new Color(0.16f, 0.19f, 0.32f));
 
         EnemyArchetype dummy = EnsureArchetype("00_Mannequin", a =>
         {

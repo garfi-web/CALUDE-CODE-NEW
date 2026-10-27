@@ -1,0 +1,9 @@
+{
+  "source": "ruins_raw.png",
+  "mode": "raccord : fondu enchaîné des bords, bande au centre, SetLatentNoiseMask, masque flou",
+  "band": 300,
+  "denoise": 0.6,
+  "seed": 6105,
+  "prompt": "ruins of a gothic city, broken cathedral spires, collapsed arches, crumbling towers, burnt gothic buildings, silhouette against the light, side view, wide panorama, dark silhouette against a bright glowing red sky, backlit, flat bright red background, simple background, uniform red sky, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, cropped, clouds, moon, sun, stars, fog, mist, water, reflection, dark sky, night sky, green"
+}

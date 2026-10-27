@@ -8,19 +8,23 @@ using UnityEngine.Rendering.Universal;
 
 // Décor de l'arène de la lune rouge (tranche verticale) : plaine de cendres sous une lune rouge géante,
 // palette noir et rouge du monde de la Red Met (docs/CHARACTERS.md).
-// Les images sont calculées ici, sans IA et à l'identique d'une fois sur l'autre (graines fixes), en aplats
-// francs avec un liseré clair sur les crêtes, pour s'accorder au rendu toon des personnages.
-// ArenaBuilder appelle Build (couches en parallaxe, sol, lumières 2D, post-traitement, cendres et braises) ;
-// les images ne sont recalculées que si elles manquent, ou par le menu RED MET > Régénérer le décor.
+// Les couches principales sont peintes avec ComfyUI et Animagine XL (tools/gen3d/background.py, dans
+// Art/Backgrounds/RedMoonPainted) : ciel, lune, nuages, montagnes, ruines gothiques, arbres morts, champ de
+// bataille, premier plan flou, sol. Les petits éléments sont calculés ici, à l'identique d'une fois sur
+// l'autre (graines fixes) : halo de la lune, brume, crête de cendre du sol, fissures de Red Met, dalles,
+// corbeaux, particules.
+// ArenaBuilder appelle Build (couches en parallaxe, sol, lumières 2D, post-traitement, cendres, braises,
+// corbeaux) ; les images calculées ne sont refaites que si elles manquent, ou par le menu RED MET > Régénérer le décor.
 public static class RedMoonDecor
 {
     private const string ArtFolder = "Assets/_Game/Art/Backgrounds/RedMoon";
+    private const string PaintedFolder = "Assets/_Game/Art/Backgrounds/RedMoonPainted";
     private const string ProfilePath = "Assets/_Game/Settings/RedMoon_PostFX.asset";
     private const string RendererPath = "Assets/_Game/Settings/Renderer2D.asset";
     private const string PostProcessDataPath = "Packages/com.unity.render-pipelines.universal/Runtime/Data/PostProcessData.asset";
     private const float Ppu = 64f;
 
-    private static readonly string[] SpriteNames = { "Sky", "Moon", "Halo", "Haze", "Far", "Mid", "Near", "Ground", "Cracks", "Foreground", "Slab", "Dot" };
+    private static readonly string[] SpriteNames = { "Halo", "Haze", "Mist", "Ground", "Cracks", "Slab", "Dot", "CrowUp", "CrowDown" };
 
     // Position de départ de la caméra (ArenaBuilder.BuildCamera) : le décor est composé autour.
     private static readonly Vector2 CameraStart = new(-4f, 0.9f);
@@ -41,12 +45,16 @@ public static class RedMoonDecor
         Material unlit = EnsureMaterial("DecorUnlit", Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"), null, 0f);
         Shader glowShader = Shader.Find("RED MET/Sprite Glow");
         Vector2 c = CameraStart;
+        var bottom = new Vector2(0.5f, 0f);
 
-        // Ciel collé à la caméra, puis lune et halo presque immobiles.
-        Layer(root, "Sky", art["Sky"], unlit, new Vector3(c.x, c.y + 1f), new Vector2(1f, 1f), -100, scale: new Vector2(120f, 1f));
-        Vector3 moonPosition = new(c.x + 3.8f, c.y + 1.9f);
+        // Ciel collé à la caméra, lune et halo presque immobiles, nuages qui glissent devant la lune.
+        Layer(root, "Sky", Painted("sky", 17f, new Vector2(0.5f, 0.5f), false), unlit, new Vector3(c.x, c.y + 0.4f), Vector2.one, -100);
+        Vector3 moonPosition = new(c.x + 3.6f, c.y + 1.9f);
         Layer(root, "Moon Halo", art["Halo"], EnsureMaterial("HaloGlow", glowShader, null, 0.9f), moonPosition, new Vector2(0.95f, 0.95f), -95);
-        Transform moon = Layer(root, "Moon", art["Moon"], EnsureMaterial("MoonGlow", glowShader, null, 1.25f), moonPosition, new Vector2(0.95f, 0.95f), -94);
+        Transform moon = Layer(root, "Moon", Painted("moon", 4.4f, new Vector2(0.5f, 0.5f), false), EnsureMaterial("MoonGlow", glowShader, null, 1.1f),
+            moonPosition, new Vector2(0.95f, 0.95f), -94);
+        Tiled(root, "Clouds", Painted("clouds", 10f, new Vector2(0.5f, 0.5f), true), unlit, new Vector3(c.x, c.y + 2.6f), new Vector2(64f, 4.17f),
+            new Vector2(0.95f, 0.95f), -93, drift: 0.22f, wrap: 10f, tint: new Color(1f, 1f, 1f, 0.8f));
 
         var moonLight = new GameObject("Moon Light 2D").AddComponent<Light2D>();
         moonLight.transform.SetParent(moon, false);
@@ -56,24 +64,75 @@ public static class RedMoonDecor
         moonLight.pointLightInnerRadius = 2f;
         moonLight.pointLightOuterRadius = 16f;
 
-        // Montagnes lointaines, brume d'horizon, ruines, dunes de cendres.
-        Tiled(root, "Far Mountains", art["Far"], null, new Vector3(c.x, -2f), new Vector2(70f, 8f), new Vector2(0.85f, 0.7f), -80);
-        Layer(root, "Horizon Haze", art["Haze"], unlit, new Vector3(c.x, -0.7f), new Vector2(0.75f, 0.6f), -76, scale: new Vector2(400f, 0.75f));
-        Tiled(root, "Ruins", art["Mid"], null, new Vector3(c.x, -2.2f), new Vector2(70f, 8f), new Vector2(0.6f, 0.45f), -70);
-        Tiled(root, "Ash Dunes", art["Near"], null, new Vector3(c.x, -2.4f), new Vector2(70f, 6f), new Vector2(0.3f, 0.2f), -60);
+        var crows = new GameObject("Crows").AddComponent<CrowFlock>();
+        crows.transform.SetParent(root, false);
+        var so = new SerializedObject(crows);
+        so.FindProperty("wingsUp").objectReferenceValue = art["CrowUp"];
+        so.FindProperty("wingsDown").objectReferenceValue = art["CrowDown"];
+        so.ApplyModifiedPropertiesWithoutUndo();
 
-        // Sol du plan de jeu (le collider reste celui d'ArenaBuilder), avec ses fissures de Red Met.
-        Tiled(root, "Ground", art["Ground"], null, new Vector3(0f, -1.5f), new Vector2(44f, 5f), Vector2.zero, -10);
+        // Montagnes, brume d'horizon, ruines gothiques, brume qui dérive, arbres morts, champ de bataille.
+        // Les plans lointains sont petits et posés sur l'horizon ; plus un plan est proche, plus il est sombre,
+        // pour que les personnages ressortent toujours (largeur d'une répétition : 2,4 fois sa hauteur).
+        Tiled(root, "Mountains", Painted("mountains", 10f, bottom, true), null, new Vector3(c.x, -1.6f), new Vector2(64f, 4.17f), new Vector2(0.85f, 0.7f), -80,
+            tint: new Color(0.85f, 0.85f, 0.85f));
+        Layer(root, "Horizon Haze", art["Haze"], unlit, new Vector3(c.x, -0.7f), new Vector2(0.75f, 0.6f), -76, scale: new Vector2(400f, 0.75f));
+        Tiled(root, "Ruins", Painted("ruins", 10f, bottom, true), null, new Vector3(c.x, -1.7f), new Vector2(64f, 4.17f), new Vector2(0.6f, 0.45f), -70,
+            tint: new Color(0.8f, 0.8f, 0.8f));
+        Tiled(root, "Mist", art["Mist"], unlit, new Vector3(c.x, -1.2f), new Vector2(64f, 2f), new Vector2(0.45f, 0.35f), -65, drift: 0.35f, wrap: 8f);
+        Tiled(root, "Dead Trees", Painted("trees", 11f, bottom, true), null, new Vector3(c.x, -2f), new Vector2(64f, 4.58f), new Vector2(0.3f, 0.2f), -60,
+            tint: new Color(0.6f, 0.6f, 0.6f));
+        Tiled(root, "Battlefield", Painted("battlefield", 8f, bottom, true), null, new Vector3(c.x, -2.4f), new Vector2(64f, 3.33f), new Vector2(0.12f, 0.08f), -50,
+            tint: new Color(0.55f, 0.55f, 0.55f));
+
+        // Sol du plan de jeu (le collider reste celui d'ArenaBuilder) : crête de cendre calculée, terre peinte
+        // juste dessous, fissures de Red Met par-dessus.
+        Tiled(root, "Ground Crest", art["Ground"], null, new Vector3(0f, -1.5f), new Vector2(44f, 5f), Vector2.zero, -11);
+        Tiled(root, "Ground", Painted("ground", 5f, new Vector2(0.5f, 1f), true), null, new Vector3(0f, -1.66f), new Vector2(44f, 2.75f), Vector2.zero, -10);
         Tiled(root, "Ground Cracks", art["Cracks"], EnsureMaterial("CrackGlow", glowShader, null, 2.2f), new Vector3(0f, -1.5f), new Vector2(44f, 5f), Vector2.zero, -9);
 
-        // Rochers du premier plan, qui défilent plus vite que la caméra, en bas de l'écran.
-        Tiled(root, "Foreground Rocks", art["Foreground"], null, new Vector3(c.x, -3f), new Vector2(90f, 4f), new Vector2(-0.35f, 0.3f), 40);
+        // Premier plan sombre et flou, qui passe devant les personnages et défile plus vite que la caméra.
+        Tiled(root, "Foreground", Painted("foreground", 6f, bottom, true), unlit, new Vector3(c.x, -3.6f), new Vector2(90f, 2.5f), new Vector2(-0.35f, 0.3f), 40,
+            tint: new Color(1f, 1f, 1f, 0.85f));
 
         Material ash = EnsureMaterial("AshParticle", Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"), art["Dot"].texture, 0f);
         Material ember = EnsureMaterial("EmberGlow", glowShader, art["Dot"].texture, 3f);
         CreateAsh(camera.transform, ash);
         CreateEmbers(camera.transform, ember);
         SetupPostProcessing(camera, root);
+    }
+
+    // Couche peinte (tools/gen3d/background.py) : l'échelle est réglée pour que l'image fasse widthMeters de large.
+    private static Sprite Painted(string name, float widthMeters, Vector2 pivot, bool repeat)
+    {
+        string path = $"{PaintedFolder}/{name}.png";
+        var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+
+        if (importer == null)
+        {
+            Debug.LogError($"[RED MET] Couche peinte manquante : {path} (lancez tools/gen3d/background.py).");
+            return null;
+        }
+
+        importer.GetSourceTextureWidthAndHeight(out int width, out int _);
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Single;
+        importer.spritePixelsPerUnit = width / widthMeters;
+        importer.mipmapEnabled = false;
+        importer.alphaIsTransparency = true;
+        importer.filterMode = FilterMode.Bilinear;
+        importer.wrapModeU = repeat ? TextureWrapMode.Repeat : TextureWrapMode.Clamp;
+        importer.wrapModeV = TextureWrapMode.Clamp;
+        importer.textureCompression = TextureImporterCompression.CompressedHQ;
+
+        var settings = new TextureImporterSettings();
+        importer.ReadTextureSettings(settings);
+        settings.spriteMeshType = SpriteMeshType.FullRect;
+        settings.spriteAlignment = (int)SpriteAlignment.Custom;
+        settings.spritePivot = pivot;
+        importer.SetTextureSettings(settings);
+        importer.SaveAndReimport();
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
     }
 
     // Plateforme d'ArenaBuilder : son carré provisoire est masqué, une dalle de pierre noire le remplace.
@@ -96,7 +155,7 @@ public static class RedMoonDecor
     }
 
     private static Transform Layer(Transform parent, string name, Sprite sprite, Material material, Vector3 position, Vector2 factor,
-        int order, Vector2? scale = null)
+        int order, Vector2? scale = null, float drift = 0f, float wrap = 0f)
     {
         var go = new GameObject(name);
         go.transform.SetParent(parent, false);
@@ -113,24 +172,28 @@ public static class RedMoonDecor
             renderer.sharedMaterial = material;
 
         if (factor != Vector2.zero)
-            SetFactor(go.AddComponent<ParallaxLayer>(), factor);
+            SetFactor(go.AddComponent<ParallaxLayer>(), factor, drift, wrap);
 
         return go.transform;
     }
 
-    private static void Tiled(Transform parent, string name, Sprite sprite, Material material, Vector3 position, Vector2 size, Vector2 factor, int order)
+    private static void Tiled(Transform parent, string name, Sprite sprite, Material material, Vector3 position, Vector2 size, Vector2 factor,
+        int order, float drift = 0f, float wrap = 0f, Color? tint = null)
     {
-        Transform layer = Layer(parent, name, sprite, material, position, factor, order);
+        Transform layer = Layer(parent, name, sprite, material, position, factor, order, drift: drift, wrap: wrap);
         var renderer = layer.GetComponent<SpriteRenderer>();
+        renderer.color = tint ?? Color.white;
         renderer.drawMode = SpriteDrawMode.Tiled;
         renderer.tileMode = SpriteTileMode.Continuous;
         renderer.size = size;
     }
 
-    private static void SetFactor(ParallaxLayer layer, Vector2 factor)
+    private static void SetFactor(ParallaxLayer layer, Vector2 factor, float drift, float wrap)
     {
         var so = new SerializedObject(layer);
         so.FindProperty("factor").vector2Value = factor;
+        so.FindProperty("drift").floatValue = drift;
+        so.FindProperty("wrapWidth").floatValue = wrap;
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 
@@ -314,18 +377,15 @@ public static class RedMoonDecor
 
     private static void Generate()
     {
-        Save("Sky", Sky(), new Vector2(0.5f, 0.5f), 32f, false);
-        Save("Moon", Moon(), new Vector2(0.5f, 0.5f), 128f, false);
         Save("Halo", Radial(256, new Color(1f, 0.25f, 0.15f), 2.2f, 0.9f), new Vector2(0.5f, 0.5f), 32f, false);
         Save("Haze", Haze(), new Vector2(0.5f, 0.5f), 32f, false);
-        Save("Far", FarMountains(), new Vector2(0.5f, 0f), Ppu, true);
-        Save("Mid", Ruins(), new Vector2(0.5f, 0f), Ppu, true);
-        Save("Near", Dunes(), new Vector2(0.5f, 0f), Ppu, true);
+        Save("Mist", Mist(), new Vector2(0.5f, 0.5f), Ppu, true);
         Save("Ground", Ground(), new Vector2(0.5f, 1f), Ppu, true);
         Save("Cracks", Cracks(), new Vector2(0.5f, 1f), Ppu, true);
-        Save("Foreground", Rocks(), new Vector2(0.5f, 0f), Ppu, true);
         Save("Slab", Slab(), new Vector2(0.5f, 1f), Ppu, false, new Vector4(24f, 0f, 24f, 0f));
         Save("Dot", Radial(32, Color.white, 1.5f, 1f), new Vector2(0.5f, 0.5f), 32f, false);
+        Save("CrowUp", Crow(true), new Vector2(0.5f, 0.5f), 100f, false);
+        Save("CrowDown", Crow(false), new Vector2(0.5f, 0.5f), 100f, false);
     }
 
     private static void Save(string name, Pixels image, Vector2 pivot, float ppu, bool repeat, Vector4 border = default)
@@ -413,24 +473,6 @@ public static class RedMoonDecor
 
     private static float Smooth(float t) => t * t * (3f - 2f * t);
 
-    private static float Ridge(float u, int seed, int frequency, int octaves) => 1f - Mathf.Abs(2f * Noise(u, seed, frequency, octaves) - 1f);
-
-    // Masque de couverture (0 à 1) : silhouettes remplies sous une hauteur, et traits en capsule.
-    private static float[] HeightMask(int w, int h, Func<float, float> height)
-    {
-        var mask = new float[w * h];
-
-        for (int x = 0; x < w; x++)
-        {
-            float top = height((x + 0.5f) / w);
-
-            for (int y = 0; y < h; y++)
-                mask[y * w + x] = Mathf.Clamp01(top - y);
-        }
-
-        return mask;
-    }
-
     private static void Stroke(float[] mask, int w, int h, Vector2 a, Vector2 b, float r0, float r1)
     {
         float r = Mathf.Max(r0, r1) + 1f;
@@ -452,81 +494,6 @@ public static class RedMoonDecor
     }
 
     // Aplat + liseré clair sur les bords supérieurs (lumière de la lune), comme un décor d'anime.
-    private static Pixels Colorize(float[] mask, int w, int h, Color body, Color rim, int rimPixels, Color? bottom = null)
-    {
-        var image = new Pixels(w, h);
-
-        for (int y = 0; y < h; y++)
-        for (int x = 0; x < w; x++)
-        {
-            float a = mask[y * w + x];
-
-            if (a <= 0f)
-                continue;
-
-            bool edge = y + rimPixels >= h || mask[(y + rimPixels) * w + x] < 0.5f;
-            Color c = edge ? rim : bottom.HasValue ? Color.Lerp(bottom.Value, body, Mathf.Clamp01(y / (h * 0.45f))) : body;
-            c.a = a;
-            image.Set(x, y, c);
-        }
-
-        return image;
-    }
-
-    private static Pixels Sky()
-    {
-        // Bandes franches du noir (haut) au rouge sombre (horizon, au tiers inférieur).
-        Color[] bands =
-        {
-            new(0.40f, 0.07f, 0.06f), new(0.30f, 0.05f, 0.05f), new(0.21f, 0.035f, 0.04f), new(0.14f, 0.025f, 0.035f),
-            new(0.09f, 0.015f, 0.025f), new(0.055f, 0.01f, 0.02f), new(0.03f, 0.006f, 0.014f),
-        };
-        float[] limits = { 0.12f, 0.22f, 0.32f, 0.42f, 0.55f, 0.7f, 1.01f };
-        var image = new Pixels(8, 512);
-
-        for (int y = 0; y < image.H; y++)
-        {
-            float v = (y + 0.5f) / image.H;
-            Color c = bands[Array.FindIndex(limits, l => v < l)];
-
-            for (int x = 0; x < image.W; x++)
-                image.Set(x, y, c);
-        }
-
-        return image;
-    }
-
-    private static Pixels Moon()
-    {
-        const int size = 512;
-        const float radius = 235f;
-        var center = new Vector2(size / 2f, size / 2f);
-        var shifted = center + new Vector2(16f, -10f);
-        var image = new Pixels(size, size);
-
-        for (int y = 0; y < size; y++)
-        for (int x = 0; x < size; x++)
-        {
-            var p = new Vector2(x + 0.5f, y + 0.5f);
-            float alpha = Mathf.Clamp01(radius - Vector2.Distance(p, center) + 0.5f);
-
-            if (alpha <= 0f)
-                continue;
-
-            // Mers en deux aplats plus sombres, croissant éclairé en haut à gauche.
-            float n = Noise(p.x / size, 71, 4, 3, p.y / size, 4);
-            Color c = n > 0.66f ? new Color(0.5f, 0.04f, 0.04f) : n > 0.56f ? new Color(0.64f, 0.07f, 0.05f) : new Color(0.86f, 0.12f, 0.08f);
-
-            if (Vector2.Distance(p, shifted) > radius - 3f)
-                c = new Color(1f, 0.42f, 0.28f);
-
-            c.a = alpha;
-            image.Set(x, y, c);
-        }
-
-        return image;
-    }
-
     private static Pixels Radial(int size, Color color, float power, float strength)
     {
         var image = new Pixels(size, size);
@@ -539,6 +506,50 @@ public static class RedMoonDecor
             c.a = Mathf.Pow(Mathf.Clamp01(1f - d), power) * strength;
             image.Set(x, y, c);
         }
+
+        return image;
+    }
+
+    // Brume qui dérive : bande de nappes douces, répétable en largeur (512 px pour 8 m).
+    private static Pixels Mist()
+    {
+        const int w = 512, h = 128;
+        var image = new Pixels(w, h);
+
+        for (int y = 0; y < h; y++)
+        for (int x = 0; x < w; x++)
+        {
+            float v = (y + 0.5f) / h;
+            float n = Noise((x + 0.5f) / w, 91, 4, 4, v * 2f, 2);
+            float bell = Mathf.Sin(Mathf.PI * v);
+            image.Set(x, y, new Color(0.42f, 0.1f, 0.1f, Mathf.Clamp01(n * 1.6f - 0.45f) * bell * bell * 0.4f));
+        }
+
+        return image;
+    }
+
+    // Corbeau en silhouette, ailes hautes ou basses (64 × 32 px, teinté par le SpriteRenderer).
+    private static Pixels Crow(bool wingsUp)
+    {
+        const int w = 64, h = 32;
+        var mask = new float[w * h];
+        var body = new Vector2(32f, 15f);
+        Stroke(mask, w, h, body + new Vector2(-9f, 0f), body + new Vector2(9f, 1f), 3.2f, 2f);
+        Stroke(mask, w, h, body + new Vector2(9f, 1f), body + new Vector2(14f, 1.5f), 2.2f, 0.8f);
+        Stroke(mask, w, h, body + new Vector2(-9f, 0f), body + new Vector2(-15f, -1f), 2f, 2.8f);
+        float tip = wingsUp ? 13f : -12f;
+
+        foreach (float side in new[] { -1f, 1f })
+        {
+            Vector2 elbow = body + new Vector2(side * 2f - 3f, tip * 0.6f);
+            Stroke(mask, w, h, body + new Vector2(-1f, 1f), elbow, 2.6f, 1.8f);
+            Stroke(mask, w, h, elbow, elbow + new Vector2(side * 4f - 6f, tip * 0.45f), 1.8f, 0.6f);
+        }
+
+        var image = new Pixels(w, h);
+
+        for (int i = 0; i < mask.Length; i++)
+            image.P[i] = new Color(1f, 1f, 1f, mask[i]);
 
         return image;
     }
@@ -557,86 +568,6 @@ public static class RedMoonDecor
         }
 
         return image;
-    }
-
-    private static Pixels FarMountains()
-    {
-        const int w = 2048, h = 512;
-        float[] mask = HeightMask(w, h, u => 90f + 130f * Noise(u, 11, 2, 4) + 90f * Mathf.Pow(Ridge(u, 12, 5, 3), 1.5f));
-        return Colorize(mask, w, h, new Color(0.17f, 0.03f, 0.045f), new Color(0.5f, 0.08f, 0.07f), 3, new Color(0.3f, 0.05f, 0.055f));
-    }
-
-    private static Pixels Ruins()
-    {
-        const int w = 2048, h = 512;
-        float[] mask = HeightMask(w, h, u => 70f + 50f * Noise(u, 21, 4, 3));
-
-        // Piliers brisés au sommet dentelé.
-        for (int k = 0; k < 7; k++)
-        {
-            float x = (k + Hash(k, 22)) * w / 7f;
-            float width = 34f + 36f * Hash(k, 23);
-            float height = 140f + 190f * Hash(k, 24);
-
-            for (int px = Mathf.FloorToInt(x); px < x + width; px++)
-            {
-                float top = 60f + height - 45f * Hash(px / 6, 25 + k);
-
-                for (int y = 0; y < Mathf.Min(h, top + 1f); y++)
-                {
-                    int i = y * w + Wrap(px, w);
-                    mask[i] = Mathf.Max(mask[i], Mathf.Clamp01(top - y));
-                }
-            }
-        }
-
-        // Arbres morts : branches qui se divisent en s'affinant.
-        for (int k = 0; k < 5; k++)
-        {
-            float x = (k + 0.5f + 0.3f * (Hash(k, 26) - 0.5f)) * w / 5f;
-            Branch(mask, w, h, new Vector2(x, 80f), 90f + 16f * (Hash(k, 27) - 0.5f), 80f + 40f * Hash(k, 28), 18f, 3, 30 + k * 13);
-        }
-
-        return Colorize(mask, w, h, new Color(0.075f, 0.015f, 0.022f), new Color(0.38f, 0.06f, 0.05f), 2);
-    }
-
-    private static void Branch(float[] mask, int w, int h, Vector2 start, float angle, float length, float width, int depth, int seed)
-    {
-        float radians = angle * Mathf.Deg2Rad;
-        Vector2 end = start + new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)) * length;
-        Stroke(mask, w, h, start, end, width, width * 0.65f);
-
-        if (depth == 0)
-            return;
-
-        for (int side = -1; side <= 1; side += 2)
-        {
-            float spread = 20f + 25f * Hash(depth * 3 + side, seed);
-            Branch(mask, w, h, end, angle + side * spread, length * (0.6f + 0.15f * Hash(depth + side, seed + 1)), width * 0.65f, depth - 1, seed + 7 * (side + 2));
-        }
-    }
-
-    private static Pixels Dunes()
-    {
-        const int w = 2048, h = 384;
-        Func<float, float> height = u => 80f + 70f * Noise(u, 31, 3, 3);
-        float[] mask = HeightMask(w, h, height);
-
-        // Épées et lances plantées dans la cendre.
-        for (int k = 0; k < 9; k++)
-        {
-            float x = (k + Hash(k, 32)) * w / 9f;
-            float angle = (90f + 40f * (Hash(k, 33) - 0.5f)) * Mathf.Deg2Rad;
-            float length = 60f + 50f * Hash(k, 34);
-            var dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-            var foot = new Vector2(x, height(x / w) - 10f);
-            Stroke(mask, w, h, foot, foot + dir * length, 3f, 1.5f);
-            Vector2 guard = foot + dir * (length * 0.25f);
-            var across = new Vector2(dir.y, -dir.x) * 9f;
-            Stroke(mask, w, h, guard - across, guard + across, 2f, 2f);
-        }
-
-        return Colorize(mask, w, h, new Color(0.06f, 0.04f, 0.045f), new Color(0.32f, 0.27f, 0.28f), 4);
     }
 
     private static Pixels Ground()
@@ -701,33 +632,6 @@ public static class RedMoonDecor
             image.P[i] = new Color(1f, 0.18f, 0.08f, Mathf.Max(core[i], halo[i] * 0.25f));
 
         return image;
-    }
-
-    private static Pixels Rocks()
-    {
-        const int w = 1024, h = 256;
-        var mask = new float[w * h];
-
-        for (int k = 0; k < 3; k++)
-        {
-            float cx = (k + Hash(k, 61)) * w / 3f;
-            float half = (120f + 100f * Hash(k, 62)) / 2f;
-            float height = 40f + 18f * Hash(k, 63);
-
-            for (int x = Mathf.FloorToInt(cx - half); x <= cx + half; x++)
-            {
-                float t = (x - cx) / half;
-                float top = height * Mathf.Sqrt(Mathf.Max(0f, 1f - t * t)) * (0.85f + 0.15f * Noise((float)x / w, 64, 32));
-
-                for (int y = 0; y < Mathf.Min(h, top + 1f); y++)
-                {
-                    int i = y * w + Wrap(x, w);
-                    mask[i] = Mathf.Max(mask[i], Mathf.Clamp01(top - y));
-                }
-            }
-        }
-
-        return Colorize(mask, w, h, new Color(0.02f, 0.008f, 0.012f), new Color(0.28f, 0.05f, 0.05f), 2);
     }
 
     // Dalle de pierre noire : 0,4 m de dessus (le collider), roche pendante dessous.

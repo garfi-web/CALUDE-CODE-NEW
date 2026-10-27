@@ -1,0 +1,9 @@
+{
+  "source": "sky_raw.png",
+  "mode": "raccord : fondu enchaîné des bords, bande au centre, SetLatentNoiseMask, masque flou",
+  "band": 300,
+  "denoise": 0.6,
+  "seed": 6101,
+  "prompt": "night sky, dark storm clouds lit by red light from below, blood red sky near the horizon, black sky above, no moon, cloudscape, only sky, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, cropped, moon, planet, sun, ground, land, mountains, landscape, horizon line, buildings, trees"
+}

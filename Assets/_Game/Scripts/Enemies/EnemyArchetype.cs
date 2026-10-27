@@ -117,6 +117,10 @@ public class EnemyArchetype : ScriptableObject
     [Tooltip("Sprites animés (pivot aux pieds). Vide : rectangle provisoire de couleur bodyColor.")]
     public RuntimeAnimatorController animator;
     public Sprite sprite;
+    [Tooltip("Couleur d'un membre arraché quand l'ennemi est en sprites (bodyColor vaut alors blanc) : la teinte des vêtements.")]
+    public Color limbColor = new(0.16f, 0.17f, 0.22f);
+
+    public Color LimbColor => animator != null || sprite != null ? limbColor : bodyColor;
 
     [Header("Sang")]
     [Tooltip("Rouge pour les humains ; noir, rouge lumineux... pour les ennemis surnaturels.")]

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 44cecb04348f3214784447f7588a43bb
+guid: f6e0127af0af1c649876184318d10a1b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -98070244222629441
-    second: Foreground_0
+      213: 3321335223884153920
+    second: CrowUp_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,7 +40,7 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
+    wrapU: 1
     wrapV: 1
     wrapW: 1
   nPOTScale: 0
@@ -50,8 +50,8 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 9
-  spritePivot: {x: 0.5, y: 0}
-  spritePixelsToUnits: 64
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Foreground_0
+      name: CrowUp_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1024
-        height: 256
+        width: 64
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fb9031ae1a593aef0800000000000000
-      internalID: -98070244222629441
+      spriteID: 0448b97f9c0c71e20800000000000000
+      internalID: 3321335223884153920
       vertices: []
       indices: 
       edges: []

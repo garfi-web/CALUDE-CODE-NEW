@@ -20,9 +20,10 @@ Le contenu de `Assets/_Game/` :
 | `Prefabs` | `Enemy`, `Projectile`, `Grenade`, `Cover` (générés par l'ArenaBuilder) |
 | `Scripts/Animation` | `CharacterAnimator` (pont optionnel vers l'Animator) |
 | `Scripts/UI`, `Scripts/Core`, `Scripts/CameraSystem` | HUD, menu Options, debug des images (F1), démo de combo (F3), GameManager, commandes, options, réserve d'objets (`Pool`), temps de jeu (pause, ralenti), caméra (suivi, tremblement, zoom d'impact) |
-| `Scripts/Environment` | `ParallaxLayer` (couches de décor en parallaxe) |
+| `Scripts/Environment` | `ParallaxLayer` (couches de décor en parallaxe, dérive des nuages et de la brume), `CrowFlock` (corbeaux) |
 | `Editor/ArenaBuilder.cs` | Menu **RED MET → Construire l'arène prototype** |
-| `Editor/RedMoonDecor.cs` | Décor de l'arène de la lune rouge (images calculées, parallaxe, lumière 2D, post-traitement, cendres et braises) ; menu **RED MET → Régénérer le décor de la lune rouge** |
+| `Editor/RedMoonDecor.cs` | Décor de l'arène de la lune rouge (couches peintes, parallaxe, lumière 2D, post-traitement, cendres, braises, corbeaux) ; menu **RED MET → Régénérer le décor de la lune rouge** (éléments calculés) |
+| `Editor/WindowsBuild.cs`, `Scripts/Core/BenchmarkRunner.cs` | Menu **RED MET → Build Windows** et banc d'essai des 60 FPS (`-redmet-benchmark`) |
 | `Editor/SpriteAnimationBuilder.cs` | Menu **RED MET → Importer les sprites des personnages** (découpe, clips, Animator Controllers) |
 
 ### Tranche verticale : jouer soi-même
@@ -34,7 +35,9 @@ Nathan M0 contre le Voyou à capuche, dans l'arène de la lune rouge, aux graphi
 3. Commandes et combos : tableaux ci-dessous. Pour un premier essai : **J J J** au contact, puis **S + K** (lanceur), **Espace**, **J J J** en l'air et **K** (smash). **Maj gauche** pour esquiver la frappe du Voyou (annoncée par un voile coloré), **L** pour le dash.
 4. **F2** donne une lame de test (sang, démembrement), **F3** joue le combo complet tout seul, **F1** affiche le debug des images et les images par seconde, **Échap** ouvre les options (gore, tremblement, flashs).
 
-Les sprites viennent de Blender (`tools/blender/redmet_animation.py`) ; après un nouveau rendu, relancez **RED MET → Construire l'arène prototype**, qui les réimporte.
+Les sprites viennent de Blender (`tools/blender/redmet_animation.py`, mannequin : `tools/blender/redmet_props.py`) et le décor de ComfyUI + Animagine XL (`tools/gen3d/background.py`) ; après un nouveau rendu, relancez **RED MET → Construire l'arène prototype**, qui les réimporte.
+
+Build Windows : **RED MET → Build Windows** (dans `Builds/Windows`, hors dépôt). Pour mesurer les 60 FPS : `REDMET.exe -redmet-benchmark` joue 30 s de combos à la lame avec le gore complet, écrit `benchmark.txt` à côté de l'exécutable, puis se ferme.
 
 ### Installation
 

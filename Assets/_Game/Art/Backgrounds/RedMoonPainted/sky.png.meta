@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9ec7950afc7002444bc34da03b844aa5
+guid: 2f192dd95f76116488cb8bdf73e1b547
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6072647820194990280
-    second: Near_0
+      213: 3836954968553550457
+    second: sky_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,7 +40,7 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
+    wrapU: 1
     wrapV: 1
     wrapW: 1
   nPOTScale: 0
@@ -50,8 +50,8 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 9
-  spritePivot: {x: 0.5, y: 0}
-  spritePixelsToUnits: 64
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 79.05882
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -77,7 +77,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Near_0
+      name: sky_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2048
-        height: 384
+        width: 1344
+        height: 768
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8373a375bfe99bba0800000000000000
-      internalID: -6072647820194990280
+      spriteID: 972fdcff63a9f3530800000000000000
+      internalID: 3836954968553550457
       vertices: []
       indices: 
       edges: []

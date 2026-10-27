@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 570a12b7b19d3454bb6d7ee4a77b2cef
+guid: 7f4c15ef993c59c4395a08d981881ce6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8538736069523498542
-    second: Mid_0
+      213: 9083969447635318612
+    second: moon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,7 +40,7 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
+    wrapU: 1
     wrapV: 1
     wrapW: 1
   nPOTScale: 0
@@ -50,8 +50,8 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 9
-  spritePivot: {x: 0.5, y: 0}
-  spritePixelsToUnits: 64
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 232.72726
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -77,7 +77,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mid_0
+      name: moon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2048
-        height: 512
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2d99c31f8c0508980800000000000000
-      internalID: -8538736069523498542
+      spriteID: 457fdcc651eb01e70800000000000000
+      internalID: 9083969447635318612
       vertices: []
       indices: 
       edges: []

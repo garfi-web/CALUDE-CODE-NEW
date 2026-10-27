@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "texture, top-down view of the ground surface, dark grey ash and gravel, cracked black stone slabs, dead roots, pebbles, flat lighting, seamless pattern, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, cropped, sky, horizon, trees, cave, landscape, scenery, perspective, water, snow, blue",
+  "seed": 5119,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 21.2
+}

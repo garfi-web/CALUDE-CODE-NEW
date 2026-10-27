@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: af82b8b0bfd0f6e41a8fd4fed16802dc
+guid: 03653bf6af0f8a340b0b8635718e03de
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2410671940745902572
-    second: Sky_0
+      213: 8287873616420496286
+    second: clouds_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,7 +40,7 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 1
+    wrapU: 0
     wrapV: 1
     wrapW: 1
   nPOTScale: 0
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 0
   alignment: 9
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 153.6
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -77,7 +77,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sky_0
+      name: clouds_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 8
-        height: 512
+        width: 1536
+        height: 640
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce9392a9b5d647120800000000000000
-      internalID: 2410671940745902572
+      spriteID: e936312a421740370800000000000000
+      internalID: 8287873616420496286
       vertices: []
       indices: 
       edges: []

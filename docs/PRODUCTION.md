@@ -495,3 +495,35 @@ Demandes, dans l'ordre : (1) allonge des coups, (2) mannequin et ennemis encore 
 - Voyou : vérifié dans les vagues 1 et 2 ; les Voyous à mains nues et au couteau ont bien leurs sprites et leur Animator. Le Dealer, le Flic, le Soldat et le Mutant restent des rectangles jusqu'à la phase C, qui commencera par le Flic corrompu après la validation du décor par l'auteur.
 - 60 FPS (vague du mannequin, combo à la lame, gore complet, éditeur) : 2,93 ms en moyenne, 6,65 ms au 99e centile, 4 images sur 4 162 au-delà de 16,6 ms (19,3 ms au pire). L'éditeur ajoute du bruit d'une mesure à l'autre ; la mesure de référence sera celle du build Windows.
 - Capture : `docs/captures/2026-10-27_mannequin_avant_apres.png` (rectangle provisoire, puis mannequin au repos, sous un jab et pendant le retour).
+
+**Point 3 — Décor peint**
+- Outil `tools/gen3d/background.py` (ComfyUI + Animagine XL 4.0, graines fixes, prompts et graines dans les `.json` de `ArtSource/Backgrounds/RedMoon/`) : 9 couches.
+  - Ciel nuageux sans lune (5101), lune tourbillonnante (5112), nuages (5103), montagnes (5104), ruines de cité gothique (5105).
+  - Arbres morts tortueux avec épées et bannières (5106), champ de bataille avec ossements, casques, boucliers, lances et bannière déchirée (5117), premier plan d'épines et de lances (5108), sol de pierres et de racines (5119).
+- Méthode retenue, après deux essais ratés :
+  - **Détourage** : les couches sont peintes en silhouettes à contre-jour sur un ciel rouge vif uni, retiré par sa luminosité ligne par ligne. Un fond vert ne marche pas : Animagine en fait une scène éclairée en vert, impossible à détourer.
+  - **Raccord sans couture** : fondu enchaîné entre les deux bords (continuité garantie), puis bande ramenée au centre et repeinte par inpainting partiel (60 % de bruit, masque flou). L'inpainting complet de la jointure inventait une scène sans rapport (une lune, un tronc) ; à 55 % de bruit sans fondu, la cassure restait visible.
+  - **Étalonnage par profondeur** : un plan plus lointain est plus sombre, désaturé et noyé dans la brume rouge. Le premier plan est presque noir et flouté (rayon 6). Les bords hauts des couches sont en fondu (et le bas des nuages), sinon les branches coupées par le bord dessinent une ligne droite.
+  - Le sol ne garde que la moitié basse de son image (rochers et racines).
+- Couches finales dans `Art/Backgrounds/RedMoonPainted/`, lues par `RedMoonDecor.Painted`, qui règle l'échelle pour une largeur donnée en mètres.
+- Composition :
+  - plans lointains petits et posés sur l'horizon (montagnes et ruines : 10 m de large pour 4,2 m de haut), plans proches assombris (arbres × 0,6, champ de bataille × 0,55) ;
+  - premier plan bas et à 85 % d'opacité ;
+  - crête de cendre et fissures de Red Met calculées au-dessus du sol peint.
+  - Une première composition à 6,7 m de haut par couche remplissait tout l'écran : une masse rouge illisible.
+- Animation légère :
+  - `ParallaxLayer.drift` fait glisser les nuages devant la lune (0,22 m/s) et la brume (0,35 m/s, nappe calculée et répétable) ;
+  - `CrowFlock` fait passer 5 corbeaux devant la lune toutes les 14 à 28 s (deux images d'ailes, créés au chargement, jamais pendant le combat) ;
+  - les cendres et les braises sont déjà en place.
+- Images calculées remplacées par les couches peintes et supprimées : ciel, lune, montagnes, ruines, dunes, rochers. Restent calculés : halo, brume, crête, fissures, dalles, corbeaux.
+- Défaut trouvé au passage : un membre arraché d'un ennemi en sprites était blanc, car `bodyColor` vaut blanc pour ne pas teinter le sprite. Nouveau champ `EnemyArchetype.limbColor` (teinte des vêtements : bleu marine pour le Voyou, toile pour le mannequin).
+- Captures : `docs/captures/2026-10-27_decor_avant_apres.png`, `..._decor_peint.png`, `..._decor_peint_combat.png`.
+
+**60 FPS dans un build Windows** (menu RED MET → Build Windows, `Builds/Windows/REDMET.exe -redmet-benchmark`, `BenchmarkRunner`) :
+- Machine : Ryzen 7 5800H, RTX 3070 Laptop, fenêtre 1920 × 1080.
+- Scène : vague du mannequin, lame de test, gore complet, démo de combo enchaînée pendant 30 s (7 combos), synchronisation verticale coupée.
+- Thread principal (CPU, `FrameTimingManager`) : 13 470 images ; **0,72 ms en moyenne**, 1,24 ms au 99e centile, 7,79 ms au pire.
+- Durée d'image : 2,23 ms en moyenne (environ 450 images/s), 7,81 ms au pire ; **aucune image au-delà de 16,6 ms**.
+- Le build pèse 222 Mo et se construit en 190 s.
+
+**En attente de la validation du décor par l'auteur.** Ensuite : phase C, en commençant par les concepts du Flic corrompu (4 variantes, l'auteur en choisit une).
