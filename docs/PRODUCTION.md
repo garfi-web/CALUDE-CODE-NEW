@@ -480,3 +480,18 @@ Demandes, dans l'ordre : (1) allonge des coups, (2) mannequin et ennemis encore 
 **Défaut corrigé — pose de mort** : le corps descendait de 0,80 m quel que soit le personnage, et les bras pendaient sous le corps. Résultat : une partie du corps passait sous le sol, ou le corps flottait sur ses bras. Désormais, les bras sont le long du corps et `fit_death_drop` calcule la descente pour que le point le plus bas touche le sol (0,68 m pour Nathan, 0,70 m pour le Voyou).
 
 **Défaut corrigé — liseré rouge côté lune** : ajouté dans `RED MET/Sprite Flash`, en rouge HDR (pris par le bloom). Il est calculé dans le monde (dérivées des UV rapportées à la position), donc il reste du côté de la lune quel que soit le sens du personnage. Une première version fondée sur les dérivées d'écran l'affichait du mauvais côté dans les captures.
+
+**Point 2 — Mannequin et ennemis en cubes**
+- Mannequin d'entraînement modélisé dans Blender, sans TripoSG puisqu'il s'agit d'un objet (`tools/blender/redmet_props.py`, `build_training_dummy`) :
+  - socle en croix et poteau en bois ;
+  - sac en toile avec 5 pièces rapiécées, deux cordes ;
+  - tête en sac nouée, bandeau de chiffon rouge à deux pans ;
+  - deux chevilles en bois pour les bras.
+  - Rendu toon au cadrage des personnages : `Art/Characters/Mannequin/Sprites/Mannequin.png`.
+- Unity :
+  - `Enemy` utilise aussi les archétypes qui n'ont qu'une image fixe ;
+  - `ArenaBuilder.ApplyStaticSprite` importe l'image et l'assigne au mannequin à chaque construction ;
+  - `HitReaction.SetSway` fait osciller le visuel autour du socle à chaque coup : amorti, dans le sens du coup, plus fort sur les coups lourds, compté en images de combat et donc figé pendant le hitstop. Il est activé par `TrainingDummy`.
+- Voyou : vérifié dans les vagues 1 et 2 ; les Voyous à mains nues et au couteau ont bien leurs sprites et leur Animator. Le Dealer, le Flic, le Soldat et le Mutant restent des rectangles jusqu'à la phase C, qui commencera par le Flic corrompu après la validation du décor par l'auteur.
+- 60 FPS (vague du mannequin, combo à la lame, gore complet, éditeur) : 2,93 ms en moyenne, 6,65 ms au 99e centile, 4 images sur 4 162 au-delà de 16,6 ms (19,3 ms au pire). L'éditeur ajoute du bruit d'une mesure à l'autre ; la mesure de référence sera celle du build Windows.
+- Capture : `docs/captures/2026-10-27_mannequin_avant_apres.png` (rectangle provisoire, puis mannequin au repos, sous un jab et pendant le retour).

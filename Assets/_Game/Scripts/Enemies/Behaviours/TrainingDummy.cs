@@ -12,12 +12,19 @@ public class TrainingDummy : EnemyBehaviour
     {
         if (Enemy != null && Enemy.Health != null)
             Enemy.Health.Damaged += OnDamaged;
+
+        // Chaque coup le fait osciller sur son socle (HitReaction, visuel seulement).
+        if (TryGetComponent(out HitReaction reaction))
+            reaction.SetSway(true);
     }
 
     private void OnDisable()
     {
         if (Enemy != null && Enemy.Health != null)
             Enemy.Health.Damaged -= OnDamaged;
+
+        if (TryGetComponent(out HitReaction reaction))
+            reaction.SetSway(false);
     }
 
     private void OnDamaged(int damage) => lastHitTime = Time.time;

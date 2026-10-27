@@ -405,6 +405,9 @@ MonoBehaviour:
   whiteFlashFrames: 3
   painPoseFrames: 10
   placeholderPoses: 1
+  swayAngle: 14
+  swayFrequency: 1.8
+  swayDamping: 0.45
 --- !u!114 &783758776838910002
 MonoBehaviour:
   m_ObjectHideFlags: 0

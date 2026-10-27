@@ -181,7 +181,8 @@ public class Enemy : MonoBehaviour, IDamageFilter
         if (bodyCollider is CapsuleCollider2D capsule)
             capsule.size = size;
 
-        if (archetype.animator != null)
+        // Sprites animés, ou image fixe seule (mannequin d'entraînement).
+        if (archetype.animator != null || archetype.sprite != null)
             ApplySprites(size);
         else
             ApplyPlaceholder(size);

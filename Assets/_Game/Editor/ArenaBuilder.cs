@@ -590,6 +590,37 @@ public static class ArenaBuilder
         EditorUtility.SetDirty(archetype);
     }
 
+    // Image fixe rendue dans Blender (tools/blender/redmet_props.py), au cadrage des sprites des personnages :
+    // 512 px pour 2,6 m, pieds à 0,3 m du bas. Sans Animator : le mannequin ne fait que se balancer (HitReaction).
+    private static void ApplyStaticSprite(EnemyArchetype archetype, string path)
+    {
+        var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+
+        if (importer == null)
+            return;
+
+        const float pixelsPerMeter = 512f / 2.6f;
+        importer.textureType = TextureImporterType.Sprite;
+        importer.spriteImportMode = SpriteImportMode.Single;
+        importer.spritePixelsPerUnit = pixelsPerMeter;
+        importer.mipmapEnabled = false;
+        importer.alphaIsTransparency = true;
+        importer.filterMode = FilterMode.Bilinear;
+        importer.textureCompression = TextureImporterCompression.CompressedHQ;
+
+        var settings = new TextureImporterSettings();
+        importer.ReadTextureSettings(settings);
+        settings.spriteAlignment = (int)SpriteAlignment.Custom;
+        settings.spritePivot = new Vector2(0.5f, 0.3f * pixelsPerMeter / 512f);
+        importer.SetTextureSettings(settings);
+        importer.SaveAndReimport();
+
+        archetype.animator = null;
+        archetype.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+        archetype.bodyColor = Color.white;
+        EditorUtility.SetDirty(archetype);
+    }
+
     private static EnemyArchetype EnsureArchetype(string file, Action<EnemyArchetype> setup)
     {
         string path = $"{ArchetypeFolder}/{file}.asset";
@@ -800,6 +831,8 @@ public static class ArenaBuilder
             a.bodyColor = new Color(0.75f, 0.62f, 0.4f);
             a.bloodColor = new Color(0.55f, 0.02f, 0.03f);
         });
+
+        ApplyStaticSprite(dummy, Root + "/Art/Characters/Mannequin/Sprites/Mannequin.png");
 
         AssetDatabase.SaveAssets();
 

@@ -30,6 +30,12 @@ public class HitReaction : MonoBehaviour
     [Tooltip("Personnage provisoire (rectangle) : couché par déformation. Un sprite animé a ses propres poses.")]
     [SerializeField] private bool placeholderPoses = true;
 
+    [Header("Balancement (mannequin)")]
+    [Tooltip("Inclinaison maximale (degrés) d'un coup fort ; le balancement remplace la pose de douleur.")]
+    [SerializeField] private float swayAngle = 14f;
+    [SerializeField] private float swayFrequency = 1.8f;
+    [SerializeField] private float swayDamping = 0.45f;
+
     private readonly ContactPoint2D[] contacts = new ContactPoint2D[8];
     private Rigidbody2D rb;
     private Health health;
@@ -46,6 +52,9 @@ public class HitReaction : MonoBehaviour
     private Vector3 visualScale = Vector3.one;
     private Vector3 visualPosition;
     private Color flashRestoreColor;
+    private bool sway;
+    private int swayFrame = -1;
+    private float swayAmplitude;
 
     public bool IsInHitstun => hitstunLeft > 0 || airborne || knockedDown;
     public bool IsAirborne => airborne;
@@ -90,6 +99,13 @@ public class HitReaction : MonoBehaviour
             health.Hit -= OnHit;
     }
 
+    // Mannequin : chaque coup le fait osciller autour de son socle au lieu de la pose de douleur.
+    public void SetSway(bool enabled)
+    {
+        sway = enabled;
+        swayFrame = -1;
+    }
+
     // La silhouette peut changer après l'apparition (archétype d'ennemi, sprite animé).
     public void SetVisual(Vector3 scale, Vector3 position, bool placeholder)
     {
@@ -118,6 +134,14 @@ public class HitReaction : MonoBehaviour
         flashLeft = whiteFlashFrames;
         poseLeft = painPoseFrames;
         StartFlash();
+
+        if (sway)
+        {
+            // Penche dans le sens du coup, plus fort sur les coups lourds. Rotation Z positive = vers la gauche.
+            float power = info.Attack != null ? Mathf.Clamp01(info.Attack.hitstop / 12f + 0.35f) : 0.5f;
+            swayAmplitude = -Mathf.Sign(info.Direction == 0f ? 1f : info.Direction) * swayAngle * power;
+            swayFrame = 0;
+        }
 
         if (attack == null)
             return;
@@ -294,6 +318,25 @@ public class HitReaction : MonoBehaviour
 
         visual.localPosition = visualPosition;
 
+        // Balancement amorti autour du socle (le visuel a son pivot aux pieds).
+        if (sway)
+        {
+            float angle = 0f;
+
+            if (swayFrame >= 0)
+            {
+                float t = swayFrame++ / AttackData.FrameRate;
+                angle = swayAmplitude * Mathf.Exp(-t / swayDamping) * Mathf.Cos(2f * Mathf.PI * swayFrequency * t);
+
+                if (t > swayDamping * 6f)
+                    swayFrame = -1;
+            }
+
+            visual.localScale = visualScale;
+            visual.localRotation = Quaternion.Euler(0f, 0f, angle);
+            return;
+        }
+
         // Pose de douleur : écrasé et penché vers l'arrière, puis retour.
         if (poseLeft > 0)
         {
@@ -318,6 +361,7 @@ public class HitReaction : MonoBehaviour
         knockedDown = false;
         bounceArmed = false;
         poseLeft = 0;
+        swayFrame = -1;
 
         if (visual != null)
         {
