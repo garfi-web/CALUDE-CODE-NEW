@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, reprends la PHASE C là où elle s'est arrêtée (section « Phase C » de docs/PRODUCTION.md) : montre-moi les 4 concepts du Dealer lieutenant (Art/Characters/Dealer/Concept, seeds 14101 à 14104) et attends mon choix, puis fais sa phase D comme pour le Flic, en respectant CLAUDE.md.
+> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, reprends la PHASE C là où elle s'est arrêtée (section « Phase C » de docs/PRODUCTION.md) : montre-moi les 4 concepts de la 2e série du Dealer lieutenant (Art/Characters/Dealer/Concept, seeds 14201 à 14204) et attends mon choix, puis fais sa phase D comme pour le Flic avec la mécanique du fusil à pompe (requête complète en fin de docs/REPRISE.md), en respectant CLAUDE.md.
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 7** choisissent la vague, F1 à F3 le debug (détail dans le `README.md`).
 
@@ -130,7 +130,7 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 4. **Tranche verticale** Nathan M0 contre le Voyou, graphismes définitifs — *faite et validée par l'auteur le 2026-10-27* (commits `ccee514` à `5bddd2b`, puis la sauvegarde de fin de session) : cel-shading, allonge des coups, mannequin, décor peint (ComfyUI + Animagine), pose de mort, liseré rouge, 60 FPS mesurés dans un build Windows. Dernières retouches demandées après validation : sol redessiné en toon et crochet allongé (0,9 m) — faites et vérifiées en Play le 2026-10-27 (le crochet touche à 0,87 m dès sa 1re image active). Détail : `docs/PRODUCTION.md`, section « Tranche verticale ».
 5. **Phase C** (reste de l'Acte I, même méthode) — **en cours**. Un ennemi à la fois :
    - **Flic corrompu terminé** : concept 13103, 1,85 m, phase D faite (armes, animations de tir avec annonce, sprites), vague 3 de l'arène.
-   - **Dealer lieutenant** : 4 concepts faits (14101 à 14104), **en attente du choix de l'auteur**, puis sa phase D.
+   - **Dealer lieutenant** : 1re série (14101 à 14104) rejetée, 2e série (14201 à 14204, africain à la peau noire foncée, cicatrices, tatouages, chaîne en or) **en attente du choix de l'auteur**, puis sa phase D avec le **fusil à pompe** (requête complète plus bas).
    - Puis le Soldat privé et le Mutant, un à la fois, avec arrêt après chaque série de concepts pour le choix de l'auteur.
 
    Tailles de tous les ennemis : `docs/ENEMIES.md`, section « Tailles ».
@@ -186,3 +186,34 @@ Outils de la tranche : `tools/blender/redmet_pipeline.py`, `tools/blender/redmet
 > Je validerai le style graphique sur cette tranche. Ensuite seulement, tu reprendras la phase C pour le reste de l'Acte I avec la même méthode.
 
 Décisions déjà prises par l'auteur pour la tranche : Voyou `Voyou_concept_s11103` (capuche) ; Contrôle intelligent des applications de Windows désactivé (il bloquait le Python de TripoSG).
+
+### Requête de l'auteur : le fusil à pompe (texte complet, 2026-10-27)
+
+À intégrer pendant la phase D du Dealer lieutenant, après le choix de son concept (2e série, seeds 14201 à 14204).
+
+> NOUVELLE MÉCANIQUE : LE FUSIL À POMPE. À intégrer pendant la phase D du Dealer lieutenant (après le choix de son concept). Mets à jour docs/ENEMIES.md, docs/GDD.md et docs/BESTIARY.md : le Dealer porte désormais un fusil à pompe au lieu d'une arme de poing.
+>
+> 1. LE DEALER ET SON FUSIL À POMPE
+> - Avertissement obligatoire avant chaque tir (environ 0,8 à 1 s, réglable dans AttackData) : il arme bruyamment le fusil (son « tchak-tchak » bien reconnaissable), l'épaule et vise Nathan, avec un signal visuel clair (lueur rouge au canon et cône de danger au sol). Il ne tire JAMAIS sans cette annonce.
+> - Dégâts selon la distance : à bout portant (environ 2,5 m), mort instantanée de Nathan quels que soient ses PV ; à moyenne distance, gros dégâts et projection ; au-delà, dispersion des plombs et dégâts faibles.
+> - Le joueur peut survivre en s'éloignant hors du cône, ou en esquivant au bon moment (l'invulnérabilité de l'esquive doit couvrir le tir, mais pas toute l'annonce, pour que ce soit un vrai réflexe).
+> - Après chaque tir, le Dealer recharge lentement : c'est la fenêtre où le joueur peut l'attaquer. Il garde aussi ses gardes du corps pour se protéger, comme dans le bestiaire.
+>
+> 2. MORT DE NATHAN PAR LE FUSIL À POMPE
+> - Si Nathan est tué par un tir à bout portant, son corps explose : morceaux (membres, torse, tête), boyaux, giclées de sang, taches au sol et sur les murs, dans le sens du tir.
+> - Courte mise en scène : hitstop, flash, ralenti d'environ 0,5 s, tremblement fort, puis l'écran de défaite.
+>
+> 3. NATHAN M4 ET LE FUSIL À POMPE (sensation de toute-puissance)
+> - Arme disponible au stade M4 (sous Red Met), sur une touche dédiée (et à la manette), ajoutée à GameInput, au README et à l'aide à l'écran.
+> - À courte portée, les ennemis humains (Acte I) sont réduits en morceaux dans une explosion de sang et de boyaux, et projetés en arrière ; à moyenne portée, projection et étourdissement ; tir en cône (plusieurs plombs).
+> - Impact maximal : gros recul de Nathan, flash du canon, onde de choc, tremblement de caméra fort, hitstop, cartouche éjectée, ralenti bref quand un tir tue plusieurs ennemis.
+> - Équilibrage : 6 cartouches, rechargement par cartouche (interruptible par l'esquive), cadence lente avec le temps de pompe. Les ennemis surnaturels des Actes II et III et les boss ne sont pas pulvérisés en un tir (ils encaissent et réagissent selon leur fiche).
+> - Ajoute une vague de test « M4 + fusil à pompe contre un groupe de Voyous » et une touche de debug pour passer Nathan en M4 avec le fusil.
+>
+> 4. TECHNIQUE ET OPTIONS
+> - Morceaux de corps : sprites découpés à partir des personnages (membres, torse, tête) et morceaux génériques de chair, avec physique 2D, rebonds, traînées de sang ; tout en pool d'objets, nombre limité de morceaux et de taches à l'écran, disparition progressive. 60 FPS obligatoires, mesure dans un build Windows pendant un tir sur 5 ennemis.
+> - Respecte le réglage de gore du menu Options : « complet » = explosion en morceaux ; « réduit » = sang sans morceaux ; « désactivé » = le personnage s'effondre simplement.
+> - Respecte CLAUDE.md : tous les dégâts passent par Health.TakeDamage, la mort instantanée aussi (par exemple un paramètre « mort instantanée » dans AttackData), et le gameplay ne dépend pas des animations.
+>
+> 5. TEST
+> Montre-moi en jeu : l'avertissement du Dealer, une esquive réussie, une mort de Nathan à bout portant, puis Nathan M4 qui pulvérise un groupe de Voyous. Captures, mesure des FPS, commit et push.

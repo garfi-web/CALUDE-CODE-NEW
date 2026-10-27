@@ -8,7 +8,7 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
-- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant : 4 concepts faits (14101 à 14104), en attente du choix de l'auteur** (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
+- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant : 1re série rejetée ; 2e série (14201 à 14204) en attente du choix de l'auteur, puis phase D avec le fusil à pompe** (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
 - TRANCHE VERTICALE terminée le 2026-10-27 (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
@@ -595,11 +595,21 @@ Même méthode et même style que la tranche verticale (cel-shading à 3 aplats,
 - 60 FPS (éditeur, vague du Flic, 600 images) : 3,07 ms en moyenne, 4,72 ms au 99e centile. Une image à 165 ms, due à la compilation du script de mesure (piège connu).
 - Captures : `docs/captures/2026-10-27_flic_en_jeu.png` (tir, rafale, matraque armée et portée, rechargement, radio) et `..._flic_poses.png` (planche Blender des poses clés).
 
-### 2026-10-27 — Concepts du Dealer lieutenant (4 sur 4, EN ATTENTE DU CHOIX DE L'AUTEUR)
+### 2026-10-27 — Concepts du Dealer lieutenant, 1re série (REJETÉE par l'auteur)
 - Lot `tools/gen3d/batches/2026-10-27_concepts_dealer.sh` : Animagine XL 4.0, 1024 × 1024, pose en T, sans arme. Le pistolet sera celui du Flic.
-- Tenue voyante, bijoux en or, lunettes teintées, assurance tranquille. Aucune marque, aucun logo ni texte, ni origine imposée (pour éviter le cliché du dealer). Taille prévue : 1,80 m.
+- Tenue voyante, bijoux en or, lunettes teintées, assurance tranquille. Aucune marque, aucun logo ni texte, et aucune origine imposée. Taille prévue : 1,80 m.
+- **Rejet de l'auteur : « ils font trop gentils ».** Il demande des dealers africains à la peau noire foncée, avec cicatrices, tatouages, dent en or, chaîne en or et une allure de caïd de cité (2e série ci-dessous).
 - Examen en pleine résolution : deux bras et deux mains partout, un seul homme adulte.
   - **14101** : 32 ans, mince, cheveux plaqués, lunettes rondes, chaînes en or. Cuir noir verni au lieu du manteau bordeaux demandé, veste courte et pantalon de cuir. Très sombre : il risque de se perdre sur le fond rouge sombre, comme le gilet noir du Flic.
   - **14102** : 27 ans, athlétique, cheveux décolorés, lunettes d'aviateur jaunes, survêtement blanc à bandes dorées, bracelets en or, baskets blanches. Le plus lisible sur le décor. Ombre portée au sol à effacer avant TripoSG (`remove_floor_line.py`).
   - **14103** : costume crème, chaînes en or (une sorte de col en maille dorée), mocassins, barbe blanche. Paraît bien plus âgé que les 40 ans demandés. Son élégance le rapproche du Chimiste, que le bestiaire veut distinct.
   - **14104** : 35 ans, queue de cheval, lunettes violettes, survêtement violet à col de fourrure, chaînes en or. Petit faux logo sur la poitrine (à effacer dans Blender), ombre au sol. Le manteau long demandé n'est pas rendu.
+
+### 2026-10-27 — Concepts du Dealer lieutenant, 2e série (4 sur 4, EN ATTENTE DU CHOIX DE L'AUTEUR)
+- Lot `tools/gen3d/batches/2026-10-27_concepts_dealer_v2.sh` : même méthode, seeds 14201 à 14204, 1 essai chacun.
+- Selon la demande de l'auteur : homme africain à la peau noire foncée, menaçant, cicatrices, tatouages, dent en or, chaîne en or, tenue de cité. Les traits du visage restent réalistes, sans caricature physique (comme pour le Chimiste). Tatouages sans texte. Sans arme : le Dealer portera un **fusil à pompe**, modélisé dans Blender. Cette nouvelle mécanique sera intégrée pendant sa phase D (texte complet de la demande dans `docs/REPRISE.md`).
+- Examen en pleine résolution : deux bras et deux mains partout, un seul homme adulte. **Aucune dent en or n'est visible** (les dents sont blanches) : elle se peindra dans Blender, où elle fera quelques pixels sur les sprites.
+  - **14201** : 30 ans, très musclé, cheveux courts, rictus, cicatrices au visage et aux bras, débardeur blanc, grosse chaîne en or, jogging noir, baskets blanches. Peu de tatouages visibles. Le haut blanc ressort bien sur le décor sombre.
+  - **14202** : massif, crâne rasé grisonnant, tatouages en brassard, cicatrices sur les bras, chaînes en or avec pendentif, débardeur noir, jean, chaussures montantes. Jambes très écartées (pose large, mais bien séparées pour TripoSG).
+  - **14203** : 25 ans, nattes collées, cicatrices aux avant-bras, perfecto noir sur sweat gris, chaîne en or avec pendentif. **Onomatopée japonaise (« ゴーン ») écrite sur le fond au-dessus de la tête** : à retirer avant TripoSG, sinon le détourage la garde.
+  - **14204** : 40 ans, chauve avec cicatrices sur le crâne, barbe, bras tatoués de motifs dorés, chemise ouverte sur le torse, chaînes et ceinture en or, bottes. Tête renversée en arrière, tenue sombre (moins lisible sur le décor). Le manteau long n'est pas rendu.
