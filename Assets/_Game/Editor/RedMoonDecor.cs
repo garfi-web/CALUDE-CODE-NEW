@@ -88,8 +88,8 @@ public static class RedMoonDecor
         // Sol du plan de jeu (le collider reste celui d'ArenaBuilder) : crête de cendre calculée, terre peinte
         // juste dessous, fissures de Red Met par-dessus.
         Tiled(root, "Ground Crest", art["Ground"], null, new Vector3(0f, -1.5f), new Vector2(44f, 5f), Vector2.zero, -11);
-        Tiled(root, "Ground", Painted("ground", 5f, new Vector2(0.5f, 1f), true), null, new Vector3(0f, -1.66f), new Vector2(44f, 2.75f), Vector2.zero, -10);
-        Tiled(root, "Ground Cracks", art["Cracks"], EnsureMaterial("CrackGlow", glowShader, null, 2.2f), new Vector3(0f, -1.5f), new Vector2(44f, 5f), Vector2.zero, -9);
+        Tiled(root, "Ground", Painted("ground", 5f, new Vector2(0.5f, 1f), true), null, new Vector3(0f, -1.66f), new Vector2(44f, 2.5f), Vector2.zero, -10);
+        Tiled(root, "Ground Cracks", art["Cracks"], EnsureMaterial("CrackGlow", glowShader, null, 3f), new Vector3(0f, -1.5f), new Vector2(44f, 5f), Vector2.zero, -9);
 
         // Premier plan sombre et flou, qui passe devant les personnages et défile plus vite que la caméra.
         Tiled(root, "Foreground", Painted("foreground", 6f, bottom, true), unlit, new Vector3(c.x, -3.6f), new Vector2(90f, 2.5f), new Vector2(-0.35f, 0.3f), 40,
@@ -610,18 +610,36 @@ public static class RedMoonDecor
         var core = new float[w * h];
         var halo = new float[w * h];
 
-        for (int k = 0; k < 6; k++)
+        // Fissures nombreuses qui partent juste sous la crête (la partie du sol visible à l'écran), s'affinent
+        // en descendant et se ramifient, avec un halo large pour le bloom.
+        for (int k = 0; k < 11; k++)
         {
-            var p = new Vector2((k + Hash(k, 51)) * w / 6f, h - 18f - 40f * Hash(k, 52));
-            float heading = -90f + 70f * (Hash(k, 53) - 0.5f);
-            int steps = 40 + Mathf.FloorToInt(50f * Hash(k, 54));
+            var p = new Vector2((k + Hash(k, 51)) * w / 11f, h - 12f - 22f * Hash(k, 52));
+            float heading = -90f + 80f * (Hash(k, 53) - 0.5f);
+            int steps = 45 + Mathf.FloorToInt(40f * Hash(k, 54));
 
             for (int s = 0; s < steps && p.y > 8f; s++)
             {
-                heading = Mathf.Clamp(heading + 50f * (Hash(s, 55 + k) - 0.5f), -160f, -20f);
+                heading = Mathf.Clamp(heading + 50f * (Hash(s, 55 + k) - 0.5f), -165f, -15f);
                 Vector2 next = p + new Vector2(Mathf.Cos(heading * Mathf.Deg2Rad), Mathf.Sin(heading * Mathf.Deg2Rad)) * 3f;
-                Stroke(core, w, h, p, next, 1.1f, 1.1f);
-                Stroke(halo, w, h, p, next, 4f, 4f);
+                float width = Mathf.Lerp(2f, 0.9f, s / (float)steps);
+                Stroke(core, w, h, p, next, width, width);
+                Stroke(halo, w, h, p, next, width * 3.5f, width * 3.5f);
+
+                if (s == steps / 3)
+                {
+                    float branch = heading + (Hash(k, 56) < 0.5f ? 50f : -50f);
+                    Vector2 q = p;
+
+                    for (int b = 0; b < 14; b++)
+                    {
+                        Vector2 r = q + new Vector2(Mathf.Cos(branch * Mathf.Deg2Rad), Mathf.Sin(branch * Mathf.Deg2Rad)) * 3f;
+                        Stroke(core, w, h, q, r, 1f, 0.7f);
+                        Stroke(halo, w, h, q, r, 3f, 2.5f);
+                        q = r;
+                    }
+                }
+
                 p = next;
             }
         }
@@ -629,7 +647,7 @@ public static class RedMoonDecor
         var image = new Pixels(w, h);
 
         for (int i = 0; i < core.Length; i++)
-            image.P[i] = new Color(1f, 0.18f, 0.08f, Mathf.Max(core[i], halo[i] * 0.25f));
+            image.P[i] = new Color(1f, 0.2f, 0.08f, Mathf.Max(core[i], halo[i] * 0.35f));
 
         return image;
     }

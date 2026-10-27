@@ -450,7 +450,7 @@ public static class ArenaBuilder
         SetObject(combat, "hook", Attack(f, "N03_Crochet", "Crochet", 7, 4, 18, 25, blunt, KnockbackType.Heavy, new Vector2(8f, 3f), 26, 9, 0.35f, a =>
         {
             a.animationId = 2; a.step = 0.4f; a.zoom = true;
-            a.hitboxOffset = new Vector2(0.525f, 0.5f); a.hitboxSize = new Vector2(0.75f, 0.9f);
+            a.hitboxOffset = new Vector2(0.645f, 0.35f); a.hitboxSize = new Vector2(0.99f, 0.9f);
         }));
 
         SetObject(combat, "heavy", Attack(f, "N04_CoupLourd", "Coup de pied lourd", 10, 4, 20, 28, blunt, KnockbackType.WallBounce, new Vector2(16f, 4f), 40, 11, 0.6f, a =>

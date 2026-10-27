@@ -59,8 +59,9 @@ LAYERS = {
                     "flat horizon, " + BACKLIT, (1536, 640), 5117, True, True, 0.12),
     "foreground": ("dark rocks and dead thorny branches, broken spear shafts, close-up foreground silhouette, black shapes, "
                    "side view, ground level, " + BACKLIT, (1536, 640), 5108, True, True, -0.3),
-    "ground": ("texture, top-down view of the ground surface, dark grey ash and gravel, cracked black stone slabs, "
-               "dead roots, pebbles, flat lighting, seamless pattern", (1024, 1024), 5119, False, True, 0.0),
+    # Sol : dessiné par le code (ground_base), en toon comme les personnages. Animagine invente des objets au lieu
+    # d'une texture, et même repeint à faible bruit il brouille les pierres : le prompt ne sert qu'au journal.
+    "ground": ("stones half buried in grey ash, dead roots (dessiné par le code)", (1024, 512), 5130, False, False, 0.0),
 }
 
 HAZE = np.array([0.30, 0.05, 0.05])
@@ -207,13 +208,86 @@ def process(name, path):
         a = np.asarray(img).astype(np.float32) / 255.0
         rgba = np.dstack([grade(a, 0.6), np.ones(a.shape[:2])])
     else:
-        # Sol : seule la moitié basse (pierres, racines) sert ; le haut de l'image est de la fumée.
+        # Sol : plus clair que le fond (pierres et cendre lisibles), à peine teinté par la lumière rouge.
         a = np.asarray(img).astype(np.float32) / 255.0
-        a = a[int(a.shape[0] * 0.45):]
-        rgba = np.dstack([grade(a, 0.35), np.ones(a.shape[:2])])
+        rgba = np.dstack([a * 0.82 + HAZE * 0.1, np.ones(a.shape[:2])])
 
     OUT.mkdir(parents=True, exist_ok=True)
     Image.fromarray((np.clip(rgba, 0, 1) * 255).astype(np.uint8), "RGBA").save(OUT / f"{name}.png")
+
+
+def ground_base(path, seed=5130, w=1024, h=512, cells=58):
+    """Sol en toon, répétable en largeur : pierres arrondies à moitié enfouies dans la cendre (cellules de Voronoï
+    de tailles variées), trois tons (lumière côté lune, ton propre, ombre), contour sombre comme les personnages,
+    cendre claire mouchetée, racines effilées."""
+    rng = np.random.default_rng(seed)
+    points = rng.uniform((0, 0), (w, h), size=(cells, 2))
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+
+    dx = xs[..., None] - points[:, 0]
+    dx = (dx + w / 2) % w - w / 2
+    dy = ys[..., None] - points[:, 1]
+    d = np.sqrt(dx * dx + dy * dy)
+    order = np.argsort(d, axis=2)
+    nearest = order[..., 0]
+    d1 = np.take_along_axis(d, order[..., :1], 2)[..., 0]
+    d2 = np.take_along_axis(d, order[..., 1:2], 2)[..., 0]
+    gap = d2 - d1
+
+    # Cendre : gris clair, nappes lentes et grain fin (bruit de valeur répétable en largeur).
+    def value_noise(cell, octave_seed):
+        gw, gh = w // cell, h // cell + 2
+        grid = np.random.default_rng(octave_seed).uniform(0, 1, (gh, gw))
+        gx, gy = xs / cell, ys / cell
+        x0, y0 = np.floor(gx).astype(int), np.floor(gy).astype(int)
+        tx, ty = gx - x0, gy - y0
+        tx, ty = tx * tx * (3 - 2 * tx), ty * ty * (3 - 2 * ty)
+        g = lambda yy, xx: grid[yy % gh, xx % gw]
+        top = g(y0, x0) * (1 - tx) + g(y0, x0 + 1) * tx
+        bottom = g(y0 + 1, x0) * (1 - tx) + g(y0 + 1, x0 + 1) * tx
+        return top * (1 - ty) + bottom * ty
+
+    mottling = value_noise(64, seed + 1) * 0.6 + value_noise(16, seed + 2) * 0.4
+    grain = rng.normal(0, 0.02, (h, w))
+    ash_value = 0.5 + 0.12 * (mottling - 0.5) + grain
+    image = np.stack([ash_value + 0.02, ash_value, ash_value - 0.02], axis=2)
+
+    # Pierres : chacune garde une part de sa cellule (les petites restent des cailloux dans la cendre).
+    margin = rng.uniform(5, 26, cells)[nearest]
+    inside = gap > margin
+    rim = (gap > margin) & (gap < margin + 3)
+    radius = np.clip(1 - (gap - margin) / 40, 0, 1)
+
+    tone = rng.uniform(0.3, 0.46, cells)[nearest]
+    warm = rng.uniform(-0.025, 0.035, cells)[nearest]
+    vx = dx[np.arange(h)[:, None], np.arange(w)[None, :], nearest]
+    vy = dy[np.arange(h)[:, None], np.arange(w)[None, :], nearest]
+    facing = (vx * 0.7 - vy * 0.7) / np.maximum(np.sqrt(vx * vx + vy * vy), 1)
+    shade = np.where((radius > 0.45) & (facing > 0.25), 1.32, np.where((radius > 0.35) & (facing < -0.3), 0.68, 1.0))
+    speckle = 1 + 0.06 * (value_noise(8, seed + 3) - 0.5)
+    stone = np.stack([tone + 0.03 + warm, tone + 0.01, tone - 0.02 - warm], axis=2) * (shade * speckle)[..., None]
+
+    image = np.where(inside[..., None], stone, image)
+    image = np.where(rim[..., None], np.array([0.1, 0.08, 0.08]), image)
+
+    # Racines : courbes sombres qui s'affinent.
+    for _ in range(8):
+        x, y = rng.uniform(0, w), rng.uniform(0, h)
+        heading = rng.uniform(0, 2 * np.pi)
+        steps = int(rng.uniform(80, 160))
+
+        for k in range(steps):
+            heading += rng.normal(0, 0.22)
+            x, y = (x + 2.5 * np.cos(heading)) % w, np.clip(y + 2.5 * np.sin(heading), 0, h - 1)
+            r = max(1, int(round(3.2 * (1 - k / steps))))
+            xi, yi = int(x), int(y)
+            ys0, ys1 = max(0, yi - r), min(h, yi + r + 1)
+
+            for xx in range(xi - r, xi + r + 1):
+                image[ys0:ys1, xx % w] = (0.16, 0.1, 0.07)
+
+    Image.fromarray((np.clip(image, 0, 1) * 255).astype(np.uint8)).save(path)
+    return path
 
 
 def main():
@@ -232,6 +306,9 @@ def main():
 
         if path.exists():
             print(f"[décor] {name} : original réutilisé ({path.name})", flush=True)
+        elif name == "ground":
+            ground_base(path, seed)
+            print(f"[décor] {name} : {path.name}, dessiné par le code", flush=True)
         else:
             generated, info = concept.generate(cfg, full, negative, seed, RAW, name, size=size)
             generated.replace(path)

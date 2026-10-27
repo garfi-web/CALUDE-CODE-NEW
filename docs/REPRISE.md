@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond. Ensuite, reprends la TRANCHE VERTICALE là où elle s'est arrêtée (section « Tranche verticale » de docs/PRODUCTION.md : construire l'arène avec les sprites, tester en Play, puis décor de la lune rouge), en respectant CLAUDE.md, et arrête-toi à la fin de la tranche pour que je valide le style.
+> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond. Ensuite, reprends la PHASE C là où elle s'est arrêtée (section « Phase C » de docs/PRODUCTION.md) : vérifie d'abord en Play le crochet allongé (F1, J J J) et le nouveau sol, puis relance ComfyUI et termine les concepts du Flic corrompu (seeds 13103 et 13104 du lot tools/gen3d/batches/2026-10-27_concepts_flic.sh, les deux premiers sont faits), montre-moi les 4 concepts et arrête-toi pour que je choisisse, en respectant CLAUDE.md.
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 7** choisissent la vague, F1 à F3 le debug (détail dans le `README.md`).
 
@@ -127,8 +127,8 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 1. **Fin de la phase B** du bestiaire — *fait* (commit `d1abe6c`).
 2. **Sauvegarde** — *faite*.
 3. **Phase combat dynamique** (Dragon Ball FighterZ sans les super-pouvoirs, hitstop, sang au couteau) — *faite* (commit `9766bed`).
-4. **Tranche verticale** Nathan M0 contre le Voyou, graphismes définitifs — faite le 2026-10-27, puis 2e série de retours appliquée le même jour : allonge des coups, mannequin modélisé, décor peint (ComfyUI + Animagine, `tools/gen3d/background.py`), pose de mort, liseré rouge, 60 FPS mesurés dans un build Windows. **En attente de la validation du décor par l'auteur.** Détail : `docs/PRODUCTION.md`, section « Tranche verticale ».
-5. **Phase C** (reste de l'Acte I, même méthode) — après validation du décor par l'auteur. Un ennemi à la fois, en commençant par le **Flic corrompu** : 4 concepts, l'auteur en choisit un, puis phase D (TripoSG, squelette, animations, sprites, intégration). Puis le Dealer lieutenant, le Soldat privé et le Mutant.
+4. **Tranche verticale** Nathan M0 contre le Voyou, graphismes définitifs — *faite et validée par l'auteur le 2026-10-27* (commits `ccee514` à `5bddd2b`, puis la sauvegarde de fin de session) : cel-shading, allonge des coups, mannequin, décor peint (ComfyUI + Animagine), pose de mort, liseré rouge, 60 FPS mesurés dans un build Windows. Dernières retouches demandées après validation : sol redessiné en toon et crochet allongé (0,9 m) — faites, **vérification en Play du crochet à refaire**. Détail : `docs/PRODUCTION.md`, section « Tranche verticale ».
+5. **Phase C** (reste de l'Acte I, même méthode) — **en cours**. Un ennemi à la fois, en commençant par le **Flic corrompu** : 4 concepts (2 faits : seeds 13101 et 13102 ; 13103 et 13104 à générer), l'auteur en choisit un, puis phase D (TripoSG, squelette, animations, sprites, intégration). Puis le Dealer lieutenant, le Soldat privé et le Mutant, un à la fois, avec arrêt après chaque série de concepts pour le choix de l'auteur.
 
 Piège : l'outil `RunCommand` du MCP Unity refuse `File.Delete` et `AssetDatabase.DeleteAsset` (« user interaction ») ; pour mesurer les FPS, ne lancer aucune commande MCP pendant l'enregistrement (la compilation du script de test fausse la mesure).
 

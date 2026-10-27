@@ -141,13 +141,15 @@ def clips(drop=0.8):
         # Combo J : jab (démarrage 4, 17 images à 60 FPS), direct (5, 20), crochet (7, 29).
         "jab": ([(0, g), (1, punch("R")), (4, punch("R")), (9, g)], False),
         "cross": ([(0, g), (1, punch("L", 0.5)), (2, punch("L")), (5, punch("L")), (10, g)], False),
+        # Crochet : bras peu plié et ramené dans l'axe, buste plus engagé et étirement plus fort que les autres
+        # coups, pour la même portée que le jab (poing à 0,9 m de l'axe chez Nathan M0).
         "hook": ([(0, g), (1, windup("R")),
-                  (3, arms_down() + [("spine.001", "X", 24), ("spine.002", "Z", 45), ("upper_arm.R", "X", -88),
-                                     ("forearm.R", "X", -55), ("upper_arm.L", "X", -40), ("forearm.L", "X", -115)] + legs_lunge()
-                      + [("upper_arm.R", "S", PUNCH_STRETCH)]),
-                  (5, arms_down() + [("spine.001", "X", 24), ("spine.002", "Z", 50), ("upper_arm.R", "X", -88),
-                                     ("forearm.R", "X", -55), ("upper_arm.L", "X", -40), ("forearm.L", "X", -115)] + legs_lunge()
-                      + [("upper_arm.R", "S", PUNCH_STRETCH)]),
+                  (3, arms_down() + [("spine.001", "X", 32), ("spine.002", "Z", 45), ("upper_arm.R", "X", -88),
+                                     ("forearm.R", "X", -35), ("upper_arm.R", "Z", 30), ("upper_arm.L", "X", -40),
+                                     ("forearm.L", "X", -115)] + legs_lunge() + [("upper_arm.R", "S", PUNCH_STRETCH * 1.15)]),
+                  (5, arms_down() + [("spine.001", "X", 32), ("spine.002", "Z", 50), ("upper_arm.R", "X", -88),
+                                     ("forearm.R", "X", -35), ("upper_arm.R", "Z", 30), ("upper_arm.L", "X", -40),
+                                     ("forearm.L", "X", -115)] + legs_lunge() + [("upper_arm.R", "S", PUNCH_STRETCH * 1.15)]),
                   (15, g)], False),
         # Coup de pied lourd (démarrage 10, 34) : jambe droite armée puis tendue.
         "heavy": ([(0, g),

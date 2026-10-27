@@ -3,12 +3,13 @@
 Choix, prompts, seeds, nombre d'essais et problèmes rencontrés, phase par phase.
 Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, animation, rendu toon) → spritesheets PNG → Unity.
 
-## État d'avancement (au 2026-10-26, fin de la phase Combat dynamique)
+## État d'avancement (au 2026-10-27, sauvegarde de fin de session)
 
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
-- **TRANCHE VERTICALE terminée le 2026-10-27, EN ATTENTE DE LA VALIDATION DU STYLE PAR L'AUTEUR** (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
+- **PHASE C EN COURS (2026-10-27)** : concepts du Flic corrompu, 2 sur 4 faits (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé après validation (vérification en Play du crochet à refaire).
+- TRANCHE VERTICALE terminée le 2026-10-27 (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
 
@@ -527,3 +528,17 @@ Demandes, dans l'ordre : (1) allonge des coups, (2) mannequin et ennemis encore 
 - Le build pèse 222 Mo et se construit en 190 s.
 
 **En attente de la validation du décor par l'auteur.** Ensuite : phase C, en commençant par les concepts du Flic corrompu (4 variantes, l'auteur en choisit une).
+
+### 2026-10-27 — Validation du décor, dernières retouches
+- L'auteur valide le décor. Il demande, avant la phase C, un sol plus lisible et un crochet aussi long que le jab.
+- **Sol** : Animagine ne sait pas faire une texture. Avec un prompt de texture, il invente des objets (rocher à yeux, cube lumineux) ; repeint en img2img à 45 % ou 28 % de bruit, il brouille les pierres ou ajoute des formes mécaniques. Le sol est donc dessiné par le code (`background.py`, `ground_base`), en toon comme les personnages : pierres arrondies à trois tons, contour sombre, cendre claire mouchetée, racines effilées, plus clair que le fond. Fissures de Red Met plus nombreuses (11 par tuile), plus épaisses, ramifiées, intensité 3. Tuile de 5 m × 2,5 m.
+- **Crochet** : bras moins plié et ramené dans l'axe, buste à 32°, étirement 1,15 fois celui des autres coups. Allonge visible à l'image active : 1,03 m (jab : 0,91 m). Zone de frappe : de 0,15 à 1,14 m, centre à 0,35 m au-dessus du centre du corps. Clip rendu de nouveau et réimporté par la reconstruction de l'arène. **La vérification en Play (F1, J J J) n'a pas pu être terminée avant la sauvegarde.**
+
+## Phase C — reste de l'Acte I (commencée le 2026-10-27)
+Méthode de la tranche verticale, un ennemi à la fois : 4 concepts (l'auteur en choisit un), puis phase D (TripoSG, nettoyage, couleurs, squelette, animations, sprites, intégration). Ordre : Flic corrompu, Dealer lieutenant, Soldat privé, Mutant.
+
+### 2026-10-27 — Concepts du Flic corrompu (EN COURS, 2 sur 4)
+- Lot `tools/gen3d/batches/2026-10-27_concepts_flic.sh` : Animagine XL 4.0, 1024 × 1024, pose en T, sans arme (pistolet et matraque modélisés à part).
+- Uniforme fictif : aucun insigne, écusson, logo ni texte dans le prompt ni dans l'image (le texte générique « POLICE » autorisé par le bestiaire n'est pas demandé, car Animagine écrit du faux texte). La corruption tient à l'attitude et à la tenue négligée, sans caricature des forces de l'ordre.
+- Faits : 13101 (45 ans, corpulent, moustache, casquette) et 13102 (35 ans, grand et mince, cheveux plaqués, blouson fermé, gants), dans `Art/Characters/Flic/Concept/`. Pas encore examinés.
+- À faire : 13103 (40 ans, musclé, cheveux ras, cicatrice) et 13104 (50 ans, négligé, manches retroussées, gilet ouvert). Le lot a été arrêté pendant le calcul de 13103 pour la sauvegarde ; aucun fichier n'était en cours d'écriture. Ensuite : examen en pleine résolution, puis choix de l'auteur.

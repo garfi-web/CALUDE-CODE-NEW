@@ -1,9 +1,0 @@
-{
-  "source": "ground_raw.png",
-  "mode": "raccord : fondu enchaîné des bords, bande au centre, SetLatentNoiseMask, masque flou",
-  "band": 300,
-  "denoise": 0.6,
-  "seed": 6119,
-  "prompt": "texture, top-down view of the ground surface, dark grey ash and gravel, cracked black stone slabs, dead roots, pebbles, flat lighting, seamless pattern, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, masterpiece, high score, great score, absurdres",
-  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, cropped, sky, horizon, trees, cave, landscape, scenery, perspective, water, snow, blue"
-}
