@@ -8,7 +8,7 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
-- **PHASE C EN COURS (2026-10-27)** : concepts du Flic corrompu, 2 sur 4 faits (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé après validation (vérification en Play du crochet à refaire).
+- **PHASE C EN COURS (2026-10-27)** : Flic corrompu : concept 13103 choisi par l'auteur, modèle TripoSG fait et placé dans Blender ; phase D (nettoyage, couleurs, squelette, animations, sprites) à faire (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
 - TRANCHE VERTICALE terminée le 2026-10-27 (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
@@ -537,8 +537,20 @@ Demandes, dans l'ordre : (1) allonge des coups, (2) mannequin et ennemis encore 
 ## Phase C — reste de l'Acte I (commencée le 2026-10-27)
 Méthode de la tranche verticale, un ennemi à la fois : 4 concepts (l'auteur en choisit un), puis phase D (TripoSG, nettoyage, couleurs, squelette, animations, sprites, intégration). Ordre : Flic corrompu, Dealer lieutenant, Soldat privé, Mutant.
 
-### 2026-10-27 — Concepts du Flic corrompu (EN COURS, 2 sur 4)
+### 2026-10-27 — Concepts du Flic corrompu (4 sur 4, choix de l'auteur : 13103)
 - Lot `tools/gen3d/batches/2026-10-27_concepts_flic.sh` : Animagine XL 4.0, 1024 × 1024, pose en T, sans arme (pistolet et matraque modélisés à part).
 - Uniforme fictif : aucun insigne, écusson, logo ni texte dans le prompt ni dans l'image (le texte générique « POLICE » autorisé par le bestiaire n'est pas demandé, car Animagine écrit du faux texte). La corruption tient à l'attitude et à la tenue négligée, sans caricature des forces de l'ordre.
 - Faits : 13101 (45 ans, corpulent, moustache, casquette) et 13102 (35 ans, grand et mince, cheveux plaqués, blouson fermé, gants), dans `Art/Characters/Flic/Concept/`. Pas encore examinés.
-- À faire : 13103 (40 ans, musclé, cheveux ras, cicatrice) et 13104 (50 ans, négligé, manches retroussées, gilet ouvert). Le lot a été arrêté pendant le calcul de 13103 pour la sauvegarde ; aucun fichier n'était en cours d'écriture. Ensuite : examen en pleine résolution, puis choix de l'auteur.
+- Faits ensuite (reprise de session) : 13103 (40 ans, musclé, cheveux ras) et 13104 (50 ans, négligé, manches retroussées), 1 essai chacun, même prompt que le lot.
+- Examen en pleine résolution : deux bras et deux mains partout, doigts corrects, un seul homme adulte.
+  - 13101 : moustache, casquette ; insigne rond doré sur la casquette (à retirer dans Blender) ; pas vraiment corpulent ; yeux fermés.
+  - 13102 : grand et mince, gants ; « POLICE » écrit sur le gilet malgré le prompt négatif, brassards à bandes vertes et petites marques jaunes aux épaules.
+  - 13103 : musclé, cheveux ras, uniforme sans aucun texte ni insigne, fond blanc cassé au lieu de gris ; cicatrice à peine visible.
+  - 13104 : chemise à manches retroussées, cravate, barbe de quelques jours ; faux texte « POLIICE » sur le gilet (à effacer dans Blender) ; yeux fermés ; ventre et gilet ouvert non rendus.
+- Vérification en Play du crochet : Nathan placé à 1,3 m du mannequin, J J J injectés par `GameInput.Inject`. Jab, direct et crochet touchent tous les trois ; le crochet touche à sa 1re image active (image 8), à 0,87 m, 25 dégâts, hitstop de 9 images, recul lourd. Sol toon et fissures affichés. Piège : l'éditeur s'était rouvert sur `GetStarted_Scene` ; charger `Assets/_Game/Scenes/Arena.unity` avant Play.
+
+### 2026-10-27 — Choix de l'auteur : Flic 13103 ; modèle TripoSG (1 essai)
+- **Retenu : `Flic_concept_s13103`** (musclé, cheveux ras, uniforme sans texte ni insigne). Aucun nettoyage du concept : fond uni, pas de ligne de sol.
+- `Flic/Source/Flic_triposg_s42.glb` depuis le concept tel quel : seed 42, 535 084 faces brutes réduites à 40 000, pic de VRAM 5,21 Go, 83 s de calcul (97 s en tout). Fond blanc cassé retiré (tolérance 24), bottes et doigts intacts.
+- Dans Blender (collection `Flic`, x = 46, car x = 42 est pris par le mannequin) : mis à **1,85 m** (choix provisoire, plus grand que le Voyou à 1,78 m pour sa carrure ; aucune taille dans `ENEMIES.md`), pieds au sol. Silhouette fidèle (gilet à plaques, ceinturon et étuis, bras massifs, bottes hautes), jambes séparées, pas de socle. 2 morceaux : le corps (19 982 sommets) et un fragment de 11 sommets à supprimer au nettoyage.
+- Suite (phase D) : nettoyage (`redmet_pipeline.clean_mesh`), couleurs par zone, squelette Rigify, animations, sprites, intégration Unity ; pistolet et matraque modélisés à part.

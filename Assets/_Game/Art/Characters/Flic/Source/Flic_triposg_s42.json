@@ -1,0 +1,37 @@
+{
+  "character": "Flic",
+  "created": "2026-10-27T21:52:01",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Flic/Concept/Flic_concept_s13103.png",
+    "image_sha256": "d982fa62f2dcfd458e709f586920cfdc014c7f316dcb514527b182b1a0825b47"
+  },
+  "duration_s": 96.9,
+  "result": {
+    "faces_raw": 535084,
+    "faces": 40000,
+    "vertices": 19993,
+    "watertight": false,
+    "extents": [
+      1.8551,
+      1.9035,
+      0.408
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.21,
+    "inference_s": 83.0,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Flic/Source/Flic_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [220, 224, 228], tolérance 24)",
+    "opaque_ratio": 0.183
+  },
+  "output": "Assets/_Game/Art/Characters/Flic/Source/Flic_triposg_s42.glb"
+}
