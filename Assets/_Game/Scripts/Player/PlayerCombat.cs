@@ -262,7 +262,7 @@ public class PlayerCombat : MonoBehaviour
         }
         else if (CurrentFrame <= CurrentAttack.startup + CurrentAttack.active)
         {
-            velocity.x = controller.Facing * CurrentAttack.lunge;
+            velocity.x = controller.Facing * CurrentAttack.StepSpeed;
         }
         else
         {

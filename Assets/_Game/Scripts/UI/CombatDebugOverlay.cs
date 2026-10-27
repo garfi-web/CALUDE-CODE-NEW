@@ -6,7 +6,8 @@ using UnityEngine;
 // F2 donne à Nathan une arme de test tranchante (sang, démembrement). F3 lance la démo de combo.
 public class CombatDebugOverlay : MonoBehaviour
 {
-    public static bool Visible { get; private set; }
+    // Modifiable aussi par les scripts de test et de capture (zones de frappe affichées sans F1).
+    public static bool Visible { get; set; }
 
     [SerializeField] private PlayerCombat player;
     [SerializeField] private ComboDemo demo;

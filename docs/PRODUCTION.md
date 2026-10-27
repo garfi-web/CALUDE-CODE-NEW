@@ -456,3 +456,27 @@ Captures : `docs/captures/2026-10-27_tranche_nathan_voyou.png`, `..._tranche_cou
 **Restes connus** : la pose de mort fait passer une partie du corps sous la ligne du sol (pose à remonter dans Blender) ; le mannequin reste un rectangle provisoire ; les personnages sont sombres sur le fond sombre (un liseré rouge de contre-jour, côté lune, les détacherait mieux) ; la mesure de 60 FPS est faite dans l'éditeur, à refaire sur un build.
 
 **Tranche verticale prête pour la validation du style par l'auteur.**
+
+### 2026-10-27 — Retours de l'auteur sur la tranche (2e série)
+Demandes, dans l'ordre : (1) allonge des coups, (2) mannequin et ennemis encore en cubes, (3) décor peint avec ComfyUI et Animagine XL, plus les défauts connus (pose de mort, liseré rouge côté lune, mesure des 60 FPS sur un build Windows). La phase C (Flic corrompu en premier) ne commence qu'après la validation du décor par l'auteur.
+
+**Point 1 — Allonge des coups**
+- Mesures avant correction :
+  - en jeu, le jab touchait jusqu'à 1,7 m de centre à centre et ratait à 1,9 m : la zone de frappe portait plus loin que le poing ;
+  - sur les sprites, le poing ne dépassait le buste que de 18 cm (0,52 m de l'axe) ;
+  - surtout, à la première image active le bras était encore replié, et le hitstop figeait cette pose à l'impact : le coup touchait sans que le poing ait l'air d'arriver.
+- Corrections dans Blender (`redmet_animation.py`) :
+  - coups en fente (buste penché à 34°, épaules tournées à 44°, jambe avant fléchie) ;
+  - bras ramené dans l'axe après la rotation des épaules (il partait de 27 cm sur le côté, invisible de profil) ;
+  - étirement anime des bras au sommet du coup, réglé par personnage : 1,5 pour Nathan M0, dont le bras ne fait que 0,32 m de l'épaule au poignet sur le modèle, 1,05 pour le Voyou ;
+  - minutage : le coup est tendu dès sa première image active (image `(démarrage − 1) / 2` à 30 FPS au plus tard), pour Nathan comme pour la frappe du Voyou.
+- Allonge visible obtenue à l'image active : jab, direct et aériens 0,91 m ; crochet 0,79 m ; coups de pied 0,88 m.
+- Zones de frappe recalées (`ArenaBuilder` et fichiers `Data/Attacks/Nathan`) : de 0,15 m devant le centre du corps jusqu'à 10 cm après le poing ou le pied, à sa hauteur.
+- `AttackData.lunge` (une vitesse) est remplacé par `step`, le pas en avant en mètres pendant le démarrage et l'actif : jab 0,30, direct 0,35, crochet 0,40, coup de pied 0,45, lanceur 0,25.
+- Vérification (Voyou immobile à 1,35 m, J J J puis K puis S + K) : les cinq coups touchent dès leur première image active ; pendant J J J, l'écart reste autour de 1 m.
+- 60 FPS (combo à la lame, gore complet, éditeur) : 3,03 ms en moyenne, 16,0 ms au pire, aucune image au-delà de 16,6 ms.
+- Captures : `docs/captures/2026-10-27_zones_de_frappe.png` (affichage F1 à la première image active de J, J, J, K, S + K) et `..._allonge_avant_apres.png` (en haut avant, en bas après).
+
+**Défaut corrigé — pose de mort** : le corps descendait de 0,80 m quel que soit le personnage, et les bras pendaient sous le corps. Résultat : une partie du corps passait sous le sol, ou le corps flottait sur ses bras. Désormais, les bras sont le long du corps et `fit_death_drop` calcule la descente pour que le point le plus bas touche le sol (0,68 m pour Nathan, 0,70 m pour le Voyou).
+
+**Défaut corrigé — liseré rouge côté lune** : ajouté dans `RED MET/Sprite Flash`, en rouge HDR (pris par le bloom). Il est calculé dans le monde (dérivées des UV rapportées à la position), donc il reste du côté de la lune quel que soit le sens du personnage. Une première version fondée sur les dérivées d'écran l'affichait du mauvais côté dans les captures.

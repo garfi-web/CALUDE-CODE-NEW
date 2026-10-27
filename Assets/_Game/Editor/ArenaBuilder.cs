@@ -428,6 +428,9 @@ public static class ArenaBuilder
     }
 
     // Profil sobre (docs/ENEMIES.md) : combo 12 / 16 / 25, coups lourds pour les rebonds.
+    // Zones de frappe calées sur les sprites de Nathan M0 (docs/PRODUCTION.md, 2026-10-27) : de 0,15 m devant
+    // le centre du corps jusqu'à 10 cm après le poing ou le pied de l'image active, à sa hauteur
+    // (le centre du corps est à 0,80 m du sol). step : pas en avant pendant le démarrage et l'actif.
     private static void AssignNathanAttacks(PlayerCombat combat)
     {
         const string f = NathanAttackFolder;
@@ -435,49 +438,50 @@ public static class ArenaBuilder
 
         SetObject(combat, "jab", Attack(f, "N01_Jab", "Jab", 4, 3, 10, 12, blunt, KnockbackType.Light, new Vector2(3.5f, 0f), 16, 4, 0.08f, a =>
         {
-            a.animationId = 0; a.lunge = 3f; a.hitboxOffset = new Vector2(0.75f, 0.15f); a.hitboxSize = new Vector2(1f, 0.7f);
+            a.animationId = 0; a.step = 0.3f; a.hitboxOffset = new Vector2(0.575f, 0.23f); a.hitboxSize = new Vector2(0.85f, 0.8f);
         }));
 
         SetObject(combat, "cross", Attack(f, "N02_Direct", "Direct", 5, 3, 12, 16, blunt, KnockbackType.Light, new Vector2(4.5f, 0f), 18, 6, 0.15f, a =>
         {
-            a.animationId = 1; a.lunge = 4f; a.hitboxOffset = new Vector2(0.85f, 0.15f); a.hitboxSize = new Vector2(1.1f, 0.7f);
+            a.animationId = 1; a.step = 0.35f; a.hitboxOffset = new Vector2(0.575f, 0.27f); a.hitboxSize = new Vector2(0.85f, 0.8f);
         }));
 
         SetObject(combat, "hook", Attack(f, "N03_Crochet", "Crochet", 7, 4, 18, 25, blunt, KnockbackType.Heavy, new Vector2(8f, 3f), 26, 9, 0.35f, a =>
         {
-            a.animationId = 2; a.lunge = 5f; a.zoom = true;
+            a.animationId = 2; a.step = 0.4f; a.zoom = true;
+            a.hitboxOffset = new Vector2(0.525f, 0.5f); a.hitboxSize = new Vector2(0.75f, 0.9f);
         }));
 
         SetObject(combat, "heavy", Attack(f, "N04_CoupLourd", "Coup de pied lourd", 10, 4, 20, 28, blunt, KnockbackType.WallBounce, new Vector2(16f, 4f), 40, 11, 0.6f, a =>
         {
-            a.animationId = 3; a.lunge = 4f; a.zoom = true; a.impactFlash = true;
-            a.hitboxOffset = new Vector2(1f, 0f); a.hitboxSize = new Vector2(1.4f, 0.9f);
+            a.animationId = 3; a.step = 0.45f; a.zoom = true; a.impactFlash = true;
+            a.hitboxOffset = new Vector2(0.575f, -0.02f); a.hitboxSize = new Vector2(0.85f, 0.9f);
         }));
 
         SetObject(combat, "launcher", Attack(f, "N05_Lanceur", "Lanceur (uppercut)", 8, 4, 20, 18, blunt, KnockbackType.Launch, new Vector2(1.5f, 15f), 45, 8, 0.35f, a =>
         {
-            a.animationId = 4; a.lunge = 2f; a.hitboxOffset = new Vector2(0.7f, 0.4f); a.hitboxSize = new Vector2(1f, 1.4f);
+            a.animationId = 4; a.step = 0.25f; a.hitboxOffset = new Vector2(0.475f, 0.35f); a.hitboxSize = new Vector2(0.65f, 1.4f);
         }));
 
         SetObject(combat, "airLight1", Attack(f, "N06_Air1", "Aérien 1", 4, 3, 9, 10, blunt, KnockbackType.Light, new Vector2(2f, 7f), 30, 5, 0.1f, a =>
         {
-            a.animationId = 5; a.lunge = 0f; a.hitboxOffset = new Vector2(0.75f, 0f); a.hitboxSize = new Vector2(1.1f, 0.9f);
+            a.animationId = 5; a.step = 0f; a.hitboxOffset = new Vector2(0.575f, 0.25f); a.hitboxSize = new Vector2(0.85f, 0.9f);
         }));
 
         SetObject(combat, "airLight2", Attack(f, "N07_Air2", "Aérien 2", 5, 3, 10, 12, blunt, KnockbackType.Light, new Vector2(2f, 7.5f), 30, 6, 0.12f, a =>
         {
-            a.animationId = 6; a.lunge = 0f; a.hitboxOffset = new Vector2(0.75f, 0f); a.hitboxSize = new Vector2(1.1f, 0.9f);
+            a.animationId = 6; a.step = 0f; a.hitboxOffset = new Vector2(0.575f, 0.25f); a.hitboxSize = new Vector2(0.85f, 0.9f);
         }));
 
         SetObject(combat, "airLight3", Attack(f, "N08_Air3", "Aérien 3", 6, 4, 12, 14, blunt, KnockbackType.Light, new Vector2(2.5f, 8f), 32, 7, 0.2f, a =>
         {
-            a.animationId = 7; a.lunge = 0f; a.hitboxOffset = new Vector2(0.8f, 0f); a.hitboxSize = new Vector2(1.2f, 1f);
+            a.animationId = 7; a.step = 0f; a.hitboxOffset = new Vector2(0.575f, -0.05f); a.hitboxSize = new Vector2(0.85f, 1f);
         }));
 
         SetObject(combat, "smash", Attack(f, "N09_Smash", "Smash", 7, 4, 16, 26, blunt, KnockbackType.GroundBounce, new Vector2(3f, -18f), 50, 12, 0.7f, a =>
         {
-            a.animationId = 8; a.lunge = 0f; a.zoom = true; a.impactFlash = true;
-            a.hitboxOffset = new Vector2(0.8f, -0.3f); a.hitboxSize = new Vector2(1.3f, 1.2f);
+            a.animationId = 8; a.step = 0f; a.zoom = true; a.impactFlash = true;
+            a.hitboxOffset = new Vector2(0.55f, -0.1f); a.hitboxSize = new Vector2(0.8f, 1.4f);
         }));
     }
 

@@ -20,9 +20,9 @@ MonoBehaviour:
   cancelWindow: {x: 6, y: 18}
   damage: 16
   damageType: 0
-  hitboxOffset: {x: 0.85, y: 0.15}
-  hitboxSize: {x: 1.1, y: 0.7}
-  lunge: 4
+  hitboxOffset: {x: 0.575, y: 0.27}
+  hitboxSize: {x: 0.85, y: 0.8}
+  step: 0.35
   hitstop: 6
   shake: 0.15
   zoom: 0

@@ -38,11 +38,14 @@ public class AttackData : ScriptableObject
     [Header("Coup")]
     public int damage = 10;
     public DamageType damageType = DamageType.Blunt;
-    [Tooltip("Zone de frappe devant l'attaquant (x vers l'avant).")]
+    [Tooltip("Zone de frappe devant l'attaquant (x vers l'avant), depuis le centre du corps. Calée sur le poing ou le pied de l'image active du sprite.")]
     public Vector2 hitboxOffset = new(0.9f, 0.1f);
     public Vector2 hitboxSize = new(1.2f, 0.9f);
-    [Tooltip("Vitesse de l'attaquant vers l'avant pendant le démarrage et l'actif.")]
-    public float lunge = 2f;
+    [Tooltip("Pas en avant (m) pendant le démarrage et l'actif : le coup « avale » la distance et garde l'ennemi à portée.")]
+    public float step = 0.3f;
+
+    // Vitesse qui parcourt le pas pendant le démarrage et l'actif.
+    public float StepSpeed => step * FrameRate / (startup + active);
 
     [Header("Impact")]
     [Range(0, 12)] public int hitstop = 5;

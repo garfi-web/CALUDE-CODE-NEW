@@ -38,6 +38,9 @@ def _apply_ops(rig, ops):
         if axis == "T":
             move = Matrix.Translation(Vector(value))
             pb.matrix = move @ pb.matrix
+        elif axis == "S":
+            # Étirement le long de l'os (Y local), hérité par les os enfants.
+            pb.matrix = pb.matrix @ Matrix.Scale(value, 4, Vector((0, 1, 0)))
         else:
             pivot = pb.head.copy()
             rotation = Matrix.Rotation(math.radians(value), 4, AXES[axis])
@@ -69,14 +72,30 @@ def legs_tuck():
     return [("thigh.L", "X", -55), ("shin.L", "X", 85), ("thigh.R", "X", -30), ("shin.R", "X", 75)]
 
 
-def punch(side, reach=1.0, lean=14):
-    """Bras « side » tendu vers l'avant ; l'autre reste en garde."""
+def legs_lunge():
+    """Fente : jambe gauche avant fléchie, jambe droite arrière tendue (le poids passe devant)."""
+    return [("thigh.L", "X", -38), ("shin.L", "X", 34), ("thigh.R", "X", 28), ("shin.R", "X", 4)]
+
+
+# Étirement des bras au sommet d'un coup (style anime), réglé par personnage dans build_actions :
+# les bras de Nathan M0 sont courts sur le modèle (0,32 m de l'épaule au poignet).
+PUNCH_STRETCH = 1.0
+
+
+def punch(side, reach=1.0, lean=34, legs=None):
+    """Bras « side » tendu vers l'avant, épaule et buste engagés ; l'autre reste en garde.
+    Le bras est ramené dans l'axe après la rotation des épaules (sinon il part sur le côté, invisible
+    de profil), puis étiré de PUNCH_STRETCH au sommet du coup."""
     other = "L" if side == "R" else "R"
+    sign = 1 if side == "R" else -1
     return arms_down() + [
-        ("spine.001", "X", lean), ("spine.002", "Z", 18 if side == "R" else -18),
-        (f"upper_arm.{side}", "X", -82 * reach), (f"forearm.{side}", "X", -10 * (1 - reach)),
+        ("spine.001", "X", lean * reach), ("spine.002", "Z", 44 * sign * reach),
+        (f"upper_arm.{side}", "X", -90 * reach), (f"forearm.{side}", "X", -10 * (1 - reach)),
+        (f"upper_arm.{side}", "Z", 35 * sign * reach),
         (f"upper_arm.{other}", "X", -40), (f"forearm.{other}", "X", -115),
-    ] + legs_stance()
+    ] + (legs_lunge() if legs is None else legs) + [
+        (f"upper_arm.{side}", "S", 1 + (PUNCH_STRETCH - 1) * reach),
+    ]
 
 
 def windup(side):
@@ -106,7 +125,8 @@ def run_pose(phase):
 
 
 # Clips : nom → (liste (image, ops), boucle). Les images sont à 30 FPS de sprite.
-def clips():
+# drop : descente du bassin (m) dans la pose de mort, propre à chaque corps (voir fit_death_drop).
+def clips(drop=0.8):
     g = guard()
     return {
         "idle": ([(0, g), (6, guard(lean=8, breathe=4)), (12, g)], True),
@@ -116,40 +136,44 @@ def clips():
                                      ("forearm.L", "X", -60), ("forearm.R", "X", -60)] + legs_tuck()),
                   (4, arms_down() + [("upper_arm.L", "Y", -30), ("upper_arm.R", "Y", 30),
                                      ("thigh.L", "X", -20), ("shin.L", "X", 25), ("thigh.R", "X", 5), ("shin.R", "X", 20)])], False),
-        # Combo J : jab (17 images à 60 FPS), direct (20), crochet (29).
-        "jab": ([(0, g), (2, punch("R", 0.5)), (3, punch("R")), (5, punch("R")), (9, g)], False),
-        "cross": ([(0, g), (2, punch("L", 0.5, 18)), (4, punch("L", 1.0, 20)), (5, punch("L", 1.0, 20)), (10, g)], False),
-        "hook": ([(0, g), (3, windup("R")),
-                  (5, arms_down() + [("spine.001", "X", 16), ("spine.002", "Z", 35), ("upper_arm.R", "X", -85),
-                                     ("forearm.R", "X", -70), ("upper_arm.L", "X", -40), ("forearm.L", "X", -115)] + legs_stance()),
-                  (7, arms_down() + [("spine.001", "X", 16), ("spine.002", "Z", 40), ("upper_arm.R", "X", -85),
-                                     ("forearm.R", "X", -70), ("upper_arm.L", "X", -40), ("forearm.L", "X", -115)] + legs_stance()),
+        # Minutage : le coup est tendu dès sa première image active, (démarrage - 1) / 2 à 30 FPS au plus tard
+        # (un décalage d'une image de l'Animator compris) ; le hitstop fige ensuite cette pose à l'impact.
+        # Combo J : jab (démarrage 4, 17 images à 60 FPS), direct (5, 20), crochet (7, 29).
+        "jab": ([(0, g), (1, punch("R")), (4, punch("R")), (9, g)], False),
+        "cross": ([(0, g), (1, punch("L", 0.5)), (2, punch("L")), (5, punch("L")), (10, g)], False),
+        "hook": ([(0, g), (1, windup("R")),
+                  (3, arms_down() + [("spine.001", "X", 24), ("spine.002", "Z", 45), ("upper_arm.R", "X", -88),
+                                     ("forearm.R", "X", -55), ("upper_arm.L", "X", -40), ("forearm.L", "X", -115)] + legs_lunge()
+                      + [("upper_arm.R", "S", PUNCH_STRETCH)]),
+                  (5, arms_down() + [("spine.001", "X", 24), ("spine.002", "Z", 50), ("upper_arm.R", "X", -88),
+                                     ("forearm.R", "X", -55), ("upper_arm.L", "X", -40), ("forearm.L", "X", -115)] + legs_lunge()
+                      + [("upper_arm.R", "S", PUNCH_STRETCH)]),
                   (15, g)], False),
-        # Coup de pied lourd (34) : jambe droite armée puis tendue.
+        # Coup de pied lourd (démarrage 10, 34) : jambe droite armée puis tendue.
         "heavy": ([(0, g),
-                   (5, guard(lean=-8) + [("thigh.R", "X", -80), ("shin.R", "X", 110)]),
-                   (7, guard(lean=-18) + [("thigh.R", "X", -95), ("shin.R", "X", 5)]),
-                   (9, guard(lean=-18) + [("thigh.R", "X", -95), ("shin.R", "X", 5)]),
+                   (2, guard(lean=-8) + [("thigh.R", "X", -80), ("shin.R", "X", 110)]),
+                   (4, guard(lean=-18) + [("thigh.R", "X", -95), ("shin.R", "X", 5)]),
+                   (8, guard(lean=-18) + [("thigh.R", "X", -95), ("shin.R", "X", 5)]),
                    (17, g)], False),
-        # Lanceur, uppercut (32).
+        # Lanceur, uppercut (démarrage 8, 32).
         "launcher": ([(0, g),
-                      (4, guard(lean=18) + [("thigh.L", "X", -25), ("shin.L", "X", 45), ("thigh.R", "X", 20), ("shin.R", "X", 45)]),
-                      (6, arms_down() + [("spine.001", "X", -10), ("upper_arm.R", "X", -160), ("forearm.R", "X", -25),
+                      (2, guard(lean=18) + [("thigh.L", "X", -25), ("shin.L", "X", 45), ("thigh.R", "X", 20), ("shin.R", "X", 45)]),
+                      (3, arms_down() + [("spine.001", "X", -10), ("upper_arm.R", "X", -160), ("forearm.R", "X", -25),
                                          ("upper_arm.L", "X", -40), ("forearm.L", "X", -115)]),
-                      (8, arms_down() + [("spine.001", "X", -12), ("upper_arm.R", "X", -165), ("forearm.R", "X", -20),
+                      (7, arms_down() + [("spine.001", "X", -12), ("upper_arm.R", "X", -165), ("forearm.R", "X", -20),
                                          ("upper_arm.L", "X", -40), ("forearm.L", "X", -115)]),
                       (16, g)], False),
         # Aériens (16, 18, 22) et smash (27) : jambes repliées.
-        "air1": ([(0, guard() + legs_tuck()), (2, punch("R") + legs_tuck()), (4, punch("R") + legs_tuck()), (8, guard() + legs_tuck())], False),
-        "air2": ([(0, guard() + legs_tuck()), (3, punch("L", 1.0, 20) + legs_tuck()), (5, punch("L", 1.0, 20) + legs_tuck()), (9, guard() + legs_tuck())], False),
+        "air1": ([(0, guard() + legs_tuck()), (1, punch("R", legs=legs_tuck())), (4, punch("R", legs=legs_tuck())), (8, guard() + legs_tuck())], False),
+        "air2": ([(0, guard() + legs_tuck()), (2, punch("L", legs=legs_tuck())), (5, punch("L", legs=legs_tuck())), (9, guard() + legs_tuck())], False),
         "air3": ([(0, guard() + legs_tuck()),
-                  (3, guard(lean=-15) + [("thigh.L", "X", -40), ("shin.L", "X", 80), ("thigh.R", "X", -90), ("shin.R", "X", 0)]),
-                  (5, guard(lean=-15) + [("thigh.L", "X", -40), ("shin.L", "X", 80), ("thigh.R", "X", -90), ("shin.R", "X", 0)]),
+                  (2, guard(lean=-15) + [("thigh.L", "X", -40), ("shin.L", "X", 80), ("thigh.R", "X", -90), ("shin.R", "X", 0)]),
+                  (6, guard(lean=-15) + [("thigh.L", "X", -40), ("shin.L", "X", 80), ("thigh.R", "X", -90), ("shin.R", "X", 0)]),
                   (11, guard() + legs_tuck())], False),
         "smash": ([(0, guard() + legs_tuck()),
-                   (3, arms_down() + [("spine.001", "X", -12), ("upper_arm.L", "X", -170), ("upper_arm.R", "X", -170),
+                   (1, arms_down() + [("spine.001", "X", -12), ("upper_arm.L", "X", -170), ("upper_arm.R", "X", -170),
                                       ("forearm.L", "X", -40), ("forearm.R", "X", -40)] + legs_tuck()),
-                   (5, arms_down() + [("spine.001", "X", 30), ("upper_arm.L", "X", -50), ("upper_arm.R", "X", -50)] + legs_tuck()),
+                   (3, arms_down() + [("spine.001", "X", 30), ("upper_arm.L", "X", -50), ("upper_arm.R", "X", -50)] + legs_tuck()),
                    (8, arms_down() + [("spine.001", "X", 30), ("upper_arm.L", "X", -40), ("upper_arm.R", "X", -40)] + legs_tuck()),
                    (14, guard() + legs_tuck())], False),
         "dash": ([(0, arms_down() + [("spine.001", "X", 30), ("upper_arm.L", "X", 50), ("upper_arm.R", "X", 50),
@@ -165,23 +189,31 @@ def clips():
                                      ("forearm.L", "X", -30), ("forearm.R", "X", -30)] + legs_stance()),
                   (5, guard(lean=-6))], False),
         "death": ([(0, arms_down() + [("spine.001", "X", -22), ("spine.004", "X", -20)] + legs_stance()),
-                   (5, arms_down() + [("spine", "X", -45), ("spine", "T", (0, 0, -0.25)), ("upper_arm.L", "X", 60),
+                   (5, arms_down() + [("spine", "X", -45), ("spine", "T", (0, 0, -drop * 0.31)), ("upper_arm.L", "X", 60),
                                       ("upper_arm.R", "X", 50), ("thigh.L", "X", -20), ("thigh.R", "X", -10)]),
-                   (10, arms_down() + [("spine", "X", -88), ("spine", "T", (0, 0, -0.78)), ("upper_arm.L", "X", 90),
-                                       ("upper_arm.R", "X", 80), ("thigh.L", "X", -10), ("thigh.R", "X", 5)]),
-                   (14, arms_down() + [("spine", "X", -90), ("spine", "T", (0, 0, -0.8)), ("upper_arm.L", "X", 90),
-                                       ("upper_arm.R", "X", 85), ("thigh.L", "X", -8), ("thigh.R", "X", 5)])], False),
-        # Coup de poing du Voyou : armement 21 images à 60 FPS (11 à 30), actif 6 (3), récupération 21 (11).
-        "enemy_punch": ([(0, g), (9, windup("R")), (11, windup("R")), (12, punch("R")), (14, punch("R")), (25, g)], False),
+                   # Couché : bras le long du corps (s'ils pendaient, ils soulèveraient le corps du sol).
+                   (10, arms_down() + [("spine", "X", -88), ("spine", "T", (0, 0, -drop + 0.02)), ("upper_arm.L", "X", 12),
+                                       ("upper_arm.R", "X", 8), ("thigh.L", "X", -10), ("thigh.R", "X", 5)]),
+                   (14, arms_down() + [("spine", "X", -90), ("spine", "T", (0, 0, -drop)), ("upper_arm.L", "X", 10),
+                                       ("upper_arm.R", "X", 6), ("thigh.L", "X", -8), ("thigh.R", "X", 5)])], False),
+        # Coup de poing du Voyou : armement 21 images à 60 FPS (11 à 30), actif 6 (3), récupération 21 (11) ;
+        # tendu à l'image 10, comme les coups de Nathan.
+        "enemy_punch": ([(0, g), (8, windup("R")), (9, windup("R")), (10, punch("R")), (13, punch("R")), (25, g)], False),
     }
 
 
-def build_actions(rig, prefix):
-    """Crée une action par clip pour ce squelette (« <prefix>_<clip> »)."""
+def build_actions(rig, prefix, drop=0.8, only=None, stretch=1.0):
+    """Crée une action par clip pour ce squelette (« <prefix>_<clip> ») ; only limite aux clips nommés,
+    stretch règle l'étirement des bras au sommet des coups (PUNCH_STRETCH)."""
+    global PUNCH_STRETCH
+    PUNCH_STRETCH = stretch
     actions = {}
     rig.animation_data_create()
 
-    for name, (keys, loop) in clips().items():
+    for name, (keys, loop) in clips(drop).items():
+        if only is not None and name not in only:
+            continue
+
         action_name = f"{prefix}_{name}"
         old = bpy.data.actions.get(action_name)
 
@@ -198,12 +230,51 @@ def build_actions(rig, prefix):
             for pb in rig.pose.bones:
                 pb.keyframe_insert("rotation_quaternion", frame=frame)
                 pb.keyframe_insert("location", frame=frame)
+                pb.keyframe_insert("scale", frame=frame)
 
         action["loop"] = loop
         action["length"] = keys[-1][0]
         actions[name] = action
 
     return actions
+
+
+def lowest_point(mesh, frame):
+    """Hauteur du point le plus bas du maillage déformé (contour exclu), par rapport à ses pieds."""
+    outline = mesh.modifiers.get("Outline")
+
+    if outline:
+        outline.show_viewport = False
+
+    bpy.context.scene.frame_set(frame)
+    dg = bpy.context.evaluated_depsgraph_get()
+    evaluated = mesh.evaluated_get(dg)
+    data = evaluated.to_mesh()
+    co = np.zeros(len(data.vertices) * 3)
+    data.vertices.foreach_get("co", co)
+    evaluated.to_mesh_clear()
+
+    if outline:
+        outline.show_viewport = True
+
+    world = np.array(mesh.matrix_world)
+    z = co.reshape(-1, 3) @ world[2, :3] + world[2, 3]
+    return float(z.min() - mesh.matrix_world.translation.z)
+
+
+def fit_death_drop(rig, mesh, prefix, drop=0.8):
+    """Pose de mort posée au sol : la descente du bassin est réduite jusqu'à ce que le point le plus
+    bas du corps couché touche le sol (sinon une partie du corps passe sous la ligne du sol)."""
+    for _ in range(3):
+        rig.animation_data.action = build_actions(rig, prefix, drop, only={"death"}, stretch=PUNCH_STRETCH)["death"]
+        low = lowest_point(mesh, 14)
+
+        if abs(low) < 0.005:
+            break
+
+        drop += low
+
+    return drop
 
 
 # ------------------------------------------------------------------- Rendu toon
