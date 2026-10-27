@@ -11,9 +11,10 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private Vector2 offset = new(0f, 1.5f);
     [SerializeField] private float smoothTime = 0.15f;
-    [SerializeField] private float minX = -11f;
-    [SerializeField] private float maxX = 11f;
-    [SerializeField] private float minY = 1.5f;
+    // Bornes pour une vue de 6,8 m de haut en 16:9 (demi-largeur 6 m) : le bord s'arrête aux murs (±20 m).
+    [SerializeField] private float minX = -14f;
+    [SerializeField] private float maxX = 14f;
+    [SerializeField] private float minY = 0.9f;
 
     [Header("Tremblement")]
     [SerializeField] private float maxShakeOffset = 0.4f;

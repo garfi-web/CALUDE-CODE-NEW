@@ -208,8 +208,9 @@ def build_actions(rig, prefix):
 
 # ------------------------------------------------------------------- Rendu toon
 
-def toon_material(name="RM_Toon", steps=(0.0, 0.45), shadow=0.55):
-    """Couleur du sommet × rampe à paliers (ombre franche), sans reflet : rendu cel-shading."""
+def toon_material(name="RM_Toon", steps=(0.0, 0.08, 0.5), tones=(0.38, 0.66, 1.0)):
+    """Couleur du sommet × rampe à paliers, sans reflet : rendu cel-shading.
+    Trois aplats francs (ombre portée, ombre propre, lumière) ; l'ombre tire un peu vers le violet."""
     mat = bpy.data.materials.get(name) or bpy.data.materials.new(name)
     mat.use_nodes = True
     nt = mat.node_tree
@@ -221,10 +222,13 @@ def toon_material(name="RM_Toon", steps=(0.0, 0.45), shadow=0.55):
     to_rgb = nt.nodes.new("ShaderNodeShaderToRGB")
     ramp = nt.nodes.new("ShaderNodeValToRGB")
     ramp.color_ramp.interpolation = 'CONSTANT'
-    ramp.color_ramp.elements[0].position = steps[0]
-    ramp.color_ramp.elements[0].color = (shadow, shadow, shadow * 1.05, 1)
-    ramp.color_ramp.elements[1].position = steps[1]
-    ramp.color_ramp.elements[1].color = (1, 1, 1, 1)
+
+    while len(ramp.color_ramp.elements) < len(steps):
+        ramp.color_ramp.elements.new(1.0)
+
+    for element, position, tone in zip(ramp.color_ramp.elements, steps, tones):
+        element.position = position
+        element.color = (tone * 0.95, tone * 0.92, min(1.0, tone * 1.08), 1)
     mix = nt.nodes.new("ShaderNodeMix")
     mix.data_type = 'RGBA'
     mix.blend_type = 'MULTIPLY'
@@ -254,7 +258,7 @@ def outline_material(name="RM_Outline", color=(0.02, 0.01, 0.015)):
     return mat
 
 
-def setup_toon(obj, thickness=0.012):
+def setup_toon(obj, thickness=0.024):
     """Matériau toon + contour par coque inversée (Solidify, normales retournées)."""
     obj.data.materials.clear()
     obj.data.materials.append(toon_material())
@@ -268,7 +272,46 @@ def setup_toon(obj, thickness=0.012):
     solid.use_rim = False
 
 
-def setup_render_scene(name="RM_Sprites", size=384, ortho=2.6, center_z=1.0):
+def smooth_shading(mesh, iterations=40):
+    """Ombrage sur les grandes formes : les normales viennent d'une copie très lissée du maillage
+    (même squelette), transférées sur le vrai maillage. La silhouette ne change pas, mais les
+    petites bosses du modèle TripoSG ne tachettent plus les aplats."""
+    name = mesh.name + "_NormalSrc"
+    src = bpy.data.objects.get(name)
+
+    if src is None:
+        src = mesh.copy()
+        src.data = mesh.data.copy()
+        src.name = name
+
+        for collection in mesh.users_collection:
+            collection.objects.link(src)
+
+    src.modifiers.clear()
+    smooth = src.modifiers.new("Smooth", 'SMOOTH')
+    smooth.factor = 1.0
+    smooth.iterations = iterations
+    armature = next(m for m in mesh.modifiers if m.type == 'ARMATURE')
+    deform = src.modifiers.new("Armature", 'ARMATURE')
+    deform.object = armature.object
+    src.hide_render = True
+    src.hide_viewport = True
+
+    transfer = mesh.modifiers.get("SmoothNormals") or mesh.modifiers.new("SmoothNormals", 'DATA_TRANSFER')
+    transfer.object = src
+    transfer.use_loop_data = True
+    transfer.data_types_loops = {'CUSTOM_NORMAL'}
+    transfer.loop_mapping = 'POLYINTERP_NEAREST'
+
+    # Ordre : squelette, normales lissées, puis contour.
+    for i, modifier_name in enumerate((armature.name, "SmoothNormals")):
+        with bpy.context.temp_override(object=mesh):
+            bpy.ops.object.modifier_move_to_index(modifier=modifier_name, index=i)
+
+    return src
+
+
+def setup_render_scene(name="RM_Sprites", size=512, ortho=2.6, center_z=1.0):
     """Scène de rendu des sprites : caméra orthographique en -X, fond transparent, soleil de face."""
     scene = bpy.data.scenes.get(name) or bpy.data.scenes.new(name)
     scene.render.resolution_x = size
@@ -297,13 +340,16 @@ def setup_render_scene(name="RM_Sprites", size=384, ortho=2.6, center_z=1.0):
 
     sun_data = bpy.data.lights.get(name + "_Sun") or bpy.data.lights.new(name + "_Sun", 'SUN')
     sun_data.energy = 3.0
+    # Ombres portées à bord net : un soleil sans diamètre apparent.
+    sun_data.use_shadow = True
+    sun_data.angle = 0.0
     sun = bpy.data.objects.get(name + "_Sun") or bpy.data.objects.new(name + "_Sun", sun_data)
 
     if sun.name not in scene.collection.objects:
         scene.collection.objects.link(sun)
 
-    # Lumière venant de l'avant-haut du personnage (côté caméra), ombre propre sur le dos.
-    sun.rotation_euler = (math.radians(50), 0, math.radians(-120))
+    # Lumière de trois quarts, haute, venant de l'avant du personnage : une moitié dans l'ombre propre.
+    sun.rotation_euler = (math.radians(55), 0, math.radians(-150))
     scene["center_z"] = center_z
     return scene, cam
 
@@ -401,7 +447,7 @@ def repack(frames_dir, out_dir, prefix, columns=8):
     return {clip: _strip(paths, os.path.join(out_dir, f"{prefix}_{clip}.png"), columns) for clip, paths in groups.items()}
 
 
-def write_sheet_info(sheets, out_dir, prefix, size=384, ortho=2.6, feet_from_bottom=0.3):
+def write_sheet_info(sheets, out_dir, prefix, size=512, ortho=2.6, feet_from_bottom=0.3):
     """sprites.json : ce qu'il faut à l'outil d'import Unity (SpriteAnimationBuilder) pour découper
     les feuilles, régler l'échelle, le pivot aux pieds, la cadence et les boucles."""
     import json

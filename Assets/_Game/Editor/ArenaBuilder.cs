@@ -100,7 +100,8 @@ public static class ArenaBuilder
         Enemy enemyPrefab = BuildEnemyPrefab(square, noFriction, lineMaterial, flashMaterial, enemyLayer,
             (1 << playerLayer) | (1 << enemyLayer), projectilePrefab, grenadePrefab);
 
-        BuildCamera(player.transform);
+        Camera camera = BuildCamera(player.transform);
+        RedMoonDecor.Build(camera);
 
         Health playerHealth = player.GetComponent<Health>();
         CombatHUD hud = BuildHud(playerHealth, out Image flashOverlay);
@@ -303,29 +304,30 @@ public static class ArenaBuilder
     {
         var level = new GameObject("Level").transform;
 
-        CreateSprite("Background", level, square, new Color(0.12f, 0.04f, 0.06f), new Vector3(0f, 4f), new Vector3(60f, 20f), -10);
-
+        // Le fond et le sol visibles viennent de RedMoonDecor ; le carré du sol ne garde que son collider.
         GameObject ground = CreateSprite("Ground", level, square, new Color(0.24f, 0.2f, 0.22f), new Vector3(0f, -2f), new Vector3(40f, 1f), 0);
         ground.AddComponent<BoxCollider2D>();
         ground.layer = groundLayer;
+        ground.GetComponent<SpriteRenderer>().enabled = false;
 
-        CreatePlatform("Platform Left", level, square, new Vector3(-6f, 0.6f), groundLayer);
-        CreatePlatform("Platform Right", level, square, new Vector3(5f, 1.8f), groundLayer);
+        RedMoonDecor.DressPlatform(CreatePlatform("Platform Left", level, square, new Vector3(-6f, 0.6f), groundLayer));
+        RedMoonDecor.DressPlatform(CreatePlatform("Platform Right", level, square, new Vector3(5f, 1.8f), groundLayer));
 
         // Les murs restent sur le layer Default pour ne pas compter comme du sol.
-        CreateSprite("Wall Left", level, square, new Color(0.18f, 0.14f, 0.16f), new Vector3(-20.5f, 4f), new Vector3(1f, 12f), 0)
+        CreateSprite("Wall Left", level, square, new Color(0.03f, 0.01f, 0.015f), new Vector3(-20.5f, 4f), new Vector3(1f, 12f), 0)
             .AddComponent<BoxCollider2D>();
-        CreateSprite("Wall Right", level, square, new Color(0.18f, 0.14f, 0.16f), new Vector3(20.5f, 4f), new Vector3(1f, 12f), 0)
+        CreateSprite("Wall Right", level, square, new Color(0.03f, 0.01f, 0.015f), new Vector3(20.5f, 4f), new Vector3(1f, 12f), 0)
             .AddComponent<BoxCollider2D>();
     }
 
     // Plateforme traversable par le dessous.
-    private static void CreatePlatform(string name, Transform parent, Sprite square, Vector3 position, int groundLayer)
+    private static GameObject CreatePlatform(string name, Transform parent, Sprite square, Vector3 position, int groundLayer)
     {
         GameObject platform = CreateSprite(name, parent, square, new Color(0.35f, 0.18f, 0.2f), position, new Vector3(4f, 0.4f), 0);
         platform.layer = groundLayer;
         platform.AddComponent<BoxCollider2D>().usedByEffector = true;
         platform.AddComponent<PlatformEffector2D>().useOneWay = true;
+        return platform;
     }
 
     private static GameObject BuildPlayer(Sprite square, PhysicsMaterial2D noFriction, int groundLayer, int playerLayer, int enemyLayer,
@@ -848,19 +850,21 @@ public static class ArenaBuilder
         return rb;
     }
 
-    private static void BuildCamera(Transform target)
+    private static Camera BuildCamera(Transform target)
     {
         var cameraGo = new GameObject("Main Camera") { tag = "MainCamera" };
-        cameraGo.transform.position = new Vector3(target.position.x, 1.5f, -10f);
+        cameraGo.transform.position = new Vector3(target.position.x, 0.9f, -10f);
 
         var camera = cameraGo.AddComponent<Camera>();
         camera.orthographic = true;
-        camera.orthographicSize = 5f;
+        // Vue de 6,8 m de haut : un personnage de 1,70 m occupe un quart de l'écran.
+        camera.orthographicSize = 3.4f;
         camera.clearFlags = CameraClearFlags.SolidColor;
         camera.backgroundColor = new Color(0.05f, 0.02f, 0.03f);
 
         cameraGo.AddComponent<AudioListener>();
         SetObject(cameraGo.AddComponent<CameraFollow>(), "target", target);
+        return camera;
     }
 
     private static CombatHUD BuildHud(Health playerHealth, out Image flashOverlay)

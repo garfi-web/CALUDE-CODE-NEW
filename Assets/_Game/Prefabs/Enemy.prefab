@@ -58,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 832d3fc9b35b93e4b8a414e6b845eae9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -404,6 +404,7 @@ MonoBehaviour:
   body: {fileID: 3037765738706679625}
   whiteFlashFrames: 3
   painPoseFrames: 10
+  placeholderPoses: 1
 --- !u!114 &783758776838910002
 MonoBehaviour:
   m_ObjectHideFlags: 0
