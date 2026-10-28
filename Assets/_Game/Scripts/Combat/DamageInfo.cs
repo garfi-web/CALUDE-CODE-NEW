@@ -21,6 +21,9 @@ public readonly struct DamageInfo
     public readonly Vector2 Point;
     // Nature du coup pour les effets (sang, étincelles) : celle de l'attaque, sauf arme imposée.
     public readonly DamageType Type;
+    // Mort instantanée (fusil à pompe à bout portant) : Health retire tous les PV, quels qu'ils soient.
+    // L'invulnérabilité (esquive) l'arrête comme n'importe quel coup.
+    public readonly bool Lethal;
 
     public DamageInfo(int amount, DamageKind kind = DamageKind.Melee, Vector2 origin = default)
         : this(amount, kind, origin, null, null, 0f, origin, DefaultType(kind))
@@ -28,7 +31,7 @@ public readonly struct DamageInfo
     }
 
     public DamageInfo(int amount, DamageKind kind, Vector2 origin, AttackData attack, GameObject attacker,
-        float direction, Vector2 point, DamageType type)
+        float direction, Vector2 point, DamageType type, bool lethal = false)
     {
         Amount = amount;
         Kind = kind;
@@ -38,9 +41,10 @@ public readonly struct DamageInfo
         Direction = direction;
         Point = point;
         Type = type;
+        Lethal = lethal;
     }
 
-    public DamageInfo WithAmount(int amount) => new(amount, Kind, Origin, Attack, Attacker, Direction, Point, Type);
+    public DamageInfo WithAmount(int amount) => new(amount, Kind, Origin, Attack, Attacker, Direction, Point, Type, Lethal);
 
     public static DamageType DefaultType(DamageKind kind) => kind switch
     {

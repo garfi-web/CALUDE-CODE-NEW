@@ -10,6 +10,8 @@ public enum GameAction
     Heavy,
     Dash,
     Dodge,
+    Shotgun,
+    Reload,
 }
 
 // Point d'entrée unique pour les commandes du prototype.
@@ -19,8 +21,9 @@ public enum GameAction
 // correspond à Q sur un clavier AZERTY, "W" à Z.
 //
 // Clavier (AZERTY) : Q/D se déplacer, S bas, Espace sauter, J coup léger, K coup lourd,
-// L dash, Maj gauche esquive, Échap options, F1 debug des images, F2 arme de test, F3 démo.
-// Manette : stick/croix, A saut, X léger, Y lourd, LB dash, RB esquive, Select options.
+// L dash, Maj gauche esquive, U fusil à pompe (M4), I recharger, Échap options, F1 debug des images,
+// F2 arme de test, F3 démo, F4 Nathan M4 avec le fusil.
+// Manette : stick/croix, A saut, X léger, Y lourd, LB dash, RB esquive, RT fusil, LT recharger, Select options.
 public static class GameInput
 {
     private const float StickDeadZone = 0.3f;
@@ -56,6 +59,8 @@ public static class GameInput
     public static bool HeavyPressed => RawHeavy || Consume(GameAction.Heavy);
     public static bool DashPressed => RawDash || Consume(GameAction.Dash);
     public static bool DodgePressed => RawDodge || Consume(GameAction.Dodge);
+    public static bool ShotgunPressed => RawShotgun || Consume(GameAction.Shotgun);
+    public static bool ReloadPressed => RawReload || Consume(GameAction.Reload);
 
     public static bool DownHeld => Vertical < DownThreshold;
 
@@ -133,6 +138,8 @@ public static class GameInput
     private static bool RawHeavy => Pressed(Keyboard.current?.kKey) || Pressed(Gamepad.current?.buttonNorth);
     private static bool RawDash => Pressed(Keyboard.current?.lKey) || Pressed(Gamepad.current?.leftShoulder);
     private static bool RawDodge => Pressed(Keyboard.current?.leftShiftKey) || Pressed(Gamepad.current?.rightShoulder);
+    private static bool RawShotgun => Pressed(Keyboard.current?.uKey) || Pressed(Gamepad.current?.rightTrigger);
+    private static bool RawReload => Pressed(Keyboard.current?.iKey) || Pressed(Gamepad.current?.leftTrigger);
 
     public static bool RestartPressed =>
         Pressed(Keyboard.current?.rKey) || Pressed(Gamepad.current?.startButton);
@@ -143,6 +150,7 @@ public static class GameInput
     public static bool DebugOverlayPressed => Pressed(Keyboard.current?.f1Key);
     public static bool DebugWeaponPressed => Pressed(Keyboard.current?.f2Key);
     public static bool DemoPressed => Pressed(Keyboard.current?.f3Key);
+    public static bool DebugM4Pressed => Pressed(Keyboard.current?.f4Key);
 
     // Navigation des menus (flèches, Z/Q/S/D en AZERTY, croix de la manette).
     public static bool MenuUp => Pressed(Keyboard.current?.upArrowKey) || Pressed(Keyboard.current?.wKey) || Pressed(Gamepad.current?.dpad.up);
@@ -172,11 +180,14 @@ public static class GameInput
     private static bool RawHeavy => Input.GetKeyDown(KeyCode.K);
     private static bool RawDash => Input.GetKeyDown(KeyCode.L);
     private static bool RawDodge => Input.GetKeyDown(KeyCode.LeftShift);
+    private static bool RawShotgun => Input.GetKeyDown(KeyCode.U);
+    private static bool RawReload => Input.GetKeyDown(KeyCode.I);
     public static bool RestartPressed => Input.GetKeyDown(KeyCode.R);
     public static bool OptionsPressed => Input.GetKeyDown(KeyCode.Escape);
     public static bool DebugOverlayPressed => Input.GetKeyDown(KeyCode.F1);
     public static bool DebugWeaponPressed => Input.GetKeyDown(KeyCode.F2);
     public static bool DemoPressed => Input.GetKeyDown(KeyCode.F3);
+    public static bool DebugM4Pressed => Input.GetKeyDown(KeyCode.F4);
     public static bool MenuUp => Input.GetKeyDown(KeyCode.UpArrow);
     public static bool MenuDown => Input.GetKeyDown(KeyCode.DownArrow);
     public static bool MenuLeft => Input.GetKeyDown(KeyCode.LeftArrow);

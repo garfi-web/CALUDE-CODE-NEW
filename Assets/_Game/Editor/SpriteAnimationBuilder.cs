@@ -18,11 +18,18 @@ public static class SpriteAnimationBuilder
     private const string AnimationsRoot = "Assets/_Game/Animations";
 
     // Ordre des attaques de Nathan : AttackData.animationId → clip.
-    private static readonly string[] AttackClips = { "jab", "cross", "hook", "heavy", "launcher", "air1", "air2", "air3", "smash" };
+    // 9 : tir au fusil à pompe (Nathan M4 seulement) ; un clip absent n'a pas d'état.
+    private static readonly string[] AttackClips = { "jab", "cross", "hook", "heavy", "launcher", "air1", "air2", "air3", "smash", "shotgun" };
+
+    // Personnages joueurs (combo de Nathan) ; les autres sont des ennemis.
+    private static readonly string[] PlayerCharacters = { "Nathan_M0", "Nathan_M4" };
 
     // Attaques des ennemis : AttackData.animationId → clip. Un ennemi n'a que les clips de ses attaques ;
     // un animationId sans clip joue la première attaque disponible.
-    private static readonly string[] EnemyAttackClips = { "enemy_punch", "enemy_shot", "enemy_burst", "enemy_baton", "enemy_radio" };
+    private static readonly string[] EnemyAttackClips =
+    {
+        "enemy_punch", "enemy_shot", "enemy_burst", "enemy_baton", "enemy_radio", "enemy_shotgun", "enemy_butt", "enemy_order",
+    };
 
     [Serializable]
     private class SheetInfo
@@ -58,7 +65,7 @@ public static class SpriteAnimationBuilder
             string character = Path.GetFileName(folder);
 
             if (File.Exists(Path.Combine(folder, "Sprites", "sprites.json")))
-                Build(character, character != "Nathan_M0");
+                Build(character, !PlayerCharacters.Contains(character));
         }
     }
 
@@ -241,11 +248,22 @@ public static class SpriteAnimationBuilder
         {
             for (int i = 0; i < AttackClips.Length; i++)
             {
-                AnimatorState attack = AddState(sm, "Attack_" + AttackClips[i], clips[AttackClips[i]]);
+                if (!clips.TryGetValue(AttackClips[i], out AnimationClip clip))
+                    continue;
+
+                AnimatorState attack = AddState(sm, "Attack_" + AttackClips[i], clip);
                 AnimatorStateTransition into = AnyTo(sm, attack, true);
                 into.AddCondition(AnimatorConditionMode.If, 0, "Attack");
                 into.AddCondition(AnimatorConditionMode.Equals, i, "ComboStep");
                 Leave(attack, idle, true);
+            }
+
+            // Cartouche glissée dans le fusil (Nathan M4).
+            if (clips.TryGetValue("shotgun_reload", out AnimationClip reloadClip))
+            {
+                AnimatorState hold = AddState(sm, "Hold", reloadClip);
+                AnyTo(sm, hold, true).AddCondition(AnimatorConditionMode.If, 0, "Hold");
+                Leave(hold, idle, true);
             }
         }
 

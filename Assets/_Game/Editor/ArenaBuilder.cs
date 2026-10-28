@@ -87,6 +87,8 @@ public static class ArenaBuilder
         SpriteAnimationBuilder.Result nathanSprites = SpriteAnimationBuilder.Build("Nathan_M0", false);
         SpriteAnimationBuilder.Result voyouSprites = SpriteAnimationBuilder.Build("Voyou", true);
         SpriteAnimationBuilder.Result copSprites = SpriteAnimationBuilder.Build("Flic", true);
+        SpriteAnimationBuilder.Result dealerSprites = SpriteAnimationBuilder.Build("Dealer", true);
+        SpriteAnimationBuilder.Result nathanM4Sprites = SpriteAnimationBuilder.Build("Nathan_M4", false);
 
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
@@ -94,6 +96,7 @@ public static class ArenaBuilder
         BuildLevel(square, groundLayer);
 
         GameObject player = BuildPlayer(square, noFriction, groundLayer, playerLayer, enemyLayer, flashMaterial, nathanSprites);
+        AddShotgunAndForms(player, enemyLayer, nathanSprites, nathanM4Sprites);
 
         Projectile projectilePrefab = BuildProjectilePrefab(square);
         Grenade grenadePrefab = BuildGrenadePrefab(square, lineMaterial);
@@ -105,7 +108,7 @@ public static class ArenaBuilder
         RedMoonDecor.Build(camera);
 
         Health playerHealth = player.GetComponent<Health>();
-        CombatHUD hud = BuildHud(playerHealth, out Image flashOverlay);
+        CombatHUD hud = BuildHud(playerHealth, player.GetComponent<PlayerShotgun>(), out Image flashOverlay);
 
         var vfx = new GameObject("CombatVfx").AddComponent<CombatVfx>();
         SetObject(vfx, "particleMaterial", lineMaterial);
@@ -113,14 +116,22 @@ public static class ArenaBuilder
         SetObject(vfx, "flashOverlay", flashOverlay);
         SetInt(vfx, "bloodCollisionLayers", (1 << groundLayer) | 1);
         SetInt(vfx, "debrisLayer", debrisLayer);
+        SetObjects(vfx, "fleshChunks", new UnityEngine.Object[]
+        {
+            GoreSprite("Generic", "chunk1"), GoreSprite("Generic", "chunk2"), GoreSprite("Generic", "chunk3"),
+        });
+        SetObject(vfx, "guts", GoreSprite("Generic", "guts"));
+        SetObject(vfx, "goreSound", Sound("Gore_Burst"));
+
+        new GameObject("GameAudio").AddComponent<GameAudio>();
 
         var waves = new GameObject("Waves").AddComponent<EnemyWaveManager>();
         SetObject(waves, "enemyPrefab", enemyPrefab);
         SetObject(waves, "coverPrefab", coverPrefab);
         SetObject(waves, "target", player.transform);
-        EnemyWave[] waveList = BuildWaves(voyouSprites, copSprites);
+        EnemyWave[] waveList = BuildWaves(voyouSprites, copSprites, dealerSprites);
         SetWaves(waves, waveList);
-        SetInt(waves, "startWave", waveList.Length - 1);
+        SetInt(waves, "startWave", MannequinWave);
 
         var manager = new GameObject("GameManager").AddComponent<GameManager>();
         SetObject(manager, "player", playerHealth);
@@ -398,6 +409,172 @@ public static class ArenaBuilder
         return player;
     }
 
+    // ------------------------------------------------- Fusil à pompe et gore
+
+    private const string GoreFolder = Root + "/Art/Gore";
+    private const string GibsFolder = Root + "/Data/Gibs";
+    private const string SoundFolder = Root + "/Audio/Voice";
+
+    // Nathan M4 et son fusil (touche U), stades M0 / M4 (F4 ou vague 8), morceaux de corps.
+    private static void AddShotgunAndForms(GameObject player, int enemyLayer, SpriteAnimationBuilder.Result m0, SpriteAnimationBuilder.Result m4)
+    {
+        var gibs = player.AddComponent<GibSource>();
+        SetObject(gibs, "body", player.transform.Find("Visual").GetComponent<SpriteRenderer>());
+
+        var shotgun = player.AddComponent<PlayerShotgun>();
+        SetObject(shotgun, "attack", NathanShotgun());
+        SetInt(shotgun, "targetLayers", 1 << enemyLayer);
+        SetObject(shotgun, "shellSound", Sound("Shotgun_Shell"));
+        // Bout du canon sur le sprite de tir de M4 (pose épaulée), depuis le centre du corps.
+        SetVector2(shotgun, "muzzleOffset", new Vector2(1.25f, 0.45f));
+
+        var form = player.AddComponent<NathanForm>();
+        SetObject(form, "animator", player.transform.Find("Visual").GetComponent<Animator>());
+        SetObject(form, "m0Controller", m0?.Controller);
+        SetObject(form, "m4Controller", m4?.Controller);
+        SetObject(form, "m0Gibs", EnsureGibSet("NathanM0"));
+        SetObject(form, "m4Gibs", EnsureGibSet("NathanM4"));
+    }
+
+    // Fusil de Nathan M4 : coup de feu à l'image 7, pompe de 36 images ; bout portant = mort instantanée
+    // des humains de l'Acte I (pulvérisés), moyenne distance = projection et étourdissement, au-delà = plombs dispersés.
+    private static AttackData NathanShotgun()
+    {
+        AttackData far = Attack(NathanAttackFolder, "N11_FusilLoin", "Fusil à pompe (plombs dispersés)", 1, 1, 0, 15,
+            DamageType.Bullet, KnockbackType.Light, new Vector2(3f, 0f), 14, 3, 0.2f);
+
+        return Attack(NathanAttackFolder, "N10_FusilAPompe", "Fusil à pompe", 6, 2, 36, 60, DamageType.Bullet,
+            KnockbackType.WallBounce, new Vector2(13f, 5f), 40, 10, 0.8f, a =>
+            {
+                a.animationId = 9;
+                a.zoom = true;
+                a.impactFlash = true;
+                a.step = 0f;
+                a.pellets = 8;
+                a.coneAngle = 18f;
+                a.closeRange = 2.5f;
+                a.midRange = 5.5f;
+                a.maxRange = 9f;
+                a.lethalAtCloseRange = true;
+                a.farHit = far;
+                a.activeSound = Sound("Shotgun_Blast");
+                a.recoverySound = Sound("Shotgun_Pump");
+            });
+    }
+
+    // Fusil du Dealer : annonce de 0,9 s (pompe armée, épaulé, cône et lueur), rechargement lent de 1,25 s.
+    private static AttackData DealerShotgun()
+    {
+        AttackData far = Attack(EnemyAttackFolder, "E02_Dealer_FusilLoin", "Fusil à pompe (plombs dispersés)", 1, 1, 0, 10,
+            DamageType.Bullet, KnockbackType.Light, new Vector2(2.5f, 0f), 12, 3, 0.15f, a => a.cancelWindow = Vector2Int.zero);
+
+        return Attack(EnemyAttackFolder, "E02_Dealer_FusilAPompe", "Fusil à pompe", 54, 3, 75, 45, DamageType.Bullet,
+            KnockbackType.WallBounce, new Vector2(11f, 5f), 40, 8, 0.6f, a =>
+            {
+                a.cancelWindow = Vector2Int.zero;
+                a.animationId = 5;
+                a.pellets = 8;
+                a.coneAngle = 16f;
+                a.closeRange = 2.5f;
+                a.midRange = 5.5f;
+                a.maxRange = 9f;
+                a.lethalAtCloseRange = true;
+                a.farHit = far;
+                a.windupSound = Sound("Shotgun_Pump");
+                a.activeSound = Sound("Shotgun_Blast");
+                a.recoverySound = Sound("Shotgun_Pump");
+            });
+    }
+
+    // Dealer en sprites, fusil à pompe au lieu du pistolet (réécrit à chaque construction).
+    private static void ApplyDealer(EnemyArchetype dealer, SpriteAnimationBuilder.Result sprites)
+    {
+        if (sprites != null)
+            ApplySprites(dealer, sprites, new Color(0.12f, 0.12f, 0.15f));
+
+        dealer.bodySize = new Vector2(0.9f, 1.8f);
+        // Canon du fusil épaulé, mesuré dans Blender : 1,2 m devant les pieds, 1,3 m de haut.
+        dealer.muzzleOffset = new Vector2(1.2f, 1.3f);
+        dealer.gibs = EnsureGibSet("Dealer");
+        AttackData order = Attack(EnemyAttackFolder, "E02_Dealer_Ordre", "Ordre « Chopez-le »", 60, 1, 30, 0, DamageType.Blunt,
+            KnockbackType.Light, Vector2.zero, 0, 0, 0f, a => a.cancelWindow = Vector2Int.zero);
+        AttackData butt = Attack(EnemyAttackFolder, "E02_Dealer_Crosse", "Coup de crosse", 24, 6, 30, 10, DamageType.Blunt,
+            KnockbackType.Light, new Vector2(4f, 0f), 16, 5, 0.15f, a => a.cancelWindow = Vector2Int.zero);
+        order.animationId = 7;
+        butt.animationId = 6;
+        EditorUtility.SetDirty(order);
+        EditorUtility.SetDirty(butt);
+
+        AttackData shotgun = DealerShotgun();
+        dealer.attacks = new[]
+        {
+            new EnemyAttack
+            {
+                name = "Ordre « Chopez-le »", kind = EnemyAttackKind.Order, cooldown = 8f,
+                buffWindupMultiplier = 0.8f, buffDuration = 5f, telegraphColor = new Color(1f, 0.3f, 0.9f), data = order,
+            },
+            new EnemyAttack
+            {
+                name = "Fusil à pompe", kind = EnemyAttackKind.Shotgun, range = 8.5f, cooldown = 1f,
+                trackingFrames = shotgun.startup - 15, telegraphColor = AimRed, data = shotgun,
+            },
+            new EnemyAttack
+            {
+                name = "Coup de crosse", range = 1.1f, cooldown = 0.6f, telegraphColor = FlashYellow, data = butt,
+            },
+        };
+        EditorUtility.SetDirty(dealer);
+    }
+
+    // Morceaux d'un personnage (Art/Gore/<nom>/head, torso, armL, armR, legL, legR), importés au cadrage des sprites.
+    private static GibSet EnsureGibSet(string name)
+    {
+        string path = $"{GibsFolder}/{name}.asset";
+        EnsureFolder(GibsFolder);
+        var set = AssetDatabase.LoadAssetAtPath<GibSet>(path);
+
+        if (set == null)
+        {
+            set = ScriptableObject.CreateInstance<GibSet>();
+            AssetDatabase.CreateAsset(set, path);
+        }
+
+        set.head = GoreSprite(name, "head");
+        set.torso = GoreSprite(name, "torso");
+        set.armLeft = GoreSprite(name, "armL");
+        set.armRight = GoreSprite(name, "armR");
+        set.legLeft = GoreSprite(name, "legL");
+        set.legRight = GoreSprite(name, "legR");
+        EditorUtility.SetDirty(set);
+        return set;
+    }
+
+    // Morceau rendu dans Blender (512 px pour 2,6 m, comme les personnages), pivot au centre.
+    private static Sprite GoreSprite(string folder, string file)
+    {
+        string path = $"{GoreFolder}/{folder}/{file}.png";
+
+        if (AssetImporter.GetAtPath(path) is not TextureImporter importer)
+            return null;
+
+        const float pixelsPerMeter = 512f / 2.6f;
+
+        if (importer.textureType != TextureImporterType.Sprite || !Mathf.Approximately(importer.spritePixelsPerUnit, pixelsPerMeter))
+        {
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Single;
+            importer.spritePixelsPerUnit = pixelsPerMeter;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.filterMode = FilterMode.Bilinear;
+            importer.SaveAndReimport();
+        }
+
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+    }
+
+    private static AudioClip Sound(string name) => AssetDatabase.LoadAssetAtPath<AudioClip>($"{SoundFolder}/{name}.mp3");
+
     // ------------------------------------------------------------- Attaques
 
     // Crée l'attaque si elle n'existe pas. Images à 60 FPS ; recul : x vers l'arrière, y vers le haut.
@@ -558,6 +735,26 @@ public static class ArenaBuilder
         SetObject(telegraph, "body", visual.GetComponent<SpriteRenderer>());
         SetObject(telegraph, "aimLine", aimLine);
 
+        // Cône de danger du fusil à pompe (maillage rempli par EnemyTelegraph) et lueur rouge au canon.
+        var cone = new GameObject("DangerCone");
+        cone.transform.SetParent(go.transform, false);
+        var coneRenderer = cone.AddComponent<MeshRenderer>();
+        coneRenderer.sharedMaterial = lineMaterial;
+        coneRenderer.sortingOrder = 4;
+        SetObject(telegraph, "cone", cone.AddComponent<MeshFilter>());
+        cone.SetActive(false);
+
+        var glowSprite = AssetDatabase.LoadAssetAtPath<Sprite>(Root + "/Art/Backgrounds/RedMoon/Dot.png");
+        GameObject glow = CreateSprite("MuzzleGlow", go.transform, glowSprite != null ? glowSprite : square, Color.red, Vector3.zero,
+            Vector3.one * 0.25f, 8);
+        // Matériau sans lumière : le matériau des braises (intensité 3) faisait virer la lueur au blanc.
+        glow.GetComponent<SpriteRenderer>().sharedMaterial = lineMaterial;
+        glow.GetComponent<SpriteRenderer>().enabled = false;
+        SetObject(telegraph, "muzzleGlow", glow.GetComponent<SpriteRenderer>());
+
+        var gibSource = go.AddComponent<GibSource>();
+        SetObject(gibSource, "body", visual.GetComponent<SpriteRenderer>());
+
         go.AddComponent<HitStop>();
         var reaction = go.AddComponent<HitReaction>();
         SetObject(reaction, "visual", visual.transform);
@@ -688,7 +885,11 @@ public static class ArenaBuilder
         EditorUtility.SetDirty(cop);
     }
 
-    private static EnemyWave[] BuildWaves(SpriteAnimationBuilder.Result voyouSprites, SpriteAnimationBuilder.Result copSprites)
+    // Vague lancée au démarrage (touche 7).
+    private const int MannequinWave = 6;
+
+    private static EnemyWave[] BuildWaves(SpriteAnimationBuilder.Result voyouSprites, SpriteAnimationBuilder.Result copSprites,
+        SpriteAnimationBuilder.Result dealerSprites)
     {
         const DamageType blunt = DamageType.Blunt;
         const DamageType blade = DamageType.Blade;
@@ -854,6 +1055,17 @@ public static class ArenaBuilder
             ApplySprites(thug, voyouSprites, new Color(0.16f, 0.19f, 0.32f));
 
         ApplyCopSprites(cop, copSprites);
+        ApplyDealer(dealer, dealerSprites);
+
+        // Morceaux de corps (fusil à pompe à bout portant) : humains de l'Acte I seulement.
+        foreach (EnemyArchetype thug in new[] { fists, knife, bar })
+            thug.gibs = EnsureGibSet("Voyou");
+
+        cop.gibs = EnsureGibSet("Flic");
+        mutant.gibbable = false;
+
+        foreach (EnemyArchetype archetype in new[] { fists, knife, bar, cop, mutant })
+            EditorUtility.SetDirty(archetype);
 
         EnemyArchetype dummy = EnsureArchetype("00_Mannequin", a =>
         {
@@ -868,10 +1080,16 @@ public static class ArenaBuilder
         });
 
         ApplyStaticSprite(dummy, Root + "/Art/Characters/Mannequin/Sprites/Mannequin.png");
+        dummy.gibbable = false;
+        EditorUtility.SetDirty(dummy);
 
         AssetDatabase.SaveAssets();
 
-        // Touches 1 à 7 (docs/ENEMIES.md, « Composition des rencontres de l'arène de test »).
+        // Touches 1 à 8 (docs/ENEMIES.md, « Composition des rencontres de l'arène de test »).
+        EnemyWave shotgunTest = Wave("M4 + fusil à pompe contre 5 Voyous", Array.Empty<float>(),
+            (fists, 2f), (knife, 2.6f), (fists, 3.2f), (bar, 3.8f), (fists, 4.4f));
+        shotgunTest.nathanM4 = true;
+
         return new[]
         {
             Wave("1 Voyou", Array.Empty<float>(), (fists, 6f)),
@@ -881,6 +1099,7 @@ public static class ArenaBuilder
             Wave("Mutant", Array.Empty<float>(), (mutant, 8f)),
             Wave("Groupe mixte", Array.Empty<float>(), (fists, 5f), (knife, 6.5f), (bar, 8f), (cop, 14f)),
             Wave("Mannequin", Array.Empty<float>(), (dummy, 12f)),
+            shotgunTest,
         };
     }
 
@@ -939,7 +1158,7 @@ public static class ArenaBuilder
         return camera;
     }
 
-    private static CombatHUD BuildHud(Health playerHealth, out Image flashOverlay)
+    private static CombatHUD BuildHud(Health playerHealth, PlayerShotgun shotgun, out Image flashOverlay)
     {
         var canvasGo = new GameObject("CombatHUD", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
         canvasGo.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
@@ -957,9 +1176,11 @@ public static class ArenaBuilder
 
         CreateText(canvas, "PlayerLabel", "NATHAN", font, 28, new Vector2(0f, 1f), new Vector2(40f, -20f), new Vector2(500f, 40f), TextAnchor.MiddleLeft);
         Text enemyLabel = CreateText(canvas, "EnemyLabel", "ENNEMIS", font, 28, new Vector2(1f, 1f), new Vector2(-40f, -20f), new Vector2(500f, 40f), TextAnchor.MiddleRight);
+        Text ammo = CreateText(canvas, "Ammo", string.Empty, font, 26, new Vector2(0f, 1f), new Vector2(40f, -105f), new Vector2(600f, 36f), TextAnchor.MiddleLeft);
+        ammo.enabled = false;
         CreateText(canvas, "Controls",
             "Q / D : se déplacer   ·   S : bas   ·   Espace : sauter   ·   J : léger   ·   K : lourd (S + K : lanceur)   ·   L ou double appui : dash   ·   Maj gauche : esquiver\n" +
-            "1 à 7 : vagues de test   ·   Échap : options   ·   F1 : debug des images   ·   F2 : arme de test   ·   F3 : démo de combo",
+            "U : fusil à pompe (M4)   ·   I : recharger   ·   1 à 8 : vagues de test   ·   Échap : options   ·   F1 : debug   ·   F2 : arme de test   ·   F3 : démo   ·   F4 : Nathan M4",
             font, 22, new Vector2(0.5f, 0f), new Vector2(0f, 40f), new Vector2(1800f, 60f), TextAnchor.MiddleCenter);
         Text message = CreateText(canvas, "Message", string.Empty, font, 72, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1400f, 300f), TextAnchor.MiddleCenter);
         message.enabled = false;
@@ -982,6 +1203,8 @@ public static class ArenaBuilder
         SetObject(hud, "enemyFill", enemyFill);
         SetObject(hud, "enemyLabel", enemyLabel);
         SetObject(hud, "messageText", message);
+        SetObject(hud, "shotgun", shotgun);
+        SetObject(hud, "ammoText", ammo);
         return hud;
     }
 
@@ -1127,6 +1350,34 @@ public static class ArenaBuilder
             return;
 
         property.floatValue = value;
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetVector2(Component component, string field, Vector2 value)
+    {
+        var so = new SerializedObject(component);
+        SerializedProperty property = Find(so, field);
+
+        if (property == null)
+            return;
+
+        property.vector2Value = value;
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetObjects(Component component, string field, UnityEngine.Object[] values)
+    {
+        var so = new SerializedObject(component);
+        SerializedProperty property = Find(so, field);
+
+        if (property == null)
+            return;
+
+        property.arraySize = values.Length;
+
+        for (int i = 0; i < values.Length; i++)
+            property.GetArrayElementAtIndex(i).objectReferenceValue = values[i];
+
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 }

@@ -16,9 +16,11 @@ public class EnemyWave
     public EnemySpawn[] enemies = Array.Empty<EnemySpawn>();
     [Tooltip("Position x des abris de cette vague.")]
     public float[] covers = Array.Empty<float>();
+    [Tooltip("La vague fait passer Nathan au stade M4 avec le fusil à pompe (test).")]
+    public bool nathanM4;
 }
 
-// Arène de test : les touches 1 à 6 lancent une vague (docs/ENEMIES.md, dernière section).
+// Arène de test : les touches 1 à 8 lancent une vague (docs/ENEMIES.md, dernière section).
 // Une nouvelle vague efface la précédente, ses abris et les renforts.
 public class EnemyWaveManager : MonoBehaviour
 {
@@ -38,6 +40,8 @@ public class EnemyWaveManager : MonoBehaviour
     private bool cleared;
 
     public IReadOnlyList<EnemyWave> Waves => waves;
+    public EnemyWave CurrentWave { get; private set; }
+    public IReadOnlyList<Enemy> Enemies => enemies;
 
     public event Action<string> WaveStarted;
     public event Action WaveCleared;
@@ -72,6 +76,7 @@ public class EnemyWaveManager : MonoBehaviour
     {
         Clear();
         EnemyWave wave = waves[index];
+        CurrentWave = wave;
 
         foreach (float x in wave.covers)
             SpawnCover(x);

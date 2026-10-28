@@ -52,7 +52,7 @@ public class Health : MonoBehaviour
                 info = filter.Filter(info);
         }
 
-        int damage = info.Amount;
+        int damage = info.Lethal ? Mathf.Max(info.Amount, CurrentHealth) : info.Amount;
 
         if (damage <= 0)
             return false;

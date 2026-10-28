@@ -80,7 +80,7 @@ Le GDD demande qu'un ennemi standard réclame **environ 4 fois plus d'actions of
 
 ### 02 — Le Dealer (lieutenant de rue du Chimiste)
 **Rôle** : commandant qui reste à distance et donne des ordres. **Acte** : I (première moitié). **Comportement** : `Commander`.
-**À ne pas confondre avec le Chimiste.** Le Dealer est un **lieutenant de rue** du réseau du Chimiste : tenue voyante, bijoux, lunettes teintées, assurance tranquille. Le **Chimiste** (`docs/CHARACTERS.md`) reste le personnage narratif, calme, élégant et **non combattant**, qui ne se montre jamais dans une rixe.
+**À ne pas confondre avec le Chimiste.** Le Dealer est un **lieutenant de rue** du réseau du Chimiste : caïd de cité menaçant, cicatrices, tatouages, chaîne et dent en or, **fusil à pompe** (concept `Dealer_concept_s14201`, 1,80 m). Le **Chimiste** (`docs/CHARACTERS.md`) reste le personnage narratif, calme, élégant et **non combattant**, qui ne se montre jamais dans une rixe.
 
 | PV | Vitesse | Détection | Poids |
 |---|---|---|---|
@@ -89,18 +89,19 @@ Le GDD demande qu'un ennemi standard réclame **environ 4 fois plus d'actions of
 | Attaque / action | Portée | Armement | Actif | Récupération | Dégâts | Annonce |
 |---|---|---|---|---|---|---|
 | Ordre « Chopez-le » (renforce les gardes : armement −20 % pendant 5 s) | Écran | 1,0 | — | 0,5 | — | Bras tendu vers Nathan, réplique |
-| Tir opportuniste au pistolet (2 tirs) | 8 | 0,60 | 0,05 par tir | 0,9 | 14 par tir | Arme levée, ligne de visée rouge |
-| Coup de crosse | 1,1 | 0,40 | 0,10 | 0,50 | 10 | Arme retournée |
+| Fusil à pompe (tir en cône, 8 plombs) | 8,5 (cône jusqu'à 9) | **0,90** | 0,05 | **1,25** (rechargement lent) | Bout portant (≤ 2,5 m du canon) : **mort instantanée** ; jusqu'à 5,5 m : 45 + projection ; au-delà : 10 | Pompe armée (« tchak-tchak »), fusil épaulé, cône de danger rouge et lueur au canon ; visée figée 0,25 s avant le coup |
+| Coup de crosse | 1,1 | 0,40 | 0,10 | 0,50 | 10 | Arme poussée en avant, flash jaune |
 
-- **Comportement** : reste à 6-9 unités derrière ses gardes. Quand il n'a plus de garde, il fuit vers une sortie ; s'il est acculé, il combat.
-- **Fenêtres** : pendant l'ordre (1,0 s, immobile), pendant la récupération du tir, et quand il fuit (dos tourné).
+- **Comportement** : reste à 6-9 unités derrière ses gardes et tire au fusil quand Nathan est à portée. Quand il n'a plus de garde, il fuit vers une sortie ; s'il est acculé, il combat.
+- **Esquive du fusil** : l'invulnérabilité de l'esquive (0,40 s) couvre le tir, pas toute l'annonce (0,90 s) : il faut esquiver au dernier moment, ou sortir du cône.
+- **Fenêtres** : pendant l'ordre (1,0 s, immobile), pendant le rechargement du fusil (1,25 s), et quand il fuit (dos tourné).
 - **Ce qu'il punit** : ignorer ses ordres, se laisser encercler par les gardes renforcés, le poursuivre en tournant le dos aux gardes.
 - **Contre-stratégie** : interrompre l'ordre (coup ou projectile), éliminer ou contourner les gardes, le coincer contre un mur.
 
-| Trajectoire | Coups pour tuer | Coups encaissables (tir) |
+| Trajectoire | Coups pour tuer | Coups encaissables (fusil, moyenne distance) |
 |---|---|---|
-| Sobre | 6 | 8 |
-| Red Met | 1 combo ou 5 tirs | 15 |
+| Sobre | 6 | 3 (1 à bout portant) |
+| Red Met | 1 combo ou 1 tir de fusil à bout portant (M4) | 5 (1 à bout portant) |
 
 ### 03 — Le Flic corrompu
 **Rôle** : tireur à couvert, contrôle de zone. **Acte** : I (milieu). **Comportement** : `CoverShooter`.

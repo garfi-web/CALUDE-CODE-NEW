@@ -30,6 +30,8 @@ MonoBehaviour:
   bloodColor: {r: 0.55, g: 0.02, b: 0.03, a: 1}
   bloodGlows: 0
   canBeDismembered: 1
+  gibbable: 1
+  gibs: {fileID: 11400000, guid: 7d824c63e9b5495449a4763dae0923cb, type: 2}
   attacks:
   - name: "Tir vis\xE9"
     kind: 1

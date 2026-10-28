@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eda0dd86182daa40b5a626f4440642c, type: 3}
+  m_Name: Flic
+  m_EditorClassIdentifier: Assembly-CSharp::GibSet
+  head: {fileID: 21300000, guid: 59871203c9c29884ab9de0a435e0a828, type: 3}
+  torso: {fileID: 21300000, guid: d6ff443729f1114449b06540cb2f8f6d, type: 3}
+  armLeft: {fileID: 21300000, guid: 44b731e9c716fee4193ee2e0bf28ffc9, type: 3}
+  armRight: {fileID: 21300000, guid: 2fc0146b2cb5ad14d8e4ec86ea9b5669, type: 3}
+  legLeft: {fileID: 21300000, guid: e974fbe4bcdb57b46ad3fe7b871c628e, type: 3}
+  legRight: {fileID: 21300000, guid: b0553a468d4a5334d8952899377ca735, type: 3}

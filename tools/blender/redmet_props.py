@@ -246,6 +246,32 @@ def build_baton(rig, collection, name="Flic_Baton", side="R"):
     return obj
 
 
+SHOTGUN_STEEL = (0.22, 0.23, 0.25)
+SHOTGUN_WOOD = (0.40, 0.24, 0.12)
+
+
+def build_shotgun(rig, collection, name="Shotgun", side="R"):
+    """Fusil à pompe générique (ni marque ni inscription) de 1 m : canon et tube magasin, pompe en bois,
+    boîtier, poignée et crosse. Tenu par la poignée : le canon part devant le poing, la crosse derrière
+    (vers le coude). Repère local : X = canon, Y = dessus de l'arme."""
+    obj, bm = _new_prop(name, collection)
+    _part(bm, _box(0.16, 0.055, 0.04), SHOTGUN_STEEL, Matrix.Translation((0.06, 0.05, 0)))
+    _part(bm, _cylinder(0.013, 0.50, 12), SHOTGUN_STEEL,
+          Matrix.Translation((0.39, 0.065, 0)) @ Matrix.Rotation(math.radians(90), 4, "Y"))
+    _part(bm, _cylinder(0.011, 0.40, 12), SHOTGUN_STEEL,
+          Matrix.Translation((0.34, 0.035, 0)) @ Matrix.Rotation(math.radians(90), 4, "Y"))
+    _part(bm, _box(0.15, 0.04, 0.045), SHOTGUN_WOOD, Matrix.Translation((0.30, 0.035, 0)))
+    _part(bm, _box(0.035, 0.09, 0.032), SHOTGUN_WOOD,
+          Matrix.Translation((-0.02, -0.01, 0)) @ Matrix.Rotation(math.radians(-18), 4, "Z"))
+    _part(bm, _box(0.30, 0.06, 0.038), SHOTGUN_WOOD,
+          Matrix.Translation((-0.17, 0.01, 0)) @ Matrix.Rotation(math.radians(-8), 4, "Z"))
+    _finish_prop(obj, bm)
+
+    fist, along, thumb = _hand_frame(rig, side)
+    obj.matrix_world = _frame_matrix(fist, along, thumb)
+    return obj
+
+
 def add_prop_bone(rig, bone_name, side="R"):
     """Os sans déformation, enfant de la main : porte une arme. Son échelle permet de la cacher
     dans les animations (opération « H » de redmet_animation)."""
@@ -271,6 +297,191 @@ def attach_to_bone(obj, rig, bone_name):
     obj.parent_bone = bone_name
     bpy.context.view_layer.update()
     obj.matrix_world = world
+
+
+# --------------------------------------------------------------- Morceaux de corps (gore)
+
+GIB_PARTS = {
+    "head": ("spine.005", "spine.006"),
+    "torso": ("spine", "spine.001", "spine.002", "spine.003", "spine.004", "shoulder.L", "shoulder.R"),
+    "armL": ("upper_arm.L", "forearm.L", "hand.L"),
+    "armR": ("upper_arm.R", "forearm.R", "hand.R"),
+    "legL": ("thigh.L", "shin.L", "foot.L", "toe.L"),
+    "legR": ("thigh.R", "shin.R", "foot.R", "toe.R"),
+}
+WOUND = (0.42, 0.02, 0.03)
+WOUND_DARK = (0.22, 0.01, 0.02)
+FLESH = (0.62, 0.16, 0.16)
+FLESH_LIGHT = (0.80, 0.38, 0.36)
+BONE = (0.88, 0.84, 0.74)
+GUTS = (0.72, 0.36, 0.40)
+
+
+def split_gibs(mesh, name_prefix, collection):
+    """Découpe le personnage (pose de repos) en morceaux selon l'os dominant de chaque sommet :
+    tête, torse, bras et jambes. Les bords de coupe (deux rangées) sont peints en rouge sang.
+    Renvoie {partie: objet}, avec le contour toon du personnage."""
+    groups = {g.index: g.name for g in mesh.vertex_groups}
+    parts = {}
+
+    for part, bones in GIB_PARTS.items():
+        name = f"{name_prefix}_gib_{part}"
+        old = bpy.data.objects.get(name)
+
+        if old is not None:
+            bpy.data.objects.remove(old)
+
+        obj = mesh.copy()
+        obj.data = mesh.data.copy()
+        obj.name = name
+        obj.parent = None
+        obj.matrix_world = mesh.matrix_world.copy()
+
+        for modifier in [m for m in obj.modifiers if m.type != 'SOLIDIFY']:
+            obj.modifiers.remove(modifier)
+
+        collection.objects.link(obj)
+        bm = bmesh.new()
+        bm.from_mesh(obj.data)
+        deform = bm.verts.layers.deform.active
+        keep = set()
+
+        for v in bm.verts:
+            weights = v[deform] if deform is not None else {}
+
+            if weights:
+                best = max(weights.items(), key=lambda item: item[1])[0]
+
+                if groups.get(best) in bones:
+                    keep.add(v)
+
+        bmesh.ops.delete(bm, geom=[v for v in bm.verts if v not in keep], context='VERTS')
+
+        # Plaie : sommets du bord ouvert, puis leurs voisins (l'attribut « Col » est par sommet).
+        layer = bm.verts.layers.float_color.get("Col")
+        edge = {v for e in bm.edges if e.is_boundary for v in e.verts}
+        ring = {o for v in edge for e in v.link_edges for o in e.verts} - edge
+
+        if layer is not None:
+            for v in edge:
+                v[layer] = (*WOUND_DARK, 1.0)
+
+            for v in ring:
+                v[layer] = (*WOUND, 1.0)
+
+        bm.to_mesh(obj.data)
+        bm.free()
+        parts[part] = obj
+
+    return parts
+
+
+def build_flesh_chunks(collection, name_prefix="Gore", location=(60.0, 0.0, 1.0)):
+    """Morceaux génériques : trois lambeaux de chair (os apparent sur l'un) et une anse de boyaux."""
+    import random
+
+    rng = random.Random(7)
+    chunks = {}
+    specs = [("chunk1", 0.09, False), ("chunk2", 0.07, True), ("chunk3", 0.055, False)]
+
+    for i, (key, radius, bone) in enumerate(specs):
+        name = f"{name_prefix}_{key}"
+        old = bpy.data.objects.get(name)
+
+        if old is not None:
+            bpy.data.objects.remove(old)
+
+        obj, bm = _new_prop(name, collection)
+        faces = _part(bm, lambda b: bmesh.ops.create_icosphere(b, subdivisions=2, radius=radius), FLESH)
+
+        for v in {v for f in faces for v in f.verts}:
+            v.co *= 0.75 + 0.5 * rng.random()
+
+        layer = bm.loops.layers.color["Col"]
+
+        for f in faces:
+            if f.calc_center_median().z > radius * 0.3:
+                for loop in f.loops:
+                    loop[layer] = (*FLESH_LIGHT, 1.0)
+
+        if bone:
+            _part(bm, _cylinder(0.014, 0.16, 8), BONE, Matrix.Translation((0.05, 0, 0)) @ Matrix.Rotation(math.radians(70), 4, "Y"))
+
+        _finish_prop(obj, bm)
+        obj.location = (location[0] + i * 0.4, location[1], location[2])
+        chunks[key] = obj
+
+    name = f"{name_prefix}_guts"
+    old = bpy.data.objects.get(name)
+
+    if old is not None:
+        bpy.data.objects.remove(old)
+
+    obj, bm = _new_prop(name, collection)
+    _part(bm, _torus(0.07, 0.024, 24, 8), GUTS, Matrix.Rotation(math.radians(90), 4, "X"))
+    _part(bm, _torus(0.05, 0.022, 20, 8), GUTS, Matrix.Translation((0.1, 0, -0.04)) @ Matrix.Rotation(math.radians(80), 4, "X"))
+    _finish_prop(obj, bm)
+    obj.location = (location[0] + 1.4, location[1], location[2])
+    chunks["guts"] = obj
+    return chunks
+
+
+def render_front_crops(scene, cam, objects, out_dir, size=512, ortho=2.6):
+    """Rend chaque objet seul, de face (caméra en -Y), au cadrage des sprites (512 px pour 2,6 m),
+    puis le recadre sur son contenu : l'échelle reste celle des personnages (196,9 px par mètre)."""
+    import numpy as np
+
+    os.makedirs(out_dir, exist_ok=True)
+    window = bpy.context.window
+    previous = window.scene
+    window.scene = scene
+    hidden = []
+    paths = {}
+
+    try:
+        for key, obj in objects.items():
+            if obj.name not in scene.collection.objects:
+                scene.collection.objects.link(obj)
+
+            hidden = [o for o in scene.objects if o.type == 'MESH' and o != obj and not o.hide_render]
+
+            for o in hidden:
+                o.hide_render = True
+
+            center = obj.matrix_world @ (sum((Vector(c) for c in obj.bound_box), Vector()) / 8)
+            cam.data.ortho_scale = ortho
+            cam.location = (center.x, center.y - 6.0, center.z)
+            cam.rotation_euler = (math.radians(90), 0, 0)
+            path = os.path.join(out_dir, f"{key}.png")
+            scene.render.filepath = path
+            bpy.ops.render.render(write_still=True)
+
+            for o in hidden:
+                o.hide_render = False
+
+            hidden = []
+            img = bpy.data.images.load(path)
+            w, h = img.size
+            px = np.array(img.pixels[:], dtype=np.float32).reshape(h, w, 4)
+            bpy.data.images.remove(img)
+            ys, xs = np.where(px[..., 3] > 0.02)
+            y0, y1 = max(0, ys.min() - 2), min(h, ys.max() + 3)
+            x0, x1 = max(0, xs.min() - 2), min(w, xs.max() + 3)
+            crop = px[y0:y1, x0:x1]
+            out = bpy.data.images.new(f"crop_{key}", x1 - x0, y1 - y0, alpha=True)
+            out.pixels = crop.ravel()
+            out.filepath_raw = path
+            out.file_format = 'PNG'
+            out.save()
+            bpy.data.images.remove(out)
+            paths[key] = path
+    finally:
+        for o in hidden:
+            o.hide_render = False
+
+        window.scene = previous
+
+    return paths
 
 
 def render_still(scene, cam, obj, path):

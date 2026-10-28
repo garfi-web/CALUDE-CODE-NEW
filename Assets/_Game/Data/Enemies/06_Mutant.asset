@@ -23,9 +23,15 @@ MonoBehaviour:
   hitstunScale: 0
   bodyColor: {r: 0.45, g: 0.55, b: 0.3, a: 1}
   bodySize: {x: 1.4, y: 2.4}
+  muzzleOffset: {x: 0, y: 0}
+  animator: {fileID: 0}
+  sprite: {fileID: 0}
+  limbColor: {r: 0.16, g: 0.17, b: 0.22, a: 1}
   bloodColor: {r: 0.3, g: 0.35, b: 0.05, a: 1}
   bloodGlows: 0
   canBeDismembered: 1
+  gibbable: 0
+  gibs: {fileID: 0}
   attacks:
   - name: Charge
     kind: 3

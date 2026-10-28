@@ -31,6 +31,7 @@ public enum EnemyAttackKind
     Shockwave,  // onde au sol autour de l'ennemi (un saut l'évite)
     Order,      // renforce les alliés : armement plus court pendant un temps
     Summon,     // appelle un renfort
+    Shotgun,    // tir en cône (fusil à pompe), annoncé par le cône de danger et la lueur du canon
 }
 
 // Une attaque d'ennemi telle que décrite dans docs/ENEMIES.md. Les images (démarrage = armement,
@@ -85,7 +86,7 @@ public class EnemyAttack
     public bool aimLine;
     public float aimLineWidth = 0.04f;
 
-    public bool IsRanged => kind is EnemyAttackKind.Projectile or EnemyAttackKind.Grenade;
+    public bool IsRanged => kind is EnemyAttackKind.Projectile or EnemyAttackKind.Grenade or EnemyAttackKind.Shotgun;
     public int WindupFrames => data != null ? data.startup : MinWindupFrames;
     public int ActiveFrames => data != null ? data.active : 1;
     public int RecoveryFrames => data != null ? data.recovery : 0;
@@ -131,6 +132,10 @@ public class EnemyArchetype : ScriptableObject
     [Tooltip("Sang lumineux (ennemis surnaturels).")]
     public bool bloodGlows;
     public bool canBeDismembered = true;
+    [Tooltip("Pulvérisé par un tir à bout portant (humains de l'Acte I). Faux : surnaturels et boss, qui encaissent selon leur fiche.")]
+    public bool gibbable = true;
+    [Tooltip("Morceaux de corps du personnage (tête, torse, bras, jambes).")]
+    public GibSet gibs;
 
     public EnemyAttack[] attacks = Array.Empty<EnemyAttack>();
 

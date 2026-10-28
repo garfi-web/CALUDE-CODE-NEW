@@ -70,7 +70,7 @@ Ils réapparaissent ponctuellement dans les actes suivants sous des versions vis
 
 ### Apparence et direction artistique
 
-Le Dealer affiche une apparence ostentatoire : vêtements de marque, survêtement luxueux ou manteau voyant, bijoux imposants, lunettes teintées et accessoires coûteux.
+Le Dealer est un caïd de cité, africain à la peau noire foncée, massif et menaçant : cicatrices au visage et aux bras, tatouages, dent en or, grosse chaîne en or, débardeur blanc et jogging noir (concept retenu : `Dealer_concept_s14201`). Il porte un **fusil à pompe**.
 
 Il se distingue des voyous ordinaires par son assurance. Il est rarement le premier à se battre et préfère laisser ses hommes intervenir à sa place.
 
@@ -80,7 +80,7 @@ Ses environnements comprennent des clubs, des arrière-salles, des appartements 
 
 Le Dealer est avant tout un organisateur. Pendant un affrontement, il se tient généralement à distance et donne des ordres à ses gardes. Il peut tenter de fuir, de négocier ou d'utiliser le décor pour retarder le joueur.
 
-Lorsqu'il devient un adversaire direct, il privilégie les attaques opportunistes et les moyens de pression plutôt que les duels loyaux.
+Lorsqu'il devient un adversaire direct, il privilégie les attaques opportunistes et les moyens de pression plutôt que les duels loyaux. Son fusil à pompe est toujours annoncé (pompe armée, arme épaulée, cône de danger rouge) : à bout portant, il tue Nathan sur le coup et fait exploser son corps ; plus loin, il projette ou disperse ses plombs. Après chaque tir, il recharge lentement, ce qui l'expose (détail : `docs/GDD.md`, « Le fusil à pompe »).
 
 Sa fonction principale est narrative : il relie la violence urbaine à l'économie de la Red Met.
 

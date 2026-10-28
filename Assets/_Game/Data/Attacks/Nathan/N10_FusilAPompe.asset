@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99fbc6718fc8a824f9af31580e5cd45d, type: 3}
+  m_Name: N10_FusilAPompe
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  displayName: "Fusil \xE0 pompe"
+  animationId: 9
+  startup: 6
+  active: 2
+  recovery: 36
+  cancelWindow: {x: 7, y: 42}
+  damage: 60
+  damageType: 2
+  hitboxOffset: {x: 0.9, y: 0.1}
+  hitboxSize: {x: 1.2, y: 0.9}
+  step: 0
+  hitstop: 10
+  shake: 0.8
+  zoom: 1
+  impactFlash: 1
+  knockback: 3
+  knockbackVelocity: {x: 13, y: 5}
+  hitstun: 40
+  pellets: 8
+  coneAngle: 18
+  closeRange: 2.5
+  midRange: 5.5
+  maxRange: 9
+  lethalAtCloseRange: 1
+  farHit: {fileID: 11400000, guid: 3593e7b824ac1f6489f6d789f07f33b4, type: 2}
+  windupSound: {fileID: 0}
+  activeSound: {fileID: 8300000, guid: 83f0f208253a42342bbb57517b336538, type: 3}
+  recoverySound: {fileID: 8300000, guid: 5fbf39317b4a0f64c961c753067417ca, type: 3}

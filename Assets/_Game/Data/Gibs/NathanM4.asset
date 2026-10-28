@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eda0dd86182daa40b5a626f4440642c, type: 3}
+  m_Name: NathanM4
+  m_EditorClassIdentifier: Assembly-CSharp::GibSet
+  head: {fileID: 21300000, guid: 027c185f13165b64a96f8fb60e5e5396, type: 3}
+  torso: {fileID: 21300000, guid: 06feec2713e942b449624a3397991ccc, type: 3}
+  armLeft: {fileID: 21300000, guid: da7d985389cebf944bdc76a709b350cc, type: 3}
+  armRight: {fileID: 21300000, guid: ba00eef4c76509c4988adac162a104c5, type: 3}
+  legLeft: {fileID: 21300000, guid: 77232c0f68eff3242bc0061bfb6870fe, type: 3}
+  legRight: {fileID: 21300000, guid: dab2fc3502ae3274f8d0a7917421b2c5, type: 3}

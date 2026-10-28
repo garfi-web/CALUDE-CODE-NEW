@@ -62,6 +62,31 @@ public class AttackData : ScriptableObject
     [Tooltip("Images pendant lesquelles la cible ne peut pas agir.")]
     public int hitstun = 15;
 
+    [Header("Tir en cône (fusil à pompe)")]
+    [Tooltip("Plombs par tir (effets) ; 0 = pas un tir en cône.")]
+    public int pellets;
+    [Tooltip("Demi-ouverture du cône (degrés).")]
+    public float coneAngle = 16f;
+    [Tooltip("Bout portant (m), depuis le canon.")]
+    public float closeRange = 2.5f;
+    [Tooltip("Au-delà (m), les plombs se dispersent : farHit s'applique.")]
+    public float midRange = 5.5f;
+    public float maxRange = 9f;
+    [Tooltip("Mort instantanée à bout portant, quels que soient les PV (passe par Health.TakeDamage). " +
+             "Un ennemi qui ne peut pas être pulvérisé (EnemyArchetype.gibbable) encaisse le coup normal.")]
+    public bool lethalAtCloseRange;
+    [Tooltip("Coup appliqué au-delà de midRange : dégâts faibles, petit recul.")]
+    public AttackData farHit;
+
+    [Header("Sons (présentation, jamais le gameplay)")]
+    [Tooltip("Au début du démarrage (armement du fusil : « tchak-tchak »).")]
+    public AudioClip windupSound;
+    [Tooltip("À la première image active (coup de feu).")]
+    public AudioClip activeSound;
+    [Tooltip("Au début de la récupération (pompe après le tir).")]
+    public AudioClip recoverySound;
+
+    public bool IsCone => pellets > 0;
     public int TotalFrames => startup + active + recovery;
     public float StartupTime => startup / FrameRate;
 

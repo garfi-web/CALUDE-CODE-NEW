@@ -61,9 +61,11 @@ Les commandes fonctionnent avec le nouvel Input System comme avec l'ancien : auc
 | Lanceur (projette en l'air) | S + K | Bas + Y / Triangle |
 | Dash (au sol et en l'air, annulable en attaque) | L, ou double appui sur Q ou D | LB / L1 |
 | Esquiver (invulnérable 0,40 s, traverse les ennemis) | Maj gauche | RB / R1 |
+| Fusil à pompe (Nathan M4 seulement, 6 cartouches) | U | RT / R2 |
+| Recharger une cartouche à la fois (l'esquive interrompt) | I | LT / L2 |
 | Options (gore, tremblement, flashs) | Échap | Select / View |
-| Lancer une vague de test | 1 à 7 (rangée du haut ou pavé numérique) | — |
-| Debug des images / arme de test / démo de combo | F1 / F2 / F3 | — |
+| Lancer une vague de test | 1 à 8 (rangée du haut ou pavé numérique) | — |
+| Debug des images / arme de test / démo de combo / Nathan M4 avec le fusil | F1 / F2 / F3 / F4 | — |
 | Recommencer après une défaite | R | Start |
 
 ### Combos
@@ -79,12 +81,13 @@ Les commandes fonctionnent avec le nouvel Input System comme avec l'ancien : auc
 | Touche | Vague | Ce qu'on teste |
 |---|---|---|
 | 1 | 1 Voyou | Esquive et contre |
-| 2 | Dealer + 2 Voyous | Interrompre l'ordre (gardes plus rapides), gérer les gardes |
+| 2 | Dealer + 2 Voyous | Interrompre l'ordre (gardes plus rapides), gérer les gardes ; fusil à pompe : sortir du cône rouge ou esquiver au dernier moment (à bout portant, il tue net) |
 | 3 | Flic corrompu + 2 abris | Progression à couvert, rechargement, appel radio sous 50 % de PV |
 | 4 | Soldat privé + 2 abris | Grenade quand Nathan se cache, rafales, changements de position |
 | 5 | Mutant | Super-armure, charge à esquiver tard, charge dans le mur (sonné 2,5 s) |
 | 6 | 3 Voyous + 1 Flic | Mixte : 2 Voyous frappent au plus en même temps, les autres tournent |
 | 7 | Mannequin d'entraînement | Combos, rebonds, sang et démembrement (avec l'arme de test F2) |
+| 8 | Nathan M4 + fusil à pompe contre 5 Voyous | Puissance de M4 : un tir à bout portant pulvérise le groupe (U pour tirer, I pour recharger) |
 
 Le mannequin apparaît au lancement. Chaque vague remet Nathan à pleine vie et efface le sang.
 

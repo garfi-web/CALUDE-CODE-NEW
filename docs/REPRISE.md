@@ -118,9 +118,9 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d'avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, reprends la PHASE C là où elle s'est arrêtée (section « Phase C » de docs/PRODUCTION.md) : montre-moi les 4 concepts de la 2e série du Dealer lieutenant (Art/Characters/Dealer/Concept, seeds 14201 à 14204) et attends mon choix, puis fais sa phase D comme pour le Flic avec la mécanique du fusil à pompe (requête complète en fin de docs/REPRISE.md), en respectant CLAUDE.md.
+> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, commence le PROTOTYPE NARRATIF (programme, point 6 ; requêtes complètes en fin de docs/REPRISE.md) par l’étape 1 (mise à jour de docs/GDD.md), et arrête-toi pour validation à la fin de chaque étape, en respectant CLAUDE.md.
 
-L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 7** choisissent la vague, F1 à F3 le debug (détail dans le `README.md`).
+L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug (détail dans le `README.md`).
 
 ## 8. Programme à venir (dans l'ordre)
 
@@ -130,10 +130,12 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 4. **Tranche verticale** Nathan M0 contre le Voyou, graphismes définitifs — *faite et validée par l'auteur le 2026-10-27* (commits `ccee514` à `5bddd2b`, puis la sauvegarde de fin de session) : cel-shading, allonge des coups, mannequin, décor peint (ComfyUI + Animagine), pose de mort, liseré rouge, 60 FPS mesurés dans un build Windows. Dernières retouches demandées après validation : sol redessiné en toon et crochet allongé (0,9 m) — faites et vérifiées en Play le 2026-10-27 (le crochet touche à 0,87 m dès sa 1re image active). Détail : `docs/PRODUCTION.md`, section « Tranche verticale ».
 5. **Phase C** (reste de l'Acte I, même méthode) — **en cours**. Un ennemi à la fois :
    - **Flic corrompu terminé** : concept 13103, 1,85 m, phase D faite (armes, animations de tir avec annonce, sprites), vague 3 de l'arène.
-   - **Dealer lieutenant** : 1re série (14101 à 14104) rejetée, 2e série (14201 à 14204, africain à la peau noire foncée, cicatrices, tatouages, chaîne en or) **en attente du choix de l'auteur**, puis sa phase D avec le **fusil à pompe** (requête complète plus bas).
-   - Puis le Soldat privé et le Mutant, un à la fois, avec arrêt après chaque série de concepts pour le choix de l'auteur.
+   - **Dealer lieutenant terminé** : 1re série (14101 à 14104) rejetée, 2e série choisie : **14201** (africain à la peau noire foncée, cicatrices, chaîne et dent en or). Phase D faite avec le **fusil à pompe** (annonce, mort instantanée à bout portant, corps pulvérisés), **Nathan M4** et son fusil (touche U, vague 8), 60 FPS mesurés dans un build Windows. Détail : `docs/PRODUCTION.md`.
+   - Ensuite le Soldat privé et le Mutant, un à la fois, avec arrêt après chaque série de concepts pour le choix de l’auteur, **après le prototype narratif** (point 6).
 
    Tailles de tous les ennemis : `docs/ENEMIES.md`, section « Tailles ».
+
+6. **Prototype narratif** (demandé le 2026-10-27, après le Dealer et le fusil à pompe) — **à commencer**. Six étapes, avec arrêt pour validation de l’auteur à la fin de chaque étape : design dans `docs/GDD.md`, état de la partie et sauvegarde, dialogues visual novel avec Ink, interventions de l’Avocat, contenu adulte (confirmation d’âge, option, scène finale vide pour les illustrations de l’auteur ; aucune image de nudité générée par Claude), mini-chapitre joué deux fois. Texte complet des deux requêtes en fin de fichier.
 
 Piège : l'outil `RunCommand` du MCP Unity refuse `File.Delete` et `AssetDatabase.DeleteAsset` (« user interaction ») ; pour mesurer les FPS, ne lancer aucune commande MCP pendant l'enregistrement (la compilation du script de test fausse la mesure).
 
@@ -217,3 +219,56 @@ Décisions déjà prises par l'auteur pour la tranche : Voyou `Voyou_concept_s11
 >
 > 5. TEST
 > Montre-moi en jeu : l'avertissement du Dealer, une esquive réussie, une mort de Nathan à bout portant, puis Nathan M4 qui pulvérise un groupe de Voyous. Captures, mesure des FPS, commit et push.
+
+### Requête de l'auteur : prototype narratif (texte complet, 2026-10-27)
+
+> APRÈS le Dealer et le fusil à pompe : PROTOTYPE NARRATIF. RED MET ne doit pas se limiter au combat : c'est l'histoire d'un joueur qui sombre et devient un monstre pour sa dose. Construis les systèmes maintenant ; les vrais dialogues, les voix ElevenLabs, la musique et les bruitages viendront à la toute fin. Mets à jour docs/GDD.md en conséquence, et arrête-toi pour validation à la fin de chaque étape.
+>
+> 1. DESIGN À METTRE À JOUR DANS docs/GDD.md
+> - Pas de choix de difficulté dans le menu. La difficulté vient des choix : le joueur qui refuse la Red Met et les choix immoraux ne monte pas en puissance et doit maîtriser l'esquive, alors que les ennemis montent en puissance à chaque incursion dans le monde parallèle. Celui qui prend une dose à chaque niveau devient de plus en plus fort (stades M0 à M4, armes, PV) et le jeu devient plus facile.
+> - Structure de chaque niveau du monde parallèle : scène d'ouverture avec Mara (visual novel), combats, scène de fin avec Mara qui juge le joueur.
+> - Mara : au début, elle le taquine et le rabaisse ; au fil des incursions, et surtout s'il devient le Nathan M4 bestial, elle est de plus en plus attirée par sa force, de plus en plus provocante, avec des tenues de plus en plus échancrées (stades M-T0 à M-T4 de docs/CHARACTERS.md) et des dialogues coquins. En fin de combat, elle peut réagir à sa puissance.
+> - Fin : si Nathan a pris la Red Met à CHAQUE niveau, Mara choisit librement de passer la nuit avec lui (scène pour adultes, consentie, entre adultes). Sinon, elle le repousse en lui reprochant de ne pas avoir eu le « courage » d'aller jusqu'au bout. Remplace la section 11.1 actuelle (agression) par cette scène consentie. Aucun contenu sexuel ne doit apparaître dans la branche de l'enfant ni à proximité.
+> - L'Avocat intervient de temps en temps, dans le monde réel comme dans le monde parallèle : paranoïaque, il pousse surtout Nathan à reprendre une dose et trouve des arguments logiques pour lui faire accepter les choix amoraux.
+>
+> 2. ÉTAT DE LA PARTIE ET SAUVEGARDE
+> - Un état central : nombre de doses, dose prise ou refusée à chaque niveau, liste des actes commis (le jeu se souvient des faits, pas seulement d'un score), les quatre axes (Humanité, Cruauté, Dépendance, Paranoïa), stade de Nathan (M0 à M4, R0 à R4), stade de Mara (M-T0 à M-T4), numéro de l'incursion.
+> - La puissance de Nathan dépend des doses ; celle des ennemis dépend du numéro de l'incursion (fichiers de données, pas de valeurs en dur).
+> - Sauvegarde et chargement de la partie.
+>
+> 3. DIALOGUES FAÇON VISUAL NOVEL
+> - Utilise Ink (langage de dialogue à embranchements, licence MIT) avec son intégration Unity, pour que j'écrive les dialogues plus tard dans des fichiers texte.
+> - Écran visual novel : grand portrait de Mara (tenue selon son stade, plusieurs expressions), boîte de texte, nom, choix multiples, défilement automatique, avance rapide, historique.
+> - Chaque réplique a un identifiant unique pour brancher plus tard la voix ElevenLabs correspondante.
+> - Les dialogues lisent l'état de la partie (doses, actes, stades) pour choisir les répliques.
+> - Mets des dialogues provisoires très courts pour tester.
+>
+> 4. INTERVENTIONS DE L'AVOCAT
+> - Répliques courtes en surimpression (sous-titre et effet visuel de distorsion) déclenchées par des événements : avant un choix de dose, après un acte immoral, quand Nathan est en manque ou blessé, de temps en temps en exploration ; avec un délai minimum pour ne pas saturer.
+> - Même système d'identifiants pour les voix.
+>
+> 5. CONTENU ADULTE
+> - Au premier lancement : écran de confirmation d'âge (18 ans et plus).
+> - Option « Contenu adulte » (activé / désactivé). Désactivé : la scène finale avec Mara est remplacée par un fondu au noir.
+> - Prépare la scène finale comme un emplacement vide (déclenchement, conditions, fondu, réglages) dans lequel je placerai mes propres illustrations. Ne génère pas toi-même d'images de nudité ou de scène sexuelle.
+>
+> 6. TEST : UN MINI-CHAPITRE
+> Monde réel (court, provisoire) → choix de la dose → ouverture avec Mara → vague de combat → fin avec Mara → seconde incursion où l'on voit l'état changer (puissance de Nathan, ennemis plus forts, tenue et ton de Mara, intervention de l'Avocat). Joue-le deux fois (en prenant toutes les doses, puis en les refusant toutes) et montre-moi les différences avec captures. Commit et push.
+
+### Requête de l'auteur : complément, Mara dans les visual novels (texte complet, 2026-10-27)
+
+> COMPLÉMENT AU PROTOTYPE NARRATIF — MARA DANS LES VISUAL NOVELS
+>
+> 1. Les tenues suivent la Red Met
+> - Dans chaque scène visual novel, la tenue de Mara dépend du nombre de doses prises : plus Nathan a pris de Red Met, plus sa tenue est sexy et échancrée (stades M-T0 à M-T4 de docs/CHARACTERS.md). Le stade est lu dans l'état de la partie, jamais codé en dur dans les dialogues.
+> - Pour chaque stade de tenue, prévois deux types de portraits : de face (scène d'ouverture) et de dos (scène de fin), avec plusieurs expressions.
+>
+> 2. Scène de fin de niveau : Mara de dos
+> - À la fin de chaque niveau du monde parallèle, un visual novel montre Mara de dos, mettant ses fesses en valeur, la tête à moitié tournée pour regarder Nathan par-dessus l'épaule d'un air moqueur. Elle le nargue, puis disparaît (fondu ou dissolution en brume rouge).
+> - Génère les portraits de dos pour chaque stade de tenue avec la même méthode que les concepts (Animagine XL, adulte, tenue du stade, sans nudité).
+> - Réplique de test pour cette scène, quand Nathan n'est pas encore assez puissant (refus de doses ou stade faible) :
+>   « Mon petit Nathan, je t'excite ? Je te fais envie ? Tu aimerais que je pose mes fesses sur ton visage, petit coquin ? Eh bien, deviens plus puissant, car je recherche un vrai bonhomme 💪. Les gamins comme toi, je les envoie en colo. »
+> - Quand Nathan devient plus puissant et bestial (M2 à M4), ses répliques de fin changent : moins moqueuses, plus troublées et attirées par sa force. Prévois les embranchements dans le fichier Ink ; j'écrirai ces répliques plus tard.
+> - Garde l'emoji 💪 dans le texte affiché, mais retire-le du texte envoyé plus tard à ElevenLabs.
+
+Note de Claude pour la suite : Mara est une adulte. Ses portraits restent habillés, sans nudité ni scène sexuelle générée ; la scène finale reste un emplacement vide pour les illustrations de l'auteur.

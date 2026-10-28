@@ -207,6 +207,73 @@ def clips(drop=0.8):
     }
 
 
+# ------------------------------------------------------------ Fusil à pompe
+
+def shotgun_aim(recoil=0, lean=8, legs=None):
+    """Fusil épaulé : la visée bras tendu (canon dans l'axe), bras droit abaissé puis avant-bras relevé
+    (coude plié, arme horizontale contre le buste), main gauche tendue sur la pompe.
+    recoil (degrés) relève le canon et recule le buste au coup de feu."""
+    return punch("R", lean=lean, legs=legs_stance() if legs is None else legs) + [
+        ("upper_arm.R", "X", 35), ("forearm.R", "X", -35 - recoil), ("spine.001", "X", -0.4 * recoil),
+        ("upper_arm.L", "X", -30), ("forearm.L", "X", 85),
+    ]
+
+
+def shotgun_low(breathe=0):
+    """Garde : fusil tenu bas, canon vers le sol devant lui."""
+    return shotgun_aim() + [("upper_arm.R", "X", 25), ("upper_arm.L", "X", 20), ("spine.004", "X", breathe)]
+
+
+def shotgun_pump(back=True):
+    """Pompe tirée vers l'arrière (back) ou renvoyée vers l'avant, fusil en garde haute."""
+    return shotgun_aim(lean=4) + [("upper_arm.R", "X", 12), ("upper_arm.L", "X", 28 if back else 4)]
+
+
+def shotgun_shell(step):
+    """Une cartouche : 0 main gauche au ceinturon, 1 main gauche glisse la cartouche sous l'arme."""
+    return shotgun_low() + ([("upper_arm.L", "X", 55), ("forearm.L", "X", -40)] if step == 0 else [("upper_arm.L", "X", 15)])
+
+
+def dealer_clips(drop=0.8):
+    """Clips du Dealer (fusil à pompe), aux durées de ses AttackData, rendus à 30 FPS.
+    Fusil : pompe armée bruyamment (images 3 à 8), épaulé et pointé (11 à 26), coup de feu à l'image 27
+    (première image active), gros recul, pompe, puis deux cartouches rechargées lentement (fin à 66)."""
+    base = clips(drop)
+    idle = shotgun_low()
+    return {
+        "idle": ([(0, idle), (6, shotgun_low(breathe=4)), (12, idle)], True),
+        "run": base["run"], "jump": base["jump"], "hurt": base["hurt"], "death": base["death"],
+        "dash": base["dash"], "dodge": base["dodge"],
+        # Fusil à pompe : armement 54 (27 à 30 FPS), actif 3, récupération 75 (38).
+        "enemy_shotgun": ([(0, idle), (3, shotgun_pump(True)), (5, shotgun_pump(False)), (8, shotgun_pump(True)),
+                           (11, shotgun_aim()), (26, shotgun_aim()), (27, shotgun_aim(recoil=30, legs=legs_lunge())),
+                           (30, shotgun_aim(recoil=12)), (34, shotgun_pump(True)), (37, shotgun_pump(False)),
+                           (42, shotgun_shell(0)), (47, shotgun_shell(1)), (52, shotgun_shell(0)), (57, shotgun_shell(1)),
+                           (66, idle)], False),
+        # Coup de crosse : armement 24 (12), actif 6, récupération 30 ; arme poussée en avant, en fente.
+        "enemy_butt": ([(0, idle), (6, shotgun_pump(True) + [("spine.001", "X", -10)]),
+                        (11, shotgun_aim(lean=30, legs=legs_lunge()) + [("upper_arm.R", "X", -10)]),
+                        (14, shotgun_aim(lean=30, legs=legs_lunge()) + [("upper_arm.R", "X", -10)]), (29, idle)], False),
+        # Ordre « Chopez-le » : armement 60 (30), récupération 30 (15) ; bras gauche pointé vers Nathan.
+        "enemy_order": ([(0, idle), (6, shotgun_low() + [("upper_arm.L", "X", -70), ("forearm.L", "X", -10)]),
+                         (24, shotgun_low() + [("upper_arm.L", "X", -75), ("forearm.L", "X", -5), ("spine.005", "X", -8)]),
+                         (31, shotgun_low() + [("upper_arm.L", "X", -70), ("forearm.L", "X", -10)]), (44, idle)], False),
+    }
+
+
+def nathan_m4_clips(drop=0.8):
+    """Nathan M4 : tous les clips de Nathan (combo, lourd, lanceur, aériens...), fusil caché, plus
+    « shotgun » (tir : AttackData démarrage 6, actif 2, récupération 36, coup de feu à l'image 3, gros
+    recul, pompe) et « shotgun_reload » (une cartouche, 0,4 s). Le fusil n'apparaît que dans ces deux clips."""
+    result = {name: ([(f, ops + HIDE_GUN) for f, ops in keys], loop) for name, (keys, loop) in clips(drop).items()
+              if name != "enemy_punch"}
+    result["shotgun"] = ([(0, shotgun_low()), (2, shotgun_aim()), (3, shotgun_aim(recoil=35, legs=legs_lunge())),
+                          (6, shotgun_aim(recoil=15)), (10, shotgun_pump(True)), (13, shotgun_pump(False)),
+                          (21, shotgun_aim())], False)
+    result["shotgun_reload"] = ([(0, shotgun_low()), (4, shotgun_shell(0)), (8, shotgun_shell(1)), (12, shotgun_low())], False)
+    return result
+
+
 # ------------------------------------------------------------ Flic corrompu
 
 # Os d'accessoires (redmet_props.add_prop_bone) : une arme à la fois dans la main droite, côté caméra.

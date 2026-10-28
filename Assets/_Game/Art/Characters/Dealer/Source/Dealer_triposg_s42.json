@@ -1,0 +1,37 @@
+{
+  "character": "Dealer",
+  "created": "2026-10-27T22:58:39",
+  "backend": "triposg",
+  "seed": 42,
+  "params": {
+    "faces": 40000,
+    "steps": 50,
+    "guidance": 7.0,
+    "bg_tolerance": 24
+  },
+  "note": "",
+  "input": {
+    "type": "image",
+    "image": "Assets/_Game/Art/Characters/Dealer/Concept/Dealer_concept_s14201.png",
+    "image_sha256": "e9d0cb6ac743cb5fba8d61e76d63690886b67fe538945eda7c80ae4f4fc25cef"
+  },
+  "duration_s": 103.0,
+  "result": {
+    "faces_raw": 661620,
+    "faces": 40000,
+    "vertices": 19943,
+    "watertight": false,
+    "extents": [
+      1.6442,
+      1.9003,
+      0.4163
+    ],
+    "decoder": "hiérarchique (skimage)",
+    "vram_peak_gb": 5.22,
+    "inference_s": 88.1,
+    "preprocessed_image": "Assets/_Game/Art/Characters/Dealer/Source/Dealer_triposg_s42_input.png",
+    "background": "fond uni retiré (couleur BGR [213, 203, 197], tolérance 24)",
+    "opaque_ratio": 0.215
+  },
+  "output": "Assets/_Game/Art/Characters/Dealer/Source/Dealer_triposg_s42.glb"
+}

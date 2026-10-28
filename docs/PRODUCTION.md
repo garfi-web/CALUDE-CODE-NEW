@@ -8,7 +8,7 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
-- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant : 1re série rejetée ; 2e série (14201 à 14204) en attente du choix de l'auteur, puis phase D avec le fusil à pompe** (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
+- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant terminé** (concept 14201, fusil à pompe, Nathan M4 et son fusil, corps pulvérisés, 60 FPS mesurés dans un build). **Suite : prototype narratif** (requête dans docs/REPRISE.md), étape par étape avec validation de l'auteur (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
 - TRANCHE VERTICALE terminée le 2026-10-27 (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
@@ -613,3 +613,78 @@ Même méthode et même style que la tranche verticale (cel-shading à 3 aplats,
   - **14202** : massif, crâne rasé grisonnant, tatouages en brassard, cicatrices sur les bras, chaînes en or avec pendentif, débardeur noir, jean, chaussures montantes. Jambes très écartées (pose large, mais bien séparées pour TripoSG).
   - **14203** : 25 ans, nattes collées, cicatrices aux avant-bras, perfecto noir sur sweat gris, chaîne en or avec pendentif. **Onomatopée japonaise (« ゴーン ») écrite sur le fond au-dessus de la tête** : à retirer avant TripoSG, sinon le détourage la garde.
   - **14204** : 40 ans, chauve avec cicatrices sur le crâne, barbe, bras tatoués de motifs dorés, chemise ouverte sur le torse, chaînes et ceinture en or, bottes. Tête renversée en arrière, tenue sombre (moins lisible sur le décor). Le manteau long n'est pas rendu.
+
+### 2026-10-27 — Dealer 14201 (choix de l'auteur) : phase D et mécanique du fusil à pompe
+**Modèle et sprites** (Blender, collection `Dealer`, x = 50, 1,80 m) :
+- TripoSG : seed 42, 661 620 faces brutes réduites à 40 000, 103 s. `clean_mesh` (24 716 faces), un fragment de 12 sommets supprimé.
+- Couleurs :
+  - zones propres au Dealer : bras nus au-delà de 30 % de l'envergure, ou de 21 % au niveau des épaules (sinon les flancs du torse sortaient couleur peau) ;
+  - débardeur en aplat blanc (les ombres dessinées du concept laissaient des taches gris-bleu) ;
+  - chaîne en or tracée en V sur la poitrine (la projection la rendait beige), dent en or au coin de la bouche côté caméra.
+- `Dealer_Rig`. `build_shotgun` : fusil à pompe générique d'1 m, sur l'os `prop_gun`.
+- `dealer_clips` : idle (fusil bas), course, saut, coup reçu, mort, dash, esquive, plus trois clips d'attaque.
+  - `enemy_shotgun` : pompe armée aux images 3 à 8, fusil épaulé de l'image 11 à 26, coup de feu et gros recul à l'image 27, pompe, puis deux cartouches rechargées ; fin à l'image 66.
+  - `enemy_butt` : coup de crosse, arme poussée en fente.
+  - `enemy_order` : ordre, bras pointé vers Nathan.
+  - Rendu : 201 images en 106 s.
+- Canon épaulé : 1,2 m devant les pieds, 1,3 m de haut.
+
+**Nathan M4** (collection `Nathan_M4`, 2,05 m), jusqu'ici à l'état brut TripoSG :
+- nettoyé, coloré par zones ; la cape, qui ressortait claire en grosse bosse blanche, est repeinte en fourrure sombre ;
+- squelette, et le même fusil ;
+- `nathan_m4_clips` : tous les clips de Nathan (fusil caché), plus `shotgun` (coup de feu à l'image 3, pompe) et `shotgun_reload` (une cartouche) ;
+- 218 images en 126 s.
+
+**Morceaux de corps** (`redmet_props.split_gibs`, `build_flesh_chunks`, `render_front_crops`) :
+- Chaque personnage est découpé selon l'os dominant de chaque sommet : tête, torse, deux bras, deux jambes. Les bords de coupe sont peints en rouge sang.
+- Rendu de face, recadré, à l'échelle des sprites : Nathan M0, Nathan M4, Voyou, Flic, Dealer.
+- Morceaux génériques : 3 lambeaux de chair (un avec un os) et des boyaux. Tout est dans `Art/Gore/`, avec un `GibSet` par personnage dans `Data/Gibs/`.
+
+**Sons** (ElevenLabs, `eleven_text_to_sound_v2`, flux « RED MET — fusil à pompe ») : `Shotgun_Pump` (« tchak-tchak »), `Shotgun_Blast`, `Shotgun_Shell`, `Gore_Burst`, dans `Audio/Voice` comme le veut CLAUDE.md. Les requêtes lancées en parallèle ont été limitées en débit : une prise par son (deux pour la cartouche). Nouveau `GameAudio` : réserve de 12 sources, sons en 2D.
+
+**Code** :
+- Mort instantanée : `AttackData.lethalAtCloseRange`, transmise par `DamageInfo.Lethal` via `Combat.Strike`. `Health.TakeDamage` retire alors tous les PV, et l'invulnérabilité (esquive) l'arrête comme tout coup.
+- Tir en cône : `AttackData.pellets`, `coneAngle`, `closeRange` (2,5), `midRange` (5,5), `maxRange` (9), `farHit` (plombs dispersés), plus les sons `windupSound`, `activeSound` et `recoverySound`. `Shotgun.Fire`, commun au Dealer et à Nathan, applique un seul coup par cible selon sa distance au canon.
+- `EnemyAttackKind.Shotgun` :
+  - armement avec son, cône de danger (`EnemyTelegraph.ShowCone`, maillage rouge plus dense à bout portant) et lueur pulsée au canon ;
+  - visée figée `trackingFrames` (39 sur 54) ;
+  - `Commander` tire au fusil au lieu du pistolet.
+- `GibSource` (morceaux, sprite à cacher, pulvérisable ou non) et `EnemyArchetype.gibbable` / `gibs` : le Mutant et le mannequin ne sont pas pulvérisables.
+- `CombatVfx` :
+  - `Explode` : morceaux, chair et boyaux en réserve de 48 avec physique 2D, rebonds et traînées de sang, puis disparition ; selon le réglage de gore (complet, réduit, désactivé) ;
+  - pour Nathan : flash, ralenti de 0,5 s et fort tremblement ;
+  - `ShotgunBlast` (gerbe, traînées de plombs, onde), `EjectShell`, `MultiKill` (ralenti).
+- `GameManager` : écran de défaite affiché 1,2 s après la mort.
+- `PlayerShotgun` : touche U ou gâchette droite, 6 cartouches. Rechargement par cartouche (I ou gâchette gauche, ou fusil vide), interrompu par l'esquive, un coup reçu ou un tir. Gros recul, douille, ralenti si au moins 2 morts.
+- `NathanForm` : M0 ou M4 (sprites, 100 ou 200 PV, morceaux, fusil). F4 bascule ; `EnemyWave.nathanM4` l'impose. Le HUD affiche les cartouches.
+- `GameInput` : U, I, F4, gâchettes. `SpriteAnimationBuilder` : clips `enemy_shotgun` (5), `enemy_butt` (6), `enemy_order` (7), `shotgun` (9) et état `Hold` du rechargement ; M4 traité comme un joueur.
+- `ArenaBuilder` : Dealer réécrit (sprites, fusil, morceaux), Nathan M4, sons, cône et lueur sur le prefab ennemi, **vague 8** « M4 + fusil à pompe contre 5 Voyous ».
+- `BenchmarkRunner -redmet-benchmark-shotgun`.
+
+**Défauts corrigés pendant le test** :
+- **Cône invisible** : `Mathf.Max(0.001, -1)` donnait une échelle de -1000 quand le Dealer était retourné.
+- **Lueur blanche** : le matériau des braises (intensité 3) la faisait virer au blanc.
+- **Variable masquante** : une variable locale `blood` masquait le système de particules du même nom.
+
+**Tests en Play** (IA du Dealer coupée, attaque déclenchée par le script) :
+- Annonce : capture de la pompe, puis cône et fusil épaulé.
+- Esquive injectée à l'image 44 sur 54 : **100/100 PV**.
+- Tir à 1,8 m sans esquive : coup mortel, PV à 0. Nathan est pulvérisé (tête, torse, jambes, chair, boyaux), le temps passe à 0,25, et l'écran de défaite s'affiche ensuite.
+- Vague 8 : **un tir tue les 5 Voyous**, tous à bout portant depuis le canon, et il reste 5 cartouches.
+- Pièges de test :
+  - lancer une vague juste après Play est écrasé par la vague de départ : attendre 1 s ;
+  - une capture d'écran en 1440p bloque l'éditeur plus de 0,2 s : ne rien capturer juste avant une action minutée ;
+  - un second tir du Dealer est refusé pendant son délai de 1 s.
+
+**60 FPS dans un build Windows** (`REDMET.exe -redmet-benchmark-shotgun`, 1920 × 1080, vsync coupée) : 30 s, 13 tirs, 65 corps pulvérisés, gore complet.
+- Thread principal : 1,01 ms en moyenne, 1,97 ms au 99e centile, 6,22 ms au pire, aucune image au-delà de 16,6 ms.
+- Durée d'image : 3,04 ms en moyenne, une seule image sur 7 457 à 17,5 ms.
+
+Captures : `docs/captures/2026-10-27_fusil_a_pompe.png` (annonce, esquive, bout portant, Nathan pulvérisé, défaite, M4 contre 5 Voyous), `..._dealer_poses.png`, `..._morceaux_de_corps.png`.
+
+**Restes** :
+- le bras gauche du Dealer pendant l'ordre est du côté opposé à la caméra ;
+- la poussière d'impact reste en carrés gris (effet existant) ;
+- M4 est riggé sans nouvelle allonge mesurée pour ses coups (zones de frappe de M0).
+
+**Docs mises à jour** : `docs/GDD.md` (« Le fusil à pompe »), `docs/BESTIARY.md` et `docs/ENEMIES.md` (Dealer au fusil, nouvelle apparence), `README.md` (touches U, I, F4, vague 8).

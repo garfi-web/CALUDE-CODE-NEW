@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: E02_Dealer_Ordre
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   displayName: "Ordre \xAB Chopez-le \xBB"
-  animationId: 0
+  animationId: 7
   startup: 60
   active: 1
   recovery: 30
@@ -22,7 +22,7 @@ MonoBehaviour:
   damageType: 0
   hitboxOffset: {x: 0.9, y: 0.1}
   hitboxSize: {x: 1.2, y: 0.9}
-  lunge: 2
+  step: 0.3
   hitstop: 0
   shake: 0
   zoom: 0
@@ -30,3 +30,13 @@ MonoBehaviour:
   knockback: 0
   knockbackVelocity: {x: 0, y: 0}
   hitstun: 0
+  pellets: 0
+  coneAngle: 16
+  closeRange: 2.5
+  midRange: 5.5
+  maxRange: 9
+  lethalAtCloseRange: 0
+  farHit: {fileID: 0}
+  windupSound: {fileID: 0}
+  activeSound: {fileID: 0}
+  recoverySound: {fileID: 0}

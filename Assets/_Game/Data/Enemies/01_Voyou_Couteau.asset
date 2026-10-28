@@ -30,6 +30,8 @@ MonoBehaviour:
   bloodColor: {r: 0.55, g: 0.02, b: 0.03, a: 1}
   bloodGlows: 0
   canBeDismembered: 1
+  gibbable: 1
+  gibs: {fileID: 11400000, guid: 1dc6d0022cccf7248ba7bab1a538ed28, type: 2}
   attacks:
   - name: Coup de couteau
     kind: 0

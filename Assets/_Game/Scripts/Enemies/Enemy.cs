@@ -195,6 +195,9 @@ public class Enemy : MonoBehaviour, IDamageFilter
         readyTimes.Clear();
         useCounts.Clear();
         gameObject.name = archetype.displayName;
+
+        if (TryGetComponent(out GibSource gibSource))
+            gibSource.Configure(archetype.gibs, archetype.gibbable && archetype.gibs != null, size.y);
         AddBehaviour();
     }
 
@@ -537,6 +540,12 @@ public class Enemy : MonoBehaviour, IDamageFilter
         telegraph.ShowWindup(attack.telegraphColor);
         BeginPhase(Phase.Windup, windup);
 
+        if (attack.data != null)
+            GameAudio.Play(attack.data.windupSound);
+
+        // Le fusil à pompe ne tire jamais sans son annonce : le cône est affiché pendant tout l'armement.
+        bool cone = attack.kind == EnemyAttackKind.Shotgun && attack.data != null && attack.data.IsCone;
+
         while (PhaseFrame < windup)
         {
             yield return FixedStep;
@@ -549,8 +558,11 @@ public class Enemy : MonoBehaviour, IDamageFilter
             if (!IsStunned)
                 Stop();
 
-            // La charge cesse de suivre la cible après trackingFrames.
-            if (attack.kind != EnemyAttackKind.Charge || PhaseFrame <= attack.trackingFrames)
+            // La charge et le fusil cessent de suivre la cible après trackingFrames : la visée se fige,
+            // le joueur peut sortir du cône ou esquiver le tir.
+            bool tracks = attack.kind is not (EnemyAttackKind.Charge or EnemyAttackKind.Shotgun) || PhaseFrame <= attack.trackingFrames;
+
+            if (tracks)
             {
                 FaceTarget();
                 direction = DirectionToTarget;
@@ -559,6 +571,10 @@ public class Enemy : MonoBehaviour, IDamageFilter
 
             if (attack.aimLine)
                 telegraph.ShowAim(Muzzle, aimPoint, attack.telegraphColor, attack.aimLineWidth);
+
+            if (cone)
+                telegraph.ShowCone(Muzzle, aimPoint - Muzzle, attack.data.coneAngle, attack.data.closeRange, attack.data.maxRange,
+                    attack.telegraphColor, !tracks);
         }
 
         telegraph.HideWindup();
@@ -575,6 +591,9 @@ public class Enemy : MonoBehaviour, IDamageFilter
         BeginPhase(Phase.Active, attack.ActiveFrames);
         useCounts[attack] = useCounts.TryGetValue(attack, out int uses) ? uses + 1 : 1;
         int recovery = attack.RecoveryFrames;
+
+        if (attack.data != null)
+            GameAudio.Play(attack.data.activeSound);
 
         switch (attack.kind)
         {
@@ -616,9 +635,19 @@ public class Enemy : MonoBehaviour, IDamageFilter
                 if (attack.summon != null)
                     ReinforcementRequested?.Invoke(this, attack.summon);
                 break;
+
+            case EnemyAttackKind.Shotgun:
+                if (targetCollider != null)
+                    Shotgun.Fire(gameObject, Muzzle, aimPoint - Muzzle, attack.data, 1 << targetCollider.gameObject.layer);
+
+                yield return Frames(Mathf.Max(0, attack.ActiveFrames - 1));
+                break;
         }
 
         // Le jeton est rendu dès la récupération : un autre ennemi peut enchaîner.
+        if (attack.data != null)
+            GameAudio.Play(attack.data.recoverySound);
+
         BeginPhase(Phase.Recovery, recovery);
         AttackTokens.Release(this);
         yield return Frames(recovery);

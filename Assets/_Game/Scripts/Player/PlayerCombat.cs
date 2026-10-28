@@ -159,6 +159,10 @@ public class PlayerCombat : MonoBehaviour
         if (!controller.CanAct || (TryGetComponent(out PlayerDodge dodge) && dodge.IsDodging))
             return;
 
+        // Pendant un tir de fusil (et sa pompe), pas de coup.
+        if (TryGetComponent(out PlayerShotgun shotgun) && shotgun.IsBusy)
+            return;
+
         AttackData next = NextAttack(null);
 
         if (next != null)

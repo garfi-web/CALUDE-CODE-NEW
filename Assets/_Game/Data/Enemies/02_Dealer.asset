@@ -21,11 +21,17 @@ MonoBehaviour:
   weight: 1
   superArmor: 0
   hitstunScale: 0.8
-  bodyColor: {r: 0.55, g: 0.2, b: 0.65, a: 1}
-  bodySize: {x: 0.9, y: 1.7}
+  bodyColor: {r: 1, g: 1, b: 1, a: 1}
+  bodySize: {x: 0.9, y: 1.8}
+  muzzleOffset: {x: 1.2, y: 1.3}
+  animator: {fileID: 9100000, guid: d25d8bcc5d8cbb0458170f2d5d7b0173, type: 2}
+  sprite: {fileID: -1401641931, guid: 2602668a6a44f2140aa0298801e9c483, type: 3}
+  limbColor: {r: 0.12, g: 0.12, b: 0.15, a: 1}
   bloodColor: {r: 0.55, g: 0.02, b: 0.03, a: 1}
   bloodGlows: 0
   canBeDismembered: 1
+  gibbable: 1
+  gibs: {fileID: 11400000, guid: 18bda95e5ebd27b46a54059011994ed5, type: 2}
   attacks:
   - name: "Ordre \xAB Chopez-le \xBB"
     kind: 5
@@ -49,27 +55,27 @@ MonoBehaviour:
     telegraphColor: {r: 1, g: 0.3, b: 0.9, a: 1}
     aimLine: 0
     aimLineWidth: 0.04
-  - name: Tir au pistolet
-    kind: 1
-    data: {fileID: 11400000, guid: 338b18cee6595dc40aebd851e0c42003, type: 2}
-    range: 8
-    cooldown: 1.2
+  - name: "Fusil \xE0 pompe"
+    kind: 7
+    data: {fileID: 11400000, guid: 3d5b25537c23e4245a3e7830bad1cd5b, type: 2}
+    range: 8.5
+    cooldown: 1
     maxUses: 0
     weight: 1
     feint: 0
-    projectileCount: 2
-    shotIntervalFrames: 15
-    projectileSpeed: 16
+    projectileCount: 1
+    shotIntervalFrames: 6
+    projectileSpeed: 18
     areaRadius: 2.5
     fuse: 1.2
     chargeSpeed: 11
-    trackingFrames: 36
+    trackingFrames: 39
     wallRecoveryFrames: 150
     buffWindupMultiplier: 0.8
     buffDuration: 5
     summon: {fileID: 0}
     telegraphColor: {r: 1, g: 0.15, b: 0.15, a: 1}
-    aimLine: 1
+    aimLine: 0
     aimLineWidth: 0.04
   - name: Coup de crosse
     kind: 0

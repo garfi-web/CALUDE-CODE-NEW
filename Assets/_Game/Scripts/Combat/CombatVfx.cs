@@ -36,10 +36,27 @@ public class CombatVfx : MonoBehaviour
     [SerializeField] private int bladeHitsToDismember = 4;
     [SerializeField] private int maxLimbsPerTarget = 2;
 
+    [Header("Fusil à pompe et corps pulvérisés")]
+    [Tooltip("Morceaux de chair génériques (tools/blender/redmet_props.py, build_flesh_chunks).")]
+    [SerializeField] private Sprite[] fleshChunks;
+    [SerializeField] private Sprite guts;
+    [SerializeField] private AudioClip goreSound;
+    [Tooltip("Morceaux à l'écran au plus (membres, chair, boyaux, douilles) : au-delà, le plus ancien est réutilisé.")]
+    [SerializeField] private int maxChunks = 48;
+    [SerializeField] private float chunkLifetime = 6f;
+    [SerializeField] private int fleshPerExplosion = 6;
+    [Tooltip("Mort de Nathan pulvérisé : ralenti (s réelles) et échelle de temps.")]
+    [SerializeField] private float deathSlowDuration = 0.5f;
+    [SerializeField] private float deathSlowScale = 0.25f;
+    [Tooltip("Ralenti quand un tir tue plusieurs ennemis.")]
+    [SerializeField] private float multiKillSlowDuration = 0.35f;
+
     private static readonly Color HumanBlood = new(0.55f, 0.02f, 0.03f);
     private static readonly Color SparkColor = new(1f, 0.9f, 0.55f);
     private static readonly Color SweatColor = new(0.8f, 0.92f, 1f, 0.9f);
     private static readonly Color DustColor = new(0.55f, 0.5f, 0.48f, 0.7f);
+    private static readonly Color BrassColor = new(0.85f, 0.62f, 0.2f);
+    private static readonly Color ShellColor = new(0.7f, 0.08f, 0.06f);
 
     private readonly List<ParticleCollisionEvent> collisionEvents = new();
     private readonly Dictionary<Health, int> bladeHits = new();
@@ -52,8 +69,10 @@ public class CombatVfx : MonoBehaviour
     private Ring[] rings;
     private Stain[] stains;
     private Limb[] limbs;
+    private Limb[] chunks;
     private int nextStain;
     private int nextLimb;
+    private int nextChunk;
     private int stainsThisFrame;
     private int flashFramesLeft;
 
@@ -81,6 +100,9 @@ public class CombatVfx : MonoBehaviour
         public float Age;
         public Color BloodColor;
         public Color Color;
+        public float Lifetime;
+        public bool Bleeds;
+        public BoxCollider2D Box;
     }
 
     private void Awake()
@@ -139,7 +161,24 @@ public class CombatVfx : MonoBehaviour
             body.gravityScale = 3f;
             go.AddComponent<BoxCollider2D>();
             go.SetActive(false);
-            limbs[i] = new Limb { Body = body, Renderer = renderer, Age = float.MaxValue };
+            limbs[i] = new Limb { Body = body, Renderer = renderer, Age = float.MaxValue, Lifetime = limbLifetime, Bleeds = true };
+        }
+
+        // Morceaux du fusil à pompe : physique 2D, rebonds sur le sol et les murs.
+        chunks = new Limb[maxChunks];
+        var bouncy = new PhysicsMaterial2D("Gibs") { bounciness = 0.35f, friction = 0.6f };
+
+        for (int i = 0; i < maxChunks; i++)
+        {
+            SpriteRenderer renderer = CreateSprite("Chunk", 6);
+            GameObject go = renderer.gameObject;
+            go.layer = debrisLayer;
+            var body = go.AddComponent<Rigidbody2D>();
+            body.gravityScale = 3f;
+            body.sharedMaterial = bouncy;
+            var box = go.AddComponent<BoxCollider2D>();
+            go.SetActive(false);
+            chunks[i] = new Limb { Body = body, Renderer = renderer, Box = box, Age = float.MaxValue };
         }
 
         if (flashOverlay != null)
@@ -257,7 +296,9 @@ public class CombatVfx : MonoBehaviour
                 break;
 
             case DamageType.Bullet:
-                Bleed(target, point, direction, 0.4f * goreScale, false);
+                // Plombs du fusil à pompe : giclée orientée, plus forte qu'une balle.
+                bool cone = attack != null && attack.IsCone;
+                Bleed(target, point, direction, (cone ? 1.2f : 0.4f) * goreScale, cone);
                 break;
 
             case DamageType.Explosion:
@@ -270,7 +311,118 @@ public class CombatVfx : MonoBehaviour
                     0.05f, 0.09f, SweatColor, 0.35f, 0.6f);
                 break;
         }
+
+        // Mort instantanée (fusil à pompe à bout portant) : le corps explose dans le sens du tir.
+        if (finisher && info.Lethal)
+            Explode(target, point, direction);
     }
+
+    // ------------------------------------------------------- Fusil à pompe
+
+    // Corps pulvérisé, selon le réglage de gore : complet = morceaux (membres, torse, tête), chair, boyaux,
+    // giclées et taches ; réduit = sang sans morceaux ; désactivé = le personnage s'effondre simplement.
+    // Nathan pulvérisé : flash, ralenti et fort tremblement avant l'écran de défaite.
+    private void Explode(Health target, Vector2 point, float direction)
+    {
+        GoreLevel gore = GameOptions.Gore;
+        bool player = target.GetComponent<PlayerController>() != null;
+
+        if (player)
+        {
+            if (GameOptions.ImpactFlashes)
+                flashFramesLeft = 2;
+
+            GameTime.SlowMotion(deathSlowDuration, deathSlowScale);
+        }
+
+        if (CameraFollow.Main != null)
+            CameraFollow.Main.Shake(player ? 1f : 0.7f);
+
+        if (gore == GoreLevel.Off)
+            return;
+
+        Color bloodColor = BloodColorOf(target);
+        Vector2 center = target.TryGetComponent(out Collider2D collider) ? (Vector2)collider.bounds.center : point;
+        Emit(blood, center, gore == GoreLevel.Full ? 90 : 35, direction, 4f, 14f, 50f, 0.06f, 0.16f, bloodColor, 0.6f, 1.4f);
+        Emit(blood, center + Vector2.up * 0.4f, gore == GoreLevel.Full ? 40 : 15, direction, 2f, 7f, 110f, 0.08f, 0.18f, bloodColor, 0.7f, 1.5f);
+        GameAudio.Play(goreSound);
+
+        if (gore != GoreLevel.Full || !target.TryGetComponent(out GibSource source) || source.Set == null)
+            return;
+
+        source.MarkExploded();
+        float feet = collider != null ? collider.bounds.min.y : center.y - source.Height * 0.5f;
+
+        for (int i = 0; i < GibSet.Count; i++)
+        {
+            Vector2 at = new(center.x, feet + GibSet.Heights[i] * source.Height);
+            SpawnChunk(source.Set[i], at, direction, 1f, bloodColor, true, chunkLifetime);
+        }
+
+        for (int i = 0; i < fleshPerExplosion && fleshChunks != null && fleshChunks.Length > 0; i++)
+            SpawnChunk(fleshChunks[i % fleshChunks.Length], center + Random.insideUnitCircle * 0.3f, direction, 1.3f, bloodColor, true, chunkLifetime);
+
+        if (guts != null)
+        {
+            SpawnChunk(guts, center, direction, 0.8f, bloodColor, true, chunkLifetime);
+            SpawnChunk(guts, center + Vector2.down * 0.15f, direction, 0.6f, bloodColor, true, chunkLifetime);
+        }
+    }
+
+    private void SpawnChunk(Sprite sprite, Vector2 position, float direction, float force, Color blood, bool bleeds, float lifetime,
+        Color? tint = null, Vector2? size = null)
+    {
+        Limb chunk = chunks[nextChunk];
+        nextChunk = (nextChunk + 1) % chunks.Length;
+
+        chunk.Renderer.sprite = sprite != null ? sprite : square;
+        chunk.Color = tint ?? Color.white;
+        chunk.Renderer.color = chunk.Color;
+        chunk.Renderer.enabled = true;
+        chunk.Renderer.transform.localScale = size.HasValue ? new Vector3(size.Value.x, size.Value.y, 1f) : Vector3.one;
+        chunk.BloodColor = blood;
+        chunk.Bleeds = bleeds;
+        chunk.Lifetime = lifetime;
+        chunk.Box.size = chunk.Renderer.sprite.bounds.size * 0.7f;
+        chunk.Body.gameObject.SetActive(true);
+        chunk.Body.position = position;
+        chunk.Body.rotation = Random.Range(-30f, 30f);
+        chunk.Body.linearVelocity = new Vector2(direction * Random.Range(5f, 12f), Random.Range(3f, 10f)) * force;
+        chunk.Body.angularVelocity = Random.Range(-900f, 900f);
+        chunk.Age = 0f;
+    }
+
+    // Coup de feu : gerbe d'étincelles et traînées de plombs dans le cône, onde au canon, fort tremblement.
+    public void ShotgunBlast(Vector2 muzzle, Vector2 aim, float coneAngle, float range)
+    {
+        float direction = aim.x >= 0f ? 1f : -1f;
+        Emit(sparks, muzzle, 26, direction, 8f, 18f, coneAngle, 0.1f, 0.22f, SparkColor, 0.05f, 0.12f);
+        SpawnRing(muzzle, 1.1f, 0.18f);
+
+        var parameters = new ParticleSystem.EmitParams { applyShapeToPosition = false };
+
+        for (int i = 0; i < 12; i++)
+        {
+            float angle = Mathf.Atan2(aim.y, Mathf.Abs(aim.x)) + Random.Range(-coneAngle, coneAngle) * Mathf.Deg2Rad;
+            var dir = new Vector2(Mathf.Cos(angle) * direction, Mathf.Sin(angle));
+            parameters.position = muzzle;
+            parameters.velocity = dir * Random.Range(40f, 60f);
+            parameters.startSize = 0.04f;
+            parameters.startLifetime = range / 55f;
+            parameters.startColor = SparkColor;
+            speedLines.Emit(parameters, 1);
+        }
+
+        if (CameraFollow.Main != null)
+            CameraFollow.Main.Shake(0.6f);
+    }
+
+    // Douille éjectée vers l'arrière et le haut après la pompe.
+    public void EjectShell(Vector2 point, float facing) =>
+        SpawnChunk(square, point, -facing, 0.35f, Color.clear, false, 1.5f, ShellColor, new Vector2(0.05f, 0.11f));
+
+    // Un tir qui tue plusieurs ennemis : bref ralenti.
+    public void MultiKill() => GameTime.SlowMotion(multiKillSlowDuration, slowMotionScale);
 
     private void BladeGore(Health target, Vector2 point, float direction, float scale, bool finisher)
     {
@@ -537,20 +689,26 @@ public class CombatVfx : MonoBehaviour
             stain.Renderer.color = color;
         }
 
-        foreach (Limb limb in limbs)
+        UpdateDebris(limbs, dt);
+        UpdateDebris(chunks, dt);
+    }
+
+    // Membres et morceaux : ils saignent en volant (traînée), puis s'estompent.
+    private void UpdateDebris(Limb[] debris, float dt)
+    {
+        foreach (Limb limb in debris)
         {
             if (!limb.Body.gameObject.activeSelf)
                 continue;
 
             limb.Age += dt;
 
-            // Le membre saigne en volant, puis s'estompe.
-            if (limb.Age < 1.2f && Time.frameCount % 3 == 0)
+            if (limb.Bleeds && limb.Age < 1.2f && Time.frameCount % 3 == 0)
                 Emit(blood, limb.Body.position, 1, -Mathf.Sign(limb.Body.linearVelocity.x), 0.2f, 1f, 30f, 0.05f, 0.1f, limb.BloodColor, 0.5f, 1f);
 
-            float fade = Mathf.InverseLerp(limbLifetime, limbLifetime - 1f, limb.Age);
+            float fade = Mathf.InverseLerp(limb.Lifetime, limb.Lifetime - 1f, limb.Age);
             Color color = limb.Color;
-            color.a = fade;
+            color.a *= fade;
             limb.Renderer.color = color;
 
             if (fade <= 0f)
@@ -589,6 +747,9 @@ public class CombatVfx : MonoBehaviour
 
         foreach (Limb limb in limbs)
             limb.Body.gameObject.SetActive(false);
+
+        foreach (Limb chunk in chunks)
+            chunk.Body.gameObject.SetActive(false);
 
         bladeHits.Clear();
         limbsTaken.Clear();

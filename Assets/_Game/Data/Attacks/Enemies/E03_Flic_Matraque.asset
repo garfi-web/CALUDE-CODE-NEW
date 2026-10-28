@@ -30,3 +30,13 @@ MonoBehaviour:
   knockback: 0
   knockbackVelocity: {x: 4.5, y: 0}
   hitstun: 18
+  pellets: 0
+  coneAngle: 16
+  closeRange: 2.5
+  midRange: 5.5
+  maxRange: 9
+  lethalAtCloseRange: 0
+  farHit: {fileID: 0}
+  windupSound: {fileID: 0}
+  activeSound: {fileID: 0}
+  recoverySound: {fileID: 0}

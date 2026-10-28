@@ -11,15 +11,29 @@ public class CombatHUD : MonoBehaviour
     [SerializeField] private RectTransform enemyFill;
     [SerializeField] private Text enemyLabel;
     [SerializeField] private Text messageText;
+    [Tooltip("Cartouches du fusil à pompe (Nathan M4), sous la barre de vie.")]
+    [SerializeField] private PlayerShotgun shotgun;
+    [SerializeField] private Text ammoText;
 
     private void OnEnable()
     {
         if (playerHealth != null) playerHealth.HealthChanged += OnPlayerHealthChanged;
+        if (shotgun != null) shotgun.AmmoChanged += OnAmmoChanged;
     }
 
     private void OnDisable()
     {
         if (playerHealth != null) playerHealth.HealthChanged -= OnPlayerHealthChanged;
+        if (shotgun != null) shotgun.AmmoChanged -= OnAmmoChanged;
+    }
+
+    private void OnAmmoChanged(int shells, int magazine, bool armed)
+    {
+        if (ammoText == null)
+            return;
+
+        ammoText.enabled = armed;
+        ammoText.text = $"NATHAN M4 · FUSIL {new string('■', shells)}{new string('□', magazine - shells)}";
     }
 
     private void Start()

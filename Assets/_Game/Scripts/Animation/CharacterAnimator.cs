@@ -31,6 +31,7 @@ public class CharacterAnimator : MonoBehaviour
     private PlayerCombat combat;
     private PlayerDodge dodge;
     private PlayerDash dash;
+    private PlayerShotgun shotgun;
     private HitStop hitStop;
     private HitReaction reaction;
     private Enemy enemy;
@@ -46,6 +47,7 @@ public class CharacterAnimator : MonoBehaviour
         combat = GetComponent<PlayerCombat>();
         dodge = GetComponent<PlayerDodge>();
         dash = GetComponent<PlayerDash>();
+        shotgun = GetComponent<PlayerShotgun>();
         hitStop = GetComponent<HitStop>();
         reaction = GetComponent<HitReaction>();
         enemy = GetComponent<Enemy>();
@@ -53,6 +55,8 @@ public class CharacterAnimator : MonoBehaviour
         CacheParameters();
 
         if (combat != null) combat.AttackStarted += OnPlayerAttack;
+        if (shotgun != null) shotgun.Fired += OnPlayerAttack;
+        if (shotgun != null) shotgun.ShellLoading += OnEnemyHold;
         if (enemy != null) enemy.AttackStarted += OnEnemyAttack;
         if (enemy != null) enemy.HoldStarted += OnEnemyHold;
         if (dodge != null) dodge.DodgeStarted += OnDodge;
@@ -87,6 +91,8 @@ public class CharacterAnimator : MonoBehaviour
     private void OnDestroy()
     {
         if (combat != null) combat.AttackStarted -= OnPlayerAttack;
+        if (shotgun != null) shotgun.Fired -= OnPlayerAttack;
+        if (shotgun != null) shotgun.ShellLoading -= OnEnemyHold;
         if (enemy != null) enemy.AttackStarted -= OnEnemyAttack;
         if (enemy != null) enemy.HoldStarted -= OnEnemyHold;
         if (dodge != null) dodge.DodgeStarted -= OnDodge;
@@ -140,6 +146,7 @@ public class CharacterAnimator : MonoBehaviour
         Trigger(AttackHash);
     }
 
+    // Immobilisation : rechargement du Flic, cartouche glissée dans le fusil de Nathan M4.
     private void OnEnemyHold() => Trigger(HoldHash);
 
     private void OnDodge() => Trigger(DodgeHash);

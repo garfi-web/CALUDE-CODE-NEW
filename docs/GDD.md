@@ -62,6 +62,19 @@ Le GDD v0.1 propose aussi deux variables simples, l'**indice de corruption moral
 | 4 — Arsenal extrême | Lance-roquettes, grenades | Destruction massive, gestion des munitions |
 | 5 — Mutation | Pouvoirs vampiriques | Drain de vie, mobilité surnaturelle, ultime |
 
+### Le fusil à pompe (Dealer et Nathan M4)
+Le **Dealer** porte un fusil à pompe (et non plus une arme de poing). Il ne tire jamais sans avertissement : environ 0,9 s (réglable dans son AttackData) pendant lesquelles il arme le fusil avec un « tchak-tchak » reconnaissable, l'épaule et vise Nathan. Un cône de danger rouge part du canon, plus dense à bout portant, et une lueur rouge pulse au bout du canon. La visée se fige 0,25 s avant le coup.
+- **Bout portant (2,5 m)** : mort instantanée de Nathan, quels que soient ses PV. Son corps explose dans le sens du tir (membres, torse, tête, boyaux, sang, taches), avec arrêt sur image, flash, ralenti de 0,5 s, fort tremblement, puis l'écran de défaite.
+- **Moyenne distance (jusqu'à 5,5 m)** : gros dégâts et projection. **Au-delà** : plombs dispersés, dégâts faibles.
+- **Survivre** : sortir du cône, ou esquiver au dernier moment. L'invulnérabilité de l'esquive (0,40 s) couvre le tir, mais pas toute l'annonce : c'est un réflexe.
+- Après chaque tir, il recharge lentement (1,25 s) : c'est la fenêtre pour le frapper. Il garde ses gardes du corps autour de lui.
+
+**Nathan M4** (sous Red Met) dispose du même fusil, sur une touche dédiée : c'est la sensation de toute-puissance.
+- À courte portée, les humains de l'Acte I sont réduits en morceaux et projetés. À moyenne portée : projection contre les murs et étourdissement. Le tir est en cône.
+- Impact maximal : gros recul de Nathan, flash du canon, onde de choc, fort tremblement, arrêt sur image, douille éjectée, ralenti bref quand un tir tue plusieurs ennemis.
+- **Équilibrage** : 6 cartouches, rechargement cartouche par cartouche (l'esquive l'interrompt), cadence lente avec le temps de pompe. Les ennemis surnaturels des Actes II et III et les boss ne sont jamais pulvérisés en un tir : ils encaissent et réagissent selon leur fiche.
+- Le réglage de gore s'applique : « complet », explosion en morceaux ; « réduit », sang sans morceaux ; « désactivé », le corps s'effondre simplement.
+
 **Équilibrage.** Sur la voie sobre, un ennemi standard demande environ 4 fois plus d'actions offensives. La difficulté doit venir du timing, des fenêtres de contre-attaque, de l'endurance et de la fuite, jamais de dégâts ennemis artificiellement gonflés.
 
 ### Scène de culpabilité
