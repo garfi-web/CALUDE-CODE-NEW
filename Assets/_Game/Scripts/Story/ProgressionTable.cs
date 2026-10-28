@@ -24,7 +24,7 @@ public class NathanStageData
 [CreateAssetMenu(menuName = "RED MET/Table de progression", fileName = "Progression")]
 public class ProgressionTable : ScriptableObject
 {
-    [Tooltip("Niveaux du monde parallèle : la fin avec Mara demande une dose à chacun.")]
+    [Tooltip("Niveaux du monde parallèle, une dose possible par niveau.")]
     public int levelCount = 10;
     [Tooltip("Dépendance ajoutée par dose prise.")]
     public int dependencePerDose = 1;
@@ -33,10 +33,27 @@ public class ProgressionTable : ScriptableObject
     public NathanStageData[] nathan = Array.Empty<NathanStageData>();
 
     [Tooltip("Doses minimales pour les tenues M-T0 à M-T4.")]
-    public int[] maraOutfitMinDoses = { 0, 1, 2, 4, 5 };
+    public int[] maraOutfitMinDoses = { 0, 1, 3, 5, 7 };
 
     [Tooltip("Doses minimales pour les stades réels R0 à R4.")]
-    public int[] realStageMinDoses = { 0, 1, 2, 4, 5 };
+    public int[] realStageMinDoses = { 0, 1, 3, 5, 7 };
+
+    [Header("Fin de la voie immorale")]
+    [Tooltip("Doses prises au minimum.")]
+    public int immoralEndingMinDoses = 6;
+    [Tooltip("Grandes demandes du Chimiste acceptées au minimum.")]
+    public int immoralEndingMinDemands = 2;
+    [Tooltip("Actes qui marquent l'acceptation des grandes demandes (identifiants de docs/SCENARIO.md).")]
+    public string[] chimisteDemandActs =
+    {
+        "acte_ch04_humiliation_acceptee",
+        "acte_ch05_coeur_marc",
+        "acte_ch07_enfant_livre",
+    };
+
+    public bool IsImmoralEnding(GameState state) =>
+        state.DosesTaken >= immoralEndingMinDoses &&
+        state.CountActs(chimisteDemandActs) >= immoralEndingMinDemands;
 
     public NathanStageData Nathan(int doses)
     {

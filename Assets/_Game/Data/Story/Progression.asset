@@ -32,7 +32,7 @@ MonoBehaviour:
     gibs: {fileID: 0}
     height: 1.7
   - stage: 2
-    minDoses: 2
+    minDoses: 3
     maxHealth: 200
     damageMultiplier: 4.5
     shotgun: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
     gibs: {fileID: 0}
     height: 1.7
   - stage: 3
-    minDoses: 4
+    minDoses: 5
     maxHealth: 240
     damageMultiplier: 5
     shotgun: 0
@@ -48,12 +48,18 @@ MonoBehaviour:
     gibs: {fileID: 0}
     height: 1.7
   - stage: 4
-    minDoses: 5
+    minDoses: 7
     maxHealth: 280
     damageMultiplier: 5.5
     shotgun: 1
     animator: {fileID: 9100000, guid: 6b7ae4646734f7f4bb541e2c3d28b6d9, type: 2}
     gibs: {fileID: 11400000, guid: a982c6f9987e31749bf6599178323e07, type: 2}
     height: 2.05
-  maraOutfitMinDoses: 0000000001000000020000000400000005000000i
-  realStageMinDoses: 0000000001000000020000000400000005000000i
+  maraOutfitMinDoses: 0000000001000000030000000500000007000000i
+  realStageMinDoses: 0000000001000000030000000500000007000000i
+  immoralEndingMinDoses: 6
+  immoralEndingMinDemands: 2
+  chimisteDemandActs:
+  - acte_ch04_humiliation_acceptee
+  - acte_ch05_coeur_marc
+  - acte_ch07_enfant_livre

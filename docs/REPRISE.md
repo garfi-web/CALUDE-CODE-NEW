@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, exécute la PROCHAINE ÉTAPE notée en tête de la section 8 de docs/REPRISE.md (intégration du scénario), et arrête-toi après les chapitres 1 à 3 de docs/SCENARIO.md pour validation, en respectant CLAUDE.md.
+> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, relis docs/SCENARIO.md (plan des chapitres 4 à 10 et trois idées de boss du chapitre 1, en attente de ma validation) et attends mes réponses aux « Points à valider » avant d'aller plus loin, en respectant CLAUDE.md.
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
@@ -135,10 +135,13 @@ Sources : `docs/source/RED_MET_10_chapitres.md` et `docs/source/RED_MET_GDD_v0.1
 > d) Fin : voie immorale = section 11.1 du GDD v0.1 (scène coupée avant l'acte, sans nudité, centrée sur la réaction de Mara) ; voie morale = section 11.2 ; puis yeux révulsés, chute, hôpital, coma et « RED MET 2 » (section 12).
 > e) Crée docs/SCENARIO.md : pour chacun des 10 chapitres, le déroulé réel et parallèle, les choix et leurs conséquences, les scènes de Mara en ouverture et en fin de niveau, les interventions de L'Avocat, les ennemis et la dose proposée, avec un identifiant par scène pour les fichiers Ink. Pas encore de dialogues complets. Montre-moi les chapitres 1 à 3 avant de rédiger la suite.
 
-**À faire jusqu'aux chapitres 1 à 3 de `docs/SCENARIO.md`, puis arrêt pour validation de l'auteur.** Ne pas commencer la suite (chapitres 4 à 10) avant son feu vert.
+**État (2026-10-28)** : points a) à e) faits. `docs/SCENARIO.md` : chapitres 1 à 3 **validés par l'auteur** (avec ses corrections), plan des **chapitres 4 à 10 rédigé, en attente de validation** : 7 points à trancher en fin de fichier, dont le **boss du ch. 1** (trois idées : A le Chœur des rieurs, B le Gérant, C la Bête de cendres). Ne l'ajouter au bestiaire qu'après le choix de l'auteur. Seuils de Mara, de Nathan (M0 à M4) et du réel (R0 à R4) à 0 / 1 / 3 / 5 / 7 doses et condition de la fin immorale reportés dans le code et `Progression.asset`.
+
+**Ensuite (après validation)** : étape 3 du prototype narratif, les dialogues visual novel avec Ink, à partir des identifiants de scène de `SCENARIO.md` ; ajouter l'argent à l'état de la partie.
 
 **Décisions de l'auteur du 2026-10-28** (elles remplacent celles de l'étape 1 du prototype narratif, commit `1f50321` ; déjà notées dans `docs/GDD.md`) :
-- **Seuils des tenues de Mara : 0 / 1-2 / 3-4 / 5-6 / 7+** (M-T0 à M-T4), car le jeu a 10 niveaux et jusqu'à 10 doses. Pendant l'intégration, mettre à jour aussi `docs/CHARACTERS.md`, `maraOutfitMinDoses` dans `ProgressionTable.cs` et `Data/Story/Progression.asset` (aujourd'hui 0, 1, 2, 4, 5), et revoir les seuils de Nathan M0 à M4 et R0 à R4, calés sur 5 doses.
+- **Seuils des tenues de Mara : 0 / 1-2 / 3-4 / 5-6 / 7+** (M-T0 à M-T4), car le jeu a 10 niveaux et jusqu'à 10 doses. Reportés dans `docs/CHARACTERS.md`, `ProgressionTable.cs` et `Data/Story/Progression.asset` (0, 1, 3, 5, 7). Seuils de Nathan M0 à M4 et R0 à R4 alignés dessus (décision du 2026-10-28, reportée dans le code) ; fusil à pompe et pouvoirs vampiriques à 7 doses.
+- **Fin immorale** si au moins 6 doses sur 10 **et** au moins 2 des 3 grandes demandes acceptées (humiliation, cœur de Marc, enfant).
 - **Fin de la voie immorale : section 11.1 du GDD v0.1**, qui remplace la nuit consentie. **L'emplacement vide pour un illustrateur est supprimé.** Scène coupée avant l'acte, sans nudité, centrée sur la réaction de Mara.
 
 L'étape 2 du prototype narratif (état de la partie et sauvegarde, commit `0eb0ce6`) attend aussi la validation de l'auteur (valeurs de puissance dans `docs/PRODUCTION.md`).

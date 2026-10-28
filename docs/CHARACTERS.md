@@ -21,6 +21,8 @@ Principe directeur : **le corps réel se vide pendant que le double se remplit**
 | **R3 — La peau sur les os** | 6–7 | **Émacié**, clavicules et poignets saillants | Dents abîmées, barbe négligée, yeux trop grands, verres fêlés | Vêtements qui pendent | Trébuche, tics, mouvements involontaires (cf. `nathan-reel-hallucination.webp`) |
 | **R4 — Corps brisé** | 8–10 | Squelettique, voûté | Teint gris, regard halluciné, rictus | Hoodie gris taché et trop grand, jean noir en lambeaux, vieilles bottes. Marques rouges sur les avant-bras et le cou. Blouse d'hôpital pour l'épilogue | Marche saccadée, absences |
 
+Le stade réel se calcule à partir des doses prises, comme celui du monde parallèle. Seuils (décision de l'auteur du 2026-10-28) : R0 à 0 dose, R1 à 1-2, R2 à 3-4, R3 à 5-6, R4 à 7 et plus. La colonne des chapitres vaut pour un joueur qui prend toutes ses doses ; le joueur sobre reste R0.
+
 Ces stades sont une représentation **fictionnelle** de la dépendance, pas un jugement sur l'apparence. Le passage de « chubby » à « maigre » doit se lire comme une **perte de santé**, jamais comme une amélioration.
 
 **De R0 à R2, on doit voir un jeune homme malade et épuisé, jamais un mort-vivant** : peau humaine (pâle, pas grise), aucune plaie ouverte, pas de sang, pas d'yeux vides ni de pupilles blanches. L'aspect « zombie » est réservé à R4 et aux hallucinations.
@@ -29,13 +31,13 @@ Concepts : `Assets/_Game/Art/Characters/Nathan_R0/` … `Nathan_R4/`, dans `Conc
 
 ### Monde de la Red Met
 
-| Stade | Dose | Silhouette | Détails | Références |
+| Stade | Doses (décision du 2026-10-28) | Silhouette | Détails | Références |
 |---|---|---|---|---|
 | **M0 — Le faible** | 0 | Même corps que R0, sans les lunettes | Poings nus, garde maladroite | — |
-| **M1 — L'éveil** | 1 | Musclé, posture droite | Barbe naissante, cheveux qui poussent, couteau | — |
-| **M2 — Le barbare** | 2–3 | **Colosse**, épaules massives | Longue chevelure brun-roux, barbe épaisse, fourrures, cicatrices | `nathan-redmet-barbare.webp`, `nathan-redmet-guerrier.webp` |
-| **M3 — Le seigneur de guerre** | 4 | Armure de plaques sombres | Peinture de guerre bleue, yeux rouges, armes lourdes | `nathan-redmet-guerrier.webp` |
-| **M4 — Le prédateur** | 5 | Peau grise, comme de la **pierre fissurée** | **Veines rouges incandescentes** (la Red Met visible sous la peau), yeux rouges luminescents | `nathan-redmet-final-double.webp` |
+| **M1 — L'éveil** | 1–2 | Musclé, posture droite | Barbe naissante, cheveux qui poussent, couteau | — |
+| **M2 — Le barbare** | 3–4 | **Colosse**, épaules massives | Longue chevelure brun-roux, barbe épaisse, fourrures, cicatrices | `nathan-redmet-barbare.webp`, `nathan-redmet-guerrier.webp` |
+| **M3 — Le seigneur de guerre** | 5–6 | Armure de plaques sombres | Peinture de guerre bleue, yeux rouges, armes lourdes | `nathan-redmet-guerrier.webp` |
+| **M4 — Le prédateur** | 7 et plus | Peau grise, comme de la **pierre fissurée** | **Veines rouges incandescentes** (la Red Met visible sous la peau), yeux rouges luminescents | `nathan-redmet-final-double.webp` |
 | **M5 — Le double** (boss du ch. 10) | — | Gigantesque, presque minéral | Les fissures rouges couvrent tout le corps ; un fragment des lunettes de R0 incrusté dans l'armure | `nathan-redmet-final-double.webp` |
 
 **Fil rouge visuel :** les **fissures rouges** apparaissent sur le double au stade M3, puis gagnent du terrain. Dans le monde réel, des marques rouges discrètes apparaissent aux mêmes endroits (avant-bras, cou) : le joueur doit pouvoir faire le lien.
@@ -75,15 +77,15 @@ Adulte, guerrière du monde de la Red Met (cf. `mara.webp`).
 
 ### Progression des tenues
 
-La tenue de Mara suit la corruption de Nathan : le stade se calcule à partir du **nombre de doses prises**, lu dans l'état de la partie (`docs/GDD.md`, « Visual novels ») ; la colonne des chapitres n'est qu'indicative, pour un joueur qui prend toutes ses doses. Seuils : 0 dose = M-T0, 1 = M-T1, 2 ou 3 = M-T2, 4 = M-T3, 5 et plus = M-T4. Chaque stade a un portrait de face (ouverture) et un portrait de dos (fin de niveau), avec plusieurs expressions ; les portraits de dos partent d'un rendu Blender du modèle 3D, affiné dans ComfyUI (Animagine XL 4.0, ControlNet pose et contours). Elle reste toujours une combattante redoutable, jamais une proie. Les scènes restent non explicites (cf. `docs/GDD.md`, lignes directrices des scènes sensibles).
+La tenue de Mara suit la corruption de Nathan : le stade se calcule à partir du **nombre de doses prises**, lu dans l'état de la partie (`docs/GDD.md`, « Visual novels ») ; la colonne des chapitres n'est qu'indicative, pour un joueur qui prend toutes ses doses. Seuils (décision de l'auteur du 2026-10-28, pour 10 niveaux et jusqu'à 10 doses) : 0 dose = M-T0, 1 ou 2 = M-T1, 3 ou 4 = M-T2, 5 ou 6 = M-T3, 7 et plus = M-T4. Chaque stade a un portrait de face (ouverture) et un portrait de dos (fin de niveau), avec plusieurs expressions ; les portraits de dos partent d'un rendu Blender du modèle 3D, affiné dans ComfyUI (Animagine XL 4.0, ControlNet pose et contours). Elle reste toujours une combattante redoutable, jamais une proie. Les scènes restent non explicites (cf. `docs/GDD.md`, lignes directrices des scènes sensibles).
 
-| Stade | Chapitres | Tenue |
+| Stade | Doses (chapitres si toutes prises) | Tenue |
 |---|---|---|
-| **M-T0** | 1–2 | La référence (`mara.webp`). Combinaison noire brillante à col montant, sangles rouges croisées, corset à boucles, jupe longue fendue, cuissardes. Entièrement couverte. |
-| **M-T1** | 3–4 | Combinaison ouverte en V sur un décolleté plongeant, fentes de jupe jusqu'aux hanches. |
-| **M-T2** | 5 | Bustier échancré, épaules et ventre nus, jupe courte fendue, porte-jarretelles et cuissardes. |
-| **M-T3** | 6–7 | Tenue de combat minimale : haut très échancré, bas de type string sous une demi-jupe qui découvre les fesses de dos, sangles et pièces d'armure rouges. Concept de dos en plus du concept de face. |
-| **M-T4** | 8–10 (voie immorale) | Armure noire fissurée de veines rouges, plus agressive et provocante, mais habillée. |
+| **M-T0** | 0 | La référence (`mara.webp`). Combinaison noire brillante à col montant, sangles rouges croisées, corset à boucles, jupe longue fendue, cuissardes. Entièrement couverte. |
+| **M-T1** | 1–2 (ch. 1–2) | Combinaison ouverte en V sur un décolleté plongeant, fentes de jupe jusqu'aux hanches. |
+| **M-T2** | 3–4 (ch. 3–4) | Bustier échancré, épaules et ventre nus, jupe courte fendue, porte-jarretelles et cuissardes. |
+| **M-T3** | 5–6 (ch. 5–6) | Tenue de combat minimale : haut très échancré, bas de type string sous une demi-jupe qui découvre les fesses de dos, sangles et pièces d'armure rouges. Concept de dos en plus du concept de face. |
+| **M-T4** | 7 et plus (ch. 7–10) | Armure noire fissurée de veines rouges, plus agressive et provocante, mais habillée. |
 
 Concepts : `Assets/_Game/Art/Characters/Mara/Concept/` (prompts et seeds dans `docs/PRODUCTION.md`). Prompt négatif imposé : `nsfw, nude, child, loli, young`.
 
@@ -108,13 +110,17 @@ C'est l'homme qui fournit la Red Met à Nathan, et **le moteur des choix moraux 
 
 ### L'escalade des demandes
 
+Ch. 1 à 3 : la dose s'achète (offerte, à crédit, puis contre de l'argent). Ensuite viennent les trois demandes du GDD v0.1 (section 10). Placement validé par l'auteur (`docs/SCENARIO.md`).
+
 | Ch. | Demande | Choix de Nathan | Conséquences |
 |---|---|---|---|
-| 3–4 | **Se prostituer** pour payer sa dose (scène non explicite) | Refuser, accepter, négocier, demander un autre travail | Image de soi, souvenirs troubles de la nuit, Paranoïa +, Humanité − |
+| 4 | **L'humiliation imposée** : une faveur sexuelle exigée pour prouver qu'il est « prêt à tout » (scène non explicite : contrainte et perte de contrôle, jamais un spectacle érotique) | Accepter, refuser, ou tenter de rompre avec le réseau | Dignité et autonomie sacrifiées, Paranoïa +, Humanité − |
 | 5 | **Rapporter un cœur pour le marché noir**, celui de Marc, son père | Refuser, prévenir Marc, déjouer le réseau, ou tuer | Irréversible : Marc disparaît de l'histoire. Cruauté ++, crise de culpabilité |
 | 7 | **Livrer un enfant au réseau** | Refuser, mettre l'enfant à l'abri, saboter la transaction, ou livrer | Enquête, détresse de la famille, pression policière, rupture morale majeure. Aucun détail pratique |
 
 Après chaque acceptation : scène de culpabilité, puis la dose. Après chaque refus : moins d'argent, pas de dose, et le dealer reste disponible… avec la demande suivante.
+
+**Le prix de son corps** n'est pas une demande du Chimiste mais un dilemme du réel (source, section 2) : un adulte propose de l'argent à Nathan en échange d'un rapport sexuel. Nathan peut refuser, accepter, négocier ou demander une autre forme de travail. La scène est non explicite et traite la vulnérabilité et le marchandage sous dépendance. Elle modifie l'image que Nathan a de lui-même et ses souvenirs troubles de la nuit (Paranoïa +, Humanité −). Placement : ch. 6 (validé).
 
 ```
 Tripo : stylized anime 3D character, mature Black African man, calm confident expression,

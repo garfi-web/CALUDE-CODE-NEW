@@ -21,6 +21,8 @@ Les inspirations : Arthas (*Warcraft III*) pour la chute du héros, une successi
 
 ## Structure : deux mondes en alternance
 
+Le déroulé détaillé de chaque chapitre (scènes, choix, ennemis, dose proposée, identifiants Ink) est dans [`docs/SCENARIO.md`](SCENARIO.md).
+
 Chaque chapitre contient au moins une séquence dans la **réalité** (descente sociale, physique et psychologique) et une dans le **monde de la Red Met** (épopée dark fantasy). Les actes réels modifient les ressources, les relations et les ennemis de l'autre monde.
 
 | Ch. | Titre | Réalité | Red Met |
@@ -45,7 +47,7 @@ Chaque incursion dans le monde de la Red Met suit le même déroulé :
 
 Une partie est une suite d'incursions numérotées ; ce numéro règle la force des ennemis (voir « Difficulté »).
 
-**Fin préférée.** La voix n'a jamais eu besoin de contrôler Nathan : elle a seulement présenté chaque mauvaise décision comme une nécessité. Le dernier choix ne se fait pas entre le bien et le mal, mais entre **assumer ses actes** et **continuer à les justifier**. Variante du GDD v0.1 : effondrement, coma, fiche médicale « RED MET 2 ».
+**Fin préférée.** La voix n'a jamais eu besoin de contrôler Nathan : elle a seulement présenté chaque mauvaise décision comme une nécessité. Le dernier choix ne se fait pas entre le bien et le mal, mais entre **assumer ses actes** et **continuer à les justifier**. Le ch. 10 se conclut ensuite par la scène avec Mara (voie immorale ou morale), puis par l'effondrement, le coma et la fiche médicale « RED MET 2 » (voir « La fin avec Mara »).
 
 ## Systèmes
 
@@ -62,14 +64,21 @@ Le jeu **se souvient des actes**, et pas seulement d'un score. Les contradiction
 Le GDD v0.1 propose aussi deux variables simples, l'**indice de corruption morale** et le **niveau de consommation** ; elles peuvent servir d'implémentation de départ.
 
 ### Progression des doses
-| Niveau | Débloque | Effet |
-|---|---|---|
-| 0 — Sobre | Poings, pieds, esquive | Santé faible, combat exigeant |
-| 1 — Première dose | Armes blanches | PV et force accrus |
-| 2 — Dépendance | Armes à feu | Éliminations rapides |
-| 3 — Escalade | Lance-flammes, lance-scie | Dégâts de zone |
-| 4 — Arsenal extrême | Lance-roquettes, grenades | Destruction massive, gestion des munitions |
-| 5 — Mutation | Pouvoirs vampiriques | Drain de vie, mobilité surnaturelle, ultime |
+Le jeu a **10 niveaux** et le joueur peut prendre **jusqu'à 10 doses**, une par niveau. Chaque dose augmente les PV et la force de Nathan, et débloque les armes dans l'ordre des documents de l'auteur. Les stades suivent les mêmes seuils que les tenues de Mara (décision de l'auteur du 2026-10-28, reportée dans `Data/Story/Progression.asset`).
+
+| Doses | Stade | Débloque | Effet |
+|---|---|---|---|
+| 0 — Sobre | M0 | Poings, pieds, esquive | Santé faible et fixe, combat exigeant |
+| 1 — Première dose | M1 | Lames et armes tranchantes | PV et force accrus ; premiers démembrements |
+| 2 | M1 | — | PV et force |
+| 3 — Dépendance | M2 | Armes à feu (pistolet 9 mm) | Éliminations rapides |
+| 5 — Escalade | M3 | Lance-flammes, lance-scie découpeuse | Dégâts de zone |
+| 6 — Arsenal extrême | M3 | Lance-roquettes, grenades | Destruction massive, gestion des munitions |
+| 7 — Mutation | M4 | Pouvoirs vampiriques (*inFAMOUS 2: Festival of Blood*) et **fusil à pompe** | Drain de vie, mobilité surnaturelle ; pulvérise les humains de l'Acte I |
+| 8 à 10 | M4 | Pouvoirs renforcés, capacité ultime (jauge) | Vers le double du ch. 10 |
+
+- **Voie sobre** : Nathan ne se bat qu'avec **les poings et les pieds**, avec une **santé faible** qui n'augmente pas, mais il **se déplace et saute normalement** (course, saut, dash, esquive identiques). Il lui faut environ 4 fois plus de coups pour tuer un ennemi.
+- **Gore** : la voie Red Met amène des **démembrements sanglants**, dans l'esprit de *L'Ombre de la Guerre* : armes tranchantes dès la 1re dose, puis armes lourdes et fusil, qui pulvérisent les corps. Le réglage de gore (`GameOptions`) s'applique à tout : « complet », démembrements et morceaux ; « réduit », du sang sans morceaux ; « désactivé », aucun sang, et le corps s'effondre. Les coups de poing et de pied ne font jamais saigner : sueur, salive, étincelles.
 
 ### Le fusil à pompe (Dealer et Nathan M4)
 Le **Dealer** porte un fusil à pompe (et non plus une arme de poing). Il ne tire jamais sans avertissement : environ 0,9 s (réglable dans son AttackData) pendant lesquelles il arme le fusil avec un « tchak-tchak » reconnaissable, l'épaule et vise Nathan. Un cône de danger rouge part du canon, plus dense à bout portant, et une lueur rouge pulse au bout du canon. La visée se fige 0,25 s avant le coup.
@@ -93,8 +102,16 @@ Il n'y a **aucun choix de difficulté dans le menu**.
 - Celui qui **prend une dose à chaque niveau** devient de plus en plus fort et le jeu devient plus facile : la facilité est la tentation.
 - Celui qui **refuse la Red Met et les choix immoraux** reste M0 face à des ennemis qui grandissent : il doit maîtriser l'esquive, les fenêtres de contre-attaque et le placement. C'est la voie exigeante, et toujours possible à terminer.
 
+### Les demandes du Chimiste
+Au début, la dose s'achète (offerte, puis à crédit, puis contre de l'argent). Ensuite, **le Chimiste exige des choix moraux** (GDD v0.1, section 10). Refuser une demande, c'est refuser la dose de ce niveau ; il reste disponible avec la demande suivante.
+1. **L'humiliation imposée** (ch. 4, section 10.3) : une faveur sexuelle exigée pour prouver que Nathan est « prêt à tout ». Mise en scène **non explicite**, comme une contrainte et une perte de contrôle, jamais comme une récompense érotique. Nathan peut accepter, refuser ou tenter de rompre avec le réseau.
+2. **Le cœur de Marc** (ch. 5, section 10.1) : « Les organes se revendent bien au marché noir. J'ai une demande pour un cœur. Tue ton père, ramène-le-moi, et tu auras ta prochaine dose. » Nathan peut refuser, protéger son père ou déjouer le réseau. Le meurtre est irréversible.
+3. **L'enfant** (ch. 7, section 10.2) : « Le marché noir me demande un enfant. » Nathan peut refuser, mettre l'enfant à l'abri ou saboter la transaction. Aucun détail pratique ; enquête, détresse de la famille, pression policière.
+
+Placement dans les chapitres validé par l'auteur (`docs/SCENARIO.md`) ; « le prix de son corps », dilemme du réel, se place au ch. 6.
+
 ### Scène de culpabilité
-Après chaque acte immoral majeur, Nathan se recroqueville et pleure (« Qu'est-ce que je suis en train de devenir… Je deviens un monstre »), puis consomme sa dose. Au fil du jeu, ces crises deviennent plus courtes, plus violentes ou plus silencieuses.
+**Avant chaque dose** payée par un acte immoral, Nathan se recroqueville en boule, la tête entre les mains, et pleure (« Qu'est-ce que je suis en train de devenir… Je deviens un monstre »), puis consomme sa dose (GDD v0.1, sections 4.3 et 10.4). Une dose payée sans acte immoral n'a droit qu'à une courte hésitation. Au fil du jeu, ces crises deviennent plus courtes, plus violentes ou plus silencieuses.
 
 ### Perte de contrôle (chapitres 6 à 10)
 Cela commence par des intrusions brèves (ch. 6), puis des absences (ch. 7), de la désobéissance (ch. 8), et enfin des animations qui précèdent la commande (ch. 9-10). Ces pertes doivent toujours rester **courtes, scénarisées et annoncées**. Il faut prévoir des options d'accessibilité et ne jamais laisser croire au joueur que son matériel est défectueux.
@@ -139,8 +156,8 @@ Il intervient de temps en temps, **dans le réel comme dans le monde parallèle*
 
 ## La fin avec Mara
 *Décision de l'auteur du 2026-10-28* : la fin suit les sections 11.1, 11.2 et 12 du GDD v0.1 (`docs/source/RED_MET_GDD_v0.1.md`). La section 11.1 remplace la nuit consentie validée le même jour, et **l'emplacement vide pour un illustrateur est supprimé**.
-- **Voie immorale** (section 11.1) : Nathan, dopé et submergé par son agressivité, franchit une limite et tente d'imposer sa volonté à Mara par la force. La scène est mise en scène comme un moment d'horreur et de rupture, **coupée avant l'acte, sans nudité ni représentation explicite**. Le refus et la réaction de Mara, et les conséquences, restent au centre ; elle n'est jamais une récompense. Sa puissance n'apporte à Nathan ni maîtrise de lui-même ni accomplissement.
-- **Voie morale** (section 11.2) : Mara le jauge, met en avant sa propre force et le renvoie : « Moi, je veux un vrai bonhomme. Toi, tu n'es qu'un gamin, et les gamins, je les envoie en colo. » Scène volontairement humiliante et frustrante : l'intégrité n'apporte pas de récompense romantique.
+- **Voie immorale** (section 11.1), si Nathan a pris **au moins 6 doses sur 10 et accepté au moins 2 des 3 grandes demandes** du Chimiste (humiliation, cœur de Marc, enfant ; `GameSession.ImmoralEnding`) : Nathan, dopé et submergé par son agressivité, franchit une limite et tente d'imposer sa volonté à Mara par la force. La scène est mise en scène comme un moment d'horreur et de rupture, **coupée avant l'acte, sans nudité ni représentation explicite**. Le refus et la réaction de Mara, et les conséquences, restent au centre ; elle n'est jamais une récompense. Sa puissance n'apporte à Nathan ni maîtrise de lui-même ni accomplissement.
+- **Voie morale** (section 11.2), dans tous les autres cas : Mara le jauge, met en avant sa propre force et le renvoie : « Moi, je veux un vrai bonhomme. Toi, tu n'es qu'un gamin, et les gamins, je les envoie en colo. » Scène volontairement humiliante et frustrante : l'intégrité n'apporte pas de récompense romantique.
 - **Conclusion commune** (section 12) : yeux révulsés, chute, écran noir, lit d'hôpital, coma, fiche médicale qui porte en bas la mention **RED MET 2**.
 - **Avertissement** : au premier lancement, un écran de confirmation d'âge (18 ans et plus) et un avertissement sur les thèmes du jeu. Claude ne génère aucune image de nudité ni de scène sexuelle.
 

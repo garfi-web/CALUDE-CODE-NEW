@@ -430,18 +430,20 @@ Les détails de son comportement et de l'arène finale peuvent varier selon la t
 
 # 5. INTÉGRATION DES ENNEMIS DANS LA PROGRESSION DES ACTES
 
-| Phase du jeu | Ennemis dominants | Nouvelle difficulté introduite | Compétence recherchée |
-|---|---|---|---|
-| Acte I — Début | Voyou classique | Combats au corps à corps et supériorité numérique | Esquiver et contre-attaquer |
-| Acte I — Milieu | Dealer, Flic corrompu | Pression à distance et soutien ennemi | Utiliser le décor |
-| Acte I — Fin | Soldat privé | Coordination et discipline tactique | Observer et anticiper |
-| Acte II — Début | Chasseur, Mutant | Embuscades et attaques lourdes | Explorer et lire les animations |
-| Acte II — Milieu | Psycho | Feintes et changements de rythme | Ne pas réagir trop tôt |
-| Acte II — Fin | Clown tueur | Pièges, tromperies et perception déstabilisée | Analyser les indices |
-| Acte III — Début | Démon techno | Environnement dangereux et perturbations | Contrôler l'espace |
-| Acte III — Milieu | Spectre | Illusions et déplacements impossibles | Identifier la vraie menace |
-| Acte III — Fin | Géant de chair | Combat long, points faibles et phases successives | Maîtriser les fenêtres d'attaque |
-| Acte III — Final | Porteur de l'aberration | Déformation de l'arène et des règles | Mobiliser toutes les compétences acquises |
+| Phase du jeu | Chapitres | Ennemis dominants | Nouvelle difficulté introduite | Compétence recherchée |
+|---|---|---|---|---|
+| Acte I — Début | 1 | Voyou classique | Combats au corps à corps et supériorité numérique | Esquiver et contre-attaquer |
+| Acte I — Milieu | 2 | Dealer, Flic corrompu | Pression à distance et soutien ennemi | Utiliser le décor |
+| Acte I — Fin | 3 | Soldat privé | Coordination et discipline tactique | Observer et anticiper |
+| Acte II — Début | 4 | Chasseur, Mutant | Embuscades et attaques lourdes | Explorer et lire les animations |
+| Acte II — Milieu | 5–6 | Psycho | Feintes et changements de rythme | Ne pas réagir trop tôt |
+| Acte II — Fin | 7 | Clown tueur | Pièges, tromperies et perception déstabilisée | Analyser les indices |
+| Acte III — Début | 8 | Démon techno | Environnement dangereux et perturbations | Contrôler l'espace |
+| Acte III — Milieu | 9 | Spectre | Illusions et déplacements impossibles | Identifier la vraie menace |
+| Acte III — Fin | 9 (mini-boss) | Géant de chair | Combat long, points faibles et phases successives | Maîtriser les fenêtres d'attaque |
+| Acte III — Final | 10 | Porteur de l'aberration | Déformation de l'arène et des règles | Mobiliser toutes les compétences acquises |
+
+Correspondance avec les 10 chapitres : `docs/SCENARIO.md`. Le Mutant reste réservé à l'Acte II (première apparition au ch. 4) ; le boss du ch. 1 est une créature propre au chapitre, à choisir parmi trois idées (`docs/SCENARIO.md`, chapitre 1).
 
 Cette structure fait évoluer la difficulté de manière qualitative. Le jeu commence par tester les réflexes, puis l'observation, ensuite la capacité d'adaptation et, enfin, la compréhension de règles nouvelles.
 

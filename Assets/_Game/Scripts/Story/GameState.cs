@@ -96,19 +96,21 @@ public class GameState
         return null;
     }
 
-    // Dose prise à chacun des niveaux 1 à levelCount (condition de la fin avec Mara).
-    public bool TookEveryDose(int levelCount)
+    public bool HasAct(string id) => acts.Exists(act => act.id == id);
+
+    // Nombre des actes donnés qui ont été commis (chacun compté une fois).
+    public int CountActs(string[] ids)
     {
-        for (int level = 1; level <= levelCount; level++)
+        int count = 0;
+
+        foreach (string id in ids)
         {
-            if (DoseAt(level) != DoseChoice.Taken)
-                return false;
+            if (HasAct(id))
+                count++;
         }
 
-        return levelCount > 0;
+        return count;
     }
-
-    public bool HasAct(string id) => acts.Exists(act => act.id == id);
 
     // Listes absentes d'un ancien fichier : JsonUtility les laisse nulles.
     public void Repair()

@@ -45,8 +45,9 @@ public static class GameSession
     public static IncursionScaling EnemyScaling =>
         Incursions != null ? Incursions.For(Mathf.Max(1, State.incursion)) : IncursionScaling.None;
 
-    // Fin avec Mara : une dose à chacun des niveaux du monde parallèle.
-    public static bool TookEveryDose => Progression != null && State.TookEveryDose(Progression.levelCount);
+    // Fin de la voie immorale (section 11.1 du GDD v0.1) : assez de doses et assez de grandes
+    // demandes du Chimiste acceptées (docs/SCENARIO.md, « La fin »).
+    public static bool ImmoralEnding => Progression != null && Progression.IsImmoralEnding(State);
 
     public static void NewGame()
     {

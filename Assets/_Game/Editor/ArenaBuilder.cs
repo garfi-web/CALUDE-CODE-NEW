@@ -460,9 +460,9 @@ public static class ArenaBuilder
             {
                 new NathanStageData { stage = NathanStage.M0, minDoses = 0, maxHealth = 100, damageMultiplier = 1f, height = 1.7f },
                 new NathanStageData { stage = NathanStage.M1, minDoses = 1, maxHealth = 140, damageMultiplier = 2f, height = 1.7f },
-                new NathanStageData { stage = NathanStage.M2, minDoses = 2, maxHealth = 200, damageMultiplier = 4.5f, height = 1.7f },
-                new NathanStageData { stage = NathanStage.M3, minDoses = 4, maxHealth = 240, damageMultiplier = 5f, height = 1.7f },
-                new NathanStageData { stage = NathanStage.M4, minDoses = 5, maxHealth = 280, damageMultiplier = 5.5f, shotgun = true, height = 2.05f },
+                new NathanStageData { stage = NathanStage.M2, minDoses = 3, maxHealth = 200, damageMultiplier = 4.5f, height = 1.7f },
+                new NathanStageData { stage = NathanStage.M3, minDoses = 5, maxHealth = 240, damageMultiplier = 5f, height = 1.7f },
+                new NathanStageData { stage = NathanStage.M4, minDoses = 7, maxHealth = 280, damageMultiplier = 5.5f, shotgun = true, height = 2.05f },
             };
             AssetDatabase.CreateAsset(table, path);
         }

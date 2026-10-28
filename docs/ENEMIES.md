@@ -27,6 +27,8 @@ La zone de collision (`EnemyArchetype.bodySize`) suit la taille du modèle quand
 
 ## 0. Règles communes
 
+**Ennemis par chapitre** : chaque chapitre est une incursion (ch. *n* = incursion *n*). La répartition des ennemis dans les 10 chapitres est dans `docs/SCENARIO.md` : Acte I aux ch. 1 à 3, Acte II aux ch. 4 à 7, Acte III aux ch. 8 à 10. Des variantes d'habillage gardent la fiche de l'ennemi, comme les Voyous pestiférés ou les Flics corrompus en gardes du commandant au ch. 2.
+
 **Équilibrage (BESTIARY.md, section 6) : l'ennemi ne change pas selon la trajectoire.** Ses PV, ses dégâts, ses temps d'armement et son comportement sont identiques sur la voie sobre et sur la voie Red Met. Ce qui change :
 - les **capacités de Nathan** (profils ci-dessous) ;
 - la **composition des groupes** et les **occasions tactiques** du niveau (abris, chemins de fuite, éléments du décor), plus généreuses sur la voie sobre ;
@@ -37,7 +39,7 @@ La zone de collision (`EnemyArchetype.bodySize`) suit la taille du modèle quand
 | Profil | PV | Combo (coups 1-2-3) | Distance | Esquive |
 |---|---|---|---|---|
 | **Sobre** (dose 0, code actuel) | 100 | 12 / 16 / 25 (53 par combo) | — | 0,18 s de déplacement, cooldown 0,65 s |
-| **Red Met** (dose 2, Nathan M2, prototype 1b) | 200 | 60 / 75 / 110 (245 par combo) | Arme à feu, 20 par tir, 4 tirs/s | Identique |
+| **Red Met** (Nathan M2, prototype 1b ; 3-4 doses) | 200 | 60 / 75 / 110 (245 par combo) | Arme à feu, 20 par tir, 4 tirs/s | Identique |
 
 Le GDD demande qu'un ennemi standard réclame **environ 4 fois plus d'actions offensives** sur la voie sobre : le Voyou (60 PV) tombe en 4 coups sobre et en 1 coup sous Red Met.
 
