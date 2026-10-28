@@ -76,6 +76,10 @@ public static class GameSession
     // Faits qui se déduisent des actes (aucun drapeau en double dans l'état).
     public static bool MarcAlive => !State.HasAct("acte_ch05_coeur_marc");
 
+    // Score de corruption lu par les dialogues (module de Mara) : Cruauté − Humanité, au minimum 0
+    // (décision de l'auteur du 2026-10-28).
+    public static int CorruptionScore => Mathf.Max(0, State.axes.cruelty - State.axes.humanity);
+
     public static MaraRole MaraRole =>
         State.HasAct("acte_ch07_mara_salut") ? MaraRole.Savior :
         State.HasAct("acte_ch07_mara_ennemie") ? MaraRole.Enemy :

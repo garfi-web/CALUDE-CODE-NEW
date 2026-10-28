@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.inkle.ink-unity-integration": "https://github.com/inkle/ink-unity-integration.git?path=Packages/com.inkle.ink-unity-integration#2.0.0",
     "com.unity.ai.assistant": "2.20.0-pre.2",
     "com.unity.ai.inference": "2.6.1",
     "com.unity.cinemachine": "6.6.0",

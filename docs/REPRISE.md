@@ -118,19 +118,19 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, rappelle-moi ce que l'étape 2 du prototype narratif reprise sur le scénario attend de ma validation (docs/PRODUCTION.md, dernière entrée), et regarde si j'ai déposé des dialogues dans docs/source/dialogues/ (règles dans LISEZMOI.md), en respectant CLAUDE.md.
+> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, regarde si j'ai déposé de nouveaux dialogues dans docs/source/dialogues/ (règles et liste de ce qui reste à écrire dans LISEZMOI.md) ; s'il y en a, intègre-les dans le jeu selon ces règles, sinon rappelle-moi ce qui reste à écrire, en respectant CLAUDE.md.
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
 ## 8. Programme à venir (dans l'ordre)
 
-### PROCHAINE ÉTAPE : validation de l'étape 2 du prototype narratif, reprise sur le scénario
+### PROCHAINE ÉTAPE : dialogues de l'auteur (étape 3 du prototype narratif)
 
 **État (2026-10-28, fin de session)** :
 - **Plan des 10 chapitres validé** (`docs/SCENARIO.md`). Boss du ch. 1 : **le Chœur des rieurs** (fiche « B1 » dans `docs/ENEMIES.md`, entrée dans `docs/BESTIARY.md`).
 - **Étape 2 (état de la partie et sauvegarde) refaite sur le scénario** : catalogue des scènes et des actes importé de `SCENARIO.md`, **doses payées par des actes immoraux** (tableau dans `docs/GDD.md`), argent des activités du réel (il ne paie jamais une dose), scène en cours, sauvegarde en version 2 (détail et tests : `docs/PRODUCTION.md`, dernières entrées). Barème des axes et valeurs de puissance validés par l'auteur pour commencer.
 - **Dialogues** : l'auteur les écrit lui-même et les dépose dans `docs/source/dialogues/chNN.md` (mode d'emploi et liste des 143 identifiants : `docs/source/dialogues/LISEZMOI.md`). Quand il dit qu'ils sont déposés : conversion en Ink **mot pour mot** ; seule l'orthographe est corrigée, et chaque correction est signalée ; identifiant de voix `<scène>_NNN` ; liste des scènes encore sans dialogue ; **aucune réplique inventée**, texte « PROVISOIRE » à la place.
-- **Ensuite** : étape 3, les dialogues visual novel avec Ink, à partir des fichiers de l'auteur.
+- **Étape 3 commencée (2026-10-28)** : module Mara V4 de l'auteur adapté et intégré (`Assets/_Game/Story/Ink/mara.ink`, paquet Ink 2.0.0, 317 voix numérotées, lecteur de visual novel, F10 et F11). Reste à écrire par l'auteur : la liste « À RÉÉCRIRE », « À ÉCRIRE » et « PROVISOIRE » de `docs/source/dialogues/LISEZMOI.md` (section 4). Quand il dépose des dialogues : conversion mot pour mot, `RED MET → Numéroter les voix Ink`, compilation (`InkVoiceTagger.CompileReport`), test F10 et F11.
 
 ### Intégration du scénario (consigne de l'auteur, 2026-10-28, texte complet ; faite)
 

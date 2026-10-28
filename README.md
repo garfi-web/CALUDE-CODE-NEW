@@ -25,6 +25,7 @@ Le contenu de `Assets/_Game/` :
 | `Editor/RedMoonDecor.cs` | Décor de l'arène de la lune rouge (couches peintes, parallaxe, lumière 2D, post-traitement, cendres, braises, corbeaux) ; menu **RED MET → Régénérer le décor de la lune rouge** (éléments calculés) |
 | `Editor/WindowsBuild.cs`, `Scripts/Core/BenchmarkRunner.cs` | Menu **RED MET → Build Windows** et banc d'essai des 60 FPS (`-redmet-benchmark`) |
 | `Editor/SpriteAnimationBuilder.cs` | Menu **RED MET → Importer les sprites des personnages** (découpe, clips, Animator Controllers) |
+| `Editor/InkVoiceTagger.cs`, `Story/Ink/`, `Scripts/Story/VisualNovelPlayer.cs` | Dialogues Ink (paquet inkle 2.0.0, compilé à l'import) ; menu **RED MET → Numéroter les voix Ink** (identifiant `#voix:<scène>_NNN` pour ElevenLabs) ; lecteur de visual novel (portraits provisoires : concepts validés de Mara) |
 | `Editor/StoryCatalogImporter.cs`, `Scripts/Story/` | Menu **RED MET → Importer le scénario (docs/SCENARIO.md)** : scènes et actes de `docs/SCENARIO.md` dans `Data/Story/Scenario.asset` (aussi relu à chaque construction de l'arène) ; état de la partie, prix des doses et sauvegarde |
 
 ### Tranche verticale : jouer soi-même
@@ -68,6 +69,8 @@ Les commandes fonctionnent avec le nouvel Input System comme avec l'ancien : auc
 | Lancer une vague de test | 1 à 8 (rangée du haut ou pavé numérique) | — |
 | Debug des images / arme de test / démo de combo / Nathan M4 avec le fusil | F1 / F2 / F3 / F4 | — |
 | État de la partie : sauvegarder / prendre la dose (son prix est ignoré en test) et entrer dans l'incursion suivante / la refuser / nouvelle partie / charger | F5 / F6 / F7 / F8 / F9 | — |
+| Visual novel de Mara : scène d'ouverture / de fin du chapitre en cours (test) | F10 / F11 | — |
+| Visual novel : réplique suivante | Entrée, Espace ou J | A (bouton bas) |
 | Recommencer après une défaite | R | Start |
 
 ### Combos

@@ -132,6 +132,7 @@ public static class ArenaBuilder
         // Scènes et actes relus dans docs/SCENARIO.md à chaque construction.
         SetObject(story, "catalog", StoryCatalogImporter.Import());
         SetObject(story, "hud", hud);
+        SetObject(story, "visualNovel", BuildVisualNovel());
 
         var waves = new GameObject("Waves").AddComponent<EnemyWaveManager>();
         SetObject(waves, "enemyPrefab", enemyPrefab);
@@ -445,6 +446,28 @@ public static class ArenaBuilder
     // ------------------------------------------------- État de la partie
 
     private const string StoryFolder = Root + "/Data/Story";
+    private const string MaraConcepts = Root + "/Art/Characters/Mara/Concept/";
+
+    // Visual novel de Mara (Story/Ink/mara.ink). Portraits provisoires : les concepts validés de
+    // chaque tenue (docs/PRODUCTION.md) ; de dos, seul le concept M-T3 existe.
+    // Publique pour l'ajouter à une scène existante sans reconstruire l'arène.
+    public static VisualNovelPlayer BuildVisualNovel()
+    {
+        var player = new GameObject("VisualNovel").AddComponent<VisualNovelPlayer>();
+        SetObject(player, "inkFile", AssetDatabase.LoadAssetAtPath<Ink.UnityIntegration.InkFile>(Root + "/Story/Ink/mara.ink"));
+        SetObjects(player, "frontPortraits", new UnityEngine.Object[]
+        {
+            MaraConcept("Mara_T0_clean_s8002"), MaraConcept("Mara_T1_nosword_s8102"), MaraConcept("Mara_T2_nosword_clean_s8201"),
+            MaraConcept("Mara_T3_front_from8312_crop"), MaraConcept("Mara_T4_nosword_s8402"),
+        });
+        SetObjects(player, "backPortraits", new UnityEngine.Object[]
+        {
+            null, null, null, MaraConcept("Mara_T3_back_concept_s8312"), null,
+        });
+        return player;
+    }
+
+    private static Texture2D MaraConcept(string name) => AssetDatabase.LoadAssetAtPath<Texture2D>(MaraConcepts + name + ".png");
 
     // Table de progression (docs/GDD.md, « Difficulté ») : créée avec les valeurs de référence si elle
     // n'existe pas, puis seuls les sprites et les morceaux de M0 et M4 sont remis à jour.

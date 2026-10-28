@@ -1294,6 +1294,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &448243626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 448243628}
+  - component: {fileID: 448243627}
+  m_Layer: 0
+  m_Name: VisualNovel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &448243627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448243626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc043815fc4d4424390c2572dfaded11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VisualNovelPlayer
+  inkFile: {fileID: 6231892579173505729, guid: 10acb9b6b152f20459e1ffd88dacd683, type: 3}
+  frontPortraits:
+  - {fileID: 2800000, guid: fe6c96933605311428881034ec3b5e24, type: 3}
+  - {fileID: 2800000, guid: 2a62ff49674b427418888571a266dc9b, type: 3}
+  - {fileID: 2800000, guid: ad938d50d2fbc644e8367c79acd83e96, type: 3}
+  - {fileID: 2800000, guid: 2f9d186422156d14da31875149200388, type: 3}
+  - {fileID: 2800000, guid: 0936e2b7bdcbcfb499273ba614cfb08c, type: 3}
+  backPortraits:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 2800000, guid: b88665d45a6f7b549919c748348bcf9d, type: 3}
+  - {fileID: 0}
+--- !u!4 &448243628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448243626}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &477645213
 GameObject:
   m_ObjectHideFlags: 0
@@ -9367,6 +9424,7 @@ MonoBehaviour:
   incursions: {fileID: 11400000, guid: 77c75a409cad63a4d920e80af8653379, type: 2}
   catalog: {fileID: 11400000, guid: 462741b481e9ccd48a2487795ecf4232, type: 2}
   hud: {fileID: 2103997401}
+  visualNovel: {fileID: 448243627}
 --- !u!4 &2033491309
 Transform:
   m_ObjectHideFlags: 0
@@ -9737,3 +9795,4 @@ SceneRoots:
   - {fileID: 477645215}
   - {fileID: 2026141321}
   - {fileID: 663901331}
+  - {fileID: 448243628}

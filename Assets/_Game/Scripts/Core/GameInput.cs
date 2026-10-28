@@ -160,6 +160,14 @@ public static class GameInput
     public static bool DebugNewGamePressed => Pressed(Keyboard.current?.f8Key);
     public static bool DebugLoadPressed => Pressed(Keyboard.current?.f9Key);
 
+    // Visual novel : réplique suivante (Entrée, Espace, J, bouton bas de la manette) ;
+    // test des scènes de Mara du chapitre en cours (F10 ouverture, F11 fin).
+    public static bool DialogueNextPressed =>
+        Pressed(Keyboard.current?.enterKey) || Pressed(Keyboard.current?.spaceKey) ||
+        Pressed(Keyboard.current?.jKey) || Pressed(Gamepad.current?.buttonSouth);
+    public static bool DebugMaraOpeningPressed => Pressed(Keyboard.current?.f10Key);
+    public static bool DebugMaraEndingPressed => Pressed(Keyboard.current?.f11Key);
+
     // Navigation des menus (flèches, Z/Q/S/D en AZERTY, croix de la manette).
     public static bool MenuUp => Pressed(Keyboard.current?.upArrowKey) || Pressed(Keyboard.current?.wKey) || Pressed(Gamepad.current?.dpad.up);
     public static bool MenuDown => Pressed(Keyboard.current?.downArrowKey) || Pressed(Keyboard.current?.sKey) || Pressed(Gamepad.current?.dpad.down);
@@ -201,6 +209,10 @@ public static class GameInput
     public static bool DebugRefuseDosePressed => Input.GetKeyDown(KeyCode.F7);
     public static bool DebugNewGamePressed => Input.GetKeyDown(KeyCode.F8);
     public static bool DebugLoadPressed => Input.GetKeyDown(KeyCode.F9);
+    public static bool DialogueNextPressed =>
+        Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.J);
+    public static bool DebugMaraOpeningPressed => Input.GetKeyDown(KeyCode.F10);
+    public static bool DebugMaraEndingPressed => Input.GetKeyDown(KeyCode.F11);
     public static bool MenuUp => Input.GetKeyDown(KeyCode.UpArrow);
     public static bool MenuDown => Input.GetKeyDown(KeyCode.DownArrow);
     public static bool MenuLeft => Input.GetKeyDown(KeyCode.LeftArrow);

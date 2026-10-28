@@ -56,7 +56,43 @@ MARA : Mon petit Nathan, je t'excite ? …
 4. Il vous **signale les scènes encore sans dialogue**.
 5. Il **n'invente jamais de répliques à votre place**. Tant que vous n'avez pas écrit une scène, elle garde dans le jeu un texte de remplacement marqué **PROVISOIRE**, que vous remplacerez par le vôtre.
 
-## 4. Liste des identifiants de scènes
+
+## 4. Ce qu'il vous reste à écrire
+
+Les marques de statut restent visibles en jeu (en rouge, au-dessus de la réplique) tant que vous n'avez pas écrit la scène. Pour la remplacer, déposez votre texte sous le même identifiant (`## ch07_mara_fin`, etc.) : Claude remplace la marque par vos répliques.
+
+**Scènes de Mara déjà dans le jeu** : `Assets/_Game/Story/Ink/mara.ink` reprend le module Mara V4 déposé dans `mara_v4/`, réparti sur les chapitres. Le détail est dans `mara_v4/ANALYSE.md`.
+
+### « À RÉÉCRIRE » : votre texte existe, mais il faut le réécrire
+| Scène | Répliques | Pourquoi |
+|---|---|---|
+| `ch01_mara_ouverture` | MARA : « Attends. » / MARA : « C'est vraiment toi ? » / NATHAN : « Tu comptes me demander ça à chaque fois ? » / MARA : « Non. Je voulais juste vérifier qu'il n'y avait pas eu une erreur de casting. » | Elles supposent que Nathan et Mara se sont déjà vus, alors que c'est leur première rencontre (« Mara. Enchantée. ») |
+
+### « À ÉCRIRE » : la scène, ou une partie, n'a pas encore de dialogue
+| Scène | Ce qui manque |
+|---|---|
+| `ch03_mara_fin` | Toute la scène (Mara de dos, fin du ch. 3) |
+| `ch04_mara_ouverture` | Toute la scène |
+| `ch04_mara_fin` | Toute la scène |
+| `ch05_mara_ouverture` | Toute la scène |
+| `ch06_mara_ouverture` | Toute la scène |
+| `ch06_mara_fin` | Toute la scène |
+| `ch07_mara_fin` | Branche « enfant livré » : la fin de la réaction de Mara après « Tu sais ce qui me fait le plus peur ?… », sans aucun contenu suggestif (les répliques suivantes ont été retirées) |
+| `ch09_mara_ouverture` | Toute la scène |
+| `ch10_mara_fin_immorale` | Fin immorale, section 11.1 : Nathan tente d'imposer sa volonté ; scène coupée avant l'acte, sans nudité, centrée sur la réaction et le refus de Mara |
+| `ch10_mara_fin_morale` | Fin morale, section 11.2 : Mara n'a aucune interaction, montre ses biceps 💪 et lance votre réplique « Moi, je veux un vrai bonhomme… » |
+
+### « PROVISOIRE » : un texte de remplacement attend le vôtre
+| Scène | Ce qui manque |
+|---|---|
+| `ch08_mara_ouverture` | Branche « Mara adversaire » (si elle a choisi de combattre Nathan au ch. 7) : ses répliques hostiles |
+| `ch08_mara_fin` | Branche « Mara adversaire » |
+| `ch09_mara_fin` | Branche « Mara adversaire » |
+| `ch10_mara_ouverture` | Branche « Mara adversaire » |
+
+Toutes les autres scènes de `SCENARIO.md` (réel, dose, l'Avocat, combats) n'ont pas encore de dialogue. La liste complète est en section 5.
+
+## 5. Liste des identifiants de scènes
 
 Toutes les scènes des 10 chapitres, dans l'ordre (détail dans `docs/SCENARIO.md`). Les scènes de combat (`_rm_…`) peuvent n'avoir que quelques répliques, ou aucune.
 Préfixes : `reel` monde réel · `dose` choix et prise de la dose · `rm` monde de la Red Met · `mara` visual novel de Mara (`ouverture` : de face, `fin` : de dos) · `avocat` intervention de l'Avocat.
