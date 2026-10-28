@@ -14,7 +14,8 @@ public static class Combat
 
         Vector2 origin = attacker != null ? (Vector2)attacker.transform.position : point;
         DamageType type = typeOverride ?? attack.damageType;
-        var info = new DamageInfo(attack.damage, kind, origin, attack, attacker, direction, point, type, lethal);
+        int damage = attacker != null && attacker.TryGetComponent(out DamageScale scale) ? scale.Apply(attack.damage) : attack.damage;
+        var info = new DamageInfo(damage, kind, origin, attack, attacker, direction, point, type, lethal);
 
         if (!target.TakeDamage(info))
             return false;

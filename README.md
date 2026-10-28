@@ -66,6 +66,7 @@ Les commandes fonctionnent avec le nouvel Input System comme avec l'ancien : auc
 | Options (gore, tremblement, flashs) | Échap | Select / View |
 | Lancer une vague de test | 1 à 8 (rangée du haut ou pavé numérique) | — |
 | Debug des images / arme de test / démo de combo / Nathan M4 avec le fusil | F1 / F2 / F3 / F4 | — |
+| État de la partie : sauvegarder / prendre la dose et entrer dans l'incursion suivante / la refuser / nouvelle partie / charger | F5 / F6 / F7 / F8 / F9 | — |
 | Recommencer après une défaite | R | Start |
 
 ### Combos

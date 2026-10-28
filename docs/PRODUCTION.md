@@ -8,7 +8,7 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
-- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant terminé** (concept 14201, fusil à pompe, Nathan M4 et son fusil, corps pulvérisés, 60 FPS mesurés dans un build). **Suite : prototype narratif** (requête dans docs/REPRISE.md), étape par étape avec validation de l'auteur (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
+- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant terminé** (concept 14201, fusil à pompe, Nathan M4 et son fusil, corps pulvérisés, 60 FPS mesurés dans un build). **Prototype narratif en cours** : étape 1 validée, étape 2 (état de la partie et sauvegarde) en attente de validation (section « Prototype narratif » à la fin), étape par étape avec validation de l'auteur (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
 - TRANCHE VERTICALE terminée le 2026-10-27 (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
@@ -688,3 +688,44 @@ Captures : `docs/captures/2026-10-27_fusil_a_pompe.png` (annonce, esquive, bout 
 - M4 est riggé sans nouvelle allonge mesurée pour ses coups (zones de frappe de M0).
 
 **Docs mises à jour** : `docs/GDD.md` (« Le fusil à pompe »), `docs/BESTIARY.md` et `docs/ENEMIES.md` (Dealer au fusil, nouvelle apparence), `README.md` (touches U, I, F4, vague 8).
+
+## Prototype narratif (commencé le 2026-10-28)
+Six étapes, avec arrêt pour validation de l'auteur à la fin de chacune (requêtes complètes dans `docs/REPRISE.md`).
+
+### 2026-10-28 — Étape 1 : design dans `docs/GDD.md` (validée)
+Déroulé d'un niveau, difficulté venue des choix, état de la partie, visual novels de Mara (tenue selon les doses, portraits de face et de dos), l'Avocat, fin avec Mara (emplacement vide pour un illustrateur ; version « agression » de la v0.1 abandonnée). Seuils de Mara validés : 0 dose M-T0, 1 M-T1, 2-3 M-T2, 4 M-T3, 5+ M-T4. Portraits de dos : rendu Blender du modèle, puis ComfyUI (Animagine XL 4.0, ControlNet pose et contours) ; essai M-T0 à montrer avant les autres.
+
+### 2026-10-28 — Étape 2 : état de la partie et sauvegarde (EN ATTENTE DE VALIDATION)
+**Code** (`Scripts/Story/`) :
+- `GameState` : incursion, dose prise ou refusée par niveau, actes commis (identifiant, niveau, effet sur les axes), quatre axes. Les stades ne sont pas stockés : ils se déduisent des doses, pour qu'un changement de seuils s'applique aux sauvegardes existantes.
+- `ProgressionTable` (`Data/Story/Progression.asset`) : 10 niveaux, dépendance +1 par dose, stades M0 à M4 de Nathan (doses minimales, PV, multiplicateur de dégâts, fusil, sprites, morceaux, taille), seuils des tenues de Mara et des stades réels R0 à R4.
+- `IncursionTable` (`Data/Story/Incursions.asset`) : force des ennemis par incursion (PV, dégâts, vitesse de déplacement et des charges ; l'armement ne change jamais).
+- `GameSession` : la partie en cours (choix de dose définitif par niveau, entrée dans l'incursion, actes), sauvegarde JSON dans `Application.persistentDataPath/saves/partie_<n>.json`, écrite dans un fichier temporaire puis remplacée ; version du format vérifiée au chargement.
+- `StorySession` : branche les tables avant le Start des autres composants ; touches de test F5 sauvegarder, F6 dose prise + incursion suivante, F7 dose refusée + incursion suivante, F8 nouvelle partie, F9 charger (message au HUD, ligne « Partie » dans le debug F1).
+- `DamageScale` (nouveau composant de combat) : `Combat.Strike` multiplie les dégâts de l'attaquant. La mort instantanée n'en dépend pas.
+- `NathanForm` lit son stade dans la partie et se met à jour à chaque changement ; F4 et la vague 8 forcent toujours M4.
+- `Enemy.Initialize` reçoit la force de l'incursion ; `EnemyWaveManager` la lit dans la partie.
+- `ArenaBuilder` : crée les deux tables (valeurs de référence, conservées ensuite), ajoute `DamageScale` à Nathan et au prefab ennemi, et `StorySession` à la scène.
+
+**Valeurs de référence, à valider** :
+
+| Stade | Doses | PV | Dégâts | Fusil |
+|---|---|---|---|---|
+| M0 | 0 | 100 | × 1 | — |
+| M1 | 1 | 140 | × 2 | — |
+| M2 | 2-3 | 200 | × 4,5 (profil Red Met de `ENEMIES.md`) | — |
+| M3 | 4 | 240 | × 5 | — |
+| M4 | 5+ | 280 | × 5,5 | oui |
+
+- Stades réels : mêmes seuils (0 R0, 1 R1, 2-3 R2, 4 R3, 5+ R4). Le joueur sobre reste R0.
+- Ennemis : +10 % de PV, +8 % de dégâts et +2 % de vitesse par incursion (incursion 10 : PV × 1,9, dégâts × 1,72, vitesse × 1,18).
+- M1 à M3 n'ont pas encore de sprites : ils affichent ceux de M0 (stade inférieur le plus proche).
+
+**Tests en Play** (scripts lancés par le MCP) :
+- Nouvelle partie : M0, 100 PV, × 1 ; Voyou 60 PV.
+- Une dose par niveau : M1 à 1 dose, M2 à 2, M3 à 4, M4 à 5 (280 PV, sprites de M4, fusil armé) ; Mara T1 à T4 aux mêmes seuils. Voyou à l'incursion 6 : 90 PV, dégâts × 1,4.
+- Un jab de 12 inflige 12 en M0 et 66 en M4.
+- Un second choix de dose au même niveau est refusé.
+- Sauvegarde, nouvelle partie, chargement : état identique octet pour octet, M4 rétabli.
+- Voie sobre, incursion 3 : Nathan reste M0 à 100 PV, Voyou à 72 PV.
+- Piège : une capture prise pendant que l'éditeur n'a pas le focus montre une image périmée (le jeu n'avance presque pas) ; capture supprimée.

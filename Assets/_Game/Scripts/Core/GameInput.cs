@@ -22,7 +22,8 @@ public enum GameAction
 //
 // Clavier (AZERTY) : Q/D se déplacer, S bas, Espace sauter, J coup léger, K coup lourd,
 // L dash, Maj gauche esquive, U fusil à pompe (M4), I recharger, Échap options, F1 debug des images,
-// F2 arme de test, F3 démo, F4 Nathan M4 avec le fusil.
+// F2 arme de test, F3 démo, F4 Nathan M4 avec le fusil, F5 sauvegarder, F6 prendre la dose,
+// F7 la refuser, F8 nouvelle partie, F9 charger.
 // Manette : stick/croix, A saut, X léger, Y lourd, LB dash, RB esquive, RT fusil, LT recharger, Select options.
 public static class GameInput
 {
@@ -152,6 +153,13 @@ public static class GameInput
     public static bool DemoPressed => Pressed(Keyboard.current?.f3Key);
     public static bool DebugM4Pressed => Pressed(Keyboard.current?.f4Key);
 
+    // État de la partie (StorySession) : sauvegarde, chargement, doses, nouvelle partie.
+    public static bool DebugSavePressed => Pressed(Keyboard.current?.f5Key);
+    public static bool DebugTakeDosePressed => Pressed(Keyboard.current?.f6Key);
+    public static bool DebugRefuseDosePressed => Pressed(Keyboard.current?.f7Key);
+    public static bool DebugNewGamePressed => Pressed(Keyboard.current?.f8Key);
+    public static bool DebugLoadPressed => Pressed(Keyboard.current?.f9Key);
+
     // Navigation des menus (flèches, Z/Q/S/D en AZERTY, croix de la manette).
     public static bool MenuUp => Pressed(Keyboard.current?.upArrowKey) || Pressed(Keyboard.current?.wKey) || Pressed(Gamepad.current?.dpad.up);
     public static bool MenuDown => Pressed(Keyboard.current?.downArrowKey) || Pressed(Keyboard.current?.sKey) || Pressed(Gamepad.current?.dpad.down);
@@ -188,6 +196,11 @@ public static class GameInput
     public static bool DebugWeaponPressed => Input.GetKeyDown(KeyCode.F2);
     public static bool DemoPressed => Input.GetKeyDown(KeyCode.F3);
     public static bool DebugM4Pressed => Input.GetKeyDown(KeyCode.F4);
+    public static bool DebugSavePressed => Input.GetKeyDown(KeyCode.F5);
+    public static bool DebugTakeDosePressed => Input.GetKeyDown(KeyCode.F6);
+    public static bool DebugRefuseDosePressed => Input.GetKeyDown(KeyCode.F7);
+    public static bool DebugNewGamePressed => Input.GetKeyDown(KeyCode.F8);
+    public static bool DebugLoadPressed => Input.GetKeyDown(KeyCode.F9);
     public static bool MenuUp => Input.GetKeyDown(KeyCode.UpArrow);
     public static bool MenuDown => Input.GetKeyDown(KeyCode.DownArrow);
     public static bool MenuLeft => Input.GetKeyDown(KeyCode.LeftArrow);

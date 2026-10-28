@@ -125,6 +125,12 @@ public static class ArenaBuilder
 
         new GameObject("GameAudio").AddComponent<GameAudio>();
 
+        // Avant les vagues : l'état de la partie règle Nathan et la force des ennemis.
+        var story = new GameObject("StorySession").AddComponent<StorySession>();
+        SetObject(story, "progression", AssetDatabase.LoadAssetAtPath<ProgressionTable>(StoryFolder + "/Progression.asset"));
+        SetObject(story, "incursions", EnsureIncursions());
+        SetObject(story, "hud", hud);
+
         var waves = new GameObject("Waves").AddComponent<EnemyWaveManager>();
         SetObject(waves, "enemyPrefab", enemyPrefab);
         SetObject(waves, "coverPrefab", coverPrefab);
@@ -428,12 +434,76 @@ public static class ArenaBuilder
         // Bout du canon sur le sprite de tir de M4 (pose épaulée), depuis le centre du corps.
         SetVector2(shotgun, "muzzleOffset", new Vector2(1.25f, 0.45f));
 
+        player.AddComponent<DamageScale>();
         var form = player.AddComponent<NathanForm>();
         SetObject(form, "animator", player.transform.Find("Visual").GetComponent<Animator>());
-        SetObject(form, "m0Controller", m0?.Controller);
-        SetObject(form, "m4Controller", m4?.Controller);
-        SetObject(form, "m0Gibs", EnsureGibSet("NathanM0"));
-        SetObject(form, "m4Gibs", EnsureGibSet("NathanM4"));
+        SetObject(form, "progression", EnsureProgression(m0, m4));
+    }
+
+    // ------------------------------------------------- État de la partie
+
+    private const string StoryFolder = Root + "/Data/Story";
+
+    // Table de progression (docs/GDD.md, « Difficulté ») : créée avec les valeurs de référence si elle
+    // n'existe pas, puis seuls les sprites et les morceaux de M0 et M4 sont remis à jour.
+    private static ProgressionTable EnsureProgression(SpriteAnimationBuilder.Result m0, SpriteAnimationBuilder.Result m4)
+    {
+        string path = StoryFolder + "/Progression.asset";
+        EnsureFolder(StoryFolder);
+        var table = AssetDatabase.LoadAssetAtPath<ProgressionTable>(path);
+
+        if (table == null)
+        {
+            table = ScriptableObject.CreateInstance<ProgressionTable>();
+            // M0 : profil sobre de docs/ENEMIES.md ; M2 : profil Red Met (200 PV, combo 245 au lieu de 53).
+            table.nathan = new[]
+            {
+                new NathanStageData { stage = NathanStage.M0, minDoses = 0, maxHealth = 100, damageMultiplier = 1f, height = 1.7f },
+                new NathanStageData { stage = NathanStage.M1, minDoses = 1, maxHealth = 140, damageMultiplier = 2f, height = 1.7f },
+                new NathanStageData { stage = NathanStage.M2, minDoses = 2, maxHealth = 200, damageMultiplier = 4.5f, height = 1.7f },
+                new NathanStageData { stage = NathanStage.M3, minDoses = 4, maxHealth = 240, damageMultiplier = 5f, height = 1.7f },
+                new NathanStageData { stage = NathanStage.M4, minDoses = 5, maxHealth = 280, damageMultiplier = 5.5f, shotgun = true, height = 2.05f },
+            };
+            AssetDatabase.CreateAsset(table, path);
+        }
+
+        NathanStageData sober = table.Get(NathanStage.M0);
+        NathanStageData predator = table.Get(NathanStage.M4);
+
+        if (sober != null)
+        {
+            sober.animator = m0?.Controller;
+            sober.gibs = EnsureGibSet("NathanM0");
+        }
+
+        if (predator != null)
+        {
+            predator.animator = m4?.Controller;
+            predator.gibs = EnsureGibSet("NathanM4");
+        }
+
+        EditorUtility.SetDirty(table);
+        return table;
+    }
+
+    // Force des ennemis par incursion : +10 % de PV, +8 % de dégâts et +2 % de vitesse à chaque fois.
+    private static IncursionTable EnsureIncursions()
+    {
+        string path = StoryFolder + "/Incursions.asset";
+        EnsureFolder(StoryFolder);
+        var table = AssetDatabase.LoadAssetAtPath<IncursionTable>(path);
+
+        if (table != null)
+            return table;
+
+        table = ScriptableObject.CreateInstance<IncursionTable>();
+        table.incursions = new IncursionScaling[10];
+
+        for (int i = 0; i < table.incursions.Length; i++)
+            table.incursions[i] = new IncursionScaling { health = 1f + 0.1f * i, damage = 1f + 0.08f * i, speed = 1f + 0.02f * i };
+
+        AssetDatabase.CreateAsset(table, path);
+        return table;
     }
 
     // Fusil de Nathan M4 : coup de feu à l'image 7, pompe de 36 images ; bout portant = mort instantanée
@@ -756,6 +826,7 @@ public static class ArenaBuilder
         SetObject(gibSource, "body", visual.GetComponent<SpriteRenderer>());
 
         go.AddComponent<HitStop>();
+        go.AddComponent<DamageScale>();
         var reaction = go.AddComponent<HitReaction>();
         SetObject(reaction, "visual", visual.transform);
         SetObject(reaction, "body", visual.GetComponent<SpriteRenderer>());

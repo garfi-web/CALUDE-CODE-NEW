@@ -337,6 +337,7 @@ GameObject:
   - component: {fileID: 6566347060233642539}
   - component: {fileID: 150590967069684960}
   - component: {fileID: 5433569687264271202}
+  - component: {fileID: 618205820070624118}
   - component: {fileID: 9120198392263221061}
   - component: {fileID: 783758776838910002}
   - component: {fileID: 2496305039570759472}
@@ -491,6 +492,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13fc0f1e0bf884e4b9aae735aa0995d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitStop
+--- !u!114 &618205820070624118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3127361022150110903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06c690ed924ce3d409fc252e58bb129d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageScale
 --- !u!114 &9120198392263221061
 MonoBehaviour:
   m_ObjectHideFlags: 0

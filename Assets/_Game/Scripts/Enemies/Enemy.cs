@@ -9,7 +9,7 @@ using UnityEngine;
 // HitReaction, l'arrêt sur image par HitStop. Le comportement (EnemyBehaviour) décide quoi faire
 // quand l'ennemi est libre.
 [RequireComponent(typeof(Rigidbody2D), typeof(Health), typeof(EnemyTelegraph))]
-[RequireComponent(typeof(HitStop), typeof(HitReaction))]
+[RequireComponent(typeof(HitStop), typeof(HitReaction), typeof(DamageScale))]
 public class Enemy : MonoBehaviour, IDamageFilter
 {
     public enum Phase { None, Windup, Active, Recovery }
@@ -54,6 +54,8 @@ public class Enemy : MonoBehaviour, IDamageFilter
     private Coroutine actionRoutine;
     private EnemyAttack currentAttack;
     private float windupMultiplier = 1f;
+    private IncursionScaling scaling = IncursionScaling.None;
+    private DamageScale damageScale;
     private float buffUntil;
     private bool chargeHitWall;
 
@@ -102,6 +104,7 @@ public class Enemy : MonoBehaviour, IDamageFilter
         health = GetComponent<Health>();
         hitStop = GetComponent<HitStop>();
         reaction = GetComponent<HitReaction>();
+        damageScale = DamageScale.On(gameObject);
 
         if (telegraph == null)
             telegraph = GetComponent<EnemyTelegraph>();
@@ -151,10 +154,12 @@ public class Enemy : MonoBehaviour, IDamageFilter
         LeaveCover();
     }
 
-    // Appelé par le gestionnaire de vagues juste après l'instanciation du prefab.
-    public void Initialize(EnemyArchetype enemyArchetype, Transform enemyTarget)
+    // Appelé par le gestionnaire de vagues juste après l'instanciation du prefab. La force de
+    // l'incursion (PV, dégâts, vitesse) s'applique par-dessus l'archétype.
+    public void Initialize(EnemyArchetype enemyArchetype, Transform enemyTarget, IncursionScaling incursionScaling = null)
     {
         archetype = enemyArchetype;
+        scaling = incursionScaling ?? IncursionScaling.None;
         Apply();
         SetTarget(enemyTarget);
     }
@@ -168,7 +173,8 @@ public class Enemy : MonoBehaviour, IDamageFilter
 
     private void Apply()
     {
-        health.SetMaxHealth(archetype.maxHealth);
+        health.SetMaxHealth(Mathf.Max(1, Mathf.RoundToInt(archetype.maxHealth * scaling.health)));
+        damageScale.Multiplier = scaling.damage;
 
         // La masse règle la poussée entre les corps ; le recul des coups passe par HitReaction.
         rb.mass = archetype.weight switch
@@ -328,7 +334,7 @@ public class Enemy : MonoBehaviour, IDamageFilter
 
     public void Move(float direction, float speed)
     {
-        rb.linearVelocity = new Vector2(direction * speed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(direction * speed * scaling.speed, rb.linearVelocity.y);
 
         if (Mathf.Abs(direction) < 0.01f)
             return;
@@ -732,13 +738,15 @@ public class Enemy : MonoBehaviour, IDamageFilter
 
             PhaseFrame++;
 
-            if (IsBlocked(direction, 0.05f + attack.chargeSpeed * Time.fixedDeltaTime))
+            float chargeSpeed = attack.chargeSpeed * scaling.speed;
+
+            if (IsBlocked(direction, 0.05f + chargeSpeed * Time.fixedDeltaTime))
             {
                 chargeHitWall = true;
                 break;
             }
 
-            rb.linearVelocity = new Vector2(direction * attack.chargeSpeed, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(direction * chargeSpeed, rb.linearVelocity.y);
 
             // La charge s'arrête sur Nathan ; s'il esquive à travers, elle continue jusqu'au mur.
             if (TargetInReach(reach) && HitTarget(attack, DamageKind.Melee))

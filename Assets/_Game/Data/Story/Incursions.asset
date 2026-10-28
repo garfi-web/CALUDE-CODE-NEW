@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d0e2ff6eff1e85408929899688abe8b, type: 3}
+  m_Name: Incursions
+  m_EditorClassIdentifier: Assembly-CSharp::IncursionTable
+  incursions:
+  - health: 1
+    damage: 1
+    speed: 1
+  - health: 1.1
+    damage: 1.08
+    speed: 1.02
+  - health: 1.2
+    damage: 1.16
+    speed: 1.04
+  - health: 1.3
+    damage: 1.24
+    speed: 1.06
+  - health: 1.4
+    damage: 1.3199999
+    speed: 1.08
+  - health: 1.5
+    damage: 1.4
+    speed: 1.1
+  - health: 1.6
+    damage: 1.48
+    speed: 1.12
+  - health: 1.7
+    damage: 1.56
+    speed: 1.14
+  - health: 1.8
+    damage: 1.64
+    speed: 1.16
+  - health: 1.9
+    damage: 1.72
+    speed: 1.18

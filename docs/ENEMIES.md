@@ -30,7 +30,7 @@ La zone de collision (`EnemyArchetype.bodySize`) suit la taille du modèle quand
 **Équilibrage (BESTIARY.md, section 6) : l'ennemi ne change pas selon la trajectoire.** Ses PV, ses dégâts, ses temps d'armement et son comportement sont identiques sur la voie sobre et sur la voie Red Met. Ce qui change :
 - les **capacités de Nathan** (profils ci-dessous) ;
 - la **composition des groupes** et les **occasions tactiques** du niveau (abris, chemins de fuite, éléments du décor), plus généreuses sur la voie sobre ;
-- jamais les statistiques d'un même ennemi.
+- jamais les statistiques d'un même ennemi selon la trajectoire. Seul le **numéro de l'incursion** les renforce (PV, dégâts, vitesse ; jamais l'armement), de la même façon pour tous les joueurs : `Data/Story/Incursions.asset` (docs/GDD.md, « Difficulté »).
 
 **Profils de Nathan utilisés pour les calculs**
 

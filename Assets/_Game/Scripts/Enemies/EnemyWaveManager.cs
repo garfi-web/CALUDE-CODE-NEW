@@ -97,7 +97,7 @@ public class EnemyWaveManager : MonoBehaviour
         x = Mathf.Clamp(x, minX, maxX);
         var position = new Vector3(x, groundY + archetype.bodySize.y * 0.5f + 0.05f, 0f);
         Enemy enemy = Instantiate(enemyPrefab, position, Quaternion.identity, transform);
-        enemy.Initialize(archetype, target);
+        enemy.Initialize(archetype, target, GameSession.EnemyScaling);
         enemy.Face(target != null ? target.position.x - x : -1f);
 
         enemy.Health.HealthChanged += OnEnemyHealthChanged;

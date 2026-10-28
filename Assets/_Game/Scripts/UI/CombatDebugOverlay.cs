@@ -75,6 +75,7 @@ public class CombatDebugOverlay : MonoBehaviour
             DrawPlayer(x, ref y);
 
         Label(x, ref y, $"Dernier coup : {lastAttack}");
+        Label(x, ref y, $"Partie : {StorySession.Describe()}   ·   F5/F9 sauver/charger, F6/F7 dose prise/refusée, F8 nouvelle");
         DrawEnemies();
     }
 
