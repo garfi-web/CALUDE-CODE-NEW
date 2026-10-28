@@ -75,7 +75,7 @@ Adulte, guerrière du monde de la Red Met (cf. `mara.webp`).
 
 ### Progression des tenues
 
-La tenue de Mara suit la corruption de Nathan. Elle reste toujours une combattante redoutable, jamais une proie. Les scènes restent non explicites (cf. `docs/GDD.md`, lignes directrices des scènes sensibles).
+La tenue de Mara suit la corruption de Nathan : le stade se calcule à partir du **nombre de doses prises**, lu dans l'état de la partie (`docs/GDD.md`, « Visual novels ») ; la colonne des chapitres n'est qu'indicative, pour un joueur qui prend toutes ses doses. Seuils : 0 dose = M-T0, 1 = M-T1, 2 ou 3 = M-T2, 4 = M-T3, 5 et plus = M-T4. Chaque stade a un portrait de face (ouverture) et un portrait de dos (fin de niveau), avec plusieurs expressions ; les portraits de dos partent d'un rendu Blender du modèle 3D, affiné dans ComfyUI (Animagine XL 4.0, ControlNet pose et contours). Elle reste toujours une combattante redoutable, jamais une proie. Les scènes restent non explicites (cf. `docs/GDD.md`, lignes directrices des scènes sensibles).
 
 | Stade | Chapitres | Tenue |
 |---|---|---|

@@ -36,6 +36,15 @@ Chaque chapitre contient au moins une séquence dans la **réalité** (descente 
 | 9 | Le roi sans royaume | Isolement | Guerre finale ; les alliés reviennent selon les choix |
 | 10 | Red Met | Fusion des deux mondes | Combat contre son double ; fins multiples |
 
+### Un niveau du monde parallèle
+Chaque incursion dans le monde de la Red Met suit le même déroulé :
+1. **Dans le réel, le choix de la dose** : la prendre ou la refuser. L'Avocat peut intervenir juste avant.
+2. **Ouverture avec Mara** (visual novel, Mara de face) : elle accueille Nathan selon ce qu'il est devenu.
+3. **Combats** (vagues, puis boss selon le chapitre). En fin de combat, Mara peut réagir à la puissance de Nathan par une courte réplique.
+4. **Fin avec Mara** (visual novel, Mara de dos) : elle juge Nathan, le nargue, puis disparaît (fondu ou dissolution en brume rouge).
+
+Une partie est une suite d'incursions numérotées ; ce numéro règle la force des ennemis (voir « Difficulté »).
+
 **Fin préférée.** La voix n'a jamais eu besoin de contrôler Nathan : elle a seulement présenté chaque mauvaise décision comme une nécessité. Le dernier choix ne se fait pas entre le bien et le mal, mais entre **assumer ses actes** et **continuer à les justifier**. Variante du GDD v0.1 : effondrement, coma, fiche médicale « RED MET 2 ».
 
 ## Systèmes
@@ -75,7 +84,14 @@ Le **Dealer** porte un fusil à pompe (et non plus une arme de poing). Il ne tir
 - **Équilibrage** : 6 cartouches, rechargement cartouche par cartouche (l'esquive l'interrompt), cadence lente avec le temps de pompe. Les ennemis surnaturels des Actes II et III et les boss ne sont jamais pulvérisés en un tir : ils encaissent et réagissent selon leur fiche.
 - Le réglage de gore s'applique : « complet », explosion en morceaux ; « réduit », sang sans morceaux ; « désactivé », le corps s'effondre simplement.
 
-**Équilibrage.** Sur la voie sobre, un ennemi standard demande environ 4 fois plus d'actions offensives. La difficulté doit venir du timing, des fenêtres de contre-attaque, de l'endurance et de la fuite, jamais de dégâts ennemis artificiellement gonflés.
+**Équilibrage.** Sur la voie sobre, un ennemi standard demande environ 4 fois plus d'actions offensives. La difficulté doit venir du timing, des fenêtres de contre-attaque, de l'endurance et de la fuite, jamais de dégâts gonflés pour punir la voie sobre.
+
+### Difficulté : elle vient des choix
+Il n'y a **aucun choix de difficulté dans le menu**.
+- **Les ennemis montent en puissance à chaque incursion**, quelle que soit la trajectoire : PV, dégâts, nombre, armures, nouvelles attaques. Les valeurs vivent dans des fichiers de données par numéro d'incursion, jamais en dur.
+- **Nathan monte en puissance avec les doses** : stade (M0 à M4), armes et PV suivent le nombre de doses prises (tableau ci-dessus et `docs/CHARACTERS.md`).
+- Celui qui **prend une dose à chaque niveau** devient de plus en plus fort et le jeu devient plus facile : la facilité est la tentation.
+- Celui qui **refuse la Red Met et les choix immoraux** reste M0 face à des ennemis qui grandissent : il doit maîtriser l'esquive, les fenêtres de contre-attaque et le placement. C'est la voie exigeante, et toujours possible à terminer.
 
 ### Scène de culpabilité
 Après chaque acte immoral majeur, Nathan se recroqueville et pleure (« Qu'est-ce que je suis en train de devenir… Je deviens un monstre »), puis consomme sa dose. Au fil du jeu, ces crises deviennent plus courtes, plus violentes ou plus silencieuses.
@@ -83,24 +99,68 @@ Après chaque acte immoral majeur, Nathan se recroqueville et pleure (« Qu'est-
 ### Perte de contrôle (chapitres 6 à 10)
 Cela commence par des intrusions brèves (ch. 6), puis des absences (ch. 7), de la désobéissance (ch. 8), et enfin des animations qui précèdent la commande (ch. 9-10). Ces pertes doivent toujours rester **courtes, scénarisées et annoncées**. Il faut prévoir des options d'accessibilité et ne jamais laisser croire au joueur que son matériel est défectueux.
 
+### État de la partie
+Un état central, sauvegardé et rechargé avec la partie, décide de tout ce qui précède :
+- les **doses** : leur nombre, et pour chaque niveau, dose prise ou refusée ;
+- les **actes commis** (une liste de faits, pas un score) ;
+- les **quatre axes** (Humanité, Cruauté, Dépendance, Paranoïa) ;
+- le **stade de Nathan** dans chaque monde (M0 à M4, R0 à R4) et le **stade de tenue de Mara** (M-T0 à M-T4) ;
+- le **numéro de l'incursion**.
+
+Les dialogues, la puissance de Nathan, celle des ennemis et la tenue de Mara lisent cet état. Aucune scène ne code un stade en dur.
+
+## Visual novels : Mara et l'Avocat
+
+Les scènes de dialogue prennent la forme d'un visual novel : grand portrait, boîte de texte avec le nom, choix multiples, défilement automatique, avance rapide, historique. Les dialogues sont écrits dans des fichiers **Ink** (texte à embranchements) que l'auteur rédige lui-même ; chaque réplique porte un identifiant unique pour y brancher plus tard sa voix ElevenLabs. Les emojis restent dans le texte affiché mais sont retirés du texte envoyé à la synthèse vocale.
+
+### Mara suit la Red Met
+- **Tenue** : elle dépend du **nombre de doses prises**, pas du chapitre. Plus Nathan a pris de Red Met, plus la tenue est sexy et échancrée, du stade M-T0 (entièrement couverte) au stade M-T4 (`docs/CHARACTERS.md`). Le refus de toutes les doses garde Mara en M-T0.
+
+  | Doses prises | 0 | 1 | 2 ou 3 | 4 | 5 et plus |
+  |---|---|---|---|---|---|
+  | Tenue de Mara | M-T0 | M-T1 | M-T2 | M-T3 | M-T4 |
+
+- **Portraits** : pour chaque stade de tenue, un portrait **de face** (scène d'ouverture) et un portrait **de dos** (scène de fin), chacun avec plusieurs expressions. Mara est toujours une femme adulte, habillée, sans nudité. Les portraits de dos partent d'un rendu du modèle 3D de Mara dans Blender (pose, tête tournée par-dessus l'épaule), pour garantir la ressemblance, puis sont affinés en illustration HD dans ComfyUI avec Animagine XL 4.0 (ControlNet sur la pose et les contours). Un essai en M-T0 est validé par l'auteur avant les autres stades.
+- **Ton** : au début, elle taquine et rabaisse Nathan. Au fil des incursions, surtout s'il devient le Nathan M4 bestial, elle est de plus en plus attirée par sa force, provocante et coquine. En fin de combat, elle peut réagir à sa puissance.
+
+### La scène de fin de niveau : Mara de dos
+À la fin de chaque niveau du monde parallèle, Mara apparaît de dos, cambrée, la tête à moitié tournée pour regarder Nathan par-dessus l'épaule d'un air moqueur. Elle le nargue, puis disparaît (fondu ou dissolution en brume rouge).
+- **Nathan encore faible** (doses refusées ou stade M0-M1) : elle se moque. Réplique de test de l'auteur :
+  > « Mon petit Nathan, je t'excite ? Je te fais envie ? Tu aimerais que je pose mes fesses sur ton visage, petit coquin ? Eh bien, deviens plus puissant, car je recherche un vrai bonhomme 💪. Les gamins comme toi, je les envoie en colo. »
+- **Nathan puissant et bestial** (M2 à M4) : ses répliques sont moins moqueuses, plus troublées et attirées par sa force. Les embranchements existent dans Ink ; l'auteur écrira les répliques.
+
+### L'Avocat
+Il intervient de temps en temps, **dans le réel comme dans le monde parallèle**, dès le début du jeu ; il ne devient le véritable antagoniste qu'après le chapitre 5. Paranoïaque, il pousse surtout Nathan à reprendre une dose et trouve des arguments logiques pour lui faire accepter les choix amoraux.
+- Répliques **courtes en surimpression** : sous-titre et effet de distorsion, sans interrompre le jeu.
+- Déclencheurs : avant un choix de dose, après un acte immoral, quand Nathan est en manque ou blessé, et parfois en exploration.
+- Un délai minimum entre deux interventions évite de saturer le joueur. Même système d'identifiants pour les voix.
+
+## La fin avec Mara
+- **Si Nathan a pris la Red Met à chaque niveau**, Mara choisit librement de passer la nuit avec lui : scène pour adultes, **consentie, entre adultes**.
+- **Sinon** (une seule dose refusée suffit), elle le repousse en lui reprochant de ne pas avoir eu le « courage » d'aller jusqu'au bout.
+- **Contenu adulte** : au premier lancement, un écran de confirmation d'âge (18 ans et plus). Dans les options, « Contenu adulte » (activé / désactivé) ; désactivé, la scène est remplacée par un fondu au noir.
+- La scène est un **emplacement vide** (déclenchement, conditions, fondu, réglages) où l'auteur placera les illustrations d'un illustrateur. Claude ne génère aucune image de nudité ni de scène sexuelle.
+- *Note* : cette section remplace la section 11.1 du GDD v0.1 d'origine. **La version « agression » de la v0.1 est abandonnée.**
+
 ## Personnages
 
 - **Nathan Voss** (18 ans, **adulte**). Fiche complète dans `docs/CHARACTERS.md`. Au départ il est un peu enrobé, avec des lunettes à double foyer et de l'acné. Dans la réalité, il se dégrade : insomnie, amaigrissement, dents abîmées, tremblements, corps émacié. Son double, lui, gagne en puissance : d'abord faible, il devient un guerrier massif, puis un prédateur vampirique et une créature quasi divine. Les animations portent ce contraste : dans la réalité Nathan trébuche, dans l'autre monde ses pas font trembler le sol.
-- **L'Avocat** : la voix intérieure, véritable antagoniste après le chapitre 5. Sarcastique, paranoïaque, vulgaire, parfois drôle, puis soudain terrifiante. Elle trouve une justification à chaque atrocité et brise le quatrième mur. Ses accusations contre des boucs émissaires (dont les créateurs LGBTQ+) relèvent **de sa paranoïa, jamais du verdict du scénario**.
-- **Mara** (adulte) : guerrière charismatique et provocante. D'abord méprisante, elle est ensuite attirée par la force de Nathan, puis horrifiée par sa dégradation. Elle peut le sauver, le combattre ou poursuivre ses propres ambitions.
+- **L'Avocat** : la voix intérieure, présente par touches dès le début (voir « Visual novels »), véritable antagoniste après le chapitre 5. Sarcastique, paranoïaque, vulgaire, parfois drôle, puis soudain terrifiante. Elle trouve une justification à chaque atrocité et brise le quatrième mur. Ses accusations contre des boucs émissaires (dont les créateurs LGBTQ+) relèvent **de sa paranoïa, jamais du verdict du scénario**.
+- **Mara** (adulte) : guerrière charismatique et provocante. D'abord moqueuse et méprisante, elle est de plus en plus attirée par la force de Nathan à mesure qu'il prend la Red Met, et sa tenue suit ses doses (voir « Visual novels »). Elle peut le sauver, le combattre ou poursuivre ses propres ambitions, et reste une combattante dans toutes les branches.
 - **Marc** : le père. Le confronter, le voler ou le tuer sont des choix irréversibles.
 - **Le Chimiste**, le dealer, l'usurier. Le Chimiste est le fournisseur de Red Met, calme, élégant et non combattant (`docs/CHARACTERS.md`) ; les dealers qu'on affronte sont ses lieutenants de rue (ennemi 02 du bestiaire).
 
 ## Bestiaire
 
-Les 12 ennemis, répartis en 3 actes (des menaces humaines aux aberrations), sont décrits dans [`docs/BESTIARY.md`](BESTIARY.md). Leurs fiches jouables (PV, dégâts, armements, fenêtres de vulnérabilité, contre-stratégies, valeurs sobre et Red Met) sont dans [`docs/ENEMIES.md`](ENEMIES.md). Règle d'équilibrage : un ennemi ne change pas selon la trajectoire, ce sont les capacités de Nathan qui changent.
+Les 12 ennemis, répartis en 3 actes (des menaces humaines aux aberrations), sont décrits dans [`docs/BESTIARY.md`](BESTIARY.md). Leurs fiches jouables (PV, dégâts, armements, fenêtres de vulnérabilité, contre-stratégies, valeurs sobre et Red Met) sont dans [`docs/ENEMIES.md`](ENEMIES.md). Règle d'équilibrage : un ennemi ne change pas selon la trajectoire, ce sont les capacités de Nathan qui changent. Les ennemis se renforcent seulement avec le numéro de l'incursion, de la même façon pour tous les joueurs.
 
 ## Lignes directrices des scènes sensibles
 
 Le jeu n'interdit pas les actes les plus sombres, mais il leur donne un **poids narratif durable**. Des portes se ferment et des personnages ne reviennent jamais.
 - Les victimes ne sont jamais des objets d'inventaire ni des récompenses. Leur peur et les conséquences restent au centre de la scène.
 - Les scènes de contrainte sexuelle restent **non explicites**. Elles sont mises en scène comme de la vulnérabilité et une perte de contrôle, jamais comme un contenu érotique. Tous les personnages concernés sont adultes.
-- Les branches de rapt ou de livraison d'enfant ne contiennent **aucun détail pratique**. Elles entraînent une enquête, la détresse de la famille et une rupture morale majeure.
+- La scène finale avec Mara est un choix libre et **consenti entre adultes**, réservée aux joueurs ayant confirmé leur âge et activé le contenu adulte.
+- Les branches de rapt ou de livraison d'enfant ne contiennent **aucun détail pratique**. Elles entraînent une enquête, la détresse de la famille et une rupture morale majeure. **Aucun contenu sexuel ni suggestif** dans cette branche ni à proximité : les scènes de Mara du même chapitre restent sans ton coquin, et aucune scène pour adultes n'y fait suite ou n'y renvoie.
 - La dégradation physique est une représentation **fictionnelle**. Elle n'est ni une description universelle des personnes dépendantes ni un jugement moral sur l'apparence.
 
 ## Direction artistique et sonore
@@ -117,6 +177,7 @@ Le jeu n'interdit pas les actes les plus sombres, mais il leur donne un **poids 
 | 1b — Sobre contre Red Met | Même arène, deux configurations ; mesurer survie et satisfaction | À faire |
 | 2 — Transformation physique | Plusieurs versions de Nathan cohérentes avec son gameplay | À faire |
 | 3 — Dilemme | Mission courte à deux choix aux conséquences fortes | À faire |
+| 4 — Narratif | État de la partie et sauvegarde, visual novels (Ink), Avocat, contenu adulte ; mini-chapitre joué deux fois (toutes les doses, puis aucune) | En cours (étape 1 : ce document) |
 
 ### Pipeline d'assets
 - **Tripo** (via Blender MCP `generate_3d`, ou le MCP Tripo) : modèles 3D de base des personnages et des accessoires.
