@@ -10,6 +10,7 @@ Hauteur debout, du sol au sommet du crâne, à laquelle chaque modèle est mis d
 | # | Ennemi | Taille | État |
 |---|---|---|---|
 | 01 | Voyou classique | 1,78 m | Modèle et sprites faits (tranche verticale) |
+| B1 | Chœur des rieurs (boss du ch. 1) | 3,20 m (2,60 m en phase 2) | Proposée, choix de design de l'auteur le 2026-10-28 |
 | 02 | Dealer (lieutenant) | 1,80 m | Proposée |
 | 03 | Flic corrompu | **1,85 m** | Validée par l'auteur le 2026-10-27, modèle et sprites faits |
 | 04 | Soldat privé | 1,88 m | Proposée (casque compris) |
@@ -79,6 +80,41 @@ Le GDD demande qu'un ennemi standard réclame **environ 4 fois plus d'actions of
 |---|---|---|
 | Sobre | 4 | 10 / 7 / 6 |
 | Red Met | 1 | 20 / 14 / 12 |
+
+### B1 — Le Chœur des rieurs (boss du chapitre 1)
+**Rôle** : premier boss du jeu, unique, hors des douze archétypes. **Chapitre** : 1 (incursion 1), Arène de la lune rouge. **Comportement** : `Boss` (à créer, phases par `IBossPhases`). Choix de l'auteur du 2026-10-28 (`docs/SCENARIO.md`, chapitre 1).
+**Silhouette** : un amas de silhouettes humaines soudées (les clients, le patron et les passants qui se moquaient de Nathan), avec des dizaines de bouches qui rient et des téléphones allumés à la place des yeux. Au centre, une **bouche géante** : sa gorge est le point faible. 3,20 m, large de 2,5 m, il avance lentement en traînant les corps.
+
+| PV | Vitesse | Détection | Poids |
+|---|---|---|---|
+| 420 | 1,4 (phase 1) / 2,2 (phase 2) | Toute l'arène | Super-armure, sauf quand la gorge est exposée |
+
+| Attaque | Phase | Portée | Armement | Actif | Récupération | Dégâts | Annonce (signal) |
+|---|---|---|---|---|---|---|---|
+| Gifle géante (balayage au sol) | 1-2 | 3,5 devant lui | 0,60 (0,50 en phase 2) | 0,15 | 0,70 | 18 + recul lourd | Un bras se lève très haut, ombre de la main au sol, flash jaune ; **se saute ou s'esquive** |
+| Éclat de rire (cri en cône) | 1-2 | Cône de 5 | 0,80 | 0,40 | **1,20 (gorge exposée)** | 8 + repousse de 3 unités | Toutes les bouches s'ouvrent en même temps, rires qui montent, image qui tremble ; **sortir du cône ou esquiver au moment du cri** |
+| Flash des téléphones (zone) | 1-2 | Cercle de 2,5 sous Nathan | 1,00 | 0,30 | 0,60 | 12 + aveuglement de 0,5 s (écran voilé, sans flash plein écran si les flashs sont désactivés) | Les téléphones s'allument un par un (compte à rebours de 3 lumières) et un cercle blanc marque le sol ; **quitter le cercle** |
+| Ruée (charge) | 2 | Toute la largeur | 0,90 | 0,60 | 1,00 (il s'écrase contre le mur, étourdi) | 22 + projection | Il recule, les silhouettes se penchent en avant, ligne rouge au sol ; **esquiver à travers** (l'esquive traverse les ennemis) |
+
+**Phases**
+- **Phase 1 (100 à 50 % des PV)** : gifle, rire et flash, en alternance. Il ne se presse jamais : c'est l'apprentissage de l'annonce et de la fenêtre.
+- **Transition (50 %)** : il hurle de rire et l'arène tremble. Des silhouettes se détachent de la masse : **2 Rieurs** (Voyous à mains nues, 30 PV, habillage de clients et de passants) entrent. Il est invulnérable pendant 2 s, sans attaquer.
+- **Phase 2 (50 à 0 %)** : la masse a rapetissé à 2,6 m. Elle est plus rapide (armements réduits de 15 %, jamais sous 0,35 s) et la **ruée** s'ajoute. Un nouveau Rieur se détache à 25 %.
+- **Mort** : les silhouettes se figent, les téléphones s'éteignent un par un, et la bouche se ferme sur un dernier rire étranglé (`ch01_rm_plaisir` enchaîne).
+
+**Points faibles**
+- **La gorge** : exposée pendant la récupération de l'éclat de rire (1,2 s) et pendant l'étourdissement après la ruée (1,0 s). Dégâts ×2, et la super-armure tombe (le coup l'interrompt).
+- **Les téléphones** : 6, placés sur la masse ; chacun tombe en 3 coups. Chaque téléphone brisé réduit le cercle du flash de 0,3 unité. Une fois les 6 brisés, le flash disparaît.
+- Ailleurs : dégâts normaux, sans interruption (super-armure).
+
+- **Ce qu'il punit** : frapper la masse pendant ses annonces, rester dans le cône du rire, rester dans le cercle, tourner le dos aux Rieurs en phase 2.
+- **Contre-stratégie** : attendre le rire, l'esquiver, puis frapper la gorge ; briser les téléphones entre deux attaques ; en phase 2, régler d'abord les Rieurs ou les éviter, puis attirer la ruée contre le mur.
+- **Gore** : sang rouge sombre et éclats de verre des téléphones (réglage de gore). Aux poings et aux pieds : éclats de verre, salive, pas de sang.
+
+| Trajectoire | Coups pour tuer | Coups encaissables (gifle / rire / ruée) |
+|---|---|---|
+| Sobre (M0) | ~ 6 fenêtres de gorge (2 coups chacune, × 2) et 5 coups ailleurs, environ 2 min | 6 / 13 / 5 |
+| Red Met (M1, 1 dose, dégâts × 2) | ~ 3 fenêtres de gorge et 3 coups ailleurs | 8 / 18 / 7 |
 
 ### 02 — Le Dealer (lieutenant de rue du Chimiste)
 **Rôle** : commandant qui reste à distance et donne des ordres. **Acte** : I (première moitié). **Comportement** : `Commander`.

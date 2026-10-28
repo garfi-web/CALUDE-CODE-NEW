@@ -14,6 +14,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProgressionTable
   levelCount: 10
   dependencePerDose: 1
+  dosePrices:
+  - level: 1
+    kind: 0
+    cost: 0
+    demandAct: 
+    blockedByAct: 
+  - level: 2
+    kind: 1
+    cost: 1
+    demandAct: 
+    blockedByAct: 
+  - level: 3
+    kind: 2
+    cost: 2
+    demandAct: 
+    blockedByAct: 
+  - level: 4
+    kind: 3
+    cost: 0
+    demandAct: acte_ch04_humiliation_acceptee
+    blockedByAct: 
+  - level: 5
+    kind: 3
+    cost: 0
+    demandAct: acte_ch05_coeur_marc
+    blockedByAct: 
+  - level: 6
+    kind: 2
+    cost: 2
+    demandAct: 
+    blockedByAct: acte_ch05_rituel
+  - level: 7
+    kind: 3
+    cost: 0
+    demandAct: acte_ch07_enfant_livre
+    blockedByAct: 
+  - level: 8
+    kind: 2
+    cost: 2
+    demandAct: 
+    blockedByAct: 
+  - level: 9
+    kind: 2
+    cost: 2
+    demandAct: 
+    blockedByAct: 
+  - level: 10
+    kind: 0
+    cost: 0
+    demandAct: 
+    blockedByAct: 
   nathan:
   - stage: 0
     minDoses: 0

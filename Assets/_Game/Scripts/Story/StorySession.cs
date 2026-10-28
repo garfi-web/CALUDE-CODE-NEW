@@ -2,15 +2,17 @@ using UnityEngine;
 
 // Branche la partie (GameSession) sur ses tables de données, avant le Start des autres composants.
 // Touches de test (arène) : F5 sauvegarder, F9 charger, F6 prendre la dose et entrer dans l'incursion
-// suivante, F7 la refuser et entrer, F8 nouvelle partie.
+// suivante (son prix est ignoré, et le message dit ce qui manquait), F7 la refuser et entrer,
+// F8 nouvelle partie.
 [DefaultExecutionOrder(-100)]
 public class StorySession : MonoBehaviour
 {
     [SerializeField] private ProgressionTable progression;
     [SerializeField] private IncursionTable incursions;
+    [SerializeField] private StoryCatalog catalog;
     [SerializeField] private CombatHUD hud;
 
-    private void Awake() => GameSession.Configure(progression, incursions);
+    private void Awake() => GameSession.Configure(progression, incursions, catalog);
 
     private void Update()
     {
@@ -31,9 +33,12 @@ public class StorySession : MonoBehaviour
 
     private void EnterNextIncursion(bool takeDose)
     {
-        GameSession.ChooseDose(takeDose);
+        DoseCheck price = takeDose ? GameSession.CanTakeDose() : DoseCheck.Ok;
+        GameSession.ChooseDose(takeDose, ignorePrice: true);
         GameSession.BeginIncursion();
-        Report((takeDose ? "DOSE PRISE" : "DOSE REFUSÉE") + $" — INCURSION {GameSession.Incursion}");
+
+        string note = price is DoseCheck.Ok or DoseCheck.AlreadyChosen ? "" : $" (test : {price} ignoré)";
+        Report((takeDose ? "DOSE PRISE" : "DOSE REFUSÉE") + note + $" — INCURSION {GameSession.Incursion}");
     }
 
     private void Report(string title)
@@ -47,6 +52,7 @@ public class StorySession : MonoBehaviour
     {
         GameState state = GameSession.State;
         return $"Incursion {state.incursion} · doses {state.DosesTaken} · Nathan {GameSession.NathanStage}/{GameSession.RealStage} · " +
-               $"Mara M-{GameSession.MaraOutfit} · {state.axes} · actes {state.acts.Count}";
+               $"Mara M-{GameSession.MaraOutfit} · {state.axes} · actes {state.acts.Count} · " +
+               $"argent {state.money}, dette {state.debt}" + (string.IsNullOrEmpty(state.scene) ? "" : $" · scène {state.scene}");
     }
 }

@@ -60,6 +60,32 @@ Ils réapparaissent ponctuellement dans les actes suivants sous des versions vis
 
 **Objectif de game design :** apprendre au joueur que chaque coup reçu compte et que l'esquive est indispensable sur la trajectoire morale.
 
+## BOSS DU CHAPITRE 1 — LE CHŒUR DES RIEURS
+
+**Rôle :** premier boss du jeu, unique (hors des douze archétypes). Choix de l'auteur le 2026-10-28.
+
+**Apparition :** fin du chapitre 1, dans l'Arène de la lune rouge.
+
+### Apparence et direction artistique
+
+Le Chœur des rieurs est la moquerie faite chair. Les clients du fast-food, le patron et les passants qui ont filmé Nathan se sont soudés en une seule masse de 3,20 m : bras, épaules et visages fondus les uns dans les autres, des dizaines de bouches qui rient, et des **téléphones allumés à la place des yeux**. Au centre s'ouvre une bouche géante.
+
+Il avance lentement, en traînant ses corps. Sa silhouette doit rester lisible sur le rouge de l'arène : une masse claire (tabliers, chemises, écrans) sur un fond sombre.
+
+### Comportement et combat
+
+Il frappe d'une gifle géante qui balaie le sol, pousse un éclat de rire en cône qui repousse Nathan, et déclenche le flash de ses téléphones sur une zone marquée au sol. Toutes ses attaques sont lentes et annoncées : c'est le combat où le joueur apprend à lire une annonce et à attendre sa fenêtre.
+
+Après chaque rire, toutes les bouches restent ouvertes : la gorge centrale est exposée et prend des dégâts doublés. Les téléphones se brisent un à un, ce qui réduit le flash.
+
+À la moitié de ses forces, des silhouettes se détachent de la masse et attaquent séparément. Le Chœur, plus petit, devient plus rapide et se met à charger.
+
+### Intégration dans le scénario
+
+Le boss donne corps à l'humiliation qui ouvre le jeu. Nathan écrase littéralement ceux qui riaient de lui, et la victoire déclenche le **plaisir inquiétant** du chapitre 1 : le joueur doit sentir à la fois la revanche et le malaise.
+
+**Objectif de game design :** enseigner l'annonce, la fenêtre de punition et le point faible, battable aux poings et aux pieds par un Nathan sobre. Fiche jouable (phases, signaux, points faibles) : `docs/ENEMIES.md`, « B1 ».
+
 ## ENNEMI 02 — LE DEALER
 
 **Rôle :** adversaire manipulateur, personnage de mission et chef d'affrontement secondaire.
@@ -432,7 +458,7 @@ Les détails de son comportement et de l'arène finale peuvent varier selon la t
 
 | Phase du jeu | Chapitres | Ennemis dominants | Nouvelle difficulté introduite | Compétence recherchée |
 |---|---|---|---|---|
-| Acte I — Début | 1 | Voyou classique | Combats au corps à corps et supériorité numérique | Esquiver et contre-attaquer |
+| Acte I — Début | 1 | Voyou classique ; boss : Chœur des rieurs | Combats au corps à corps et supériorité numérique | Esquiver et contre-attaquer |
 | Acte I — Milieu | 2 | Dealer, Flic corrompu | Pression à distance et soutien ennemi | Utiliser le décor |
 | Acte I — Fin | 3 | Soldat privé | Coordination et discipline tactique | Observer et anticiper |
 | Acte II — Début | 4 | Chasseur, Mutant | Embuscades et attaques lourdes | Explorer et lire les animations |
@@ -443,7 +469,7 @@ Les détails de son comportement et de l'arène finale peuvent varier selon la t
 | Acte III — Fin | 9 (mini-boss) | Géant de chair | Combat long, points faibles et phases successives | Maîtriser les fenêtres d'attaque |
 | Acte III — Final | 10 | Porteur de l'aberration | Déformation de l'arène et des règles | Mobiliser toutes les compétences acquises |
 
-Correspondance avec les 10 chapitres : `docs/SCENARIO.md`. Le Mutant reste réservé à l'Acte II (première apparition au ch. 4) ; le boss du ch. 1 est une créature propre au chapitre, à choisir parmi trois idées (`docs/SCENARIO.md`, chapitre 1).
+Correspondance avec les 10 chapitres : `docs/SCENARIO.md` (plan validé par l'auteur). Le Mutant reste réservé à l'Acte II (première apparition au ch. 4) ; le boss du ch. 1 est le **Chœur des rieurs**, un boss unique (fiche plus haut).
 
 Cette structure fait évoluer la difficulté de manière qualitative. Le jeu commence par tester les réflexes, puis l'observation, ensuite la capacité d'adaptation et, enfin, la compréhension de règles nouvelles.
 

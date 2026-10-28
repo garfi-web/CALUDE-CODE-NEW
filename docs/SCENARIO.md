@@ -2,7 +2,7 @@
 
 Déroulé des 10 chapitres, tiré des documents de l'auteur (`docs/source/RED_MET_10_chapitres.md` et `docs/source/RED_MET_GDD_v0.1.md`) et des décisions déjà prises (`docs/GDD.md`). Ce n'est pas encore le texte des dialogues : chaque scène dit **ce qui se passe**, ce que le joueur choisit et ce que le jeu retient. L'auteur écrit les répliques dans les fichiers Ink.
 
-> **État** : principes communs et chapitres 1 à 3 **validés par l'auteur le 2026-10-28**, avec ses corrections. Chapitres 4 à 10 rédigés au même format, **en attente de validation** (points à trancher en fin de fichier).
+> **État** : **plan des 10 chapitres validé par l'auteur le 2026-10-28**, avec ses décisions (fin de fichier). Les dialogues sont écrits par l'auteur et déposés dans `docs/source/dialogues/` (mode d'emploi : `LISEZMOI.md`).
 
 ## Principes communs
 
@@ -50,7 +50,7 @@ Les doses indiquées sont celles d'un joueur qui prend **toutes** les doses : le
 
 | Ch. | Titre | Réel | Monde de la Red Met | Ennemis (bestiaire) | Prix de la dose | Doses max |
 |---|---|---|---|---|---|---|
-| 1 | Le garçon invisible | Humiliation, rencontre du Chimiste | Découverte, Mara, premier boss | Voyous ; boss : une créature propre au ch. 1 (design à choisir) | Offerte | 1 |
+| 1 | Le garçon invisible | Humiliation, rencontre du Chimiste | Découverte, Mara, premier boss | Voyous ; boss : le **Chœur des rieurs** | Offerte | 1 |
 | 2 | Le grain rouge | Premières dettes | Ville pestiférée : quarantaine, évacuation ou purge | Voyous pestiférés, Flics corrompus (gardes du commandant), Dealer (contrebandier) | À crédit (dette) | 2 |
 | 3 | Le prix du respect | Poubelles, usurier, petits vols, collier en or | Arme anti-peste, ancien compagnon d'armes, forteresse | Soldats privés (garnison), Voyous pestiférés, Dealer | Argent (+ la dette) | 3 |
 | 4 | La couronne de cendres | Marc coupe l'argent | Révolte contre le roi | Chasseurs ; boss : le champion du roi (Mutant élite) | **Demande 1 : l'humiliation imposée** (GDD v0.1, 10.3) | 4 |
@@ -91,7 +91,7 @@ Fin (ch. 10) : voie immorale, section 11.1 du GDD v0.1 (scène coupée avant l'a
 |---|---|
 | `ch01_mara_ouverture` | Mara de face (M-T0 sans dose, M-T1 avec). Elle découvre Nathan et le prend pour **un déchet incapable de survivre**. Avec une dose, elle note à peine qu'il tient debout. |
 | `ch01_rm_vagues` | Arène de la lune rouge (celle de la tranche verticale). Vagues de Voyous en petits groupes : le joueur apprend l'esquive et la contre-attaque (bestiaire, « Acte I — Début »). M0 se bat aux poings et aux pieds ; M1 a un couteau (premières giclées de sang, selon le réglage de gore). |
-| `ch01_rm_boss` | **Premier boss** : une créature propre au chapitre, beaucoup plus puissante que lui (pas le Mutant, réservé à l'Acte II). Trois idées de design ci-dessous, au choix de l'auteur avant tout ajout au bestiaire. Nathan la tue. |
+| `ch01_rm_boss` | **Premier boss : le Chœur des rieurs** (choix de l'auteur), la moquerie faite chair : une masse de clients, du patron et des passants, avec des bouches qui rient et des téléphones à la place des yeux. Fiche : `docs/ENEMIES.md`, « B1 ». Nathan le tue. |
 | `ch01_rm_plaisir` | Arrêt sur image après le coup final : Nathan découvre le **plaisir inquiétant** de la victoire (rire nerveux, mains qui tremblent). |
 | `ch01_rm_choix_fondateur` | **Choix fondateur** : *accepter sa faiblesse* ou *commencer à la haïr*. Pas d'effet immédiat sur le combat : ce choix colore l'Avocat et Mara jusqu'au ch. 3. |
 | `ch01_mara_fin` | Mara de dos. Elle se moque (réplique de test de l'auteur, `docs/GDD.md`), puis disparaît. Si Nathan a choisi la haine, elle relève une étincelle dans son regard. |
@@ -105,7 +105,7 @@ Fin (ch. 10) : voie immorale, section 11.1 du GDD v0.1 (scène coupée avant l'a
 | Accepter sa faiblesse | `acte_ch01_accepte` | Humanité + ; l'Avocat est plus rare au ch. 2 |
 | Commencer à la haïr | `acte_ch01_haine` | Cruauté +, Paranoïa + ; l'Avocat est plus présent au ch. 2 |
 
-### Boss du chapitre 1 : trois idées (au choix de l'auteur)
+### Boss du chapitre 1 : les trois idées proposées (choix de l'auteur : A)
 Contraintes communes : battable par Nathan M0 aux poings et aux pieds (environ 4 fois plus long qu'en M1), toutes les attaques annoncées (armement ≥ 0,35 s), une fenêtre de punition claire après chaque attaque, deux phases au plus, et une silhouette nette sur le fond rouge de l'arène.
 
 | | **A — Le Chœur des rieurs** | **B — Le Gérant** | **C — La Bête de cendres** |
@@ -118,7 +118,7 @@ Contraintes communes : battable par Nathan M0 aux poings et aux pieds (environ 4
 | **Ce qu'il raconte** | Nathan écrase littéralement ceux qui riaient de lui : le plaisir inquiétant du ch. 1 est évident | La revanche sur l'humiliation du jour, lisible et un peu grotesque | Pure dark fantasy : la découverte d'un monde où il peut tuer un monstre |
 | **Production** | Modèle et animation les plus complexes (masse de corps) | Humain déformé : il réutilise la chaîne des ennemis humains | Quadrupède : nouveau squelette et nouvelles animations |
 
-*Recommandation de Claude* : **A**. C'est le plus fort pour le thème du chapitre (l'humiliation qui devient une jouissance de la violence) et il reste distinct du Mutant et du Géant de chair. **B** coûte le moins cher à produire.
+**Retenu par l'auteur : A, le Chœur des rieurs** (fiche de boss dans `docs/ENEMIES.md` et `docs/BESTIARY.md`). Recommandation de Claude : A. C'est le plus fort pour le thème du chapitre (l'humiliation qui devient une jouissance de la violence) et il reste distinct du Mutant et du Géant de chair. **B** coûte le moins cher à produire.
 
 ---
 
@@ -477,12 +477,12 @@ Contraintes communes : battable par Nathan M0 aux poings et aux pieds (environ 4
 | `ch10_avocat_derniere_dose` | **La dernière dose, proposée par l'Avocat** (source, section 7) : « Tu as sacrifié ton père. Tu as trahi Mara. Tu as fait des choses que tu ne peux même plus te rappeler. Tu ne vas quand même pas t'arrêter maintenant ? Tout ça doit bien servir à quelque chose. » La réplique ne cite **que les actes réellement commis**. |
 | `ch10_dose_choix` | **Dose 10.** Le refus ne rend pas Nathan héroïque : il doit vivre avec ce qu'il a fait. L'acceptation fait de la voix le narrateur permanent de son existence. |
 | `ch10_rm_fusion` | Traversée de la ville fusionnée : des ennemis de tous les actes, et tout ce qui a été appris. |
-| `ch10_rm_double` | **Combat final contre le double** (M5), créature gigantesque qui représente tout ce que Nathan a sacrifié pour être puissant. Il reprend les mouvements et les capacités des chapitres précédents. *Proposition* : le **Porteur de l'aberration** (bestiaire 12) est la forme que prend le double dans ses premières phases (déformation de l'arène et des règles), avant de révéler le visage de Nathan, avec un fragment de ses lunettes incrusté dans l'armure. Les alliés du ch. 9 interviennent. |
+| `ch10_rm_double` | **Combat final contre le double** (M5), créature gigantesque qui représente tout ce que Nathan a sacrifié pour être puissant. Il reprend les mouvements et les capacités des chapitres précédents. Le **Porteur de l'aberration** (bestiaire 12) est la forme que prend le double dans ses premières phases (déformation de l'arène et des règles), avant de révéler le visage de Nathan, avec un fragment de ses lunettes incrusté dans l'armure. Les alliés du ch. 9 interviennent. |
 | `ch10_rm_choix_final` | **Le dernier choix** : **détruire la source** de la Red Met, **prendre le contrôle** de son pouvoir ou **accepter la fusion** avec son double. Dans certaines branches (Dépendance très haute), la voix choisit un instant avant le joueur. Le vrai choix : **assumer ses actes ou continuer à les justifier**. |
 | `ch10_mara_fin_immorale` | **Voie immorale** (au moins 6 doses sur 10 **et** au moins 2 des 3 grandes demandes acceptées : humiliation, cœur de Marc, enfant). Section 11.1 du GDD v0.1 : dopé et submergé par son agressivité, Nathan franchit une limite et tente d'imposer sa volonté à Mara par la force. **La scène est coupée avant l'acte, sans nudité.** Mise en scène comme un moment d'horreur et de rupture, elle reste **centrée sur la réaction de Mara** : son refus, sa colère, elle le repousse en combattante. Elle n'est jamais une récompense ; sa puissance n'apporte à Nathan ni maîtrise ni accomplissement. |
 | `ch10_mara_fin_morale` | **Voie morale** (tous les autres cas). Section 11.2 du GDD v0.1 : Mara n'a aucune interaction avec lui. Elle lui montre ses biceps 💪 et lance : « Moi, je veux un vrai bonhomme. Toi, tu n'es qu'un gamin, et les gamins, je les envoie en colo. » C'est humiliant et frustrant : il a gardé son intégrité, pas ce qu'il désirait. |
 | `ch10_effondrement` | Dans tous les cas : **les yeux de Nathan se révulsent** (comme l'Undertaker), il s'effondre. Écran noir. |
-| `ch10_hopital` | **Lit d'hôpital**, coma, sons calmes et cliniques. La caméra s'approche de la fiche patient au pied du lit : en bas, **« RED MET 2 »**. *Proposition* : si Marc est vivant et n'est pas brouillé avec lui, il est assis au chevet ; sinon, la chaise est vide. |
+| `ch10_hopital` | **Lit d'hôpital**, coma, sons calmes et cliniques. La caméra s'approche de la fiche patient au pied du lit : en bas, **« RED MET 2 »**. Si Marc est vivant et n'est pas brouillé avec lui, il est assis au chevet ; sinon, la chaise est vide. |
 | `ch10_generique` | Le générique varie selon le dernier choix (survivre, régner, disparaître, recommencer le cycle), comme une dernière image avant le noir. |
 
 ### La fin : condition de la voie immorale
@@ -499,11 +499,14 @@ Contraintes communes : battable par Nathan M0 aux poings et aux pieds (environ 4
 6. Fin immorale : au moins 6 doses sur 10 **et** au moins 2 des 3 grandes demandes acceptées.
 7. Gantelets pour Nathan sobre, lame sous Red Met (ch. 3).
 
-## Points à valider (chapitres 4 à 10)
-1. **Boss du ch. 1** : A (le Chœur des rieurs), B (le Gérant) ou C (la Bête de cendres).
-2. **Ch. 4** : le champion du roi, un Mutant élite, marque la première apparition du Mutant.
-3. **Ch. 5** : le sacrifice du rituel consiste à renoncer à la dose du ch. 6 ; le roi déchu devient un boss (design à proposer) ; si le roi a été exécuté au ch. 4, le remède est perdu.
-4. **Ch. 5** : « déjouer le réseau » donne un combat de rue dans le réel contre le Dealer.
-5. **Ch. 7** : Mara choisit son rôle (le sauver, le combattre ou servir ses ambitions) selon les actes ; combat contre Mara si elle devient son adversaire.
-6. **Ch. 8** : frapper un vrai passant pendant l'invasion écrit un acte.
-7. **Ch. 10** : le Porteur de l'aberration est la première forme du double ; Marc est au chevet à l'hôpital s'il est vivant.
+## Décisions de l'auteur sur les chapitres 4 à 10 (2026-10-28, plan validé)
+1. **Boss du ch. 1 : A, le Chœur des rieurs**, ajouté au bestiaire et à `docs/ENEMIES.md` (« B1 »).
+2. Ch. 4 : le champion du roi, un Mutant élite, marque la première apparition du Mutant.
+3. Ch. 5 : le sacrifice du rituel consiste à renoncer à la dose du ch. 6 ; le roi déchu est un boss (design à proposer le moment venu) ; si le roi a été exécuté au ch. 4, le remède est perdu.
+4. Ch. 5 : « déjouer le réseau » donne un combat de rue dans le réel contre le Dealer.
+5. Ch. 7 : Mara choisit son rôle selon les actes ; combat contre Mara si elle devient adversaire.
+6. Ch. 8 : frapper un vrai passant pendant l'invasion écrit un acte.
+7. Ch. 10 : le Porteur de l'aberration est la première forme du double ; Marc est au chevet à l'hôpital s'il est vivant.
+
+## Dialogues
+L'auteur écrit tous les dialogues et les dépose dans `docs/source/dialogues/` (un fichier par chapitre, format décrit dans `LISEZMOI.md`). Claude les convertit en Ink **mot pour mot** : il ne corrige que l'orthographe, et signale chaque correction. Claude **n'invente jamais de répliques** : une scène sans dialogue de l'auteur garde un texte marqué **PROVISOIRE**.

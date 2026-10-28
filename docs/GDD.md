@@ -122,7 +122,9 @@ Un état central, sauvegardé et rechargé avec la partie, décide de tout ce qu
 - les **actes commis** (une liste de faits, pas un score) ;
 - les **quatre axes** (Humanité, Cruauté, Dépendance, Paranoïa) ;
 - le **stade de Nathan** dans chaque monde (M0 à M4, R0 à R4) et le **stade de tenue de Mara** (M-T0 à M-T4) ;
-- le **numéro de l'incursion**.
+- le **numéro de l'incursion** ;
+- l'**argent** et la **dette** envers le Chimiste (prix des doses : `docs/SCENARIO.md`) ;
+- la **scène en cours** et les scènes vues (identifiants de `docs/SCENARIO.md`), pour reprendre la partie.
 
 Les dialogues, la puissance de Nathan, celle des ennemis et la tenue de Mara lisent cet état. Aucune scène ne code un stade en dur.
 

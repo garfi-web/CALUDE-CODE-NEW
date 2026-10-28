@@ -19,6 +19,28 @@ public class NathanStageData
     public float height = 1.7f;
 }
 
+public enum DosePriceKind
+{
+    Offered,
+    Credit,
+    Money,
+    Demand,
+}
+
+// Prix de la dose d'un niveau (docs/SCENARIO.md, colonne « Prix de la dose »).
+[Serializable]
+public class DosePrice
+{
+    public int level;
+    public DosePriceKind kind;
+    [Tooltip("Crédit : dette ajoutée. Argent : somme à payer, en plus de la dette en cours.")]
+    public int cost;
+    [Tooltip("Demande : l'acte qui paie la dose (la grande demande acceptée).")]
+    public string demandAct;
+    [Tooltip("Acte qui rend la dose impossible (le rituel du ch. 5 pour la dose du ch. 6).")]
+    public string blockedByAct;
+}
+
 // Ce que les doses prises changent (docs/GDD.md, « Difficulté » ; seuils dans docs/CHARACTERS.md).
 // Une seule table pour Nathan (monde parallèle et réel) et pour la tenue de Mara.
 [CreateAssetMenu(menuName = "RED MET/Table de progression", fileName = "Progression")]
@@ -26,8 +48,23 @@ public class ProgressionTable : ScriptableObject
 {
     [Tooltip("Niveaux du monde parallèle, une dose possible par niveau.")]
     public int levelCount = 10;
-    [Tooltip("Dépendance ajoutée par dose prise.")]
+    [Tooltip("Dépendance ajoutée par dose prise, quand le catalogue n'a pas d'acte pour cette dose.")]
     public int dependencePerDose = 1;
+
+    [Tooltip("Prix de la dose de chaque niveau.")]
+    public DosePrice[] dosePrices =
+    {
+        new() { level = 1, kind = DosePriceKind.Offered },
+        new() { level = 2, kind = DosePriceKind.Credit, cost = 1 },
+        new() { level = 3, kind = DosePriceKind.Money, cost = 2 },
+        new() { level = 4, kind = DosePriceKind.Demand, demandAct = "acte_ch04_humiliation_acceptee" },
+        new() { level = 5, kind = DosePriceKind.Demand, demandAct = "acte_ch05_coeur_marc" },
+        new() { level = 6, kind = DosePriceKind.Money, cost = 2, blockedByAct = "acte_ch05_rituel" },
+        new() { level = 7, kind = DosePriceKind.Demand, demandAct = "acte_ch07_enfant_livre" },
+        new() { level = 8, kind = DosePriceKind.Money, cost = 2 },
+        new() { level = 9, kind = DosePriceKind.Money, cost = 2 },
+        new() { level = 10, kind = DosePriceKind.Offered },
+    };
 
     [Tooltip("Stades M0 à M4, dans l'ordre.")]
     public NathanStageData[] nathan = Array.Empty<NathanStageData>();
@@ -69,6 +106,10 @@ public class ProgressionTable : ScriptableObject
     }
 
     public NathanStageData Get(NathanStage stage) => Array.Find(nathan, data => data.stage == stage);
+
+    // Sans prix renseigné, la dose est offerte.
+    public DosePrice PriceFor(int level) =>
+        Array.Find(dosePrices, price => price.level == level) ?? new DosePrice { level = level, kind = DosePriceKind.Offered };
 
     public RuntimeAnimatorController AnimatorFor(NathanStageData data)
     {

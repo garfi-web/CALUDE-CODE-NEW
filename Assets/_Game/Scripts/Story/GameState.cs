@@ -59,15 +59,22 @@ public class StoryAct
 [Serializable]
 public class GameState
 {
-    public const int CurrentVersion = 1;
+    // Version 2 : argent, dette, scène en cours et scènes vues (docs/SCENARIO.md).
+    public const int CurrentVersion = 2;
 
     public int version = CurrentVersion;
     // Numéro de l'incursion en cours ou dernière jouée (0 : pas encore entré dans le monde parallèle).
-    // Chaque niveau du monde parallèle est une incursion.
+    // Chaque niveau du monde parallèle est une incursion, et chaque chapitre un niveau.
     public int incursion;
     public List<LevelChoice> doses = new();
     public List<StoryAct> acts = new();
     public MoralAxes axes;
+    // Argent du réel (unités abstraites) et dette envers le Chimiste (dose à crédit du ch. 2).
+    public int money;
+    public int debt;
+    // Scène en cours (identifiant de docs/SCENARIO.md, nœud Ink) : point de reprise de la sauvegarde.
+    public string scene = "";
+    public List<string> scenesSeen = new();
 
     public int DosesTaken
     {
@@ -112,10 +119,14 @@ public class GameState
         return count;
     }
 
-    // Listes absentes d'un ancien fichier : JsonUtility les laisse nulles.
+    // Champs absents d'un ancien fichier : JsonUtility laisse les listes nulles, et une partie de la
+    // version 1 n'a ni argent ni dette (zéro convient). Le fichier est ensuite réécrit en version 2.
     public void Repair()
     {
         doses ??= new List<LevelChoice>();
         acts ??= new List<StoryAct>();
+        scenesSeen ??= new List<string>();
+        scene ??= "";
+        version = CurrentVersion;
     }
 }

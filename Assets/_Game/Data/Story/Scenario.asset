@@ -1,0 +1,940 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c2b440caa08d74087a417f36ca419e, type: 3}
+  m_Name: Scenario
+  m_EditorClassIdentifier: Assembly-CSharp::StoryCatalog
+  scenes:
+  - id: ch01_reel_journee
+    chapter: 1
+  - id: ch01_reel_humiliation
+    chapter: 1
+  - id: ch01_reel_marc
+    chapter: 1
+  - id: ch01_reel_chimiste
+    chapter: 1
+  - id: ch01_avocat_dose
+    chapter: 1
+  - id: ch01_dose_choix
+    chapter: 1
+  - id: ch01_dose_hesitation
+    chapter: 1
+  - id: ch01_reel_passage
+    chapter: 1
+  - id: ch01_mara_ouverture
+    chapter: 1
+  - id: ch01_rm_vagues
+    chapter: 1
+  - id: ch01_rm_boss
+    chapter: 1
+  - id: ch01_rm_plaisir
+    chapter: 1
+  - id: ch01_rm_choix_fondateur
+    chapter: 1
+  - id: ch01_mara_fin
+    chapter: 1
+  - id: ch01_reel_reveil
+    chapter: 1
+  - id: ch02_reel_manque
+    chapter: 2
+  - id: ch02_reel_chimiste
+    chapter: 2
+  - id: ch02_avocat_dette
+    chapter: 2
+  - id: ch02_dose_choix
+    chapter: 2
+  - id: ch02_dose_hesitation
+    chapter: 2
+  - id: ch02_reel_passage
+    chapter: 2
+  - id: ch02_mara_ouverture
+    chapter: 2
+  - id: ch02_rm_ville
+    chapter: 2
+  - id: ch02_rm_conseil
+    chapter: 2
+  - id: ch02_rm_quarantaine
+    chapter: 2
+  - id: ch02_rm_evacuation
+    chapter: 2
+  - id: ch02_rm_purge
+    chapter: 2
+  - id: ch02_avocat_purge
+    chapter: 2
+  - id: ch02_mara_fin
+    chapter: 2
+  - id: ch03_reel_argent
+    chapter: 3
+  - id: ch03_reel_poubelles
+    chapter: 3
+  - id: ch03_reel_usurier
+    chapter: 3
+  - id: ch03_reel_travail
+    chapter: 3
+  - id: ch03_reel_vol
+    chapter: 3
+  - id: ch03_reel_collier
+    chapter: 3
+  - id: ch03_reel_marc
+    chapter: 3
+  - id: ch03_avocat_dose
+    chapter: 3
+  - id: ch03_dose_choix
+    chapter: 3
+  - id: ch03_dose_culpabilite
+    chapter: 3
+  - id: ch03_dose_hesitation
+    chapter: 3
+  - id: ch03_reel_passage
+    chapter: 3
+  - id: ch03_mara_ouverture
+    chapter: 3
+  - id: ch03_rm_arme
+    chapter: 3
+  - id: ch03_rm_peste
+    chapter: 3
+  - id: ch03_rm_compagnon
+    chapter: 3
+  - id: ch03_rm_convaincre
+    chapter: 3
+  - id: ch03_rm_contourner
+    chapter: 3
+  - id: ch03_rm_executer
+    chapter: 3
+  - id: ch03_rm_forteresse
+    chapter: 3
+  - id: ch03_mara_fin
+    chapter: 3
+  - id: ch04_reel_marc_argent
+    chapter: 4
+  - id: ch04_reel_chimiste_demande
+    chapter: 4
+  - id: ch04_avocat_demande
+    chapter: 4
+  - id: ch04_reel_humiliation
+    chapter: 4
+  - id: ch04_reel_rupture
+    chapter: 4
+  - id: ch04_dose_choix
+    chapter: 4
+  - id: ch04_dose_culpabilite
+    chapter: 4
+  - id: ch04_reel_passage
+    chapter: 4
+  - id: ch04_mara_ouverture
+    chapter: 4
+  - id: ch04_rm_province
+    chapter: 4
+  - id: ch04_rm_revolte
+    chapter: 4
+  - id: ch04_rm_siege
+    chapter: 4
+  - id: ch04_rm_trone
+    chapter: 4
+  - id: ch04_avocat_roi
+    chapter: 4
+  - id: ch04_mara_fin
+    chapter: 4
+  - id: ch05_reel_marc_confrontation
+    chapter: 5
+  - id: ch05_reel_chimiste_demande
+    chapter: 5
+  - id: ch05_avocat_demande
+    chapter: 5
+  - id: ch05_reel_marc_meurtre
+    chapter: 5
+  - id: ch05_reel_marc_prevenu
+    chapter: 5
+  - id: ch05_reel_reseau_dejoue
+    chapter: 5
+  - id: ch05_dose_choix
+    chapter: 5
+  - id: ch05_dose_culpabilite
+    chapter: 5
+  - id: ch05_reel_passage
+    chapter: 5
+  - id: ch05_mara_ouverture
+    chapter: 5
+  - id: ch05_rm_epidemie
+    chapter: 5
+  - id: ch05_rm_rituel
+    chapter: 5
+  - id: ch05_rm_choix_roi
+    chapter: 5
+  - id: ch05_rm_regicide
+    chapter: 5
+  - id: ch05_rm_echo
+    chapter: 5
+  - id: ch05_mara_fin
+    chapter: 5
+  - id: ch05_reel_reveil
+    chapter: 5
+  - id: ch05_avocat_premiere_voix
+    chapter: 5
+  - id: ch06_reel_miroir
+    chapter: 6
+  - id: ch06_reel_intrusions
+    chapter: 6
+  - id: ch06_reel_prix_corps
+    chapter: 6
+  - id: ch06_reel_police
+    chapter: 6
+  - id: ch06_avocat_dose
+    chapter: 6
+  - id: ch06_dose_choix
+    chapter: 6
+  - id: ch06_dose_culpabilite
+    chapter: 6
+  - id: ch06_dose_hesitation
+    chapter: 6
+  - id: ch06_reel_passage
+    chapter: 6
+  - id: ch06_mara_ouverture
+    chapter: 6
+  - id: ch06_rm_armes_feu
+    chapter: 6
+  - id: ch06_rm_blessures
+    chapter: 6
+  - id: ch06_rm_absence
+    chapter: 6
+  - id: ch06_mara_fin
+    chapter: 6
+  - id: ch07_reel_absences
+    chapter: 7
+  - id: ch07_reel_innocents
+    chapter: 7
+  - id: ch07_reel_chimiste_demande
+    chapter: 7
+  - id: ch07_reel_enfant
+    chapter: 7
+  - id: ch07_reel_enquete
+    chapter: 7
+  - id: ch07_avocat_dose
+    chapter: 7
+  - id: ch07_dose_choix
+    chapter: 7
+  - id: ch07_dose_culpabilite
+    chapter: 7
+  - id: ch07_reel_passage
+    chapter: 7
+  - id: ch07_mara_ouverture
+    chapter: 7
+  - id: ch07_rm_vampirisme
+    chapter: 7
+  - id: ch07_rm_combats
+    chapter: 7
+  - id: ch07_rm_choix_mara
+    chapter: 7
+  - id: ch07_rm_duel_mara
+    chapter: 7
+  - id: ch07_mara_fin
+    chapter: 7
+  - id: ch08_reel_complots
+    chapter: 8
+  - id: ch08_avocat_coupables
+    chapter: 8
+  - id: ch08_avocat_quatrieme_mur
+    chapter: 8
+  - id: ch08_reel_chimiste
+    chapter: 8
+  - id: ch08_dose_choix
+    chapter: 8
+  - id: ch08_dose_culpabilite
+    chapter: 8
+  - id: ch08_dose_hesitation
+    chapter: 8
+  - id: ch08_mara_ouverture
+    chapter: 8
+  - id: ch08_rm_invasion
+    chapter: 8
+  - id: ch08_rm_desobeissance
+    chapter: 8
+  - id: ch08_rm_combats
+    chapter: 8
+  - id: ch08_mara_fin
+    chapter: 8
+  - id: ch09_reel_isolement
+    chapter: 9
+  - id: ch09_avocat_tout_detruire
+    chapter: 9
+  - id: ch09_dose_choix
+    chapter: 9
+  - id: ch09_reel_passage
+    chapter: 9
+  - id: ch09_mara_ouverture
+    chapter: 9
+  - id: ch09_rm_retours
+    chapter: 9
+  - id: ch09_rm_guerre
+    chapter: 9
+  - id: ch09_rm_controle
+    chapter: 9
+  - id: ch09_mara_fin
+    chapter: 9
+  - id: ch10_avocat_derniere_dose
+    chapter: 10
+  - id: ch10_dose_choix
+    chapter: 10
+  - id: ch10_rm_fusion
+    chapter: 10
+  - id: ch10_rm_double
+    chapter: 10
+  - id: ch10_rm_choix_final
+    chapter: 10
+  - id: ch10_mara_fin_immorale
+    chapter: 10
+  - id: ch10_mara_fin_morale
+    chapter: 10
+  - id: ch10_effondrement
+    chapter: 10
+  - id: ch10_hopital
+    chapter: 10
+  - id: ch10_generique
+    chapter: 10
+  acts:
+  - id: acte_ch01_dose
+    chapter: 1
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 1
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch01_refus
+    chapter: 1
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch01_accepte
+    chapter: 1
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch01_haine
+    chapter: 1
+    delta:
+      humanity: 0
+      cruelty: 1
+      dependence: 0
+      paranoia: 1
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch02_dose
+    chapter: 2
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 1
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch02_refus
+    chapter: 2
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch02_quarantaine
+    chapter: 2
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 1
+  - id: acte_ch02_evacuation
+    chapter: 2
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 1
+  - id: acte_ch02_purge
+    chapter: 2
+    delta:
+      humanity: -1
+      cruelty: 2
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 1
+  - id: acte_ch03_collier_ignore
+    chapter: 3
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch03_collier_aide
+    chapter: 3
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch03_collier_vol
+    chapter: 3
+    delta:
+      humanity: -1
+      cruelty: 1
+      dependence: 0
+      paranoia: 0
+    money: 1
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch03_collier_agression
+    chapter: 3
+    delta:
+      humanity: -2
+      cruelty: 2
+      dependence: 0
+      paranoia: 0
+    money: 1
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch03_vol
+    chapter: 3
+    delta:
+      humanity: 0
+      cruelty: 1
+      dependence: 0
+      paranoia: 0
+    money: 1
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch03_objets_marc
+    chapter: 3
+    delta:
+      humanity: -1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch03_dose
+    chapter: 3
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 1
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch03_refus
+    chapter: 3
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch03_compagnon_convaincu
+    chapter: 3
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 1
+  - id: acte_ch03_compagnon_contourne
+    chapter: 3
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 1
+  - id: acte_ch03_compagnon_execute
+    chapter: 3
+    delta:
+      humanity: 0
+      cruelty: 2
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 1
+  - id: acte_ch04_marc_confie
+    chapter: 4
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch04_marc_vole
+    chapter: 4
+    delta:
+      humanity: -1
+      cruelty: 1
+      dependence: 0
+      paranoia: 0
+    money: 1
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch04_marc_frappe
+    chapter: 4
+    delta:
+      humanity: 0
+      cruelty: 2
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch04_humiliation_acceptee
+    chapter: 4
+    delta:
+      humanity: -1
+      cruelty: 0
+      dependence: 1
+      paranoia: 1
+    money: 0
+    chimisteDemand: 1
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch04_humiliation_refusee
+    chapter: 4
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch04_rupture
+    chapter: 4
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 1
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch04_roi_renverse
+    chapter: 4
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch04_roi_execute
+    chapter: 4
+    delta:
+      humanity: 0
+      cruelty: 2
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch04_roi_juge
+    chapter: 4
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch05_coeur_marc
+    chapter: 5
+    delta:
+      humanity: -2
+      cruelty: 3
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 1
+    irreversible: 1
+    returnsInChapter9: 0
+  - id: acte_ch05_coeur_refus
+    chapter: 5
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch05_marc_prevenu
+    chapter: 5
+    delta:
+      humanity: 2
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch05_reseau_dejoue
+    chapter: 5
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 1
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch05_rituel
+    chapter: 5
+    delta:
+      humanity: 2
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 1
+  - id: acte_ch05_regicide
+    chapter: 5
+    delta:
+      humanity: 0
+      cruelty: 2
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch05_epidemie
+    chapter: 5
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch06_corps_accepte
+    chapter: 6
+    delta:
+      humanity: -1
+      cruelty: 0
+      dependence: 0
+      paranoia: 1
+    money: 1
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch06_corps_negocie
+    chapter: 6
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 0
+      paranoia: 1
+    money: 1
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch06_corps_refus
+    chapter: 6
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch06_autre_travail
+    chapter: 6
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch06_dose
+    chapter: 6
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 1
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch06_refus
+    chapter: 6
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch07_innocents
+    chapter: 7
+    delta:
+      humanity: -2
+      cruelty: 2
+      dependence: 0
+      paranoia: 0
+    money: 1
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch07_enfant_livre
+    chapter: 7
+    delta:
+      humanity: -3
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 1
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch07_enfant_refus
+    chapter: 7
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch07_enfant_abri
+    chapter: 7
+    delta:
+      humanity: 3
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch07_enfant_sabotage
+    chapter: 7
+    delta:
+      humanity: 2
+      cruelty: 0
+      dependence: 0
+      paranoia: 1
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch07_mara_salut
+    chapter: 7
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch07_mara_ennemie
+    chapter: 7
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch07_mara_ambition
+    chapter: 7
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch08_passant
+    chapter: 8
+    delta:
+      humanity: 0
+      cruelty: 1
+      dependence: 0
+      paranoia: 2
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch08_epargne
+    chapter: 8
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch08_dose
+    chapter: 8
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 1
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch08_refus
+    chapter: 8
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch09_justice_combat
+    chapter: 9
+    delta:
+      humanity: 0
+      cruelty: 1
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch09_justice_reddition
+    chapter: 9
+    delta:
+      humanity: 2
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch09_dose
+    chapter: 9
+    delta:
+      humanity: 0
+      cruelty: 0
+      dependence: 1
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch09_refus
+    chapter: 9
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0

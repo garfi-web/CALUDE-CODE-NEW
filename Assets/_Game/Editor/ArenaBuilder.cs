@@ -129,6 +129,8 @@ public static class ArenaBuilder
         var story = new GameObject("StorySession").AddComponent<StorySession>();
         SetObject(story, "progression", AssetDatabase.LoadAssetAtPath<ProgressionTable>(StoryFolder + "/Progression.asset"));
         SetObject(story, "incursions", EnsureIncursions());
+        // Scènes et actes relus dans docs/SCENARIO.md à chaque construction.
+        SetObject(story, "catalog", StoryCatalogImporter.Import());
         SetObject(story, "hud", hud);
 
         var waves = new GameObject("Waves").AddComponent<EnemyWaveManager>();

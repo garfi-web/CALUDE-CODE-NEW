@@ -9365,6 +9365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StorySession
   progression: {fileID: 11400000, guid: 933ae0ef285ccba49bf8bc728142c0da, type: 2}
   incursions: {fileID: 11400000, guid: 77c75a409cad63a4d920e80af8653379, type: 2}
+  catalog: {fileID: 11400000, guid: 462741b481e9ccd48a2487795ecf4232, type: 2}
   hud: {fileID: 2103997401}
 --- !u!4 &2033491309
 Transform:

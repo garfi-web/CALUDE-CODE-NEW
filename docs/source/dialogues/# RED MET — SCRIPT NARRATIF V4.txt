@@ -1,0 +1,1779 @@
+# RED MET — SCRIPT NARRATIF V4
+## MARA : LES RENDEZ-VOUS AVEC LE CAUCHEMAR
+
+**Document de production narrative — Dialogues de visual novel**
+
+### Règles de continuité
+
+Chaque niveau du monde parallèle comporte deux scènes obligatoires avec Mara : une ouverture et une clôture.
+
+La progression visuelle et verbale dépend de l'état de Nathan :
+
+- **M-T0 — Le garçon risible :** Mara le rabaisse, se moque de son manque de confiance et l'amène à révéler ses complexes.
+- **M-T1 — Le changement :** elle remarque les premiers effets de la Red Met. Sa curiosité se mêle à sa provocation.
+- **M-T2 — Le jeu de séduction :** elle assume son intérêt, utilise les sous-entendus sexuels et apprécie de troubler Nathan.
+- **M-T3 — L'attirance :** ses provocations deviennent plus intimes. Elle est troublée par la puissance de Nathan, mais s'inquiète de la personne qui se cache derrière.
+- **M-T4 — Le monstre séduisant :** elle assume son désir, tout en refusant de confondre attirance, domination et approbation morale.
+
+Les scènes de Nathan sobre disposent de leurs propres variations. Mara est plus moqueuse, plus méprisante et moins séduite. Elle peut toutefois reconnaître un acte courageux sans devenir soudainement amoureuse.
+
+Les scènes de Nathan dépendant présentent une évolution inverse : elle remarque son corps, sa présence et son aplomb, mais ses réactions deviennent plus complexes lorsque ses actes dépassent certaines limites.
+
+Le nombre de doses, la décision du niveau, le stade physique de Nathan et son historique moral restent des variables distinctes. Une seule prise ne suffit pas à faire de lui M4.
+
+---
+
+# INCURSION 01 — LES REFLETS
+
+## Ouverture : « Le casting de ta propre vie »
+
+*Le monde parallèle se forme autour de Nathan. Une rue vide, des néons rouges, des vitrines déformées. Le bruit d'une circulation lointaine semble provenir d'une pièce fermée.*
+
+*L'image se fige. Mara apparaît en grand portrait de visual novel. Elle le regarde sans parler, puis son visage s'éclaire d'un sourire presque incrédule.*
+
+### Branche A — Nathan n'a pas pris de Red Met
+
+**MARA**
+
+Attends.
+
+C'est vraiment toi ?
+
+*Nathan lève les yeux.*
+
+**NATHAN**
+
+Tu comptes me demander ça à chaque fois ?
+
+**MARA**
+
+Non, je voulais juste vérifier. Je me suis dit qu'il y avait peut-être une erreur de casting. Tu sais, le héros qui se trompe de porte et se retrouve dans le jeu du voisin.
+
+**NATHAN**
+
+T'es qui, bordel ?
+
+**MARA**
+
+Mara. Enchantée. J'aurais bien tendu la main, mais j'ai peur que tu prennes ça pour une demande en mariage.
+
+*Elle rit.*
+
+**MARA**
+
+Détends-toi, Nathan. Je te taquine. Si je voulais vraiment t'humilier, je te demanderais de me raconter comment tu essaies de draguer quelqu'un.
+
+**NATHAN**
+
+Tu me connais pas.
+
+**MARA**
+
+Je sais. C'est ça qui est drôle. Je viens de te dire trois phrases et tu as déjà choisi entre me détester et essayer de me plaire.
+
+**NATHAN**
+
+Je m'en fous de te plaire.
+
+**MARA**
+
+Bien sûr. Et tu ne regardes jamais les femmes dans la rue, tu ne répètes jamais de conversation dans ta tête et tu ne t'es jamais imaginé entrer dans une pièce où tout le monde se retournerait pour te regarder.
+
+Elle s'approche du cadre.
+
+**MARA**
+
+Tu sais ce qui me fait de la peine chez toi ? Tu as probablement passé des années à attendre de devenir quelqu'un d'autre avant de commencer à vivre. Tu t'es dit qu'un jour tu serais plus beau, plus fort, plus drôle, plus intéressant. Qu'un jour, tu aurais enfin le droit de ne plus avoir honte.
+
+**NATHAN**
+
+Ferme-la.
+
+**MARA**
+
+Et maintenant, tu es dans un endroit où personne ne te connaît, et tu continues à te comporter comme si tu devais présenter une autorisation avant d'exister.
+
+*Elle hausse les épaules.*
+
+**MARA**
+
+C'est presque mignon. Pas sexuellement, hein. N'allons pas trop vite. J'ai encore un peu de dignité.
+
+**NATHAN**
+
+T'as fini ?
+
+**MARA**
+
+Pas du tout. Mais je vais te laisser découvrir la suite tout seul.
+
+*Son sourire devient plus froid.*
+
+**MARA**
+
+Une dernière chose, Nathan. Ne confonds pas le fait que je me moque de toi avec le fait que je te sous-estime. Pour l'instant, je fais les deux. À toi de me donner une raison de changer d'avis.
+
+Le portrait se dissout dans la brume rouge.
+
+### Branche B — Nathan a déjà consommé une dose
+
+*Mara apparaît. Elle allait sourire, mais s'interrompt en observant la posture de Nathan.*
+
+**MARA**
+
+Oh.
+
+**NATHAN**
+
+Quoi ?
+
+**MARA**
+
+Rien. Tu as juste l'air un peu moins… pliable.
+
+**NATHAN**
+
+Pliable ?
+
+**MARA**
+
+Oui. Avant, j'avais l'impression que si je haussais un sourcil, tu allais me demander pardon d'avoir attiré mon attention.
+
+Elle l'observe avec intérêt.
+
+**MARA**
+
+Tu as changé ta façon de te tenir. Tu regardes les gens un peu plus longtemps. Tu prends davantage de place.
+
+**NATHAN**
+
+Tu aimes ça ?
+
+**MARA**
+
+J'aime les changements. Ça évite aux conversations d'être aussi ennuyeuses que leur propriétaire.
+
+Elle sourit.
+
+**MARA**
+
+Mais attention, mon grand. Tu as acheté un peu de confiance, pas encore une personnalité. Ne va pas me faire le coup du mâle mystérieux. Tu es à deux phrases de me raconter que tu ne supportes pas les femmes superficielles parce que tu as été blessé par le passé.
+
+**NATHAN**
+
+Tu veux savoir ce que je supporte pas ? Les femmes qui parlent trop.
+
+Mara ouvre la bouche, feint une émotion bouleversée, puis applaudit lentement.
+
+**MARA**
+
+Magnifique. Il vient de découvrir les réparties. Je suis émue.
+
+Elle se penche vers le cadre.
+
+**MARA**
+
+Continue comme ça, Nathan. Si tu deviens vraiment intéressant, je pourrais même finir par te regarder ailleurs que dans les yeux.
+
+Elle disparaît avant qu'il puisse répondre.
+
+---
+
+## Clôture : « Un survivant n'est pas encore un homme dangereux »
+
+*Le niveau est terminé. Nathan se tient dans une rue vide. Mara apparaît de dos, tête tournée vers lui par-dessus son épaule.*
+
+### Branche A — Nathan reste sobre
+
+**MARA**
+
+Alors, mon petit héros. Tu as survécu.
+
+**NATHAN**
+
+Tu as l'air déçue.
+
+**MARA**
+
+Pas du tout. Je pensais surtout que tu allais trouver une manière particulièrement créative de te faire tuer. J'avais presque commencé à préparer un discours.
+
+Elle prend une pose solennelle.
+
+**MARA**
+
+« Nathan. Il n'était pas très fort, pas très malin, mais il avait un magnifique sens du sacrifice… »
+
+Elle s'interrompt.
+
+**MARA**
+
+Non, même en exagérant, ça ne marche pas.
+
+**NATHAN**
+
+Tu sais quoi ? Va te faire foutre.
+
+**MARA**
+
+Voilà. Ça, c'était mieux. Il y avait presque une émotion.
+
+Elle se retourne un peu plus.
+
+**MARA**
+
+Tu sais ce qui est embêtant avec toi ? Tu es capable de faire quelque chose de courageux, puis tu gâches le moment en regardant autour de toi pour vérifier si quelqu'un l'a remarqué.
+
+**NATHAN**
+
+Tu ne sais rien de moi.
+
+**MARA**
+
+Tu as raison. Et pourtant, je suis déjà fatiguée de t'entendre te défendre contre des accusations que personne n'a formulées.
+
+Un silence.
+
+**MARA**
+
+Va dormir, Nathan. Tu vas avoir besoin de toute ton énergie pour continuer à me prouver que je me trompe sur toi.
+
+Elle commence à disparaître.
+
+**MARA**
+
+Et, s'il te plaît, arrête de faire cette tête. On dirait que tu attends un câlin de fin de colonie.
+
+La brume l'avale.
+
+### Branche B — Nathan a consommé une dose
+
+**MARA**
+
+Eh bien, eh bien.
+
+Elle le détaille.
+
+**MARA**
+
+Tu as terminé le niveau, tu es encore debout et tu n'as pas passé les cinq dernières minutes à regarder tes chaussures. Trois progrès en une soirée. On devrait fêter ça.
+
+**NATHAN**
+
+Comment ?
+
+Mara sourit lentement.
+
+**MARA**
+
+Tu as une imagination très limitée quand tu es nerveux, tu sais ?
+
+**NATHAN**
+
+Je ne suis pas nerveux.
+
+**MARA**
+
+Bien sûr. Tu as seulement la même tête qu'un type qui vient de comprendre que la fille qu'il drague a déjà remarqué qu'il la draguait.
+
+Elle tourne les yeux vers lui.
+
+**MARA**
+
+Je dois reconnaître une chose : tu commences à avoir de la présence. Pas seulement quand tu te bats. Tu sembles enfin croire que tu as le droit d'être là.
+
+**NATHAN**
+
+Tu me trouves attirant ?
+
+**MARA**
+
+Je te trouve intéressant. Pour l'instant, c'est déjà une belle promotion.
+
+Elle recule légèrement.
+
+**MARA**
+
+Ne dépense pas tout ton nouveau courage d'un coup. Il va falloir qu'il te dure jusqu'à notre prochaine rencontre.
+
+Elle disparaît.
+
+---
+
+# INCURSION 02 — LES COULOIRS DE VERRE
+
+## Ouverture : « Tu as changé de posture. Pas encore de problème. »
+
+*Les rues du monde parallèle sont désormais impossibles : les immeubles se reflètent les uns dans les autres, les silhouettes apparaissent dans des vitrines avant de disparaître derrière Nathan.*
+
+*Mara apparaît en portrait. Un reflet de son visage bouge une fraction de seconde après elle.*
+
+### Branche A — Nathan refuse la Red Met
+
+**MARA**
+
+Oh, regarde-moi ça. Tu es revenu.
+
+**NATHAN**
+
+Tu as l'air surprise.
+
+**MARA**
+
+Je le suis. Je pensais que tu aurais découvert une manière de te perdre dans ton propre quartier.
+
+Elle regarde les couloirs déformés.
+
+**MARA**
+
+Tu vois ces miroirs ? Ils sont formidables. Ils te montrent exactement ce que tu es, mais avec juste assez de déformation pour que tu puisses te convaincre que tu es mieux que ça.
+
+**NATHAN**
+
+Tu vas arrêter de parler par énigmes ?
+
+**MARA**
+
+Tu préfères que je te parle de ton physique ? Je peux. Tu as un petit côté homme qui a commandé un costume sur Internet sans vérifier les tailles.
+
+**NATHAN**
+
+Tu prends vraiment plaisir à me rabaisser.
+
+**MARA**
+
+Oui. Mais ne le prends pas personnellement. Je prends plaisir à beaucoup de choses. Certaines sont même parfaitement légales.
+
+Elle sourit.
+
+**MARA**
+
+D'ailleurs, tu sais ce qui est étrange ? Tu pourrais être méchant avec moi. Tu pourrais m'insulter, me dire de partir, essayer de reprendre le contrôle de la conversation. Mais tu passes ton temps à répondre comme si tu espérais obtenir une bonne note à la fin.
+
+**NATHAN**
+
+Qu'est-ce que tu veux que je fasse ?
+
+**MARA**
+
+Rien. C'est justement ça que tu ne comprends pas.
+
+Elle se rapproche.
+
+**MARA**
+
+Tu n'as pas besoin de me convaincre, Nathan. Tu n'as pas besoin de devenir fort pour que j'admette que tu existes. Tu existes déjà. C'est seulement que tu n'aimes pas beaucoup ce que tu vois.
+
+Un silence inhabituel.
+
+Puis elle sourit de nouveau.
+
+**MARA**
+
+Et puis, honnêtement, si tu veux que je te désire un jour, il va falloir commencer par arrêter de me demander, toutes les trois secondes, si je te trouve désirable.
+
+**NATHAN**
+
+Je ne t'ai rien demandé.
+
+**MARA**
+
+Pas avec des mots.
+
+Elle disparaît.
+
+### Branche B — Nathan a continué à prendre la Red Met
+
+Mara apparaît avec une expression intéressée. Son sourire se fait plus lent.
+
+**MARA**
+
+Je commence à voir le problème.
+
+**NATHAN**
+
+Quel problème ?
+
+**MARA**
+
+Tu es en train de devenir séduisant.
+
+Nathan ne répond pas tout de suite.
+
+Mara éclate de rire.
+
+**MARA**
+
+Oh, cette tête ! Si j'avais su qu'il suffisait de te faire un compliment pour te faire perdre tous tes moyens, j'aurais commencé plus tôt.
+
+**NATHAN**
+
+Tu le penses vraiment ?
+
+**MARA**
+
+Je ne sais pas encore. Mais je commence à apprécier le spectacle.
+
+Elle l'observe avec une franchise provocatrice.
+
+**MARA**
+
+Tu sais, je me suis toujours demandé ce que ça ferait de parler à un homme qui n'a pas l'air de vouloir s'excuser avant même d'avoir ouvert la bouche.
+
+**NATHAN**
+
+Et alors ?
+
+**MARA**
+
+Et alors, je découvre que c'est assez agréable. Dangereusement agréable, même.
+
+Elle penche la tête.
+
+**MARA**
+
+Maintenant, ne va pas croire que je suis déjà en train d'imaginer ce que tu caches sous tes vêtements. Je suis une femme cultivée. J'ai d'abord besoin d'évaluer ton sens de la conversation.
+
+Un silence.
+
+**MARA**
+
+Même si, entre nous, tu as commencé à rendre l'examen plus intéressant.
+
+Elle disparaît.
+
+---
+
+## Clôture : « Le premier reflet »
+
+### Branche A — Nathan reste sobre
+
+Mara apparaît de dos devant un miroir fissuré.
+
+**MARA**
+
+Tu sais ce que je vois, quand je te regarde ?
+
+**NATHAN**
+
+J'imagine que tu vas me le dire.
+
+**MARA**
+
+Un homme qui préfère avoir mal plutôt que de risquer de découvrir qu'il pourrait avoir besoin de quelque chose.
+
+Elle regarde le miroir.
+
+**MARA**
+
+Tu refuses la Red Met. Très bien. Mais ne te raconte pas que ça fait automatiquement de toi un héros. Peut-être que tu as raison. Peut-être que tu as peur. Peut-être que tu préfères être un faible qui se trouve des raisons à un homme fort qui devrait assumer ses actes.
+
+**NATHAN**
+
+Tu ne peux pas t'empêcher de salir tout ce que je fais.
+
+**MARA**
+
+Je ne salis rien. Je te demande simplement de vérifier si tu es en train de faire le bien ou de te fabriquer une jolie histoire sur toi-même.
+
+Elle tourne la tête.
+
+**MARA**
+
+Tu n'es pas obligé de devenir un monstre. Mais si tu restes comme tu es, cesse de prétendre que c'est moi qui t'en empêche.
+
+Elle disparaît.
+
+### Branche B — Nathan poursuit sa progression
+
+Mara apparaît de dos. Elle fait mine de s'éloigner, puis s'arrête.
+
+**MARA**
+
+Je vais te dire quelque chose que tu vas probablement prendre comme un compliment beaucoup plus important que nécessaire.
+
+**NATHAN**
+
+Vas-y.
+
+**MARA**
+
+J'ai envie de te voir au prochain niveau.
+
+**NATHAN**
+
+Tu veux voir si je vais survivre ?
+
+**MARA**
+
+Ça aussi.
+
+Elle sourit.
+
+**MARA**
+
+Mais je me demande surtout si tu es aussi doué pour tenir une conversation quand tu n'es pas en train de distribuer des coups.
+
+**NATHAN**
+
+Tu pourrais venir vérifier.
+
+Mara rit, sincèrement cette fois.
+
+**MARA**
+
+Oh, Nathan. Tu viens de faire une proposition qui ressemble presque à une invitation.
+
+Elle se penche légèrement vers lui.
+
+**MARA**
+
+Continue comme ça et je finirai par te demander d'enlever ta veste. Pour vérifier si tu as encore quelque chose d'intéressant dessous, évidemment.
+
+**NATHAN**
+
+Évidemment.
+
+**MARA**
+
+Tu apprends. C'est inquiétant.
+
+Son sourire s'efface une seconde.
+
+**MARA**
+
+Fais attention à toi. Je ne suis pas certaine d'aimer la vitesse à laquelle tu changes.
+
+Elle disparaît.
+
+---
+
+# INCURSION 03 — LE SILO BLANC
+
+## Ouverture : « La famille, c'est mauvais pour les affaires »
+
+*Le monde parallèle se matérialise autour d'un immense silo industriel. Une lumière blanche tombe du plafond. Des voix lointaines semblent répéter des conversations de Nathan.*
+
+*Mara apparaît devant un mur couvert de photographies qui se dissolvent avant qu'on puisse les distinguer.*
+
+### Branche A — Nathan refuse la Red Met
+
+**MARA**
+
+Tu as l'air épuisé.
+
+**NATHAN**
+
+Merci.
+
+**MARA**
+
+Ce n'était pas un compliment.
+
+Elle le regarde de plus près.
+
+**MARA**
+
+Tu sais, il y a quelque chose de presque admirable chez toi. Tu continues à avancer alors que tu n'as ni la force, ni l'endurance, ni le bon sens de prendre ce qui pourrait t'aider.
+
+**NATHAN**
+
+Tu appelles ça du bon sens ?
+
+**MARA**
+
+J'appelle ça une option. Tu peux la refuser, mais évite de me faire croire que tu n'as jamais eu envie de l'accepter.
+
+Elle croise les bras.
+
+**MARA**
+
+Tu sais ce qui m'inquiète le plus chez toi ? Tu sembles croire que devenir quelqu'un de bien devrait être une expérience agréable. Comme si ton intégrité allait finir par t'offrir un dîner gratuit, un meilleur physique et une femme qui tombe amoureuse de toi.
+
+**NATHAN**
+
+Je ne fais pas ça pour toi.
+
+**MARA**
+
+Je sais. Et c'est probablement la seule bonne nouvelle de la journée.
+
+Elle s'approche du cadre.
+
+**MARA**
+
+Mais je vais te poser une question, Nathan. Si tu dois souffrir pour rester celui que tu veux être, combien de temps vas-tu tenir avant de m'en vouloir de ne pas t'avoir récompensé ?
+
+Nathan reste silencieux.
+
+**MARA**
+
+Voilà. Tu vois ? C'est une question beaucoup plus intéressante que de savoir si tu es courageux.
+
+Elle disparaît.
+
+### Branche B — Nathan devient plus puissant
+
+Mara apparaît avec un sourire qui laisse deviner qu'elle attendait cette rencontre.
+
+**MARA**
+
+Ah. Voilà mon problème préféré.
+
+**NATHAN**
+
+Je suis ton problème préféré ?
+
+**MARA**
+
+Ne prends pas la grosse tête. Tu es surtout le seul problème ici qui commence à avoir des épaules intéressantes.
+
+Elle l'observe ouvertement.
+
+**MARA**
+
+Je vais être franche. Tu as changé assez pour que je me demande ce que ça donnerait de te voir dans un endroit où personne n'essaie de nous tuer.
+
+**NATHAN**
+
+Tu veux dire un rendez-vous ?
+
+**MARA**
+
+J'ai dit un endroit calme. Ne confonds pas ça avec une promesse de finir dans ton lit.
+
+Elle sourit.
+
+**MARA**
+
+Même si je dois reconnaître qu'il devient plus difficile de t'imaginer en train de trébucher sur tes propres pieds au moment le plus intéressant.
+
+**NATHAN**
+
+Tu y penses beaucoup ?
+
+**MARA**
+
+Assez pour que tu arrêtes de sourire comme un idiot, oui.
+
+Elle laisse passer un silence.
+
+**MARA**
+
+Tu sais ce qui est étrange ? Je t'aurais trouvé beaucoup moins attirant si tu m'avais simplement raconté à quel point tu étais fort. Mais là, tu commences à le montrer sans avoir besoin de parler.
+
+Elle le regarde droit dans les yeux.
+
+**MARA**
+
+Ne gâche pas ça en essayant de me prouver que tu es un mâle alpha. Je t'en supplie. Il n'y a rien de plus triste qu'un homme qui a des épaules de déménageur et l'ego d'un collégien.
+
+Elle disparaît.
+
+---
+
+## Clôture : « L'offre du Dealer »
+
+Cette scène se déroule après la proposition du cœur. Mara connaît les enjeux de la mission, mais elle ne sait pas nécessairement quelle décision Nathan a prise.
+
+### Branche A — Nathan refuse de tuer son père
+
+Mara apparaît de dos. Elle ne sourit pas immédiatement.
+
+**MARA**
+
+Tu as refusé.
+
+**NATHAN**
+
+Oui.
+
+**MARA**
+
+Tu as l'air surpris de toi-même.
+
+**NATHAN**
+
+Je pensais que tu allais te moquer.
+
+**MARA**
+
+Je peux toujours le faire, si ça t'aide à retrouver tes repères.
+
+Elle se retourne.
+
+**MARA**
+
+Tu veux que je te dise que tu as fait le bon choix ? Que tu as été courageux ? Que tu mérites une médaille et un massage des épaules ?
+
+**NATHAN**
+
+Non.
+
+**MARA**
+
+Alors pourquoi tu as cette tête ?
+
+Nathan ne répond pas.
+
+Mara soupire.
+
+**MARA**
+
+Parce que tu voudrais que ce soit simple. Tu voudrais refuser, te sentir fier, puis continuer ta vie en attendant que quelqu'un vienne reconnaître tes mérites.
+
+Elle s'approche du cadre.
+
+**MARA**
+
+Mais tu vas rester faible, Nathan. Tu vas devoir recommencer le prochain niveau avec les mêmes deux poings et les mêmes jambes fatiguées. Et personne ne va te garantir que tu seras récompensé pour ce que tu viens de faire.
+
+Un silence.
+
+**MARA**
+
+Tu sais quoi ? C'est peut-être ça, le courage. Faire quelque chose sans savoir si quelqu'un t'en remerciera.
+
+Elle retrouve son sourire moqueur.
+
+**MARA**
+
+Ne crois pas que ça me donne envie de t'embrasser. Il y a des limites à mon manque de jugement.
+
+Elle disparaît.
+
+### Branche B — Nathan a accepté de tuer son père
+
+Mara apparaît de dos. Lorsqu'elle tourne la tête, son sourire paraît d'abord habituel.
+
+**MARA**
+
+Alors ?
+
+**NATHAN**
+
+Quoi ?
+
+**MARA**
+
+Tu as obtenu ce que tu voulais ?
+
+**NATHAN**
+
+Oui.
+
+Elle attend.
+
+**MARA**
+
+Et pourquoi tu as l'air de quelqu'un qui vient de découvrir qu'il y a un cadavre dans sa cuisine ?
+
+**NATHAN**
+
+Tu ne sais pas de quoi tu parles.
+
+**MARA**
+
+Non. Raconte-moi.
+
+**NATHAN**
+
+Je n'ai pas envie d'en parler.
+
+**MARA**
+
+C'est fascinant. Tu as pris une décision assez grande pour changer ta vie, et maintenant tu voudrais qu'on parle de la pluie.
+
+Elle le regarde plus attentivement.
+
+**MARA**
+
+Tu sais ce qui est horrible ? Je te trouve plus attirant qu'avant. Je vois la différence. Je vois comment tu te tiens, comment tu me regardes, comment tu as arrêté de demander pardon avant même de toucher une poignée de porte.
+
+Nathan ne répond pas.
+
+**MARA**
+
+Et une partie de moi a envie de te provoquer, juste pour voir jusqu'où tu peux aller.
+
+Elle marque une pause.
+
+**MARA**
+
+Mais je ne veux pas devenir la fille qui te donne envie de continuer à faire des choses que tu ne peux pas supporter.
+
+**NATHAN**
+
+Je ne te demande pas ça.
+
+**MARA**
+
+Pas avec des mots.
+
+Elle le regarde droit dans les yeux.
+
+**MARA**
+
+Tu veux que je te trouve beau. Que je te trouve fort. Que je te regarde comme si tu avais gagné quelque chose.
+
+**NATHAN**
+
+Tu me trouves beau, oui ou non ?
+
+Mara hésite, puis répond.
+
+**MARA**
+
+Oui.
+
+Un silence.
+
+**MARA**
+
+Et c'est justement pour ça que je suis en colère contre toi. Parce que je te regarde, et je vois quelque chose qui me plaît. Puis je me rappelle ce que tu as fait, et je comprends que mon désir ne rendra jamais cet acte moins réel.
+
+Elle commence à disparaître.
+
+**MARA**
+
+Je peux avoir envie de toi, Nathan. Ça ne veut pas dire que je vais te tenir la main pendant que tu apprends à te détester.
+
+La brume rouge l'emporte.
+
+---
+
+# INCURSION 04 — LE PARC DES SOURRIRES
+
+## Ouverture : « Tu as l'air d'un mauvais rêve qui a réussi sa carrière »
+
+*Des lumières de fête foraine s'allument dans le brouillard. Une musique joyeuse tourne trop lentement. Des silhouettes de chevaux de bois semblent regarder Nathan.*
+
+*Mara apparaît dans un portrait particulièrement lumineux. Son sourire est éclatant, presque trop parfait.*
+
+### Branche A — Nathan n'a pas pris la dose
+
+**MARA**
+
+Bienvenue au parc des merveilles !
+
+Elle ouvre les bras.
+
+**MARA**
+
+Ici, les enfants rient, les adultes mentent et les monstres ont l'air de mascottes pourries. Tu vas te sentir comme chez toi.
+
+**NATHAN**
+
+Tu es particulièrement insupportable aujourd'hui.
+
+**MARA**
+
+Merci. J'ai travaillé mon personnage.
+
+Elle le détaille.
+
+**MARA**
+
+Toi, en revanche, tu as l'air d'avoir dormi dans un abribus après une dispute avec ton propre destin.
+
+**NATHAN**
+
+Tu peux être sérieuse deux secondes ?
+
+**MARA**
+
+Pourquoi ? Tu comptes me dire quelque chose d'important ?
+
+Nathan hésite.
+
+Mara sourit.
+
+**MARA**
+
+C'est bien ce que je pensais.
+
+Elle baisse légèrement la voix.
+
+**MARA**
+
+Tu sais, Nathan, il y a une chose que je respecte chez toi. Tu peux être terriblement pénible, tu peux avoir peur de tout, tu peux même être assez lâche quand personne ne regarde. Mais jusqu'ici, tu n'as pas encore décidé que tes besoins passaient avant absolument tout le monde.
+
+Elle marque un silence.
+
+**MARA**
+
+Ne me regarde pas comme ça. Je viens de dire quelque chose de gentil. Je suis déjà en train de le regretter.
+
+**NATHAN**
+
+Tu penses que je vais céder ?
+
+**MARA**
+
+Je pense que tu vas être tenté. Et je pense que tu vas chercher une bonne raison de céder si la tentation devient suffisamment forte.
+
+Elle le regarde.
+
+**MARA**
+
+La question, ce n'est pas de savoir si tu es un homme bien aujourd'hui. C'est de savoir ce que tu feras quand tu auras enfin une excuse qui ressemble à une bonne raison.
+
+Elle sourit de nouveau.
+
+**MARA**
+
+Allez. Va jouer, petit héros. Et essaie de ne pas confondre le courage avec le fait de mourir lentement pour pouvoir dire que tu avais raison.
+
+Elle disparaît.
+
+### Branche B — Nathan est devenu puissant
+
+Mara regarde les lumières du parc, puis Nathan.
+
+**MARA**
+
+J'adore cet endroit.
+
+**NATHAN**
+
+Tu te fous de moi ?
+
+**MARA**
+
+Évidemment. C'est un cauchemar avec des chevaux en plastique. Mais il y a quelque chose de charmant dans l'effort que les gens font pour rendre les choses horribles un peu plus jolies.
+
+Elle l'observe avec un sourire.
+
+**MARA**
+
+Un peu comme toi, finalement.
+
+**NATHAN**
+
+Tu me compares à un cheval en plastique ?
+
+**MARA**
+
+Non. Le cheval, lui, ne passe pas son temps à essayer de me convaincre qu'il est irrésistible.
+
+Elle s'approche.
+
+**MARA**
+
+Tu sais, je commence à avoir des pensées très inconvenantes à ton sujet.
+
+Nathan hausse un sourcil.
+
+**MARA**
+
+Ne prends pas cet air. Il est déjà difficile de discuter avec toi sans que tu te mettes à imaginer que je suis en train de te déshabiller du regard.
+
+Un sourire.
+
+**MARA**
+
+Même si, pour être parfaitement honnête, tu commences à rendre cet exercice plus tentant.
+
+**NATHAN**
+
+Tu pourrais le faire au lieu d'en parler.
+
+Mara éclate de rire.
+
+**MARA**
+
+Oh ! Il est devenu audacieux. Je vais finir par devoir surveiller mes propres répliques.
+
+Elle le regarde plus sérieusement.
+
+**MARA**
+
+Mais je vais te dire quelque chose. Tu me plais davantage que je ne le pensais. Et ça m'agace, parce que j'ai l'impression de découvrir que tu peux être autre chose qu'un projet de rénovation.
+
+**NATHAN**
+
+Je ne suis pas un projet.
+
+**MARA**
+
+Pour l'instant, tu es un très beau chantier.
+
+Elle disparaît dans un éclat de lumière rouge.
+
+---
+
+## Clôture : « La commande concernant l'enfant »
+
+### Branche A — Nathan refuse la transaction
+
+Mara apparaît de dos, immobile. La musique du parc s'éloigne.
+
+**MARA**
+
+Tu as refusé.
+
+**NATHAN**
+
+Oui.
+
+**MARA**
+
+Cette fois, tu n'as même pas essayé de négocier avec toi-même ?
+
+**NATHAN**
+
+Non.
+
+Mara se retourne.
+
+**MARA**
+
+C'est nouveau.
+
+Elle l'observe quelques secondes.
+
+**MARA**
+
+Ne crois pas que je vais te dire que tu es un saint. Tu es toujours arrogant, tu as toujours besoin qu'on remarque tes efforts, et je pense que tu serais capable de te disputer avec un panneau de signalisation si tu croyais qu'il te manquait de respect.
+
+Un sourire.
+
+**MARA**
+
+Mais tu as refusé de participer à quelque chose que tu savais immonde, même si tu savais que tu allais le payer.
+
+**NATHAN**
+
+Tu es en train de me complimenter ?
+
+**MARA**
+
+Ne t'habitue pas. Ça me donne des rides.
+
+Elle baisse la voix.
+
+**MARA**
+
+Tu sais, Nathan, je crois que tu vas découvrir un jour que tu n'as pas besoin de devenir puissant pour être quelqu'un. Mais je ne te promets pas que ce sera agréable.
+
+Elle se retourne.
+
+**MARA**
+
+Et si tu me demandes si je te trouve attirant parce que tu as fait le bon choix, je t'envoie personnellement dans une colonie de vacances.
+
+**NATHAN**
+
+Je n'allais pas te le demander.
+
+**MARA**
+
+Bien sûr que non.
+
+Elle disparaît.
+
+### Branche B — Nathan accepte la mission
+
+Le portrait de Mara apparaît de dos. Elle regarde les lumières de la fête foraine.
+
+**MARA**
+
+Tu as accepté.
+
+**NATHAN**
+
+Oui.
+
+Elle ne se retourne pas.
+
+**MARA**
+
+Tu sais ce qui me fait le plus peur ? Ce n'est pas que tu sois capable de faire quelque chose d'horrible. Les humains sont capables de choses horribles depuis bien avant notre naissance.
+
+Elle tourne lentement la tête.
+
+**MARA**
+
+C'est que tu arrives encore à me regarder en espérant que je vais te trouver attirant après.
+
+Nathan serre les poings.
+
+**NATHAN**
+
+Je ne te demande pas de me pardonner.
+
+**MARA**
+
+Non. Tu me demandes quelque chose de beaucoup plus compliqué.
+
+**NATHAN**
+
+Quoi ?
+
+**MARA**
+
+Tu veux que je puisse te désirer sans avoir à penser à ce que tu as fait.
+
+Un long silence.
+
+**MARA**
+
+Et tu sais quoi ? Une partie de moi le peut. C'est ça qui m'énerve. Je te regarde, et je vois l'homme que tu es devenu. Je peux être attirée par ton assurance, par ta présence, par la façon dont tu n'hésites plus à me regarder dans les yeux.
+
+Elle s'approche légèrement du cadre.
+
+**MARA**
+
+Mais je ne suis pas obligée d'aimer tout ce qui vient avec.
+
+**NATHAN**
+
+Alors pourquoi tu continues à venir me voir ?
+
+Mara sourit avec tristesse.
+
+**MARA**
+
+Parce que je veux savoir si tu vas encore réussir à me surprendre. Parce que j'ai envie de découvrir qui tu es sous tout ça. Et parce que je ne suis pas aussi raisonnable que j'aime le prétendre.
+
+Elle reprend son ton provocateur.
+
+**MARA**
+
+Et parce que, merde, il faut bien reconnaître que tu as fini par devenir un sacré spectacle.
+
+Elle disparaît.
+
+---
+
+# INCURSION 05 — LE THÉÂTRE DES DETTES
+
+## Ouverture : « La mauvaise habitude de devenir intéressant »
+
+*Un théâtre immense s'étend devant Nathan. Les sièges sont occupés par des silhouettes sans visage. Une seule place reste vide, au premier rang.*
+
+*Mara apparaît. Elle est plus habillée, plus élégante, mais son sourire conserve son insolence.*
+
+### Branche A — Nathan reste sobre
+
+**MARA**
+
+Je commence à croire que tu vas vraiment aller jusqu'au bout.
+
+**NATHAN**
+
+Tu sembles déçue.
+
+**MARA**
+
+Je suis déçue par beaucoup de choses. Par exemple, par le fait que tu ne sois toujours pas devenu drôle.
+
+Nathan hausse les épaules.
+
+**MARA**
+
+Mais je suis aussi un peu curieuse. Tu refuses la Red Met, tu te bats avec tes deux poings, tu encaisses des coups que tu pourrais éviter en choisissant la solution que tu refuses. Je me demande ce qui te fait tenir.
+
+**NATHAN**
+
+Je sais ce que je ne veux pas devenir.
+
+**MARA**
+
+C'est déjà quelque chose. Mais ce n'est pas exactement la même chose que savoir qui tu veux être.
+
+Elle regarde les sièges vides.
+
+**MARA**
+
+Tu peux passer toute ta vie à refuser de devenir ton pire cauchemar. À un moment, il faudra aussi décider ce que tu veux construire à la place.
+
+**NATHAN**
+
+Tu es en train de me donner des conseils ?
+
+**MARA**
+
+Je suis en train de te dire que ton manque de personnalité commence à devenir un problème narratif.
+
+Elle sourit.
+
+**MARA**
+
+Allez, va te battre. Au moins, quand tu te bats, tu arrêtes de chercher la bonne réponse.
+
+Elle disparaît.
+
+### Branche B — Nathan approche de M4
+
+Mara le regarde un long moment, sans parler.
+
+**NATHAN**
+
+Quoi ?
+
+**MARA**
+
+Je réfléchis.
+
+**NATHAN**
+
+C'est dangereux.
+
+**MARA**
+
+Pour toi, peut-être. Pour moi, c'est une activité relativement nouvelle.
+
+Elle se rapproche légèrement.
+
+**MARA**
+
+Tu as de la présence, Nathan. Tu sais entrer dans une pièce. Tu sais regarder une femme sans avoir l'air de demander une autorisation écrite.
+
+Elle sourit.
+
+**MARA**
+
+C'est presque dommage. Tu aurais pu apprendre tout ça sans devenir aussi compliqué.
+
+**NATHAN**
+
+Tu me trouves compliqué ?
+
+**MARA**
+
+Tu es une énigme qui a été passée dans un broyeur industriel.
+
+Elle rit, puis son expression devient plus douce.
+
+**MARA**
+
+Mais je dois reconnaître quelque chose. Je me demande parfois ce que tu ferais si je te demandais de rester ici avec moi, loin des combats et de tout ce bordel.
+
+**NATHAN**
+
+Tu me le demandes ?
+
+Mara le regarde sans sourire.
+
+**MARA**
+
+Pas encore.
+
+Elle s'approche du cadre.
+
+**MARA**
+
+Je voudrais voir si tu sais rester dans une pièce avec une femme qui te désire sans avoir besoin de lui prouver quoi que ce soit.
+
+Un silence.
+
+**MARA**
+
+Je voudrais savoir si tu es capable d'être attirant sans être dangereux. Si tu peux être fort sans avoir besoin de gagner. Si tu peux me regarder sans essayer de posséder la réponse à toutes mes questions.
+
+Elle sourit de nouveau.
+
+**MARA**
+
+C'est beaucoup demander, je sais. Mais tu commences à me donner envie d'essayer.
+
+Elle disparaît.
+
+---
+
+## Clôture : « Les dettes ne disparaissent pas »
+
+### Branche A — Nathan a refusé les doses
+
+Mara apparaît de dos devant la scène vide.
+
+**MARA**
+
+Tu sais ce que tu as gagné ?
+
+**NATHAN**
+
+Non.
+
+**MARA**
+
+Rien.
+
+Elle tourne la tête.
+
+**MARA**
+
+Enfin, rien de ce que tu peux compter. Tu n'as pas gagné de muscles. Tu n'as pas gagné d'armes. Tu n'as pas gagné ma gratitude, et tu n'as certainement pas gagné le droit de me demander de t'embrasser pour te récompenser.
+
+**NATHAN**
+
+Je ne te demande pas ça.
+
+**MARA**
+
+Je sais.
+
+Elle le regarde avec une pointe de sérieux.
+
+**MARA**
+
+C'est précisément pour ça que je vais te dire quelque chose que tu n'aimeras pas. Tu es encore faible. Tu es encore terrifié. Et tu n'es pas devenu l'homme que tu voulais être.
+
+Nathan baisse les yeux.
+
+**MARA**
+
+Mais tu es toujours capable de choisir ce que tu refuses de faire.
+
+Elle sourit légèrement.
+
+**MARA**
+
+Ne sous-estime pas cette capacité. Le monde va passer beaucoup de temps à essayer de te la faire oublier.
+
+Elle disparaît.
+
+### Branche B — Nathan devient M4
+
+Mara apparaît de dos. Sa tenue et son apparence correspondent à son stade avancé. Elle ne se retourne pas tout de suite.
+
+**MARA**
+
+Je vais te dire quelque chose, et tu vas essayer de ne pas en faire toute ta personnalité.
+
+**NATHAN**
+
+Je t'écoute.
+
+Elle se retourne lentement.
+
+**MARA**
+
+J'ai envie de toi.
+
+Nathan reste silencieux.
+
+**MARA**
+
+Ne fais pas cette tête. Tu savais bien que cette conversation finirait par arriver. Tu as passé suffisamment de temps à me regarder comme si j'étais une récompense dans un jeu que tu pouvais enfin gagner.
+
+Elle s'approche.
+
+**MARA**
+
+Oui, tu me plais. Oui, j'aime la façon dont tu as changé. Oui, je me demande ce que ça ferait de t'embrasser sans devoir entendre une seule seconde de tes petites phrases d'homme mystérieux.
+
+Un sourire.
+
+**MARA**
+
+Et oui, j'ai imaginé ce que tu pourrais faire si, pour une fois, tu utilisais tes mains pour autre chose que casser des choses.
+
+Nathan sourit.
+
+**MARA**
+
+Oh, ne prends pas cet air. Je ne te donne pas un permis de conduire pour mon corps.
+
+Elle rit, puis reprend plus sérieusement.
+
+**MARA**
+
+Je te le dis parce que je le pense. Pas pour que tu te sentes obligé de continuer à devenir plus fort. Pas pour que tu me prouves que tu es encore plus dangereux. Et certainement pas pour que tu ailles tuer quelqu'un en pensant que je t'attendrai à la fin.
+
+Elle le regarde fixement.
+
+**MARA**
+
+Je peux te désirer, Nathan. Mais je ne veux pas devenir une excuse de plus.
+
+Elle disparaît dans la brume rouge.
+
+---
+
+# INCURSION 06 — LE DERNIER SEUIL
+
+## Ouverture : « Tu as fini par devenir quelqu'un »
+
+*Le monde parallèle se déchire. Les immeubles semblent flotter dans le vide. Des fragments de précédentes scènes apparaissent brièvement dans l'environnement.*
+
+*Mara apparaît pour la dernière fois au début d'une incursion. Son expression est sérieuse, mais elle conserve cette insolence qui l'a toujours caractérisée.*
+
+### Branche A — Nathan a refusé la Red Met
+
+**MARA**
+
+Alors, Nathan. On est arrivés au dernier chapitre.
+
+**NATHAN**
+
+Tu as l'air déçue.
+
+**MARA**
+
+Je pensais surtout que tu finirais par céder. C'est la partie la plus agaçante de cette histoire : j'ai passé tout ce temps à te provoquer, à te rabaisser, à te dire que tu étais trop faible pour survivre ici… et tu es encore là.
+
+Elle le regarde.
+
+**MARA**
+
+Tu n'es pas devenu plus fort comme tu l'espérais. Tu n'as pas débloqué l'arsenal de tes rêves. Tu es toujours obligé d'observer, d'esquiver, de frapper au bon moment.
+
+**NATHAN**
+
+Et pourtant, je suis arrivé jusqu'ici.
+
+**MARA**
+
+Oui.
+
+Elle marque une pause.
+
+**MARA**
+
+Je n'aime pas toujours ce que tu es. Je ne suis pas amoureuse de toi. Je ne vais pas soudainement te trouver irrésistible parce que tu as résisté à la tentation.
+
+Elle sourit.
+
+**MARA**
+
+Mais je crois que tu as enfin compris quelque chose : tu n'as pas besoin de devenir celui que les autres désirent pour décider de ce que tu veux être.
+
+**NATHAN**
+
+C'est ton discours d'adieu ?
+
+**MARA**
+
+Ne t'emballe pas. J'ai encore quelques insultes en réserve.
+
+Elle se rapproche.
+
+**MARA**
+
+Mais avant que tu partes, j'aimerais que tu m'accordes une chose. Arrête de croire que ton choix te rend supérieur aux autres. Tu as refusé. C'est important. Mais ça ne te donne pas le droit de regarder les gens qui ont cédé comme si tu étais né meilleur qu'eux.
+
+Elle le regarde.
+
+**MARA**
+
+Tu ne sais pas ce qu'ils ont perdu avant d'arriver ici. Tu ne sais pas ce qu'ils avaient peur de perdre. Tu ne sais pas ce qu'ils se racontent pour continuer à respirer.
+
+Un silence.
+
+**MARA**
+
+Tu as fait ton choix, Nathan. Maintenant, tiens-toi à lui. Pas pour moi. Pas pour obtenir une récompense. Pour toi.
+
+Elle retrouve son sourire moqueur.
+
+**MARA**
+
+Et maintenant, va sauver le monde. Mais fais attention : si tu trébuches au dernier niveau, je vais me foutre de toi pendant des siècles.
+
+Elle disparaît.
+
+### Branche B — Nathan est devenu M4
+
+Mara apparaît de face. Elle le regarde comme si elle le voyait pour la première fois.
+
+**MARA**
+
+Merde.
+
+**NATHAN**
+
+Tu l'as déjà dit.
+
+**MARA**
+
+Je sais. J'avais préparé quelque chose de beaucoup plus élégant, mais tu as ce talent très particulier pour me faire perdre le fil de mes pensées.
+
+Elle le détaille.
+
+**MARA**
+
+Tu es devenu l'homme que tu voulais être.
+
+**NATHAN**
+
+Et tu me désires.
+
+Mara sourit, sans détourner le regard.
+
+**MARA**
+
+Oui. Je te désire.
+
+Nathan s'approche.
+
+**MARA**
+
+Et je vais même te faire la faveur de ne pas prétendre que c'est uniquement à cause de tes épaules. Ce serait injuste pour tes autres qualités.
+
+Elle sourit.
+
+**MARA**
+
+Mais je dois t'avouer quelque chose. Je ne sais plus très bien si je te trouve irrésistible ou si je suis simplement fascinée par la catastrophe que tu es devenu.
+
+**NATHAN**
+
+Tu peux faire les deux.
+
+**MARA**
+
+Oh, je sais. C'est précisément ce qui m'inquiète.
+
+Elle l'observe.
+
+**MARA**
+
+Tu as appris à prendre ce que tu voulais. Tu as appris à faire peur. Tu as appris à gagner. Tu as passé tellement de temps à chercher une manière de ne plus jamais être le garçon qu'on ignorait que tu as fini par devenir un homme qu'on ne peut plus ignorer.
+
+Un silence.
+
+**MARA**
+
+Et pourtant, quand tu me regardes, je vois encore le type qui se demandait s'il était assez bien pour m'adresser la parole.
+
+**NATHAN**
+
+Il a disparu.
+
+Mara secoue lentement la tête.
+
+**MARA**
+
+Non. Il est là. Tu as juste appris à le faire taire.
+
+Elle se rapproche.
+
+**MARA**
+
+Tu sais ce que j'aimerais ? Une soirée normale. Un bar, un verre, une conversation. Pas de monstres, pas de sang, pas de cris. Et pas de Nathan qui cherche à savoir si je le trouve assez viril.
+
+**NATHAN**
+
+Tu crois qu'on pourrait avoir ça ?
+
+Mara le regarde, presque tendre.
+
+**MARA**
+
+Je ne sais pas.
+
+Puis elle retrouve sa provocation.
+
+**MARA**
+
+Mais si tu continues à me regarder comme ça, je pourrais être tentée de découvrir ce que tu sais faire quand tu n'as pas besoin de massacrer quelque chose pour attirer mon attention.
+
+Elle laisse durer le silence.
+
+**MARA**
+
+Seulement, je veux que tu comprennes une chose avant d'aller plus loin. Je ne suis pas ton prix. Je suis Mara. Je peux te vouloir, je peux te refuser, je peux changer d'avis. Et si tu ne supportes pas cette idée, alors tu n'es pas encore aussi fort que tu le crois.
+
+Elle pose deux doigts contre sa propre poitrine.
+
+**MARA**
+
+Je veux que tu me désires parce que je suis là, devant toi. Pas parce que tu as passé ta vie à essayer de gagner tout ce qui t'avait échappé.
+
+Elle sourit.
+
+**MARA**
+
+Alors, Nathan… tu es encore capable de me parler sans chercher à gagner ?
+
+**FIN DE L'OUVERTURE.**
+
+---
+
+# CLÔTURE FINALE — MARA, AVANT LE COMA
+
+La confrontation avec Mara clôt la dernière incursion. Le choix du joueur a déterminé le niveau de puissance, mais également la façon dont Nathan la regarde et la manière dont elle comprend l'homme qu'il est devenu.
+
+## Branche A — Nathan est resté sobre
+
+Mara apparaît de face. Elle a cessé de sourire.
+
+**MARA**
+
+Tu as tenu.
+
+**NATHAN**
+
+Oui.
+
+**MARA**
+
+Tu as souffert.
+
+**NATHAN**
+
+Oui.
+
+**MARA**
+
+Et tu es arrivé jusqu'ici.
+
+**NATHAN**
+
+Oui.
+
+Elle baisse les yeux, puis les relève.
+
+**MARA**
+
+Je pensais que tu finirais par céder. Je pensais que tu allais trouver une bonne raison de prendre une dose, puis une autre, puis une autre. C'est ce que font beaucoup de gens ici.
+
+**NATHAN**
+
+Je ne suis pas beaucoup de gens.
+
+**MARA**
+
+Non. Tu es Nathan. C'est déjà suffisamment compliqué.
+
+Elle esquisse un sourire.
+
+**MARA**
+
+Je ne vais pas te dire que tu es parfait. Tu es pénible, tu es complexé, tu as parfois l'air de demander pardon avant même d'avoir fait quelque chose. Et tu as passé une quantité franchement inquiétante de temps à essayer de me prouver que tu étais quelqu'un que je pourrais désirer.
+
+**NATHAN**
+
+Et maintenant ?
+
+Mara le regarde longuement.
+
+**MARA**
+
+Maintenant, je pense que tu dois apprendre à vivre sans attendre que je te donne la réponse.
+
+**NATHAN**
+
+Tu ne veux pas de moi.
+
+**MARA**
+
+Pas comme tu le voudrais. Et je ne vais pas te mentir pour rendre ton histoire plus confortable.
+
+Elle se rapproche.
+
+**MARA**
+
+Mais je te respecte, Nathan. Pas parce que tu as refusé la Red Met. Pas parce que tu as traversé cet endroit avec deux poings et une santé ridicule. Je te respecte parce que tu as accepté de ne pas avoir tout ce que tu voulais.
+
+Un silence.
+
+**MARA**
+
+Tu sais ce qui est triste ? Il t'a fallu tout cet enfer pour commencer à comprendre que le monde ne te doit rien.
+
+Elle sourit une dernière fois.
+
+**MARA**
+
+C'est une leçon assez chère. Essaie au moins de ne pas l'oublier.
+
+Elle disparaît.
+
+## Branche B — Nathan a suivi la trajectoire de dépendance
+
+Mara apparaît en grand portrait. Son regard se pose sur Nathan, puis descend brièvement le long de sa silhouette avant de revenir à son visage.
+
+**MARA**
+
+Tu as fini par y arriver.
+
+**NATHAN**
+
+À quoi ?
+
+**MARA**
+
+À devenir quelqu'un qu'on remarque.
+
+Elle sourit.
+
+**MARA**
+
+Je ne vais pas te mentir. Tu es attirant, Nathan. Tu as une présence que tu n'avais pas au début. Tu n'as plus l'air de vouloir t'excuser d'être dans la même pièce que moi.
+
+Elle se rapproche.
+
+**MARA**
+
+Et oui, j'ai envie de toi. Je me demande même ce que tu ferais si je te disais de venir ici, juste à côté de moi, et de fermer enfin cette bouche qui te sert à tout gâcher.
+
+Nathan sourit.
+
+**MARA**
+
+Oh, ne t'emballe pas. Je n'ai pas dit que tu pouvais arrêter de réfléchir. Je te demande simplement de le faire ailleurs.
+
+Elle laisse échapper un rire, puis redevient sérieuse.
+
+**MARA**
+
+Tu sais ce qui me fait peur ? Je peux te regarder et avoir envie de t'embrasser. Je peux être attirée par ce que tu es devenu. Je peux même avoir envie de découvrir ce qu'il y a sous cette armure que tu t'es fabriquée.
+
+**NATHAN**
+
+Alors qu'est-ce qui t'arrête ?
+
+**MARA**
+
+Le reste.
+
+Elle le fixe.
+
+**MARA**
+
+Les gens que tu as blessés. Ce que tu as fait à ton père. Ce que tu as accepté de devenir pour continuer à prendre cette merde.
+
+Nathan détourne les yeux.
+
+**MARA**
+
+Je ne te demande pas de redevenir le garçon du début. Je ne crois pas que ce soit possible. Je te demande de comprendre que le fait que je te désire ne change rien à ce qui s'est passé.
+
+Elle s'approche davantage.
+
+**MARA**
+
+Je peux te vouloir et te condamner. Je peux te trouver beau et penser que tu as fait quelque chose d'impardonnable. Je peux avoir envie de t'embrasser et refuser de te servir d'excuse pour continuer à te détruire.
+
+Un silence.
+
+**MARA**
+
+Tu voulais être assez fort pour obtenir tout ce que tu désirais. Eh bien, tu as obtenu une partie de ce que tu voulais.
+
+Elle le regarde avec une tristesse contenue.
+
+**MARA**
+
+Maintenant, regarde ce que ça t'a coûté.
+
+Mara disparaît dans la brume rouge.
+
+---
+
+# CONSIGNES D'INTÉGRATION DANS LE FICHIER INK
+
+Les scènes précédentes doivent être intégrées à la structure des niveaux en conservant les mêmes règles :
+
+- Mara apparaît toujours au début et à la fin d'une incursion dans le monde parallèle.
+- La tenue est déterminée par le stade M-T0 à M-T4 issu de l'état de la partie.
+- Les dialogues utilisent le nombre total de doses, le choix du niveau courant, la progression physique et l'historique moral.
+- Un refus de dose n'efface pas la progression déjà acquise. Il modifie la scène actuelle, sans faire régresser artificiellement Nathan.
+- Les scènes d'ouverture peuvent utiliser les informations des niveaux précédents, mais ne doivent jamais révéler une décision que le joueur n'a pas encore prise.
+- Les scènes de clôture doivent commenter les événements réellement survenus pendant le niveau.
+- Les variantes de dialogues doivent être suffisamment distinctes pour que deux parcours produisent des expériences sensiblement différentes.
+
+La règle la plus importante : **Mara ne doit pas être une récompense automatique pour les choix immoraux.** Elle peut être attirée par Nathan, apprécier sa présence et assumer son désir, tout en étant bouleversée par la manière dont il a acquis cette puissance. C'est cette contradiction qui rend leur relation intéressante et qui empêche le parcours Red Met de devenir une simple succession de récompenses.
+

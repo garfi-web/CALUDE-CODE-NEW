@@ -2,9 +2,31 @@ using System;
 using System.IO;
 using UnityEngine;
 
+// Peut-on prendre la dose du prochain niveau, et sinon pourquoi.
+public enum DoseCheck
+{
+    Ok,
+    AlreadyChosen,
+    // Un acte l'interdit (le rituel du ch. 5 pour la dose du ch. 6).
+    Blocked,
+    NotEnoughMoney,
+    // La grande demande du Chimiste n'a pas été acceptée.
+    DemandNotAccepted,
+}
+
+// Rôle de Mara à partir du ch. 7 (docs/SCENARIO.md).
+public enum MaraRole
+{
+    Undecided,
+    Savior,
+    Enemy,
+    Ambitious,
+}
+
 // Partie en cours : l'état (GameState) et les tables qui le traduisent en puissance de Nathan,
 // tenue de Mara et force des ennemis. Tout ce qui dépend des choix du joueur lit ici, jamais
-// une valeur en dur. Sauvegarde en JSON dans Application.persistentDataPath/saves.
+// une valeur en dur. Scènes et actes : identifiants de docs/SCENARIO.md (StoryCatalog).
+// Sauvegarde en JSON dans Application.persistentDataPath/saves.
 public static class GameSession
 {
     private const string SaveFolder = "saves";
@@ -12,6 +34,7 @@ public static class GameSession
     public static GameState State { get; private set; } = new();
     public static ProgressionTable Progression { get; private set; }
     public static IncursionTable Incursions { get; private set; }
+    public static StoryCatalog Catalog { get; private set; }
 
     // Tout changement de l'état (dose, acte, incursion, chargement).
     public static event Action Changed;
@@ -22,13 +45,15 @@ public static class GameSession
         State = new GameState();
         Progression = null;
         Incursions = null;
+        Catalog = null;
         Changed = null;
     }
 
-    public static void Configure(ProgressionTable progression, IncursionTable incursions)
+    public static void Configure(ProgressionTable progression, IncursionTable incursions, StoryCatalog catalog)
     {
         Progression = progression;
         Incursions = incursions;
+        Catalog = catalog;
         Changed?.Invoke();
     }
 
@@ -49,27 +74,99 @@ public static class GameSession
     // demandes du Chimiste acceptées (docs/SCENARIO.md, « La fin »).
     public static bool ImmoralEnding => Progression != null && Progression.IsImmoralEnding(State);
 
+    // Faits qui se déduisent des actes (aucun drapeau en double dans l'état).
+    public static bool MarcAlive => !State.HasAct("acte_ch05_coeur_marc");
+
+    public static MaraRole MaraRole =>
+        State.HasAct("acte_ch07_mara_salut") ? MaraRole.Savior :
+        State.HasAct("acte_ch07_mara_ennemie") ? MaraRole.Enemy :
+        State.HasAct("acte_ch07_mara_ambition") ? MaraRole.Ambitious :
+        MaraRole.Undecided;
+
     public static void NewGame()
     {
         State = new GameState();
         Changed?.Invoke();
     }
 
-    // Dose du prochain niveau. Un choix est définitif : faux s'il a déjà été fait.
-    public static bool ChooseDose(bool take)
+    // ------------------------------------------------------------ Doses
+
+    public static DosePrice NextDosePrice =>
+        Progression != null ? Progression.PriceFor(NextLevel) : new DosePrice { level = NextLevel };
+
+    public static DoseCheck CanTakeDose()
     {
         int level = NextLevel;
 
         if (State.DoseAt(level).HasValue)
-            return false;
+            return DoseCheck.AlreadyChosen;
+
+        DosePrice price = NextDosePrice;
+
+        if (!string.IsNullOrEmpty(price.blockedByAct) && State.HasAct(price.blockedByAct))
+            return DoseCheck.Blocked;
+
+        return price.kind switch
+        {
+            DosePriceKind.Money when State.money < price.cost + State.debt => DoseCheck.NotEnoughMoney,
+            DosePriceKind.Demand when !State.HasAct(price.demandAct) => DoseCheck.DemandNotAccepted,
+            _ => DoseCheck.Ok,
+        };
+    }
+
+    // Dose du prochain niveau, définitive. Prendre la dose la paie (crédit, argent et dette, ou
+    // demande déjà acceptée) ; ignorePrice ne sert qu'aux touches de test. Refuser est toujours possible.
+    // Les actes acte_chNN_dose et acte_chNN_refus du catalogue sont inscrits s'ils existent.
+    public static DoseCheck ChooseDose(bool take, bool ignorePrice = false)
+    {
+        int level = NextLevel;
+
+        if (State.DoseAt(level).HasValue)
+            return DoseCheck.AlreadyChosen;
+
+        if (take)
+        {
+            DoseCheck check = CanTakeDose();
+
+            if (check != DoseCheck.Ok && !ignorePrice)
+                return check;
+
+            if (check == DoseCheck.Ok)
+                Pay(NextDosePrice);
+        }
 
         State.doses.Add(new LevelChoice { level = level, dose = take ? DoseChoice.Taken : DoseChoice.Refused });
 
-        if (take && Progression != null)
+        string actId = $"acte_ch{level:00}_{(take ? "dose" : "refus")}";
+
+        if (Catalog != null && Catalog.FindAct(actId) != null)
+            RecordAct(actId);
+        else if (take && Progression != null)
             State.axes.dependence += Progression.dependencePerDose;
 
         Changed?.Invoke();
-        return true;
+        return DoseCheck.Ok;
+    }
+
+    private static void Pay(DosePrice price)
+    {
+        switch (price.kind)
+        {
+            case DosePriceKind.Credit:
+                State.debt += price.cost;
+                break;
+            case DosePriceKind.Money:
+                State.money -= price.cost + State.debt;
+                State.debt = 0;
+                break;
+        }
+    }
+
+    // Argent d'une activité sans acte moral (poubelles, petit boulot).
+    public static void EarnMoney(int amount)
+    {
+        State.money += amount;
+        Changed?.Invoke();
     }
 
     // Entrée dans le niveau suivant du monde parallèle.
@@ -79,12 +176,51 @@ public static class GameSession
         Changed?.Invoke();
     }
 
+    // Un acte du catalogue : ses effets (axes, argent) viennent de docs/SCENARIO.md. Faux si
+    // l'identifiant est inconnu ou si l'acte est déjà inscrit (chaque acte n'a lieu qu'une fois).
+    public static bool RecordAct(string id)
+    {
+        StoryActDefinition definition = Catalog != null ? Catalog.FindAct(id) : null;
+
+        if (definition == null)
+        {
+            Debug.LogWarning($"[RED MET] Acte inconnu du catalogue : {id} (docs/SCENARIO.md, puis RED MET → Importer le scénario).");
+            return false;
+        }
+
+        if (State.HasAct(id))
+            return false;
+
+        State.money += definition.money;
+        RecordAct(id, definition.delta);
+        return true;
+    }
+
+    // Acte hors catalogue (identifiant à compléter, comme acte_ch09_allie_<nom>) : effets donnés par l'appelant.
     public static void RecordAct(string id, MoralAxes delta)
     {
         State.acts.Add(new StoryAct { id = id, level = State.incursion, delta = delta });
         State.axes += delta;
         Changed?.Invoke();
     }
+
+    // ------------------------------------------------------------ Scènes
+
+    // Entrée dans une scène : point de reprise de la sauvegarde.
+    public static void EnterScene(string id)
+    {
+        if (Catalog != null && !Catalog.HasScene(id))
+            Debug.LogWarning($"[RED MET] Scène inconnue du catalogue : {id}");
+
+        State.scene = id;
+
+        if (!State.scenesSeen.Contains(id))
+            State.scenesSeen.Add(id);
+
+        Changed?.Invoke();
+    }
+
+    public static bool SceneSeen(string id) => State.scenesSeen.Contains(id);
 
     // ------------------------------------------------------------ Sauvegarde
 
