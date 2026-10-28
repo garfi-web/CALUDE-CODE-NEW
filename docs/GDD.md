@@ -28,7 +28,7 @@ Chaque chapitre contient au moins une séquence dans la **réalité** (descente 
 | Ch. | Titre | Réalité | Red Met |
 |---|---|---|---|
 | 1 | Le garçon invisible | Humiliation, rencontre du Chimiste | Découverte, Mara, premier boss |
-| 2 | Le grain rouge | Premières dettes | Ville pestiférée : quarantaine, évacuation ou purge |
+| 2 | Le grain rouge | Premières humiliations | Ville pestiférée : quarantaine, évacuation ou purge |
 | 3 | Le prix du respect | Poubelles, usurier, petits vols | Arme anti-peste, ancien compagnon d'armes |
 | 4 | La couronne de cendres | Rupture familiale | Révolte contre le roi |
 | 5 | Le fils qui tue son père | Point de rupture avec Marc | Régicide ; la voix apparaît |
@@ -103,12 +103,28 @@ Il n'y a **aucun choix de difficulté dans le menu**.
 - Celui qui **refuse la Red Met et les choix immoraux** reste M0 face à des ennemis qui grandissent : il doit maîtriser l'esquive, les fenêtres de contre-attaque et le placement. C'est la voie exigeante, et toujours possible à terminer.
 
 ### Les demandes du Chimiste
-Au début, la dose s'achète (offerte, puis à crédit, puis contre de l'argent). Ensuite, **le Chimiste exige des choix moraux** (GDD v0.1, section 10). Refuser une demande, c'est refuser la dose de ce niveau ; il reste disponible avec la demande suivante.
-1. **L'humiliation imposée** (ch. 4, section 10.3) : une faveur sexuelle exigée pour prouver que Nathan est « prêt à tout ». Mise en scène **non explicite**, comme une contrainte et une perte de contrôle, jamais comme une récompense érotique. Nathan peut accepter, refuser ou tenter de rompre avec le réseau.
-2. **Le cœur de Marc** (ch. 5, section 10.1) : « Les organes se revendent bien au marché noir. J'ai une demande pour un cœur. Tue ton père, ramène-le-moi, et tu auras ta prochaine dose. » Nathan peut refuser, protéger son père ou déjouer le réseau. Le meurtre est irréversible.
-3. **L'enfant** (ch. 7, section 10.2) : « Le marché noir me demande un enfant. » Nathan peut refuser, mettre l'enfant à l'abri ou saboter la transaction. Aucun détail pratique ; enquête, détresse de la famille, pression policière.
+**La dose ne s'achète jamais avec de l'argent** (décision de l'auteur du 2026-10-28). La 1re est offerte ; **chacune des suivantes se paie par un acte immoral**. Ne pas commettre l'acte, c'est refuser la dose de ce niveau ; le Chimiste reste disponible avec l'exigence suivante.
 
-Placement dans les chapitres validé par l'auteur (`docs/SCENARIO.md`) ; « le prix de son corps », dilemme du réel, se place au ch. 6.
+| Dose (ch.) | Acte immoral qui la paie |
+|---|---|
+| 1 | Offerte |
+| 2 | Fouiller les poubelles pour le Chimiste |
+| 3 | Voler le collier en or d'une vieille dame (ou l'agresser pour le prendre) |
+| 4 | Voler le portefeuille de Marc |
+| 5 | **Tuer Marc pour son cœur** (GDD v0.1, 10.1), irréversible |
+| 6 | **Se prostituer : l'acte sexuel imposé par le Chimiste** (10.3, fusionné avec « le prix de son corps ») |
+| 7 | **Enlever un enfant pour le marché noir** (10.2) |
+| 8 | Frapper un passant jusqu'à lui arracher ses dents en or |
+| 9 | Faire accuser un innocent à sa place |
+| 10 | Faux don du sang : voler des poches de sang à l'hôpital, pour lui et le Chimiste (au dernier niveau de puissance, Nathan est devenu un vampire) |
+
+- Les trois actes en gras sont les **grandes demandes** de la fin immorale.
+- **Mise en scène** : rien d'explicite ; la victime, sa peur et les conséquences restent au centre.
+  - **Enfant** : aucun détail pratique ; on montre l'enquête, la détresse de la famille et la pression policière.
+  - **Acte imposé** : coupé avant tout acte. C'est une contrainte et une perte de contrôle, jamais une récompense érotique. Nathan est hétérosexuel et le vit comme une humiliation abjecte. L'horreur vient de la contrainte, jamais du fait que le Chimiste soit un homme : la scène ne porte aucun jugement sur l'homosexualité.
+- **L'argent** gagné par les activités du réel (poubelles, objets revendus) reste dans l'état de la partie et reste utile, mais il ne paie jamais une dose ; ses usages restent à définir.
+
+Détail par chapitre : `docs/SCENARIO.md`.
 
 ### Scène de culpabilité
 **Avant chaque dose** payée par un acte immoral, Nathan se recroqueville en boule, la tête entre les mains, et pleure (« Qu'est-ce que je suis en train de devenir… Je deviens un monstre »), puis consomme sa dose (GDD v0.1, sections 4.3 et 10.4). Une dose payée sans acte immoral n'a droit qu'à une courte hésitation. Au fil du jeu, ces crises deviennent plus courtes, plus violentes ou plus silencieuses.
@@ -123,7 +139,7 @@ Un état central, sauvegardé et rechargé avec la partie, décide de tout ce qu
 - les **quatre axes** (Humanité, Cruauté, Dépendance, Paranoïa) ;
 - le **stade de Nathan** dans chaque monde (M0 à M4, R0 à R4) et le **stade de tenue de Mara** (M-T0 à M-T4) ;
 - le **numéro de l'incursion** ;
-- l'**argent** et la **dette** envers le Chimiste (prix des doses : `docs/SCENARIO.md`) ;
+- l'**argent** gagné par les activités du réel (il ne paie jamais une dose) ;
 - la **scène en cours** et les scènes vues (identifiants de `docs/SCENARIO.md`), pour reprendre la partie.
 
 Les dialogues, la puissance de Nathan, celle des ennemis et la tenue de Mara lisent cet état. Aucune scène ne code un stade en dur.

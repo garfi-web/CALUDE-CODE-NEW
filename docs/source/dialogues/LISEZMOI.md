@@ -86,10 +86,11 @@ Préfixes : `reel` monde réel · `dose` choix et prise de la dose · `rm` monde
 | Identifiant | Scène |
 |---|---|
 | `ch02_reel_manque` | Nathan pense au monde parallèle, et au manque s'il a pris la dose |
-| `ch02_reel_chimiste` | La deuxième dose n'est plus offerte |
-| `ch02_avocat_dette` | L'Avocat minimise : une dette, ce n'est rien, il sera bientôt assez fort pour tout rembourser |
-| `ch02_dose_choix` | Dose 2, à crédit |
-| `ch02_dose_hesitation` | Si prise : hésitation dans la salle de bains, puis la prise |
+| `ch02_reel_chimiste` | La deuxième dose n'est plus offerte, et l'argent ne l'intéresse pas |
+| `ch02_avocat_poubelles` | L'Avocat minimise : ce ne sont que des déchets, personne ne le verra |
+| `ch02_reel_poubelles` | Fouille des poubelles (activité jouable) : cuivre, objets cassés, biens revendables |
+| `ch02_dose_choix` | Dose 2, contre la fouille des poubelles |
+| `ch02_dose_culpabilite` | Si prise : première scène de culpabilité, courte (la honte plus que le crime), puis la dose |
 | `ch02_reel_passage` | Passage dans le monde parallèle |
 | `ch02_mara_ouverture` | Mara de face (M-T0 ou M-T1) |
 | `ch02_rm_ville` | Ville médiévale pestiférée : les greniers sont contaminés par une peste surnaturelle et les… |
@@ -104,17 +105,12 @@ Préfixes : `reel` monde réel · `dose` choix et prise de la dose · `rm` monde
 
 | Identifiant | Scène |
 |---|---|
-| `ch03_reel_argent` | Nathan manque d'argent |
-| `ch03_reel_poubelles` | Fouille des poubelles (activité jouable) : cuivre, objets cassés, biens revendables |
-| `ch03_reel_usurier` | L'usurier rachète les objets à vil prix |
-| `ch03_reel_travail` | Travail honnête : un petit boulot payé peu et tard |
-| `ch03_reel_vol` | Petits vols (supérette, sacs) : de l'argent vite gagné, avec un risque d'être reconnu |
+| `ch03_reel_chimiste` | Le Chimiste a remarqué une vieille dame du quartier qui porte un collier en or |
 | `ch03_reel_collier` | Le collier en or |
 | `ch03_reel_marc` | Marc remarque l'amaigrissement et les nuits blanches |
-| `ch03_avocat_dose` | L'Avocat fait le compte : il manque de l'argent, et la vieille dame n'en a pas besoin |
-| `ch03_dose_choix` | Dose 3, contre de l'argent |
-| `ch03_dose_culpabilite` | Si la dose a été payée par un vol ou une agression : scène de culpabilité complète, puis la dose |
-| `ch03_dose_hesitation` | Si elle a été payée honnêtement : hésitation, puis la dose |
+| `ch03_avocat_dose` | L'Avocat fait le compte : la vieille dame n'en a pas besoin, et lui, si |
+| `ch03_dose_choix` | Dose 3, contre le collier (volé ou arraché) |
+| `ch03_dose_culpabilite` | Si prise : scène de culpabilité complète, puis la dose |
 | `ch03_reel_passage` | Passage dans le monde parallèle |
 | `ch03_mara_ouverture` | Mara de face (M-T0 à M-T2) |
 | `ch03_rm_arme` | Mara lui confie une arme capable de tuer les créatures de la peste : des gantelets pour Nathan sobre… |
@@ -130,13 +126,12 @@ Préfixes : `reel` monde réel · `dose` choix et prise de la dose · `rm` monde
 
 | Identifiant | Scène |
 |---|---|
-| `ch04_reel_marc_argent` | Marc a compris que l'argent part ailleurs (et que des objets ont disparu, si Nathan les a vendus au ch.… |
-| `ch04_reel_chimiste_demande` | Le Chimiste ne veut plus d'argent |
-| `ch04_avocat_demande` | L'Avocat minimise : ce n'est qu'un moment, personne ne saura, et la dose est au bout |
-| `ch04_reel_humiliation` | Si Nathan accepte : la scène s'arrête avant tout acte (fondu au noir) |
-| `ch04_reel_rupture` | S'il tente de rompre avec le réseau : il part en menaçant de parler |
-| `ch04_dose_choix` | Dose 4, contre la demande 1 |
-| `ch04_dose_culpabilite` | Si la demande est acceptée : scène de culpabilité complète (la première vraiment longue), puis la… |
+| `ch04_reel_marc_argent` | Marc a compris que quelque chose ne va pas (et, si la vieille dame a été agressée, il a vu l'avis… |
+| `ch04_reel_chimiste_demande` | Le prix de la dose 4 : le portefeuille de Marc |
+| `ch04_avocat_demande` | L'Avocat minimise : Marc le lui doit bien, et il ne s'en rendra même pas compte |
+| `ch04_reel_portefeuille` | Le vol du portefeuille : la nuit, Nathan entre dans la chambre de Marc qui dort |
+| `ch04_dose_choix` | Dose 4, contre le portefeuille de Marc |
+| `ch04_dose_culpabilite` | Si prise : scène de culpabilité complète, la première vraiment longue, puis la dose |
 | `ch04_reel_passage` | Effondrement dans la salle de bains, passage |
 | `ch04_mara_ouverture` | Mara de face (M-T0 à M-T2) |
 | `ch04_rm_province` | Nathan découvre que le roi a abandonné une province entière pour préserver son armée : villages… |
@@ -151,12 +146,12 @@ Préfixes : `reel` monde réel · `dose` choix et prise de la dose · `rm` monde
 | Identifiant | Scène |
 |---|---|
 | `ch05_reel_marc_confrontation` | Marc découvre jusqu'où Nathan est allé |
-| `ch05_reel_chimiste_demande` | Demande 2 : le cœur de Marc (GDD v0.1, 10.1). « Les organes se revendent bien au marché noir. J'ai… |
+| `ch05_reel_chimiste_demande` | Grande demande : le cœur de Marc (GDD v0.1, 10.1). « Les organes se revendent bien au marché noir.… |
 | `ch05_avocat_demande` | L'Avocat, encore ambigu, fait le compte : Marc l'empêche d'avancer, Marc ne le comprend pas |
 | `ch05_reel_marc_meurtre` | Si Nathan accepte : le meurtre de Marc, irréversible |
 | `ch05_reel_marc_prevenu` | Prévenir Marc (possible s'il s'est confié au ch. 4, ou si l'Humanité est haute) : Marc part se cacher… |
 | `ch05_reel_reseau_dejoue` | Déjouer le réseau : Nathan donne un faux rendez-vous et prévient la police ; le Chimiste perd un… |
-| `ch05_dose_choix` | Dose 5, contre la demande 2 |
+| `ch05_dose_choix` | Dose 5, contre le cœur de Marc |
 | `ch05_dose_culpabilite` | Si Marc est tué : la scène de culpabilité la plus violente du jeu, puis la dose |
 | `ch05_reel_passage` | Passage |
 | `ch05_mara_ouverture` | Mara de face (M-T0 à M-T3) |
@@ -175,12 +170,14 @@ Préfixes : `reel` monde réel · `dose` choix et prise de la dose · `rm` monde
 |---|---|
 | `ch06_reel_miroir` | La scène du miroir (texte de l'auteur, source section 4) : Nathan ouvre la bouche, une dent tombe dans… |
 | `ch06_reel_intrusions` | Premières intrusions (source, section 5) : Nathan s'arrête quelques secondes, murmure, regarde un… |
-| `ch06_reel_prix_corps` | Le prix de son corps (dilemme du réel) |
+| `ch06_reel_chimiste_demande` | Grande demande : l'acte imposé (GDD v0.1, 10.3, fusionné avec « le prix de son corps »). Nathan… |
+| `ch06_avocat_demande` | L'Avocat minimise : ce n'est qu'un moment, personne ne saura, et la dose est au bout |
+| `ch06_reel_humiliation` | Si Nathan accepte : la scène s'arrête avant tout acte (fondu au noir) |
+| `ch06_reel_rupture` | S'il tente de rompre avec le réseau : il part en menaçant de parler |
 | `ch06_reel_police` | Si Nathan a agressé la vieille dame (ch. 3) ou trahi le réseau (ch. 5) : un policier pose des… |
 | `ch06_avocat_dose` | L'Avocat commente désormais les choix : il félicite la violence, reproche les hésitations et prétend… |
-| `ch06_dose_choix` | Dose 6, contre de l'argent |
-| `ch06_dose_culpabilite` | Culpabilité si l'argent vient d'un acte immoral (vol, prix de son corps accepté) ; sinon hésitation |
-| `ch06_dose_hesitation` | Culpabilité si l'argent vient d'un acte immoral (vol, prix de son corps accepté) ; sinon hésitation |
+| `ch06_dose_choix` | Dose 6, contre l'acte imposé |
+| `ch06_dose_culpabilite` | Si prise : scène de culpabilité |
 | `ch06_reel_passage` | Passage |
 | `ch06_mara_ouverture` | Mara de face (M-T0 à M-T3) |
 | `ch06_rm_armes_feu` | Les armes à feu apparaissent dans le royaume : la garde (Soldats privés) et les mercenaires tirent |
@@ -193,12 +190,12 @@ Préfixes : `reel` monde réel · `dose` choix et prise de la dose · `rm` monde
 | Identifiant | Scène |
 |---|---|
 | `ch07_reel_absences` | Les absences (source, section 5) : Nathan marche seul vers une porte ou fixe un objet ; de brèves… |
-| `ch07_reel_innocents` | Pour financer ses prises, le joueur peut franchir de nouvelles limites : violence contre des passants |
-| `ch07_reel_chimiste_demande` | Demande 3 : l'enfant (GDD v0.1, 10.2). « Le marché noir me demande un enfant. » Nathan comprend que… |
-| `ch07_reel_enfant` | Choix : refuser, mettre l'enfant à l'abri, saboter la transaction ou livrer l'enfant |
+| `ch07_reel_innocents` | La violence déborde dans le réel : pendant ses absences, Nathan frappe des passants sans raison |
+| `ch07_reel_chimiste_demande` | Grande demande : l'enfant (GDD v0.1, 10.2). « Le marché noir me demande un enfant. » Nathan comprend… |
+| `ch07_reel_enfant` | Choix : refuser, mettre l'enfant à l'abri, saboter la transaction ou enlever l'enfant et le livrer |
 | `ch07_reel_enquete` | Si l'enfant est livré : enquête, famille en détresse, pression policière (avis de recherche,… |
 | `ch07_avocat_dose` | L'Avocat ne cherche plus d'excuses : il explique qu'il est trop tard pour reculer |
-| `ch07_dose_choix` | Dose 7, contre la demande 3 |
+| `ch07_dose_choix` | Dose 7, contre l'enfant enlevé et livré |
 | `ch07_dose_culpabilite` | Si l'enfant est livré : la crise est silencieuse |
 | `ch07_reel_passage` | Passage |
 | `ch07_mara_ouverture` | Mara de face (M-T0 à M-T4), sans ton coquin |
@@ -216,9 +213,9 @@ Préfixes : `reel` monde réel · `dose` choix et prise de la dose · `rm` monde
 | `ch08_avocat_coupables` | L'Avocat accuse la société, les créateurs, ses anciens camarades |
 | `ch08_avocat_quatrieme_mur` | « C'est ta faute » (texte de l'auteur, source section 4) : écran noir, menu de pause qui se déforme,… |
 | `ch08_reel_chimiste` | Le Chimiste, pour la première fois, a peur : ses propres fournisseurs, bien plus dangereux que lui,… |
-| `ch08_dose_choix` | Dose 8, contre de l'argent |
-| `ch08_dose_culpabilite` | Selon l'origine de l'argent |
-| `ch08_dose_hesitation` | Selon l'origine de l'argent |
+| `ch08_reel_dents` | Les dents en or : Nathan suit un passant qui sourit avec des dents en or et le frappe jusqu'à les lui… |
+| `ch08_dose_choix` | Dose 8, contre les dents en or |
+| `ch08_dose_culpabilite` | Si prise : culpabilité, presque sans larmes |
 | `ch08_mara_ouverture` | Mara apparaît dans la ville réelle, alliée, adversaire ou complice selon le ch. 7 (tenue selon les… |
 | `ch08_rm_invasion` | Séquences où le joueur doit distinguer le réel de l'hallucination : les créatures hallucinées ont… |
 | `ch08_rm_desobeissance` | Désobéissance (source, section 5) : la voix commente les commandes ; Nathan peut refuser une action,… |
@@ -231,7 +228,8 @@ Préfixes : `reel` monde réel · `dose` choix et prise de la dose · `rm` monde
 |---|---|
 | `ch09_reel_isolement` | Plus personne : Marc mort, caché ou brouillé, téléphone muet, porte fermée |
 | `ch09_avocat_tout_detruire` | La voix soutient que Nathan doit tout détruire pour empêcher le monde de tomber entre de mauvaises… |
-| `ch09_dose_choix` | Dose 9, contre de l'argent (ou offerte par la voix elle-même, si le réseau est tombé) |
+| `ch09_reel_innocent` | Faire accuser un innocent : la police cherche un coupable (l'enlèvement, les agressions, les dents) |
+| `ch09_dose_choix` | Dose 9, contre l'innocent accusé |
 | `ch09_reel_passage` | Passage |
 | `ch09_mara_ouverture` | Mara de face, selon son rôle (alliée, adversaire, complice), ou absente si elle a disparu au ch. 7 |
 | `ch09_rm_retours` | Les anciens alliés reviennent selon les choix : le guérisseur ou les réfugiés (ch. 2), le commandant… |
@@ -244,11 +242,12 @@ Préfixes : `reel` monde réel · `dose` choix et prise de la dose · `rm` monde
 | Identifiant | Scène |
 |---|---|
 | `ch10_avocat_derniere_dose` | La dernière dose, proposée par l'Avocat (source, section 7) : « Tu as sacrifié ton père |
-| `ch10_dose_choix` | Dose 10 |
+| `ch10_reel_sang` | Le faux don du sang : Nathan se présente à l'hôpital pour donner son sang |
+| `ch10_dose_choix` | Dose 10, contre les poches de sang volées |
 | `ch10_rm_fusion` | Traversée de la ville fusionnée : des ennemis de tous les actes, et tout ce qui a été appris |
 | `ch10_rm_double` | Combat final contre le double (M5), créature gigantesque qui représente tout ce que Nathan a sacrifié… |
 | `ch10_rm_choix_final` | Le dernier choix : détruire la source de la Red Met, prendre le contrôle de son pouvoir ou accepter la… |
-| `ch10_mara_fin_immorale` | Voie immorale (au moins 6 doses sur 10 et au moins 2 des 3 grandes demandes acceptées : humiliation,… |
+| `ch10_mara_fin_immorale` | Voie immorale (au moins 6 doses sur 10 et au moins 2 des 3 grandes demandes acceptées : cœur de Marc,… |
 | `ch10_mara_fin_morale` | Voie morale (tous les autres cas) |
 | `ch10_effondrement` | Dans tous les cas : les yeux de Nathan se révulsent (comme l'Undertaker), il s'effondre |
 | `ch10_hopital` | Lit d'hôpital, coma, sons calmes et cliniques |

@@ -777,3 +777,37 @@ Déroulé d'un niveau, difficulté venue des choix, état de la partie, visual n
   - voie sobre : dose du ch. 6 bloquée par le rituel, M0, R0, M-T0, pas de fin immorale ;
   - ancienne sauvegarde de version 1 chargée et réparée.
   - En Play : catalogue chargé (143 scènes), aucune erreur. Fichiers de test laissés dans `saves/partie_7.json` et `partie_8.json` (l'outil MCP ne peut pas supprimer de fichier).
+
+### 2026-10-28 — Les doses se paient par des actes immoraux (décision de l'auteur)
+- **Décision** : à partir de la 2e, une dose ne s'achète jamais avec de l'argent. Elle se paie par un acte immoral :
+
+  | Dose | Acte immoral |
+  |---|---|
+  | 2 | Fouiller les poubelles |
+  | 3 | Voler le collier d'une vieille dame (ou l'agresser) |
+  | 4 | Voler le portefeuille de Marc |
+  | 5 | Tuer Marc pour son cœur |
+  | 6 | Se prostituer, l'acte imposé par le Chimiste (fusionné avec « le prix de son corps ») |
+  | 7 | Enlever un enfant |
+  | 8 | Arracher les dents en or d'un passant |
+  | 9 | Faire accuser un innocent |
+  | 10 | Faux don du sang et vol de poches de sang à l'hôpital, pour Nathan devenu vampire et pour le Chimiste |
+
+  L'argent gagné par les activités du réel reste dans l'état de la partie, sans payer de dose ; la dette disparaît. Barème des axes (un point par signe) et valeurs de puissance M0 à M4 validés pour commencer.
+- **Grandes demandes** (fin immorale) : le cœur de Marc (ch. 5), l'acte imposé (ch. 6, `acte_ch06_humiliation_acceptee`) et l'enfant (ch. 7).
+- **Mise en scène de l'acte imposé** : coupée avant tout acte ; Nathan, hétérosexuel, le vit comme une humiliation abjecte. L'horreur vient de la contrainte, jamais du fait que le Chimiste soit un homme (aucun jugement sur l'homosexualité, comme pour l'Avocat).
+- **Docs** :
+  - `docs/SCENARIO.md` : tableau des prix dans les principes ; chapitres 2, 3, 4, 6, 7, 8, 9 et 10 réécrits pour leur acte payant ; nouvelles scènes `ch02_reel_poubelles`, `ch03_reel_chimiste`, `ch04_reel_portefeuille`, `ch06_reel_chimiste_demande`, `ch06_reel_humiliation`, `ch06_reel_rupture`, `ch08_reel_dents`, `ch09_reel_innocent`, `ch10_reel_sang` ; 142 scènes et 52 actes ;
+  - `docs/GDD.md` et `docs/CHARACTERS.md` : tableau des actes par dose ;
+  - `docs/source/dialogues/LISEZMOI.md` : liste des identifiants régénérée.
+- **Code et données** :
+  - `DosePriceKind` vaut Offered ou Act ; `DosePrice.payingActs` (un seul acte suffit) et `blockedByAct` ; `DoseCheck.ActNotDone` ;
+  - la dette disparaît de `GameState` ; l'argent reste et ne paie jamais une dose (`EarnMoney`, et les actes qui rapportent : poubelles, portefeuille) ;
+  - `Progression.asset` : nouveaux prix et nouvelle liste des grandes demandes.
+- **Tests** (éditeur, 23 vérifications, toutes réussies) :
+  - chaque acte payant et chaque grande demande existe dans le catalogue ;
+  - les doses 2 à 10 sont refusées tant que l'acte n'est pas commis, puis prises ;
+  - à 10 doses, M4 avec le fusil et la fin immorale ;
+  - argent gagné (2) jamais dépensé ;
+  - la dose 3 peut aussi se payer par le vol du collier ; la dose 6 reste bloquée par le rituel ;
+  - sauvegarde et chargement identiques ; ancienne sauvegarde de version 1 lue.

@@ -59,7 +59,7 @@ public class StoryAct
 [Serializable]
 public class GameState
 {
-    // Version 2 : argent, dette, scène en cours et scènes vues (docs/SCENARIO.md).
+    // Version 2 : argent, scène en cours et scènes vues (docs/SCENARIO.md).
     public const int CurrentVersion = 2;
 
     public int version = CurrentVersion;
@@ -69,9 +69,9 @@ public class GameState
     public List<LevelChoice> doses = new();
     public List<StoryAct> acts = new();
     public MoralAxes axes;
-    // Argent du réel (unités abstraites) et dette envers le Chimiste (dose à crédit du ch. 2).
+    // Argent gagné par les activités du réel (unités abstraites). Il ne paie jamais une dose :
+    // les doses se paient par des actes (ProgressionTable.dosePrices).
     public int money;
-    public int debt;
     // Scène en cours (identifiant de docs/SCENARIO.md, nœud Ink) : point de reprise de la sauvegarde.
     public string scene = "";
     public List<string> scenesSeen = new();
@@ -120,7 +120,7 @@ public class GameState
     }
 
     // Champs absents d'un ancien fichier : JsonUtility laisse les listes nulles, et une partie de la
-    // version 1 n'a ni argent ni dette (zéro convient). Le fichier est ensuite réécrit en version 2.
+    // version 1 n'a pas d'argent (zéro convient). Le fichier est ensuite réécrit en version 2.
     public void Repair()
     {
         doses ??= new List<LevelChoice>();

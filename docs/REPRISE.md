@@ -128,7 +128,7 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 
 **État (2026-10-28, fin de session)** :
 - **Plan des 10 chapitres validé** (`docs/SCENARIO.md`). Boss du ch. 1 : **le Chœur des rieurs** (fiche « B1 » dans `docs/ENEMIES.md`, entrée dans `docs/BESTIARY.md`).
-- **Étape 2 (état de la partie et sauvegarde) refaite sur le scénario, EN ATTENTE DE VALIDATION** : catalogue des scènes et des actes importé de `SCENARIO.md`, prix des doses par niveau, argent et dette, scène en cours, sauvegarde en version 2 (détail et tests : `docs/PRODUCTION.md`, dernière entrée). À valider : les prix (unités abstraites) et le barème d'un point par signe + ou −.
+- **Étape 2 (état de la partie et sauvegarde) refaite sur le scénario** : catalogue des scènes et des actes importé de `SCENARIO.md`, **doses payées par des actes immoraux** (tableau dans `docs/GDD.md`), argent des activités du réel (il ne paie jamais une dose), scène en cours, sauvegarde en version 2 (détail et tests : `docs/PRODUCTION.md`, dernières entrées). Barème des axes et valeurs de puissance validés par l'auteur pour commencer.
 - **Dialogues** : l'auteur les écrit lui-même et les dépose dans `docs/source/dialogues/chNN.md` (mode d'emploi et liste des 143 identifiants : `docs/source/dialogues/LISEZMOI.md`). Quand il dit qu'ils sont déposés : conversion en Ink **mot pour mot** ; seule l'orthographe est corrigée, et chaque correction est signalée ; identifiant de voix `<scène>_NNN` ; liste des scènes encore sans dialogue ; **aucune réplique inventée**, texte « PROVISOIRE » à la place.
 - **Ensuite** : étape 3, les dialogues visual novel avec Ink, à partir des fichiers de l'auteur.
 

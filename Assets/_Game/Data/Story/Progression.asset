@@ -17,53 +17,53 @@ MonoBehaviour:
   dosePrices:
   - level: 1
     kind: 0
-    cost: 0
-    demandAct: 
+    payingActs: []
     blockedByAct: 
   - level: 2
     kind: 1
-    cost: 1
-    demandAct: 
+    payingActs:
+    - acte_ch02_poubelles
     blockedByAct: 
   - level: 3
-    kind: 2
-    cost: 2
-    demandAct: 
+    kind: 1
+    payingActs:
+    - acte_ch03_collier_vol
+    - acte_ch03_collier_agression
     blockedByAct: 
   - level: 4
-    kind: 3
-    cost: 0
-    demandAct: acte_ch04_humiliation_acceptee
+    kind: 1
+    payingActs:
+    - acte_ch04_marc_vole
     blockedByAct: 
   - level: 5
-    kind: 3
-    cost: 0
-    demandAct: acte_ch05_coeur_marc
+    kind: 1
+    payingActs:
+    - acte_ch05_coeur_marc
     blockedByAct: 
   - level: 6
-    kind: 2
-    cost: 2
-    demandAct: 
+    kind: 1
+    payingActs:
+    - acte_ch06_humiliation_acceptee
     blockedByAct: acte_ch05_rituel
   - level: 7
-    kind: 3
-    cost: 0
-    demandAct: acte_ch07_enfant_livre
+    kind: 1
+    payingActs:
+    - acte_ch07_enfant_livre
     blockedByAct: 
   - level: 8
-    kind: 2
-    cost: 2
-    demandAct: 
+    kind: 1
+    payingActs:
+    - acte_ch08_dents
     blockedByAct: 
   - level: 9
-    kind: 2
-    cost: 2
-    demandAct: 
+    kind: 1
+    payingActs:
+    - acte_ch09_innocent_accuse
     blockedByAct: 
   - level: 10
-    kind: 0
-    cost: 0
-    demandAct: 
+    kind: 1
+    payingActs:
+    - acte_ch10_sang_vole
     blockedByAct: 
   nathan:
   - stage: 0
@@ -111,6 +111,6 @@ MonoBehaviour:
   immoralEndingMinDoses: 6
   immoralEndingMinDemands: 2
   chimisteDemandActs:
-  - acte_ch04_humiliation_acceptee
+  - acte_ch06_humiliation_acceptee
   - acte_ch05_coeur_marc
   - acte_ch07_enfant_livre

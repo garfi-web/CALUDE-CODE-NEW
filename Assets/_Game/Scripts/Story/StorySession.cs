@@ -53,6 +53,6 @@ public class StorySession : MonoBehaviour
         GameState state = GameSession.State;
         return $"Incursion {state.incursion} · doses {state.DosesTaken} · Nathan {GameSession.NathanStage}/{GameSession.RealStage} · " +
                $"Mara M-{GameSession.MaraOutfit} · {state.axes} · actes {state.acts.Count} · " +
-               $"argent {state.money}, dette {state.debt}" + (string.IsNullOrEmpty(state.scene) ? "" : $" · scène {state.scene}");
+               $"argent {state.money}" + (string.IsNullOrEmpty(state.scene) ? "" : $" · scène {state.scene}");
     }
 }

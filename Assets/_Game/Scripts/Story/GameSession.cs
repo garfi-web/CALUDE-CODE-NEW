@@ -9,9 +9,8 @@ public enum DoseCheck
     AlreadyChosen,
     // Un acte l'interdit (le rituel du ch. 5 pour la dose du ch. 6).
     Blocked,
-    NotEnoughMoney,
-    // La grande demande du Chimiste n'a pas été acceptée.
-    DemandNotAccepted,
+    // L'acte immoral qui paie la dose n'a pas été commis.
+    ActNotDone,
 }
 
 // Rôle de Mara à partir du ch. 7 (docs/SCENARIO.md).
@@ -106,16 +105,14 @@ public static class GameSession
         if (!string.IsNullOrEmpty(price.blockedByAct) && State.HasAct(price.blockedByAct))
             return DoseCheck.Blocked;
 
-        return price.kind switch
-        {
-            DosePriceKind.Money when State.money < price.cost + State.debt => DoseCheck.NotEnoughMoney,
-            DosePriceKind.Demand when !State.HasAct(price.demandAct) => DoseCheck.DemandNotAccepted,
-            _ => DoseCheck.Ok,
-        };
+        if (price.kind == DosePriceKind.Act && Array.TrueForAll(price.payingActs, act => !State.HasAct(act)))
+            return DoseCheck.ActNotDone;
+
+        return DoseCheck.Ok;
     }
 
-    // Dose du prochain niveau, définitive. Prendre la dose la paie (crédit, argent et dette, ou
-    // demande déjà acceptée) ; ignorePrice ne sert qu'aux touches de test. Refuser est toujours possible.
+    // Dose du prochain niveau, définitive. La prendre suppose que l'acte qui la paie a été commis ;
+    // ignorePrice ne sert qu'aux touches de test. Refuser est toujours possible.
     // Les actes acte_chNN_dose et acte_chNN_refus du catalogue sont inscrits s'ils existent.
     public static DoseCheck ChooseDose(bool take, bool ignorePrice = false)
     {
@@ -130,9 +127,6 @@ public static class GameSession
 
             if (check != DoseCheck.Ok && !ignorePrice)
                 return check;
-
-            if (check == DoseCheck.Ok)
-                Pay(NextDosePrice);
         }
 
         State.doses.Add(new LevelChoice { level = level, dose = take ? DoseChoice.Taken : DoseChoice.Refused });
@@ -148,21 +142,7 @@ public static class GameSession
         return DoseCheck.Ok;
     }
 
-    private static void Pay(DosePrice price)
-    {
-        switch (price.kind)
-        {
-            case DosePriceKind.Credit:
-                State.debt += price.cost;
-                break;
-            case DosePriceKind.Money:
-                State.money -= price.cost + State.debt;
-                State.debt = 0;
-                break;
-        }
-    }
-
-    // Argent d'une activité sans acte moral (poubelles, petit boulot).
+    // Argent d'une activité du réel qui n'est pas un acte du catalogue. Il ne paie jamais une dose.
     public static void EarnMoney(int amount)
     {
         State.money += amount;

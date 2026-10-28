@@ -110,17 +110,21 @@ C'est l'homme qui fournit la Red Met à Nathan, et **le moteur des choix moraux 
 
 ### L'escalade des demandes
 
-Ch. 1 à 3 : la dose s'achète (offerte, à crédit, puis contre de l'argent). Ensuite viennent les trois demandes du GDD v0.1 (section 10). Placement validé par l'auteur (`docs/SCENARIO.md`).
+Le Chimiste ne vend jamais une dose contre de l'argent (décision de l'auteur du 2026-10-28). La 1re est offerte ; chacune des suivantes se paie par un **acte immoral** qu'il exige. Tableau complet dans `docs/GDD.md` (« Les demandes du Chimiste »), détail dans `docs/SCENARIO.md`.
 
-| Ch. | Demande | Choix de Nathan | Conséquences |
+| Ch. | Exigence | Choix de Nathan | Conséquences |
 |---|---|---|---|
-| 4 | **L'humiliation imposée** : une faveur sexuelle exigée pour prouver qu'il est « prêt à tout » (scène non explicite : contrainte et perte de contrôle, jamais un spectacle érotique) | Accepter, refuser, ou tenter de rompre avec le réseau | Dignité et autonomie sacrifiées, Paranoïa +, Humanité − |
-| 5 | **Rapporter un cœur pour le marché noir**, celui de Marc, son père | Refuser, prévenir Marc, déjouer le réseau, ou tuer | Irréversible : Marc disparaît de l'histoire. Cruauté ++, crise de culpabilité |
-| 7 | **Livrer un enfant au réseau** | Refuser, mettre l'enfant à l'abri, saboter la transaction, ou livrer | Enquête, détresse de la famille, pression policière, rupture morale majeure. Aucun détail pratique |
+| 2 | Fouiller les poubelles pour lui | Fouiller ou refuser | Honte, Humanité −, un peu d'argent |
+| 3 | Le collier en or d'une vieille dame | L'ignorer, lui demander de l'aide, le voler, l'agresser | Terreur de la victime, plainte à la police si agression |
+| 4 | Le portefeuille de Marc | Le voler ou non (et se confier à Marc, ou l'affronter) | Marc ne lui fait plus confiance |
+| 5 | **Le cœur de Marc**, pour le marché noir | Refuser, prévenir Marc, déjouer le réseau, ou tuer | Irréversible : Marc disparaît de l'histoire. Cruauté +++, crise de culpabilité |
+| 6 | **Se prostituer : l'acte sexuel imposé par le Chimiste** (non explicite : contrainte et perte de contrôle, jamais un spectacle érotique ; Nathan, hétérosexuel, le vit comme une humiliation abjecte ; aucun jugement sur l'homosexualité) | Accepter, refuser, ou tenter de rompre avec le réseau | Dignité et autonomie sacrifiées, Paranoïa ++, Humanité − |
+| 7 | **Enlever un enfant** pour le marché noir | Refuser, mettre l'enfant à l'abri, saboter la transaction, ou l'enlever et le livrer | Enquête, détresse de la famille, pression policière, rupture morale majeure. Aucun détail pratique |
+| 8 | Les dents en or d'un passant | Le frapper jusqu'à les arracher, ou refuser | Cruauté +++, pression policière |
+| 9 | Un coupable pour la police | Faire accuser un innocent, ou refuser | Un innocent emprisonné |
+| 10 | Des poches de sang | Faux don du sang à l'hôpital et vol des poches, ou refuser | Nathan, devenu vampire, et le Chimiste se nourrissent du même vol |
 
-Après chaque acceptation : scène de culpabilité, puis la dose. Après chaque refus : moins d'argent, pas de dose, et le dealer reste disponible… avec la demande suivante.
-
-**Le prix de son corps** n'est pas une demande du Chimiste mais un dilemme du réel (source, section 2) : un adulte propose de l'argent à Nathan en échange d'un rapport sexuel. Nathan peut refuser, accepter, négocier ou demander une autre forme de travail. La scène est non explicite et traite la vulnérabilité et le marchandage sous dépendance. Elle modifie l'image que Nathan a de lui-même et ses souvenirs troubles de la nuit (Paranoïa +, Humanité −). Placement : ch. 6 (validé).
+Après chaque acte : scène de culpabilité, puis la dose. Après chaque refus : pas de dose, et le Chimiste reste disponible… avec l'exigence suivante. Les trois exigences en gras sont les **grandes demandes** de la fin immorale.
 
 ```
 Tripo : stylized anime 3D character, mature Black African man, calm confident expression,

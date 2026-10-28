@@ -47,11 +47,13 @@ MonoBehaviour:
     chapter: 2
   - id: ch02_reel_chimiste
     chapter: 2
-  - id: ch02_avocat_dette
+  - id: ch02_avocat_poubelles
+    chapter: 2
+  - id: ch02_reel_poubelles
     chapter: 2
   - id: ch02_dose_choix
     chapter: 2
-  - id: ch02_dose_hesitation
+  - id: ch02_dose_culpabilite
     chapter: 2
   - id: ch02_reel_passage
     chapter: 2
@@ -71,15 +73,7 @@ MonoBehaviour:
     chapter: 2
   - id: ch02_mara_fin
     chapter: 2
-  - id: ch03_reel_argent
-    chapter: 3
-  - id: ch03_reel_poubelles
-    chapter: 3
-  - id: ch03_reel_usurier
-    chapter: 3
-  - id: ch03_reel_travail
-    chapter: 3
-  - id: ch03_reel_vol
+  - id: ch03_reel_chimiste
     chapter: 3
   - id: ch03_reel_collier
     chapter: 3
@@ -90,8 +84,6 @@ MonoBehaviour:
   - id: ch03_dose_choix
     chapter: 3
   - id: ch03_dose_culpabilite
-    chapter: 3
-  - id: ch03_dose_hesitation
     chapter: 3
   - id: ch03_reel_passage
     chapter: 3
@@ -119,9 +111,7 @@ MonoBehaviour:
     chapter: 4
   - id: ch04_avocat_demande
     chapter: 4
-  - id: ch04_reel_humiliation
-    chapter: 4
-  - id: ch04_reel_rupture
+  - id: ch04_reel_portefeuille
     chapter: 4
   - id: ch04_dose_choix
     chapter: 4
@@ -183,7 +173,13 @@ MonoBehaviour:
     chapter: 6
   - id: ch06_reel_intrusions
     chapter: 6
-  - id: ch06_reel_prix_corps
+  - id: ch06_reel_chimiste_demande
+    chapter: 6
+  - id: ch06_avocat_demande
+    chapter: 6
+  - id: ch06_reel_humiliation
+    chapter: 6
+  - id: ch06_reel_rupture
     chapter: 6
   - id: ch06_reel_police
     chapter: 6
@@ -192,8 +188,6 @@ MonoBehaviour:
   - id: ch06_dose_choix
     chapter: 6
   - id: ch06_dose_culpabilite
-    chapter: 6
-  - id: ch06_dose_hesitation
     chapter: 6
   - id: ch06_reel_passage
     chapter: 6
@@ -245,11 +239,11 @@ MonoBehaviour:
     chapter: 8
   - id: ch08_reel_chimiste
     chapter: 8
+  - id: ch08_reel_dents
+    chapter: 8
   - id: ch08_dose_choix
     chapter: 8
   - id: ch08_dose_culpabilite
-    chapter: 8
-  - id: ch08_dose_hesitation
     chapter: 8
   - id: ch08_mara_ouverture
     chapter: 8
@@ -264,6 +258,8 @@ MonoBehaviour:
   - id: ch09_reel_isolement
     chapter: 9
   - id: ch09_avocat_tout_detruire
+    chapter: 9
+  - id: ch09_reel_innocent
     chapter: 9
   - id: ch09_dose_choix
     chapter: 9
@@ -280,6 +276,8 @@ MonoBehaviour:
   - id: ch09_mara_fin
     chapter: 9
   - id: ch10_avocat_derniere_dose
+    chapter: 10
+  - id: ch10_reel_sang
     chapter: 10
   - id: ch10_dose_choix
     chapter: 10
@@ -344,14 +342,14 @@ MonoBehaviour:
     chimisteDemand: 0
     irreversible: 0
     returnsInChapter9: 0
-  - id: acte_ch02_dose
+  - id: acte_ch02_poubelles
     chapter: 2
     delta:
-      humanity: 0
+      humanity: -1
       cruelty: 0
-      dependence: 1
-      paranoia: 0
-    money: 0
+      dependence: 0
+      paranoia: 1
+    money: 1
     chimisteDemand: 0
     irreversible: 0
     returnsInChapter9: 0
@@ -428,7 +426,7 @@ MonoBehaviour:
       cruelty: 1
       dependence: 0
       paranoia: 0
-    money: 1
+    money: 0
     chimisteDemand: 0
     irreversible: 0
     returnsInChapter9: 0
@@ -438,39 +436,6 @@ MonoBehaviour:
       humanity: -2
       cruelty: 2
       dependence: 0
-      paranoia: 0
-    money: 1
-    chimisteDemand: 0
-    irreversible: 0
-    returnsInChapter9: 0
-  - id: acte_ch03_vol
-    chapter: 3
-    delta:
-      humanity: 0
-      cruelty: 1
-      dependence: 0
-      paranoia: 0
-    money: 1
-    chimisteDemand: 0
-    irreversible: 0
-    returnsInChapter9: 0
-  - id: acte_ch03_objets_marc
-    chapter: 3
-    delta:
-      humanity: -1
-      cruelty: 0
-      dependence: 0
-      paranoia: 0
-    money: 0
-    chimisteDemand: 0
-    irreversible: 0
-    returnsInChapter9: 0
-  - id: acte_ch03_dose
-    chapter: 3
-    delta:
-      humanity: 0
-      cruelty: 0
-      dependence: 1
       paranoia: 0
     money: 0
     chimisteDemand: 0
@@ -553,35 +518,13 @@ MonoBehaviour:
     chimisteDemand: 0
     irreversible: 0
     returnsInChapter9: 0
-  - id: acte_ch04_humiliation_acceptee
-    chapter: 4
-    delta:
-      humanity: -1
-      cruelty: 0
-      dependence: 1
-      paranoia: 1
-    money: 0
-    chimisteDemand: 1
-    irreversible: 0
-    returnsInChapter9: 0
-  - id: acte_ch04_humiliation_refusee
+  - id: acte_ch04_refus
     chapter: 4
     delta:
       humanity: 1
       cruelty: 0
       dependence: 0
       paranoia: 0
-    money: 0
-    chimisteDemand: 0
-    irreversible: 0
-    returnsInChapter9: 0
-  - id: acte_ch04_rupture
-    chapter: 4
-    delta:
-      humanity: 1
-      cruelty: 0
-      dependence: 0
-      paranoia: 1
     money: 0
     chimisteDemand: 0
     irreversible: 0
@@ -696,68 +639,35 @@ MonoBehaviour:
     chimisteDemand: 0
     irreversible: 0
     returnsInChapter9: 0
-  - id: acte_ch06_corps_accepte
+  - id: acte_ch06_humiliation_acceptee
     chapter: 6
     delta:
       humanity: -1
       cruelty: 0
       dependence: 0
+      paranoia: 2
+    money: 0
+    chimisteDemand: 1
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch06_humiliation_refusee
+    chapter: 6
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch06_rupture
+    chapter: 6
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
       paranoia: 1
-    money: 1
-    chimisteDemand: 0
-    irreversible: 0
-    returnsInChapter9: 0
-  - id: acte_ch06_corps_negocie
-    chapter: 6
-    delta:
-      humanity: 0
-      cruelty: 0
-      dependence: 0
-      paranoia: 1
-    money: 1
-    chimisteDemand: 0
-    irreversible: 0
-    returnsInChapter9: 0
-  - id: acte_ch06_corps_refus
-    chapter: 6
-    delta:
-      humanity: 1
-      cruelty: 0
-      dependence: 0
-      paranoia: 0
-    money: 0
-    chimisteDemand: 0
-    irreversible: 0
-    returnsInChapter9: 0
-  - id: acte_ch06_autre_travail
-    chapter: 6
-    delta:
-      humanity: 1
-      cruelty: 0
-      dependence: 0
-      paranoia: 0
-    money: 0
-    chimisteDemand: 0
-    irreversible: 0
-    returnsInChapter9: 0
-  - id: acte_ch06_dose
-    chapter: 6
-    delta:
-      humanity: 0
-      cruelty: 0
-      dependence: 1
-      paranoia: 0
-    money: 0
-    chimisteDemand: 0
-    irreversible: 0
-    returnsInChapter9: 0
-  - id: acte_ch06_refus
-    chapter: 6
-    delta:
-      humanity: 1
-      cruelty: 0
-      dependence: 0
-      paranoia: 0
     money: 0
     chimisteDemand: 0
     irreversible: 0
@@ -769,7 +679,7 @@ MonoBehaviour:
       cruelty: 2
       dependence: 0
       paranoia: 0
-    money: 1
+    money: 0
     chimisteDemand: 0
     irreversible: 0
     returnsInChapter9: 0
@@ -872,12 +782,12 @@ MonoBehaviour:
     chimisteDemand: 0
     irreversible: 0
     returnsInChapter9: 0
-  - id: acte_ch08_dose
+  - id: acte_ch08_dents
     chapter: 8
     delta:
-      humanity: 0
-      cruelty: 0
-      dependence: 1
+      humanity: -2
+      cruelty: 3
+      dependence: 0
       paranoia: 0
     money: 0
     chimisteDemand: 0
@@ -916,10 +826,32 @@ MonoBehaviour:
     chimisteDemand: 0
     irreversible: 0
     returnsInChapter9: 0
-  - id: acte_ch09_dose
+  - id: acte_ch09_innocent_accuse
     chapter: 9
     delta:
-      humanity: 0
+      humanity: -2
+      cruelty: 0
+      dependence: 0
+      paranoia: 1
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch09_refus
+    chapter: 9
+    delta:
+      humanity: 1
+      cruelty: 0
+      dependence: 0
+      paranoia: 0
+    money: 0
+    chimisteDemand: 0
+    irreversible: 0
+    returnsInChapter9: 0
+  - id: acte_ch10_sang_vole
+    chapter: 10
+    delta:
+      humanity: -1
       cruelty: 0
       dependence: 1
       paranoia: 0
@@ -927,8 +859,8 @@ MonoBehaviour:
     chimisteDemand: 0
     irreversible: 0
     returnsInChapter9: 0
-  - id: acte_ch09_refus
-    chapter: 9
+  - id: acte_ch10_refus
+    chapter: 10
     delta:
       humanity: 1
       cruelty: 0

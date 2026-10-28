@@ -22,21 +22,18 @@ public class NathanStageData
 public enum DosePriceKind
 {
     Offered,
-    Credit,
-    Money,
-    Demand,
+    // Payée par un acte immoral (jamais par de l'argent).
+    Act,
 }
 
-// Prix de la dose d'un niveau (docs/SCENARIO.md, colonne « Prix de la dose »).
+// Prix de la dose d'un niveau (docs/SCENARIO.md, « La dose, son prix et la culpabilité »).
 [Serializable]
 public class DosePrice
 {
     public int level;
     public DosePriceKind kind;
-    [Tooltip("Crédit : dette ajoutée. Argent : somme à payer, en plus de la dette en cours.")]
-    public int cost;
-    [Tooltip("Demande : l'acte qui paie la dose (la grande demande acceptée).")]
-    public string demandAct;
+    [Tooltip("Actes qui paient la dose : l'un d'eux suffit (voler le collier ou agresser la vieille dame).")]
+    public string[] payingActs = Array.Empty<string>();
     [Tooltip("Acte qui rend la dose impossible (le rituel du ch. 5 pour la dose du ch. 6).")]
     public string blockedByAct;
 }
@@ -55,15 +52,15 @@ public class ProgressionTable : ScriptableObject
     public DosePrice[] dosePrices =
     {
         new() { level = 1, kind = DosePriceKind.Offered },
-        new() { level = 2, kind = DosePriceKind.Credit, cost = 1 },
-        new() { level = 3, kind = DosePriceKind.Money, cost = 2 },
-        new() { level = 4, kind = DosePriceKind.Demand, demandAct = "acte_ch04_humiliation_acceptee" },
-        new() { level = 5, kind = DosePriceKind.Demand, demandAct = "acte_ch05_coeur_marc" },
-        new() { level = 6, kind = DosePriceKind.Money, cost = 2, blockedByAct = "acte_ch05_rituel" },
-        new() { level = 7, kind = DosePriceKind.Demand, demandAct = "acte_ch07_enfant_livre" },
-        new() { level = 8, kind = DosePriceKind.Money, cost = 2 },
-        new() { level = 9, kind = DosePriceKind.Money, cost = 2 },
-        new() { level = 10, kind = DosePriceKind.Offered },
+        new() { level = 2, kind = DosePriceKind.Act, payingActs = new[] { "acte_ch02_poubelles" } },
+        new() { level = 3, kind = DosePriceKind.Act, payingActs = new[] { "acte_ch03_collier_vol", "acte_ch03_collier_agression" } },
+        new() { level = 4, kind = DosePriceKind.Act, payingActs = new[] { "acte_ch04_marc_vole" } },
+        new() { level = 5, kind = DosePriceKind.Act, payingActs = new[] { "acte_ch05_coeur_marc" } },
+        new() { level = 6, kind = DosePriceKind.Act, payingActs = new[] { "acte_ch06_humiliation_acceptee" }, blockedByAct = "acte_ch05_rituel" },
+        new() { level = 7, kind = DosePriceKind.Act, payingActs = new[] { "acte_ch07_enfant_livre" } },
+        new() { level = 8, kind = DosePriceKind.Act, payingActs = new[] { "acte_ch08_dents" } },
+        new() { level = 9, kind = DosePriceKind.Act, payingActs = new[] { "acte_ch09_innocent_accuse" } },
+        new() { level = 10, kind = DosePriceKind.Act, payingActs = new[] { "acte_ch10_sang_vole" } },
     };
 
     [Tooltip("Stades M0 à M4, dans l'ordre.")]
@@ -83,7 +80,7 @@ public class ProgressionTable : ScriptableObject
     [Tooltip("Actes qui marquent l'acceptation des grandes demandes (identifiants de docs/SCENARIO.md).")]
     public string[] chimisteDemandActs =
     {
-        "acte_ch04_humiliation_acceptee",
+        "acte_ch06_humiliation_acceptee",
         "acte_ch05_coeur_marc",
         "acte_ch07_enfant_livre",
     };
