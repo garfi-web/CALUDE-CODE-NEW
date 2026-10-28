@@ -362,8 +362,11 @@ def landmarks(obj):
     }
 
 
-def add_rig(obj, name):
-    """Metarig humain Rigify ajusté au personnage, puis peau automatique. Renvoie l'armature."""
+def add_rig(obj, name, marks=None):
+    """Metarig humain Rigify ajusté au personnage, puis peau automatique. Renvoie l'armature.
+
+    marks : repères donnés à la main (mêmes clés que landmarks) quand la mesure automatique se trompe,
+    par exemple quand des cheveux longs ou une jupe large écartent des sommets loin de l'axe (Mara)."""
     import addon_utils
     addon_utils.enable("rigify", default_set=True, persistent=True)
 
@@ -374,7 +377,9 @@ def add_rig(obj, name):
     obj.vertex_groups.clear()
     obj.parent = None
 
-    L = landmarks(obj)
+    # matrix_world n'est à jour qu'après une mise à jour de la scène (juste après clean_mesh, par exemple).
+    bpy.context.view_layer.update()
+    L = marks or landmarks(obj)
     H, cx, cy, az = L["H"], L["cx"], L["cy"], L["arm_z"]
     lx = L["leg_x"]
 

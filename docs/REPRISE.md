@@ -118,15 +118,62 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, regarde si j'ai déposé de nouveaux dialogues dans docs/source/dialogues/ (règles et liste de ce qui reste à écrire dans LISEZMOI.md) ; s'il y en a, intègre-les dans le jeu selon ces règles, sinon rappelle-moi ce qui reste à écrire, en respectant CLAUDE.md.
+> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, reprends la PROCHAINE ÉTAPE notée en tête de la section 8 de docs/REPRISE.md (refonte de l'écran visual novel) : relance ComfyUI, montre-moi les portraits de Mara M-T0 déjà générés (Assets/_Game/Art/Characters/Mara/VN/ et les planches de ArtSource/VN/Mara/T0/) et les 10 décors, puis arrête-toi pour que je les valide avant de produire M-T1 à M-T4 et de construire l'interface, en respectant CLAUDE.md.
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
 ## 8. Programme à venir (dans l'ordre)
 
-### PROCHAINE ÉTAPE : dialogues de l'auteur (étape 3 du prototype narratif)
+### PROCHAINE ÉTAPE : refonte de l'écran visual novel (demandée le 2026-10-28)
 
-**État (2026-10-28, fin de session)** :
+**Ordre de travail** : 1) l'auteur valide les portraits de Mara M-T0 ; 2) portraits M-T1 à M-T4, même méthode ; 3) interface ; 4) décors branchés par scène ; 5) test, captures, 60 FPS, commit et push, puis attente de la validation.
+
+**Décisions déjà prises par l'auteur** :
+- **Modèles** : ControlNet Union SDXL de xinsir (Apache 2.0) et BiRefNet (MIT). Les deux sont téléchargés et figés dans `C:\RED MET\ai`, hors dépôt.
+- **Test des choix** : dans un nœud séparé `test_choix`, aux options marquées PROVISOIRE, joué après `ch01_mara_ouverture`. Jamais de choix ajouté dans les scènes de l'auteur.
+
+**Où on en est** (`docs/PRODUCTION.md`, dernière entrée) :
+- Portraits M-T0 générés et détourés, **à montrer à l'auteur** : 5 expressions de face (graine 8502), le dos (graine 8512) et le médaillon. Écarts à lui signaler : sangles rouges absentes, mèche blanche sur la version méprisante, cheveux du dos trop courts.
+- Méthode : squelette OpenPose et ControlNet ; le rendu du maillage 3D est inutilisable (cheveux fusionnés aux bras).
+- Les 10 décors (`Assets/_Game/Art/Backgrounds/VN/`) sont à examiner.
+- La police M PLUS Rounded 1c (OFL) est installée.
+- L'interface n'est pas commencée.
+
+**Outils** (ComfyUI à démarrer d'abord, section 4) :
+```bash
+"C:/RED MET/ai/ComfyUI/.venv/Scripts/python.exe" -I tools/gen3d/vn_portraits.py --stage T0 --seeds 8502
+"C:/RED MET/ai/BiRefNet/.venv/Scripts/python.exe" -I tools/gen3d/vn_cutout.py ArtSource/VN/Mara/T0/<brut>.png
+"C:/RED MET/ai/ComfyUI/.venv/Scripts/python.exe" -I tools/gen3d/vn_backgrounds.py ch01
+```
+Libérer la mémoire vidéo de ComfyUI avant BiRefNet : `curl -X POST http://127.0.0.1:8188/free -d '{"unload_models":true,"free_memory":true}'`.
+
+**Requête de l'auteur (texte complet)** :
+> Refonte de l'écran visual novel : le résultat actuel ne me convient pas (concept en pose en T dans un cadre gris, posé sur l'écran de combat). Je veux un vrai visual novel, sur le modèle de mise en page des visual novels anime modernes, aux couleurs de RED MET (noir, rouge, touches de blanc). Ne reprends que la mise en page, pas le style des personnages du modèle : Mara reste une guerrière adulte avec ses tenues M-T0 à M-T4.
+>
+> 1. Mise en scène
+> - Pendant un visual novel : le combat est en pause, et le HUD (barres de vie, aide des touches) est caché.
+> - Fond plein écran : un décor illustré propre à chaque scène (plaine de la lune rouge, ruines, salle du trône, etc.), peint avec ComfyUI et Animagine XL dans le style des décors déjà validés, légèrement flouté pour faire ressortir le personnage.
+>
+> 2. Portraits de Mara
+> - Nouvelles illustrations dédiées au visual novel, pas les concepts en pose en T : pose naturelle et expressive (bras croisés, main sur la hanche, lame posée sur l'épaule, penchée en avant), cadrage aux genoux, grande taille (environ 85 % de la hauteur de l'écran), fond transparent (détourage propre, sans halo).
+> - Pour chaque stade de tenue (M-T0 à M-T4) : une vue de face et une vue de dos (scène de fin), et au moins 5 expressions (moqueuse, méprisante, amusée, troublée, en colère).
+> - Respiration légère et apparition en fondu glissé ; l'expression change via des tags Ink (par exemple #expr:moqueuse, #pose:dos).
+> - Montre-moi d'abord les portraits du stade M-T0 pour validation avant de produire les autres.
+>
+> 3. Interface (1920x1080, mise à l'échelle propre)
+> - Boîte de dialogue arrondie en bas, noire semi-transparente avec un liseré rouge ; étiquette au nom du personnage en pilule rouge qui chevauche le haut de la boîte ; texte qui s'affiche lettre par lettre (vitesse réglable) avec un indicateur « suivant ».
+> - Choix : boutons en pilule empilés à droite, l'option sélectionnée surlignée en rouge, navigation au clavier, à la souris et à la manette.
+> - Carte du personnage en haut à gauche : médaillon rond du visage, nom, titre (« Guerrière de la Red Met »). N'affiche aucun score moral ni d'affection chiffrée (règle du GDD).
+> - Boutons ronds autour de la boîte : historique et réglages à gauche ; lecture automatique, avance rapide et sauvegarde à droite.
+> - Police lisible de style anime, avec licence libre (OFL) et accents français ; indique-moi la police choisie.
+>
+> 4. L'Avocat garde son propre style d'intervention (surimpression déformée), distinct de l'écran de Mara.
+>
+> 5. Test : la scène ch01_mara_ouverture avec un choix et la scène de fin de dos, en 1920x1080, captures avant/après, 60 FPS. Commit et push, puis attends ma validation.
+
+### Dialogues de l'auteur (étape 3 du prototype narratif, en cours en parallèle)
+
+**État (2026-10-28)** :
 - **Plan des 10 chapitres validé** (`docs/SCENARIO.md`). Boss du ch. 1 : **le Chœur des rieurs** (fiche « B1 » dans `docs/ENEMIES.md`, entrée dans `docs/BESTIARY.md`).
 - **Étape 2 (état de la partie et sauvegarde) refaite sur le scénario** : catalogue des scènes et des actes importé de `SCENARIO.md`, **doses payées par des actes immoraux** (tableau dans `docs/GDD.md`), argent des activités du réel (il ne paie jamais une dose), scène en cours, sauvegarde en version 2 (détail et tests : `docs/PRODUCTION.md`, dernières entrées). Barème des axes et valeurs de puissance validés par l'auteur pour commencer.
 - **Dialogues** : l'auteur les écrit lui-même et les dépose dans `docs/source/dialogues/chNN.md` (mode d'emploi et liste des 143 identifiants : `docs/source/dialogues/LISEZMOI.md`). Quand il dit qu'ils sont déposés : conversion en Ink **mot pour mot** ; seule l'orthographe est corrigée, et chaque correction est signalée ; identifiant de voix `<scène>_NNN` ; liste des scènes encore sans dialogue ; **aucune réplique inventée**, texte « PROVISOIRE » à la place.

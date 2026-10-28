@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "medieval city street at night, plague, boarded houses, red plague marks on doors, burning braziers, red smoke, ruined granaries, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, black and red color palette, crimson light, wide shot, eye level, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, silhouette of person, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, green, blue sky, daylight",
+  "seed": 6102,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1344,
+    768
+  ],
+  "duration_s": 20.1
+}

@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "approach to a black stone fortress on a cliff, huge gate, burning braziers, ash storm, red moon behind, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, black and red color palette, crimson light, wide shot, eye level, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, silhouette of person, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, green, blue sky, daylight",
+  "seed": 6103,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1344,
+    768
+  ],
+  "duration_s": 21.1
+}
