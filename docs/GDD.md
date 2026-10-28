@@ -116,9 +116,11 @@ Les scènes de dialogue prennent la forme d'un visual novel : grand portrait, bo
 ### Mara suit la Red Met
 - **Tenue** : elle dépend du **nombre de doses prises**, pas du chapitre. Plus Nathan a pris de Red Met, plus la tenue est sexy et échancrée, du stade M-T0 (entièrement couverte) au stade M-T4 (`docs/CHARACTERS.md`). Le refus de toutes les doses garde Mara en M-T0.
 
-  | Doses prises | 0 | 1 | 2 ou 3 | 4 | 5 et plus |
+  | Doses prises | 0 | 1 ou 2 | 3 ou 4 | 5 ou 6 | 7 et plus |
   |---|---|---|---|---|---|
   | Tenue de Mara | M-T0 | M-T1 | M-T2 | M-T3 | M-T4 |
+
+  *Décision de l'auteur du 2026-10-28* : ces seuils (0 / 1-2 / 3-4 / 5-6 / 7+) remplacent ceux validés le même jour (0 / 1 / 2-3 / 4 / 5+), car le jeu a 10 niveaux et jusqu'à 10 doses.
 
 - **Portraits** : pour chaque stade de tenue, un portrait **de face** (scène d'ouverture) et un portrait **de dos** (scène de fin), chacun avec plusieurs expressions. Mara est toujours une femme adulte, habillée, sans nudité. Les portraits de dos partent d'un rendu du modèle 3D de Mara dans Blender (pose, tête tournée par-dessus l'épaule), pour garantir la ressemblance, puis sont affinés en illustration HD dans ComfyUI avec Animagine XL 4.0 (ControlNet sur la pose et les contours). Un essai en M-T0 est validé par l'auteur avant les autres stades.
 - **Ton** : au début, elle taquine et rabaisse Nathan. Au fil des incursions, surtout s'il devient le Nathan M4 bestial, elle est de plus en plus attirée par sa force, provocante et coquine. En fin de combat, elle peut réagir à sa puissance.
@@ -136,11 +138,11 @@ Il intervient de temps en temps, **dans le réel comme dans le monde parallèle*
 - Un délai minimum entre deux interventions évite de saturer le joueur. Même système d'identifiants pour les voix.
 
 ## La fin avec Mara
-- **Si Nathan a pris la Red Met à chaque niveau**, Mara choisit librement de passer la nuit avec lui : scène pour adultes, **consentie, entre adultes**.
-- **Sinon** (une seule dose refusée suffit), elle le repousse en lui reprochant de ne pas avoir eu le « courage » d'aller jusqu'au bout.
-- **Contenu adulte** : au premier lancement, un écran de confirmation d'âge (18 ans et plus). Dans les options, « Contenu adulte » (activé / désactivé) ; désactivé, la scène est remplacée par un fondu au noir.
-- La scène est un **emplacement vide** (déclenchement, conditions, fondu, réglages) où l'auteur placera les illustrations d'un illustrateur. Claude ne génère aucune image de nudité ni de scène sexuelle.
-- *Note* : cette section remplace la section 11.1 du GDD v0.1 d'origine. **La version « agression » de la v0.1 est abandonnée.**
+*Décision de l'auteur du 2026-10-28* : la fin suit les sections 11.1, 11.2 et 12 du GDD v0.1 (`docs/source/RED_MET_GDD_v0.1.md`). La section 11.1 remplace la nuit consentie validée le même jour, et **l'emplacement vide pour un illustrateur est supprimé**.
+- **Voie immorale** (section 11.1) : Nathan, dopé et submergé par son agressivité, franchit une limite et tente d'imposer sa volonté à Mara par la force. La scène est mise en scène comme un moment d'horreur et de rupture, **coupée avant l'acte, sans nudité ni représentation explicite**. Le refus et la réaction de Mara, et les conséquences, restent au centre ; elle n'est jamais une récompense. Sa puissance n'apporte à Nathan ni maîtrise de lui-même ni accomplissement.
+- **Voie morale** (section 11.2) : Mara le jauge, met en avant sa propre force et le renvoie : « Moi, je veux un vrai bonhomme. Toi, tu n'es qu'un gamin, et les gamins, je les envoie en colo. » Scène volontairement humiliante et frustrante : l'intégrité n'apporte pas de récompense romantique.
+- **Conclusion commune** (section 12) : yeux révulsés, chute, écran noir, lit d'hôpital, coma, fiche médicale qui porte en bas la mention **RED MET 2**.
+- **Avertissement** : au premier lancement, un écran de confirmation d'âge (18 ans et plus) et un avertissement sur les thèmes du jeu. Claude ne génère aucune image de nudité ni de scène sexuelle.
 
 ## Personnages
 
@@ -159,7 +161,7 @@ Les 12 ennemis, répartis en 3 actes (des menaces humaines aux aberrations), son
 Le jeu n'interdit pas les actes les plus sombres, mais il leur donne un **poids narratif durable**. Des portes se ferment et des personnages ne reviennent jamais.
 - Les victimes ne sont jamais des objets d'inventaire ni des récompenses. Leur peur et les conséquences restent au centre de la scène.
 - Les scènes de contrainte sexuelle restent **non explicites**. Elles sont mises en scène comme de la vulnérabilité et une perte de contrôle, jamais comme un contenu érotique. Tous les personnages concernés sont adultes.
-- La scène finale avec Mara est un choix libre et **consenti entre adultes**, réservée aux joueurs ayant confirmé leur âge et activé le contenu adulte.
+- La scène finale de la voie immorale (section 11.1 du GDD v0.1) suit la règle ci-dessus : coupée avant l'acte, sans nudité, centrée sur la réaction de Mara.
 - Les branches de rapt ou de livraison d'enfant ne contiennent **aucun détail pratique**. Elles entraînent une enquête, la détresse de la famille et une rupture morale majeure. **Aucun contenu sexuel ni suggestif** dans cette branche ni à proximité : les scènes de Mara du même chapitre restent sans ton coquin, et aucune scène pour adultes n'y fait suite ou n'y renvoie.
 - La dégradation physique est une représentation **fictionnelle**. Elle n'est ni une description universelle des personnes dépendantes ni un jugement moral sur l'apparence.
 
@@ -177,7 +179,7 @@ Le jeu n'interdit pas les actes les plus sombres, mais il leur donne un **poids 
 | 1b — Sobre contre Red Met | Même arène, deux configurations ; mesurer survie et satisfaction | À faire |
 | 2 — Transformation physique | Plusieurs versions de Nathan cohérentes avec son gameplay | À faire |
 | 3 — Dilemme | Mission courte à deux choix aux conséquences fortes | À faire |
-| 4 — Narratif | État de la partie et sauvegarde, visual novels (Ink), Avocat, contenu adulte ; mini-chapitre joué deux fois (toutes les doses, puis aucune) | En cours (étape 1 : ce document) |
+| 4 — Narratif | État de la partie et sauvegarde, visual novels (Ink), Avocat, confirmation d’âge et fin de la section 11.1 ; mini-chapitre joué deux fois (toutes les doses, puis aucune) | En cours (étape 1 : ce document) |
 
 ### Pipeline d'assets
 - **Tripo** (via Blender MCP `generate_3d`, ou le MCP Tripo) : modèles 3D de base des personnages et des accessoires.

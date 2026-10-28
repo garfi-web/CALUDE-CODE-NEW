@@ -135,9 +135,11 @@ Sources : `docs/source/RED_MET_10_chapitres.md` et `docs/source/RED_MET_GDD_v0.1
 > d) Fin : voie immorale = section 11.1 du GDD v0.1 (scène coupée avant l'acte, sans nudité, centrée sur la réaction de Mara) ; voie morale = section 11.2 ; puis yeux révulsés, chute, hôpital, coma et « RED MET 2 » (section 12).
 > e) Crée docs/SCENARIO.md : pour chacun des 10 chapitres, le déroulé réel et parallèle, les choix et leurs conséquences, les scènes de Mara en ouverture et en fin de niveau, les interventions de L'Avocat, les ennemis et la dose proposée, avec un identifiant par scène pour les fichiers Ink. Pas encore de dialogues complets. Montre-moi les chapitres 1 à 3 avant de rédiger la suite.
 
-**Note de Claude, à confirmer avec l'auteur au début de la session** : cette consigne diffère de deux décisions validées le même jour (étape 1 du prototype narratif, commit `1f50321`) :
-- seuils de Mara : validés 0 / 1 / 2-3 / 4 / 5+, ici 0 / 1-2 / 3-4 / 5-6 / 7+ ; s'ils changent, mettre à jour aussi `docs/GDD.md`, `docs/CHARACTERS.md` et `maraOutfitMinDoses` de `Data/Story/Progression.asset` (ainsi que les seuils de Nathan M0 à M4 et R0 à R4, calés sur 5 doses) ;
-- fin immorale : la version « agression » de la section 11.1 avait été abandonnée au profit d'une nuit consentie (emplacement vide pour un illustrateur) ; ici elle revient. Demander laquelle garder, et ce que devient l'emplacement de la scène consentie.
+**À faire jusqu'aux chapitres 1 à 3 de `docs/SCENARIO.md`, puis arrêt pour validation de l'auteur.** Ne pas commencer la suite (chapitres 4 à 10) avant son feu vert.
+
+**Décisions de l'auteur du 2026-10-28** (elles remplacent celles de l'étape 1 du prototype narratif, commit `1f50321` ; déjà notées dans `docs/GDD.md`) :
+- **Seuils des tenues de Mara : 0 / 1-2 / 3-4 / 5-6 / 7+** (M-T0 à M-T4), car le jeu a 10 niveaux et jusqu'à 10 doses. Pendant l'intégration, mettre à jour aussi `docs/CHARACTERS.md`, `maraOutfitMinDoses` dans `ProgressionTable.cs` et `Data/Story/Progression.asset` (aujourd'hui 0, 1, 2, 4, 5), et revoir les seuils de Nathan M0 à M4 et R0 à R4, calés sur 5 doses.
+- **Fin de la voie immorale : section 11.1 du GDD v0.1**, qui remplace la nuit consentie. **L'emplacement vide pour un illustrateur est supprimé.** Scène coupée avant l'acte, sans nudité, centrée sur la réaction de Mara.
 
 L'étape 2 du prototype narratif (état de la partie et sauvegarde, commit `0eb0ce6`) attend aussi la validation de l'auteur (valeurs de puissance dans `docs/PRODUCTION.md`).
 
@@ -152,7 +154,7 @@ L'étape 2 du prototype narratif (état de la partie et sauvegarde, commit `0eb0
 
    Tailles de tous les ennemis : `docs/ENEMIES.md`, section « Tailles ».
 
-6. **Prototype narratif** (demandé le 2026-10-27, après le Dealer et le fusil à pompe) — **en cours** : étape 1 (`docs/GDD.md`, avec le complément « Mara dans les visual novels ») validée par l’auteur le 2026-10-28 (seuils de Mara : 0 dose M-T0, 1 M-T1, 2-3 M-T2, 4 M-T3, 5+ M-T4 ; version « agression » de la v0.1 abandonnée ; scène finale vide pour un illustrateur). Portraits de dos de Mara : rendu Blender du modèle 3D, puis ComfyUI + Animagine avec ControlNet pose et contours ; montrer un essai M-T0 à l’auteur avant les autres stades. Étape 2 (état de la partie et sauvegarde) faite le 2026-10-28, en attente de validation. Six étapes, avec arrêt pour validation de l’auteur à la fin de chaque étape : design dans `docs/GDD.md`, état de la partie et sauvegarde, dialogues visual novel avec Ink, interventions de l’Avocat, contenu adulte (confirmation d’âge, option, scène finale vide pour les illustrations de l’auteur ; aucune image de nudité générée par Claude), mini-chapitre joué deux fois. Texte complet des deux requêtes en fin de fichier.
+6. **Prototype narratif** (demandé le 2026-10-27, après le Dealer et le fusil à pompe) — **en cours** : étape 1 (`docs/GDD.md`, avec le complément « Mara dans les visual novels ») validée par l’auteur le 2026-10-28, puis modifiée le même jour : seuils de Mara 0 / 1-2 / 3-4 / 5-6 / 7+ et fin immorale de la section 11.1 du GDD v0.1, sans emplacement pour un illustrateur (voir « PROCHAINE ÉTAPE » ci-dessus). Portraits de dos de Mara : rendu Blender du modèle 3D, puis ComfyUI + Animagine avec ControlNet pose et contours ; montrer un essai M-T0 à l’auteur avant les autres stades. Étape 2 (état de la partie et sauvegarde) faite le 2026-10-28, en attente de validation. Six étapes, avec arrêt pour validation de l’auteur à la fin de chaque étape : design dans `docs/GDD.md`, état de la partie et sauvegarde, dialogues visual novel avec Ink, interventions de l’Avocat, confirmation d’âge et fin de la section 11.1 (aucune image de nudité générée par Claude), mini-chapitre joué deux fois. Texte complet des deux requêtes en fin de fichier.
 
 Piège : l'outil `RunCommand` du MCP Unity refuse `File.Delete` et `AssetDatabase.DeleteAsset` (« user interaction ») ; pour mesurer les FPS, ne lancer aucune commande MCP pendant l'enregistrement (la compilation du script de test fausse la mesure).
 
@@ -288,4 +290,4 @@ Décisions déjà prises par l'auteur pour la tranche : Voyou `Voyou_concept_s11
 > - Quand Nathan devient plus puissant et bestial (M2 à M4), ses répliques de fin changent : moins moqueuses, plus troublées et attirées par sa force. Prévois les embranchements dans le fichier Ink ; j'écrirai ces répliques plus tard.
 > - Garde l'emoji 💪 dans le texte affiché, mais retire-le du texte envoyé plus tard à ElevenLabs.
 
-Note de Claude pour la suite : Mara est une adulte. Ses portraits restent habillés, sans nudité ni scène sexuelle générée ; la scène finale reste un emplacement vide pour les illustrations de l'auteur.
+Note de Claude pour la suite : Mara est une adulte. Ses portraits restent habillés, sans nudité ni scène sexuelle générée ; la fin immorale suit la section 11.1 du GDD v0.1 (décision du 2026-10-28, l'emplacement vide est supprimé) : coupée avant l'acte, sans nudité.
