@@ -3,12 +3,12 @@
 Choix, prompts, seeds, nombre d'essais et problèmes rencontrés, phase par phase.
 Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, animation, rendu toon) → spritesheets PNG → Unity.
 
-## État d'avancement (au 2026-10-27, sauvegarde de fin de session)
+## État d'avancement (au 2026-10-28, sauvegarde de fin de session)
 
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
-- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant terminé** (concept 14201, fusil à pompe, Nathan M4 et son fusil, corps pulvérisés, 60 FPS mesurés dans un build). **Prototype narratif en cours** : étape 1 validée, étape 2 (état de la partie et sauvegarde) en attente de validation (section « Prototype narratif » à la fin), étape par étape avec validation de l'auteur (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
+- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant terminé** (concept 14201, fusil à pompe, Nathan M4 et son fusil, corps pulvérisés, 60 FPS mesurés dans un build). **Prototype narratif en cours** : étape 1 validée, étape 2 (état de la partie et sauvegarde) en attente de validation (section « Prototype narratif » à la fin). **Prochaine étape : intégration du scénario** depuis `docs/source/` (consigne complète en tête de la section 8 de `docs/REPRISE.md`), étape par étape avec validation de l'auteur (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
 - TRANCHE VERTICALE terminée le 2026-10-27 (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
@@ -729,3 +729,9 @@ Déroulé d'un niveau, difficulté venue des choix, état de la partie, visual n
 - Sauvegarde, nouvelle partie, chargement : état identique octet pour octet, M4 rétabli.
 - Voie sobre, incursion 3 : Nathan reste M0 à 100 PV, Voyou à 72 PV.
 - Piège : une capture prise pendant que l'éditeur n'a pas le focus montre une image périmée (le jeu n'avance presque pas) ; capture supprimée.
+
+### 2026-10-28 — Sauvegarde de fin de session
+- Documents de référence de l'auteur rangés dans `docs/source/`, sans retouche : `RED_MET_10_chapitres.md` (« Dix chapitres pour devenir un monstre », 305 lignes : chapitres 1 à 10, voix off, contrôle de la manette, Mara, fin, notes de l'auteur) et `RED_MET_GDD_v0.1.md` (GDD conceptuel v0.1, 471 lignes, sections 1 à 16). UTF-8, aucun caractère illisible.
+- Prochaine étape notée dans `docs/REPRISE.md` (section 8) : intégration du scénario, avec la consigne complète de l'auteur et deux points à confirmer (seuils de Mara, fin immorale).
+- Unity : scène `Arena.unity` et projet enregistrés. Blender : `REDMET_personnages.blend` inchangé depuis le 2026-10-27 et déjà commité ; le Blender relié au MCP ne montrait qu'une scène vide, non enregistrée pour ne pas écraser le fichier. ComfyUI et TripoSG ne tournaient pas.
+- Git : aucun fichier au-delà de 50 Mo (le plus gros, `REDMET_personnages.blend`, fait 30 Mo), Git LFS inutile ; `.gitignore` inchangé (copies `.blend1` exclues).

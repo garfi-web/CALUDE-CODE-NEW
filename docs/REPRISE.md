@@ -118,11 +118,28 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, commence le PROTOTYPE NARRATIF (programme, point 6 ; requêtes complètes en fin de docs/REPRISE.md) par l’étape 1 (mise à jour de docs/GDD.md), et arrête-toi pour validation à la fin de chaque étape, en respectant CLAUDE.md.
+> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, exécute la PROCHAINE ÉTAPE notée en tête de la section 8 de docs/REPRISE.md (intégration du scénario), et arrête-toi après les chapitres 1 à 3 de docs/SCENARIO.md pour validation, en respectant CLAUDE.md.
 
-L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug (détail dans le `README.md`).
+L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
 ## 8. Programme à venir (dans l'ordre)
+
+### PROCHAINE ÉTAPE : intégration du scénario (consigne de l'auteur, 2026-10-28, texte complet)
+
+Sources : `docs/source/RED_MET_10_chapitres.md` et `docs/source/RED_MET_GDD_v0.1.md` (copies conformes des documents de l'auteur, non retouchées).
+
+> Lis entièrement docs/source/RED_MET_10_chapitres.md et docs/source/RED_MET_GDD_v0.1.md.
+> a) Mets en cohérence docs/GDD.md, docs/CHARACTERS.md, docs/ENEMIES.md et docs/BESTIARY.md avec ces sources, en gardant les décisions déjà prises : 10 niveaux et jusqu'à 10 doses, tenues de Mara selon les doses (0 = M-T0, 1-2 = M-T1, 3-4 = M-T2, 5-6 = M-T3, 7 et plus = M-T4), visual novels d'ouverture et de fin, L'Avocat, Dealer au fusil à pompe, pas de choix de difficulté dans le menu. Sur la voie sobre, Nathan ne se bat qu'avec les poings et les pieds, avec une santé faible, mais il se déplace et saute normalement.
+> b) Progression des armes par doses : lames, armes à feu, lance-flammes et lance-scie, lance-roquettes et grenades, pouvoirs vampiriques ; place le fusil à pompe (stade M4) dans cette progression. Démembrements sanglants sur la voie Red Met, avec le réglage de gore.
+> c) Les trois demandes du Chimiste et la scène de culpabilité avant chaque dose, comme dans le GDD v0.1 section 10, mises en scène non explicites.
+> d) Fin : voie immorale = section 11.1 du GDD v0.1 (scène coupée avant l'acte, sans nudité, centrée sur la réaction de Mara) ; voie morale = section 11.2 ; puis yeux révulsés, chute, hôpital, coma et « RED MET 2 » (section 12).
+> e) Crée docs/SCENARIO.md : pour chacun des 10 chapitres, le déroulé réel et parallèle, les choix et leurs conséquences, les scènes de Mara en ouverture et en fin de niveau, les interventions de L'Avocat, les ennemis et la dose proposée, avec un identifiant par scène pour les fichiers Ink. Pas encore de dialogues complets. Montre-moi les chapitres 1 à 3 avant de rédiger la suite.
+
+**Note de Claude, à confirmer avec l'auteur au début de la session** : cette consigne diffère de deux décisions validées le même jour (étape 1 du prototype narratif, commit `1f50321`) :
+- seuils de Mara : validés 0 / 1 / 2-3 / 4 / 5+, ici 0 / 1-2 / 3-4 / 5-6 / 7+ ; s'ils changent, mettre à jour aussi `docs/GDD.md`, `docs/CHARACTERS.md` et `maraOutfitMinDoses` de `Data/Story/Progression.asset` (ainsi que les seuils de Nathan M0 à M4 et R0 à R4, calés sur 5 doses) ;
+- fin immorale : la version « agression » de la section 11.1 avait été abandonnée au profit d'une nuit consentie (emplacement vide pour un illustrateur) ; ici elle revient. Demander laquelle garder, et ce que devient l'emplacement de la scène consentie.
+
+L'étape 2 du prototype narratif (état de la partie et sauvegarde, commit `0eb0ce6`) attend aussi la validation de l'auteur (valeurs de puissance dans `docs/PRODUCTION.md`).
 
 1. **Fin de la phase B** du bestiaire — *fait* (commit `d1abe6c`).
 2. **Sauvegarde** — *faite*.
