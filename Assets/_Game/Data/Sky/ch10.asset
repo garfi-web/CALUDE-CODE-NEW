@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd387e0188f78443993b36840ab9744, type: 3}
+  m_Name: ch10
+  m_EditorClassIdentifier: Assembly-CSharp::SkyProfile
+  sky: {fileID: 21300000, guid: 2f192dd95f76116488cb8bdf73e1b547, type: 3}
+  skyTint: {r: 1, g: 1, b: 1, a: 1}
+  skyWidth: 17
+  celestials:
+  - sprite: {fileID: 21300000, guid: 7f4c15ef993c59c4395a08d981881ce6, type: 3}
+    offset: {x: 2.4, y: 1.6}
+    width: 6.4
+    color: {r: 1, g: 1, b: 1, a: 1}
+    glow: 1.1
+    haloColor: {r: 1, g: 0.25, b: 0.15, a: 1}
+    haloScale: 1.82
+    haloPulse: 0.05
+    lightColor: {r: 1, g: 0.32, b: 0.22, a: 1}
+    lightIntensity: 1.1
+  clouds: {fileID: 21300000, guid: 03653bf6af0f8a340b0b8635718e03de, type: 3}
+  cloudTint: {r: 1, g: 1, b: 1, a: 0.9}
+  cloudDrift: 0.4
+  neutralLandscape: 0
+  landscapeTint: {r: 1, g: 1, b: 1, a: 1}
+  fogColor: {r: 0.5, g: 0.08, b: 0.08, a: 1}
+  fogDrift: 0.35
+  horizonColor: {r: 0.55, g: 0.08, b: 0.06, a: 1}
+  frontFog: 0
+  aurora: 0
+  auroraColorA: {r: 0.2, g: 1, b: 0.55, a: 1}
+  auroraColorB: {r: 0.2, g: 0.55, b: 1, a: 1}
+  auroraIntensity: 1
+  auroraSpeed: 0.15
+  lightning: 0
+  lightningInterval: {x: 2.5, y: 6}
+  lightningColor: {r: 0.85, g: 0.9, b: 1, a: 1}
+  lightningFlash: 1.6
+  ashRate: 75
+  ashColor: {r: 0.6, g: 0.55, b: 0.56, a: 0.85}
+  emberRate: 22
+  rainRate: 0
+  rainColor: {r: 0.7, g: 0.75, b: 0.8, a: 0.35}
+  rainSpeed: 14
+  lightColor: {r: 1, g: 0.88, b: 0.88, a: 1}
+  lightIntensity: 0.95
+  rimColor: {r: 2, g: 0.2, b: 0.1, a: 1}
+  rimDirection: {x: 0.8, y: 0.45}
+  ambient: {r: 1, g: 1, b: 1, a: 1}
+  bloomTint: {r: 1, g: 0.6, b: 0.55, a: 1}
+  bloomIntensity: 1.4
+  colorFilter: {r: 1, g: 1, b: 1, a: 1}
+  postExposure: 0
+  contrast: 18
+  saturation: 6
+  vignetteColor: {r: 0, g: 0, b: 0, a: 1}
+  vignette: 0.45

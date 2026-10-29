@@ -24,7 +24,9 @@ public static class RedMoonDecor
     private const string PostProcessDataPath = "Packages/com.unity.render-pipelines.universal/Runtime/Data/PostProcessData.asset";
     private const float Ppu = 64f;
 
-    private static readonly string[] SpriteNames = { "Halo", "Haze", "Mist", "Ground", "Cracks", "Slab", "Dot", "CrowUp", "CrowDown" };
+    // Halo, Haze, Mist et CloudSoft sont blancs : le ciel du chapitre les teinte (SkyController).
+    private static readonly string[] SpriteNames =
+        { "Halo", "Haze", "Mist", "Ground", "Cracks", "Slab", "Dot", "CrowUp", "CrowDown", "Quad", "Bolt1", "Bolt2", "CloudSoft", "Sun", "PaleMoon" };
 
     // Position de départ de la caméra (ArenaBuilder.BuildCamera) : le décor est composé autour.
     private static readonly Vector2 CameraStart = new(-4f, 0.9f);
@@ -44,25 +46,56 @@ public static class RedMoonDecor
         var root = new GameObject("Decor").transform;
         Material unlit = EnsureMaterial("DecorUnlit", Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"), null, 0f);
         Shader glowShader = Shader.Find("RED MET/Sprite Glow");
+        Material glow = EnsureMaterial("SkyGlow", glowShader, null, 1f);
         Vector2 c = CameraStart;
         var bottom = new Vector2(0.5f, 0f);
 
-        // Ciel collé à la caméra, lune et halo presque immobiles, nuages qui glissent devant la lune.
-        Layer(root, "Sky", Painted("sky", 17f, new Vector2(0.5f, 0.5f), false), unlit, new Vector3(c.x, c.y + 0.4f), Vector2.one, -100);
-        Vector3 moonPosition = new(c.x + 3.6f, c.y + 1.9f);
-        Layer(root, "Moon Halo", art["Halo"], EnsureMaterial("HaloGlow", glowShader, null, 0.9f), moonPosition, new Vector2(0.95f, 0.95f), -95);
-        Transform moon = Layer(root, "Moon", Painted("moon", 4.4f, new Vector2(0.5f, 0.5f), false), EnsureMaterial("MoonGlow", glowShader, null, 1.1f),
-            moonPosition, new Vector2(0.95f, 0.95f), -94);
-        Tiled(root, "Clouds", Painted("clouds", 10f, new Vector2(0.5f, 0.5f), true), unlit, new Vector3(c.x, c.y + 2.6f), new Vector2(64f, 4.17f),
+        // Ciel collé à la caméra, astres presque immobiles, nuages qui glissent devant. Le ciel du chapitre
+        // (SkyController, Data/Sky) remplace les images et les couleurs ; la construction pose le ch. 1.
+        Transform sky = Layer(root, "Sky", Painted("sky", 17f, new Vector2(0.5f, 0.5f), false), unlit, new Vector3(c.x, c.y + 0.4f), Vector2.one, -100);
+        Transform aurora = Layer(root, "Aurora", art["Quad"], EnsureMaterial("SkyAurora", Shader.Find("RED MET/Sky Aurora"), null, 1f),
+            new Vector3(c.x, c.y + 2.2f), new Vector2(0.97f, 0.97f), -98, scale: new Vector2(26f, 5.5f));
+        aurora.GetComponent<SpriteRenderer>().enabled = false;
+
+        var celestials = new SkyController.CelestialSlot[3];
+
+        for (int i = 0; i < celestials.Length; i++)
+        {
+            Transform body = Layer(root, i == 0 ? "Moon" : $"Celestial {i + 1}", Painted("moon", 4.4f, new Vector2(0.5f, 0.5f), false),
+                i == 0 ? EnsureMaterial("MoonGlow", glowShader, null, 1.1f) : glow, new Vector3(c.x + 3.6f, c.y + 1.9f), new Vector2(0.95f, 0.95f), -94);
+            Transform halo = Layer(body, "Halo", art["Halo"], EnsureMaterial("HaloGlow", glowShader, null, 0.9f), body.position, Vector2.zero, -95);
+            halo.gameObject.AddComponent<SkyPulse>();
+
+            var light = new GameObject("Light 2D").AddComponent<Light2D>();
+            light.transform.SetParent(body, false);
+            light.lightType = Light2D.LightType.Point;
+            light.pointLightInnerRadius = 2f;
+            light.pointLightOuterRadius = 16f;
+
+            celestials[i] = new SkyController.CelestialSlot
+            {
+                body = body.GetComponent<SpriteRenderer>(), halo = halo.GetComponent<SpriteRenderer>(), light = light,
+            };
+            body.gameObject.SetActive(i == 0);
+        }
+
+        SpriteRenderer clouds = Tiled(root, "Clouds", Painted("clouds", 10f, new Vector2(0.5f, 0.5f), true), unlit, new Vector3(c.x, c.y + 2.6f), new Vector2(64f, 4.17f),
             new Vector2(0.95f, 0.95f), -93, drift: 0.22f, wrap: 10f, tint: new Color(1f, 1f, 1f, 0.8f));
 
-        var moonLight = new GameObject("Moon Light 2D").AddComponent<Light2D>();
-        moonLight.transform.SetParent(moon, false);
-        moonLight.lightType = Light2D.LightType.Point;
-        moonLight.color = new Color(1f, 0.32f, 0.22f);
-        moonLight.intensity = 0.8f;
-        moonLight.pointLightInnerRadius = 2f;
-        moonLight.pointLightOuterRadius = 16f;
+        // Éclairs : deux traits possibles dans le ciel, et un voile qui illumine le ciel derrière le paysage.
+        Transform boltRoot = Layer(root, "Lightning", null, null, new Vector3(c.x, c.y + 0.4f), new Vector2(0.97f, 0.97f), -92);
+        var bolts = new SpriteRenderer[2];
+
+        for (int i = 0; i < bolts.Length; i++)
+        {
+            Transform bolt = Layer(boltRoot, $"Bolt {i + 1}", art[$"Bolt{i + 1}"], EnsureMaterial("BoltGlow", glowShader, null, 2.5f),
+                boltRoot.position + new Vector3(0f, 2.2f), Vector2.zero, -92);
+            bolts[i] = bolt.GetComponent<SpriteRenderer>();
+            bolts[i].enabled = false;
+        }
+
+        Transform flash = Layer(root, "Lightning Flash", art["Quad"], unlit, new Vector3(c.x, c.y + 0.4f), Vector2.one, -91, scale: new Vector2(40f, 20f));
+        flash.GetComponent<SpriteRenderer>().enabled = false;
 
         var crows = new GameObject("Crows").AddComponent<CrowFlock>();
         crows.transform.SetParent(root, false);
@@ -74,43 +107,135 @@ public static class RedMoonDecor
         // Montagnes, brume d'horizon, ruines gothiques, brume qui dérive, arbres morts, champ de bataille.
         // Les plans lointains sont petits et posés sur l'horizon ; plus un plan est proche, plus il est sombre,
         // pour que les personnages ressortent toujours (largeur d'une répétition : 2,4 fois sa hauteur).
-        Tiled(root, "Mountains", Painted("mountains", 10f, bottom, true), null, new Vector3(c.x, -1.6f), new Vector2(64f, 4.17f), new Vector2(0.85f, 0.7f), -80,
-            tint: new Color(0.85f, 0.85f, 0.85f));
-        Layer(root, "Horizon Haze", art["Haze"], unlit, new Vector3(c.x, -0.7f), new Vector2(0.75f, 0.6f), -76, scale: new Vector2(400f, 0.75f));
-        Tiled(root, "Ruins", Painted("ruins", 10f, bottom, true), null, new Vector3(c.x, -1.7f), new Vector2(64f, 4.17f), new Vector2(0.6f, 0.45f), -70,
-            tint: new Color(0.8f, 0.8f, 0.8f));
-        Tiled(root, "Mist", art["Mist"], unlit, new Vector3(c.x, -1.2f), new Vector2(64f, 2f), new Vector2(0.45f, 0.35f), -65, drift: 0.35f, wrap: 8f);
-        Tiled(root, "Dead Trees", Painted("trees", 11f, bottom, true), null, new Vector3(c.x, -2f), new Vector2(64f, 4.58f), new Vector2(0.3f, 0.2f), -60,
-            tint: new Color(0.6f, 0.6f, 0.6f));
-        Tiled(root, "Battlefield", Painted("battlefield", 8f, bottom, true), null, new Vector3(c.x, -2.4f), new Vector2(64f, 3.33f), new Vector2(0.12f, 0.08f), -50,
-            tint: new Color(0.55f, 0.55f, 0.55f));
+        // Chaque couche a une version neutre (tools/gen3d/skies.py), colorée par le ciel des ch. 2 à 9.
+        var landscape = new List<SkyController.LandscapeLayer>
+        {
+            Landscape("mountains", Tiled(root, "Mountains", Painted("mountains", 10f, bottom, true), null, new Vector3(c.x, -1.6f), new Vector2(64f, 4.17f),
+                new Vector2(0.85f, 0.7f), -80, tint: new Color(0.85f, 0.85f, 0.85f)), new Color(0.85f, 0.85f, 0.85f)),
+        };
+        SpriteRenderer horizon = Layer(root, "Horizon Haze", art["Haze"], unlit, new Vector3(c.x, -0.7f), new Vector2(0.75f, 0.6f), -76, scale: new Vector2(400f, 0.75f))
+            .GetComponent<SpriteRenderer>();
+        horizon.color = HorizonRed;
+        landscape.Add(Landscape("ruins", Tiled(root, "Ruins", Painted("ruins", 10f, bottom, true), null, new Vector3(c.x, -1.7f), new Vector2(64f, 4.17f),
+            new Vector2(0.6f, 0.45f), -70, tint: new Color(0.8f, 0.8f, 0.8f)), new Color(0.8f, 0.8f, 0.8f)));
+        SpriteRenderer mist = Tiled(root, "Mist", art["Mist"], unlit, new Vector3(c.x, -1.2f), new Vector2(64f, 2f), new Vector2(0.45f, 0.35f), -65, drift: 0.35f, wrap: 8f,
+            tint: MistRed);
+        landscape.Add(Landscape("trees", Tiled(root, "Dead Trees", Painted("trees", 11f, bottom, true), null, new Vector3(c.x, -2f), new Vector2(64f, 4.58f),
+            new Vector2(0.3f, 0.2f), -60, tint: new Color(0.6f, 0.6f, 0.6f)), new Color(0.6f, 0.6f, 0.6f)));
+        landscape.Add(Landscape("battlefield", Tiled(root, "Battlefield", Painted("battlefield", 8f, bottom, true), null, new Vector3(c.x, -2.4f), new Vector2(64f, 3.33f),
+            new Vector2(0.12f, 0.08f), -50, tint: new Color(0.55f, 0.55f, 0.55f)), new Color(0.55f, 0.55f, 0.55f)));
 
         // Sol du plan de jeu (le collider reste celui d'ArenaBuilder) : crête de cendre calculée, terre peinte
-        // juste dessous, fissures de Red Met par-dessus.
+        // juste dessous, fissures de Red Met par-dessus, identiques dans tous les chapitres.
         Tiled(root, "Ground Crest", art["Ground"], null, new Vector3(0f, -1.5f), new Vector2(44f, 5f), Vector2.zero, -11);
         Tiled(root, "Ground", Painted("ground", 5f, new Vector2(0.5f, 1f), true), null, new Vector3(0f, -1.66f), new Vector2(44f, 2.5f), Vector2.zero, -10);
         Tiled(root, "Ground Cracks", art["Cracks"], EnsureMaterial("CrackGlow", glowShader, null, 3f), new Vector3(0f, -1.5f), new Vector2(44f, 5f), Vector2.zero, -9);
 
+        // Brouillard qui roule devant le plan de jeu (aube du ch. 7), éteint ailleurs.
+        SpriteRenderer frontFog = Tiled(root, "Front Fog", art["Mist"], unlit, new Vector3(-30f, -0.6f), new Vector2(90f, 3.5f), Vector2.zero, 30);
+        frontFog.enabled = false;
+
         // Premier plan sombre et flou, qui passe devant les personnages et défile plus vite que la caméra.
-        Tiled(root, "Foreground", Painted("foreground", 6f, bottom, true), unlit, new Vector3(c.x, -3.6f), new Vector2(90f, 2.5f), new Vector2(-0.35f, 0.3f), 40,
-            tint: new Color(1f, 1f, 1f, 0.85f));
+        landscape.Add(Landscape("foreground", Tiled(root, "Foreground", Painted("foreground", 6f, bottom, true), unlit, new Vector3(c.x, -3.6f), new Vector2(90f, 2.5f),
+            new Vector2(-0.35f, 0.3f), 40, tint: new Color(1f, 1f, 1f, 0.85f)), new Color(1f, 1f, 1f, 0.85f)));
 
         Material ash = EnsureMaterial("AshParticle", Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"), art["Dot"].texture, 0f);
         Material ember = EnsureMaterial("EmberGlow", glowShader, art["Dot"].texture, 3f);
-        CreateAsh(camera.transform, ash);
-        CreateEmbers(camera.transform, ember);
-        SetupPostProcessing(camera, root);
+        ParticleSystem ashSystem = CreateAsh(camera.transform, ash);
+        ParticleSystem emberSystem = CreateEmbers(camera.transform, ember);
+        ParticleSystem rainSystem = CreateRain(camera.transform, ash);
+        Volume volume = SetupPostProcessing(camera, root);
+
+        // Lune du ch. 1 telle que construite avant les ciels (halo et lumière rouges) : le halo, désormais blanc,
+        // prend sa teinte rouge du matériau dans l'éditeur ; en jeu, SkyController la règle par chapitre.
+        celestials[0].halo.sharedMaterial.SetColor("_Tint", new Color(1f, 0.25f, 0.15f));
+        celestials[0].light.color = new Color(1f, 0.32f, 0.22f);
+        celestials[0].light.intensity = 0.8f;
+
+        BuildSkyController(root, SkyProfiles.EnsureAll(art), sky.GetComponent<SpriteRenderer>(), clouds, celestials, landscape, mist, horizon, frontFog,
+            aurora.GetComponent<SpriteRenderer>(), flash.GetComponent<SpriteRenderer>(), bolts, ashSystem, emberSystem, rainSystem, volume);
+    }
+
+    private static readonly Color MistRed = new(0.42f, 0.1f, 0.1f);
+    private static readonly Color HorizonRed = new(0.55f, 0.08f, 0.06f);
+
+    // Couche de paysage et sa version neutre, importée à la même taille et au même pivot que l'originale.
+    private static SkyController.LandscapeLayer Landscape(string name, SpriteRenderer renderer, Color baseTint)
+    {
+        Sprite original = renderer.sprite;
+        Sprite neutral = ImportPainted($"{SkyProfiles.Folder}/Neutral/{name}.png", original.bounds.size.x, original.pivot / original.rect.size, true);
+        return new SkyController.LandscapeLayer { renderer = renderer, original = original, neutral = neutral, baseTint = baseTint };
+    }
+
+    private static void BuildSkyController(Transform root, SkyProfile[] profiles, SpriteRenderer sky, SpriteRenderer clouds,
+        SkyController.CelestialSlot[] celestials, List<SkyController.LandscapeLayer> landscape, SpriteRenderer mist, SpriteRenderer horizon,
+        SpriteRenderer frontFog, SpriteRenderer aurora, SpriteRenderer flash, SpriteRenderer[] bolts, ParticleSystem ash, ParticleSystem embers,
+        ParticleSystem rain, Volume volume)
+    {
+        var controller = new GameObject("Sky").AddComponent<SkyController>();
+        controller.transform.SetParent(root, false);
+        var so = new SerializedObject(controller);
+
+        SetArray(so.FindProperty("chapters"), profiles.Length, (p, i) => p.objectReferenceValue = profiles[i]);
+        so.FindProperty("cameraStart").vector2Value = CameraStart;
+        so.FindProperty("sky").objectReferenceValue = sky;
+        so.FindProperty("clouds").objectReferenceValue = clouds;
+        SetArray(so.FindProperty("celestials"), celestials.Length, (p, i) =>
+        {
+            p.FindPropertyRelative("body").objectReferenceValue = celestials[i].body;
+            p.FindPropertyRelative("halo").objectReferenceValue = celestials[i].halo;
+            p.FindPropertyRelative("light").objectReferenceValue = celestials[i].light;
+        });
+        SetArray(so.FindProperty("landscape"), landscape.Count, (p, i) =>
+        {
+            p.FindPropertyRelative("renderer").objectReferenceValue = landscape[i].renderer;
+            p.FindPropertyRelative("original").objectReferenceValue = landscape[i].original;
+            p.FindPropertyRelative("neutral").objectReferenceValue = landscape[i].neutral;
+            p.FindPropertyRelative("baseTint").colorValue = landscape[i].baseTint;
+        });
+        so.FindProperty("mist").objectReferenceValue = mist;
+        so.FindProperty("horizon").objectReferenceValue = horizon;
+        so.FindProperty("frontFog").objectReferenceValue = frontFog;
+        so.FindProperty("aurora").objectReferenceValue = aurora;
+        so.FindProperty("flash").objectReferenceValue = flash;
+        SetArray(so.FindProperty("bolts"), bolts.Length, (p, i) => p.objectReferenceValue = bolts[i]);
+        so.FindProperty("ash").objectReferenceValue = ash;
+        so.FindProperty("embers").objectReferenceValue = embers;
+        so.FindProperty("rain").objectReferenceValue = rain;
+        so.FindProperty("globalLight").objectReferenceValue = FindGlobalLight();
+        so.FindProperty("volume").objectReferenceValue = volume;
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetArray(SerializedProperty array, int size, Action<SerializedProperty, int> set)
+    {
+        array.arraySize = size;
+
+        for (int i = 0; i < size; i++)
+            set(array.GetArrayElementAtIndex(i), i);
+    }
+
+    private static Light2D FindGlobalLight()
+    {
+        foreach (Light2D light in UnityEngine.Object.FindObjectsByType<Light2D>(FindObjectsInactive.Include))
+            if (light.lightType == Light2D.LightType.Global)
+                return light;
+
+        return null;
     }
 
     // Couche peinte (tools/gen3d/background.py) : l'échelle est réglée pour que l'image fasse widthMeters de large.
-    private static Sprite Painted(string name, float widthMeters, Vector2 pivot, bool repeat)
+    private static Sprite Painted(string name, float widthMeters, Vector2 pivot, bool repeat) =>
+        ImportPainted($"{PaintedFolder}/{name}.png", widthMeters, pivot, repeat);
+
+    // Importe une image peinte en sprite de widthMeters de large (aussi pour les ciels, SkyProfiles).
+    public static Sprite ImportPainted(string path, float widthMeters, Vector2 pivot, bool repeat)
     {
-        string path = $"{PaintedFolder}/{name}.png";
         var importer = AssetImporter.GetAtPath(path) as TextureImporter;
 
         if (importer == null)
         {
-            Debug.LogError($"[RED MET] Couche peinte manquante : {path} (lancez tools/gen3d/background.py).");
+            Debug.LogError($"[RED MET] Couche peinte manquante : {path} (lancez tools/gen3d/background.py ou skies.py).");
             return null;
         }
 
@@ -177,7 +302,7 @@ public static class RedMoonDecor
         return go.transform;
     }
 
-    private static void Tiled(Transform parent, string name, Sprite sprite, Material material, Vector3 position, Vector2 size, Vector2 factor,
+    private static SpriteRenderer Tiled(Transform parent, string name, Sprite sprite, Material material, Vector3 position, Vector2 size, Vector2 factor,
         int order, float drift = 0f, float wrap = 0f, Color? tint = null)
     {
         Transform layer = Layer(parent, name, sprite, material, position, factor, order, drift: drift, wrap: wrap);
@@ -185,7 +310,10 @@ public static class RedMoonDecor
         renderer.color = tint ?? Color.white;
         renderer.drawMode = SpriteDrawMode.Tiled;
         renderer.tileMode = SpriteTileMode.Continuous;
-        renderer.size = size;
+        // Jamais plus haut que l'image : sinon le mode Tiled ajoute en haut une tranche de la répétition
+        // suivante (la dernière ligne de l'image), visible comme une ligne nette sur les ciels clairs.
+        renderer.size = sprite != null ? new Vector2(size.x, Mathf.Min(size.y, sprite.bounds.size.y)) : size;
+        return renderer;
     }
 
     private static void SetFactor(ParallaxLayer layer, Vector2 factor, float drift, float wrap)
@@ -220,7 +348,7 @@ public static class RedMoonDecor
 
     // Cendres qui tombent en biais et braises qui montent du sol. Systèmes posés une fois pour toutes :
     // rien n'est créé ni détruit pendant le combat.
-    private static void CreateAsh(Transform camera, Material material)
+    private static ParticleSystem CreateAsh(Transform camera, Material material)
     {
         ParticleSystem ps = Particles(camera, "Ash", new Vector3(0f, 4.4f, 10f), new Vector3(18f, 0.5f, 0.1f), material, 20);
         ParticleSystem.MainModule main = ps.main;
@@ -236,9 +364,10 @@ public static class RedMoonDecor
         noise.strength = 0.25f;
         noise.frequency = 0.4f;
         noise.scrollSpeed = 0.2f;
+        return ps;
     }
 
-    private static void CreateEmbers(Transform camera, Material material)
+    private static ParticleSystem CreateEmbers(Transform camera, Material material)
     {
         ParticleSystem ps = Particles(camera, "Embers", new Vector3(0f, -3.2f, 10f), new Vector3(18f, 0.3f, 0.1f), material, 21);
         ParticleSystem.MainModule main = ps.main;
@@ -253,6 +382,28 @@ public static class RedMoonDecor
         noise.enabled = true;
         noise.strength = 0.6f;
         noise.frequency = 0.6f;
+        return ps;
+    }
+
+    // Pluie ou bruine (ch. 2 et 6) : gouttes étirées selon leur vitesse, éteinte dans les autres chapitres.
+    private static ParticleSystem CreateRain(Transform camera, Material material)
+    {
+        ParticleSystem ps = Particles(camera, "Rain", new Vector3(1.5f, 5f, 10f), new Vector3(22f, 0.5f, 0.1f), material, 22);
+        ParticleSystem.MainModule main = ps.main;
+        main.startLifetime = 0.9f;
+        main.startSize = new ParticleSystem.MinMaxCurve(0.02f, 0.035f);
+        main.startRotation = 0f;
+        main.maxParticles = 800;
+        main.prewarm = false;
+        ParticleSystem.EmissionModule emission = ps.emission;
+        emission.rateOverTime = 0f;
+        Velocity(ps, new Vector2(-2f, -14f), new Vector2(-2f, -14f));
+
+        var renderer = ps.GetComponent<ParticleSystemRenderer>();
+        renderer.renderMode = ParticleSystemRenderMode.Stretch;
+        renderer.velocityScale = 0.05f;
+        renderer.lengthScale = 1f;
+        return ps;
     }
 
     private static ParticleSystem Particles(Transform camera, string name, Vector3 localPosition, Vector3 box, Material material, int order)
@@ -298,7 +449,7 @@ public static class RedMoonDecor
     }
 
     // Bloom (lune, fissures, braises), vignette, contraste et grain léger.
-    private static void SetupPostProcessing(Camera camera, Transform parent)
+    private static Volume SetupPostProcessing(Camera camera, Transform parent)
     {
         camera.GetUniversalAdditionalCameraData().renderPostProcessing = true;
 
@@ -317,6 +468,7 @@ public static class RedMoonDecor
         volume.transform.SetParent(parent, false);
         volume.isGlobal = true;
         volume.sharedProfile = EnsureProfile();
+        return volume;
     }
 
     private static VolumeProfile EnsureProfile()
@@ -377,7 +529,7 @@ public static class RedMoonDecor
 
     private static void Generate()
     {
-        Save("Halo", Radial(256, new Color(1f, 0.25f, 0.15f), 2.2f, 0.9f), new Vector2(0.5f, 0.5f), 32f, false);
+        Save("Halo", Radial(256, Color.white, 2.2f, 0.9f), new Vector2(0.5f, 0.5f), 32f, false);
         Save("Haze", Haze(), new Vector2(0.5f, 0.5f), 32f, false);
         Save("Mist", Mist(), new Vector2(0.5f, 0.5f), Ppu, true);
         Save("Ground", Ground(), new Vector2(0.5f, 1f), Ppu, true);
@@ -386,6 +538,12 @@ public static class RedMoonDecor
         Save("Dot", Radial(32, Color.white, 1.5f, 1f), new Vector2(0.5f, 0.5f), 32f, false);
         Save("CrowUp", Crow(true), new Vector2(0.5f, 0.5f), 100f, false);
         Save("CrowDown", Crow(false), new Vector2(0.5f, 0.5f), 100f, false);
+        Save("Quad", Solid(4, 4), new Vector2(0.5f, 0.5f), 4f, false);
+        Save("Bolt1", Bolt(61), new Vector2(0.5f, 1f), 64f, false);
+        Save("Bolt2", Bolt(62), new Vector2(0.5f, 1f), 64f, false);
+        Save("CloudSoft", CloudSoft(), new Vector2(0.5f, 0.5f), 51.2f, true);
+        Save("Sun", Sun(), new Vector2(0.5f, 0.5f), 64f, false);
+        Save("PaleMoon", PaleMoon(), new Vector2(0.5f, 0.5f), 64f, false);
     }
 
     private static void Save(string name, Pixels image, Vector2 pivot, float ppu, bool repeat, Vector4 border = default)
@@ -522,7 +680,7 @@ public static class RedMoonDecor
             float v = (y + 0.5f) / h;
             float n = Noise((x + 0.5f) / w, 91, 4, 4, v * 2f, 2);
             float bell = Mathf.Sin(Mathf.PI * v);
-            image.Set(x, y, new Color(0.42f, 0.1f, 0.1f, Mathf.Clamp01(n * 1.6f - 0.45f) * bell * bell * 0.4f));
+            image.Set(x, y, new Color(1f, 1f, 1f, Mathf.Clamp01(n * 1.6f - 0.45f) * bell * bell * 0.4f));
         }
 
         return image;
@@ -554,6 +712,119 @@ public static class RedMoonDecor
         return image;
     }
 
+    private static Pixels Solid(int w, int h)
+    {
+        var image = new Pixels(w, h);
+
+        for (int i = 0; i < image.P.Length; i++)
+            image.P[i] = Color.white;
+
+        return image;
+    }
+
+    // Éclair : trait brisé qui descend en zigzag avec deux ramifications, cœur net et halo (64 × 512 px, 1 × 8 m).
+    private static Pixels Bolt(int seed)
+    {
+        const int w = 64, h = 512;
+        var core = new float[w * h];
+        var halo = new float[w * h];
+        var p = new Vector2(w / 2f, h - 4f);
+
+        for (int s = 0; p.y > 8f; s++)
+        {
+            Vector2 next = p + new Vector2((Hash(s, seed) - 0.5f) * 14f, -10f - 10f * Hash(s, seed + 1));
+            next.x = Mathf.Clamp(next.x, 10f, w - 10f);
+            float width = Mathf.Lerp(1.8f, 0.8f, 1f - p.y / h);
+            Stroke(core, w, h, p, next, width, width);
+            Stroke(halo, w, h, p, next, width * 4f, width * 4f);
+
+            if (s == 8 || s == 17)
+            {
+                Vector2 q = next;
+                float side = Hash(s, seed + 2) < 0.5f ? -1f : 1f;
+
+                for (int b = 0; b < 6; b++)
+                {
+                    Vector2 r = q + new Vector2(side * (3f + 4f * Hash(b, seed + 3)), -9f);
+                    r.x = Mathf.Clamp(r.x, 4f, w - 4f);
+                    Stroke(core, w, h, q, r, 0.8f, 0.5f);
+                    Stroke(halo, w, h, q, r, 2.5f, 2f);
+                    q = r;
+                }
+            }
+
+            p = next;
+        }
+
+        var image = new Pixels(w, h);
+
+        for (int i = 0; i < core.Length; i++)
+            image.P[i] = new Color(1f, 1f, 1f, Mathf.Max(core[i], halo[i] * 0.3f));
+
+        return image;
+    }
+
+    // Nuages doux en bande, répétables en largeur (512 px pour 10 m) : la couleur vient du ciel du chapitre.
+    private static Pixels CloudSoft()
+    {
+        const int w = 512, h = 214;
+        var image = new Pixels(w, h);
+
+        for (int y = 0; y < h; y++)
+        for (int x = 0; x < w; x++)
+        {
+            float v = (y + 0.5f) / h;
+            float n = Noise((x + 0.5f) / w, 71, 5, 5, v * 2.5f, 2);
+            float bell = Mathf.Sin(Mathf.PI * v);
+            image.Set(x, y, new Color(1f, 1f, 1f, Mathf.Clamp01(n * 2.2f - 0.95f) * bell));
+        }
+
+        return image;
+    }
+
+    // Soleil : disque net et blanc, couronne douce (256 px ; le disque occupe la moitié centrale).
+    // Les soleils peints par Animagine sortaient en disques mécaniques : celui-ci est calculé.
+    private static Pixels Sun()
+    {
+        const int size = 256;
+        var image = new Pixels(size, size);
+
+        for (int y = 0; y < size; y++)
+        for (int x = 0; x < size; x++)
+        {
+            float d = Vector2.Distance(new Vector2(x + 0.5f, y + 0.5f), new Vector2(size / 2f, size / 2f)) / (size / 2f);
+            float disc = Mathf.Clamp01((0.5f - d) * 40f);
+            float corona = Mathf.Pow(Mathf.Clamp01(1f - d), 3f) * 0.6f;
+            image.Set(x, y, new Color(1f, 1f, 1f, Mathf.Max(disc, corona)));
+        }
+
+        return image;
+    }
+
+    // Lune pâle : disque gris clair, mers plus sombres, bord assombri (256 px, disque plein).
+    private static Pixels PaleMoon()
+    {
+        const int size = 256;
+        var image = new Pixels(size, size);
+
+        for (int y = 0; y < size; y++)
+        for (int x = 0; x < size; x++)
+        {
+            var p = new Vector2(x + 0.5f, y + 0.5f) / (size / 2f) - Vector2.one;
+            float d = p.magnitude;
+            float alpha = Mathf.Clamp01((0.96f - d) * 60f);
+
+            if (alpha <= 0f)
+                continue;
+
+            float maria = Noise(p.x * 0.5f + 0.5f, 33, 3, 3, p.y * 1.5f + 1.5f, 3);
+            float shade = Mathf.Lerp(1f, 0.72f, Mathf.Clamp01((maria - 0.45f) * 3f)) * Mathf.Lerp(1f, 0.8f, d * d);
+            image.Set(x, y, new Color(shade, shade, shade * 1.04f, alpha));
+        }
+
+        return image;
+    }
+
     private static Pixels Haze()
     {
         var image = new Pixels(8, 128);
@@ -561,7 +832,7 @@ public static class RedMoonDecor
         for (int y = 0; y < image.H; y++)
         {
             float s = Mathf.Sin(Mathf.PI * (y + 0.5f) / image.H);
-            var c = new Color(0.55f, 0.08f, 0.06f, s * s * 0.45f);
+            var c = new Color(1f, 1f, 1f, s * s * 0.45f);
 
             for (int x = 0; x < image.W; x++)
                 image.Set(x, y, c);

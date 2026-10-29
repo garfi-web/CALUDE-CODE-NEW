@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "abandoned province, empty burnt village, broken carts, war banners, smoke columns, clear bright blue sky, big sun, white clouds, sunny day, glowing red cracks in the ground, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, wide shot, eye level, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, silhouette of person, red moon, blood moon, crimson sky, blood red sky, red clouds",
+  "seed": 6204,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1344,
+    768
+  ],
+  "duration_s": 21.2
+}

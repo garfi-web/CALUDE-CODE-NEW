@@ -70,6 +70,7 @@ Les commandes fonctionnent avec le nouvel Input System comme avec l'ancien : auc
 | Debug des images / arme de test / démo de combo / Nathan M4 avec le fusil | F1 / F2 / F3 / F4 | — |
 | État de la partie : sauvegarder / prendre la dose (son prix est ignoré en test) et entrer dans l'incursion suivante / la refuser / nouvelle partie / charger | F5 / F6 / F7 / F8 / F9 | — |
 | Visual novel de Mara : scène d'ouverture / de fin du chapitre en cours (test) | F10 / F11 | — |
+| Ciel du chapitre suivant (arène de test, ch. 1 à 10) | F12 | — |
 | Visual novel : réplique suivante | Entrée, Espace ou J | A (bouton bas) |
 | Recommencer après une défaite | R | Start |
 

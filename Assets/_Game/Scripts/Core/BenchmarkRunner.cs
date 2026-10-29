@@ -7,7 +7,9 @@ using UnityEngine;
 // Banc d'essai des 60 FPS dans un build, lancé par un argument (sans lui, ne fait rien) :
 // « -redmet-benchmark » : vague du mannequin, lame de test, gore complet, démo de combo enchaînée ;
 // « -redmet-benchmark-shotgun » : Nathan M4 contre 5 Voyous (vague 8), un tir de fusil à pompe à bout portant
-// sur le groupe, vague relancée après chaque tir (5 corps pulvérisés à chaque fois), gore complet.
+// sur le groupe, vague relancée après chaque tir (5 corps pulvérisés à chaque fois), gore complet ;
+// « -redmet-benchmark-sky » : ciels animés (SkyController), orage du ch. 6 (éclairs, pluie) puis aurores du ch. 5,
+// avec la démo de combo enchaînée contre le mannequin.
 // Synchronisation verticale coupée pour mesurer la marge réelle. Le temps CPU de chaque image vient de
 // FrameTimingManager (actif dans les builds quand « Frame Timing Stats » est coché, ce que fait l'outil de build).
 // Rapport : benchmark.txt (ou benchmark_shotgun.txt) à côté de l'exécutable, puis le jeu se ferme.
@@ -15,6 +17,7 @@ public class BenchmarkRunner : MonoBehaviour
 {
     private const string Argument = "-redmet-benchmark";
     private const string ShotgunArgument = "-redmet-benchmark-shotgun";
+    private const string SkyArgument = "-redmet-benchmark-sky";
 
     [SerializeField] private float warmup = 2f;
     [SerializeField] private float duration = 30f;
@@ -29,7 +32,9 @@ public class BenchmarkRunner : MonoBehaviour
     {
         string[] args = System.Environment.GetCommandLineArgs();
 
-        if (args.Contains(ShotgunArgument))
+        if (args.Contains(SkyArgument))
+            StartCoroutine(RunSky());
+        else if (args.Contains(ShotgunArgument))
             StartCoroutine(Run(true));
         else if (args.Contains(Argument))
             StartCoroutine(Run(false));
@@ -109,6 +114,55 @@ public class BenchmarkRunner : MonoBehaviour
         string path = Path.Combine(Path.GetDirectoryName(Application.dataPath) ?? ".", shotgun ? "benchmark_shotgun.txt" : "benchmark.txt");
         File.WriteAllText(path, report);
         Debug.Log(report);
+        Application.Quit();
+    }
+
+    // Orage puis aurores, la moitié de la durée chacun ; un rapport par ciel dans benchmark_sky.txt.
+    private IEnumerator RunSky()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = -1;
+        GameOptions.Gore = GoreLevel.Full;
+
+        yield return new WaitForSecondsRealtime(warmup);
+
+        var sky = FindAnyObjectByType<SkyController>();
+        var demo = FindAnyObjectByType<ComboDemo>();
+        FindAnyObjectByType<EnemyWaveManager>().StartWave(mannequinWave);
+        var report = new System.Text.StringBuilder();
+
+        foreach (int chapter in new[] { 6, 5 })
+        {
+            sky.Apply(chapter);
+            yield return new WaitForSecondsRealtime(1f);
+
+            var cpu = new List<double>();
+            var frame = new List<double>();
+            float end = Time.realtimeSinceStartup + duration / 2f;
+
+            while (Time.realtimeSinceStartup < end)
+            {
+                if (!demo.IsPlaying)
+                    demo.Play();
+
+                FrameTimingManager.CaptureFrameTimings();
+
+                if (FrameTimingManager.GetLatestTimings(1, timings) > 0)
+                    cpu.Add(timings[0].cpuMainThreadFrameTime);
+
+                frame.Add(Time.unscaledDeltaTime * 1000.0);
+                yield return null;
+            }
+
+            string scene = chapter == 6
+                ? $"ciel du ch. 6 (orage : éclairs, pluie), démo de combo contre le mannequin, {duration / 2f:F0} s, vsync coupée"
+                : $"ciel du ch. 5 (aurores, deux lunes), démo de combo contre le mannequin, {duration / 2f:F0} s, vsync coupée";
+            report.AppendLine(Report(cpu, frame, scene));
+        }
+
+        string path = Path.Combine(Path.GetDirectoryName(Application.dataPath) ?? ".", "benchmark_sky.txt");
+        File.WriteAllText(path, report.ToString());
+        Debug.Log(report.ToString());
         Application.Quit();
     }
 

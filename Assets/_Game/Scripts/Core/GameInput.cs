@@ -23,7 +23,7 @@ public enum GameAction
 // Clavier (AZERTY) : Q/D se déplacer, S bas, Espace sauter, J coup léger, K coup lourd,
 // L dash, Maj gauche esquive, U fusil à pompe (M4), I recharger, Échap options, F1 debug des images,
 // F2 arme de test, F3 démo, F4 Nathan M4 avec le fusil, F5 sauvegarder, F6 prendre la dose,
-// F7 la refuser, F8 nouvelle partie, F9 charger.
+// F7 la refuser, F8 nouvelle partie, F9 charger, F10 et F11 scènes de Mara, F12 ciel du chapitre suivant.
 // Manette : stick/croix, A saut, X léger, Y lourd, LB dash, RB esquive, RT fusil, LT recharger, Select options.
 public static class GameInput
 {
@@ -168,6 +168,9 @@ public static class GameInput
     public static bool DebugMaraOpeningPressed => Pressed(Keyboard.current?.f10Key);
     public static bool DebugMaraEndingPressed => Pressed(Keyboard.current?.f11Key);
 
+    // Arène de test : ciel du chapitre suivant (SkyController).
+    public static bool DebugSkyPressed => Pressed(Keyboard.current?.f12Key);
+
     // Navigation des menus (flèches, Z/Q/S/D en AZERTY, croix de la manette).
     public static bool MenuUp => Pressed(Keyboard.current?.upArrowKey) || Pressed(Keyboard.current?.wKey) || Pressed(Gamepad.current?.dpad.up);
     public static bool MenuDown => Pressed(Keyboard.current?.downArrowKey) || Pressed(Keyboard.current?.sKey) || Pressed(Gamepad.current?.dpad.down);
@@ -213,6 +216,7 @@ public static class GameInput
         Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.J);
     public static bool DebugMaraOpeningPressed => Input.GetKeyDown(KeyCode.F10);
     public static bool DebugMaraEndingPressed => Input.GetKeyDown(KeyCode.F11);
+    public static bool DebugSkyPressed => Input.GetKeyDown(KeyCode.F12);
     public static bool MenuUp => Input.GetKeyDown(KeyCode.UpArrow);
     public static bool MenuDown => Input.GetKeyDown(KeyCode.DownArrow);
     public static bool MenuLeft => Input.GetKeyDown(KeyCode.LeftArrow);

@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "ruined hall on the fortress outskirts, many cracked mirrors, shards of glass on the floor, broken roof open to a violent thunderstorm, lightning, purple and steel blue light, glowing red cracks in the ground, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, wide shot, eye level, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, silhouette of person, red moon, blood moon, crimson sky, blood red sky, red clouds",
+  "seed": 6206,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1344,
+    768
+  ],
+  "duration_s": 21.1
+}

@@ -34,15 +34,22 @@ MARA = ("1girl, solo, adult, mature female, 28 years old, mature face, tall, vol
 
 # Tenues (docs/CHARACTERS.md, « Progression des tenues ») : seule M-T0 est produite avant validation.
 OUTFITS = {
-    "T0": ("black bodysuit, latex bodysuit, shiny clothes, high collar, turtleneck, red straps, crossed straps, corset, "
-           "buckles, long skirt, side slit, thigh boots, fully covered"),
+    # Retour de l'auteur (2026-10-29) : sangles rouges absentes de la 1re série, d'où le poids.
+    "T0": ("black bodysuit, latex bodysuit, shiny clothes, high collar, turtleneck, (red straps:1.3), "
+           "(red crossed straps over chest:1.2), red leather harness, corset, buckles, long skirt, side slit, "
+           "thigh boots, fully covered"),
 }
 
 POSES = {
-    "front": "cowboy shot, standing, hand on own hip, holding sword over shoulder, sword resting on shoulder, "
-             "glowing red energy sword, head tilt, contrapposto, front view, facing viewer, looking at viewer",
+    # La lame doit rester tenue quelle que soit l'expression (1re série : lame flottante sur 3 expressions).
+    "front": "cowboy shot, standing, hand on own hip, (hand gripping sword hilt:1.2), holding sword over shoulder, "
+             "sword resting on shoulder, glowing red energy sword, red flaming blade, black hilt, head tilt, "
+             "contrapposto, front view, facing viewer, looking at viewer",
+    # De dos : cheveux aussi longs que de face, même lame que de face (1re série : cheveux courts, garde dorée).
     "back": "cowboy shot, standing, from behind, back, arched back, looking back, looking over shoulder, "
-            "hand on own hip, holding sword, glowing red energy sword, sword pointing down",
+            "(very long hair:1.3), (hair reaching hips:1.2), straight hair down back, "
+            "hand on own hip, (hand gripping sword hilt:1.2), holding sword, glowing red energy sword, "
+            "red flaming blade, black hilt, sword pointing down",
 }
 
 EXPRESSIONS = {
@@ -57,7 +64,8 @@ STYLE = ("anime coloring, cel shading, clean lineart, detailed face, dark fantas
          "simple background, black background, safe")
 NEGATIVE = ("nsfw, nude, nipples, explicit, cleavage cutout, child, loli, young, petite, flat chest, aged down, "
             "baby face, male, t-pose, spread arms, arms outstretched, full body, feet, multiple views, logo, text, "
-            "letters, watermark, signature, lowres, bad anatomy, bad hands, extra fingers, missing fingers, "
+            "letters, watermark, signature, white hair, white streak, silver hair, grey hair, floating sword, "
+            "floating weapon, gold hilt, golden hilt, short hair, medium hair, bob cut, lowres, bad anatomy, bad hands, extra fingers, missing fingers, "
             "extra limbs, extra arms, extra swords, cropped head, out of frame, chibi, big head, worst quality, "
             "low quality, low score, bad score, average score, blurry, white background, grey background, "
             "busy background, scenery")

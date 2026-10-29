@@ -16,11 +16,32 @@ public class ParallaxLayer : MonoBehaviour
     private Vector3 start;
     private Vector3 camStart;
     private float driftOffset;
+    private bool anchored;
+
+    // Glissement en m/s, réglé par le ciel du chapitre (SkyController).
+    public float Drift
+    {
+        get => drift;
+        set => drift = value;
+    }
+
+    // Nouvelle position de base (quand la caméra est à son point de départ) : astres déplacés par SkyController.
+    public void SetAnchor(Vector3 position)
+    {
+        start = position;
+        anchored = true;
+
+        if (cam == null)
+            transform.position = position;
+    }
 
     private void Start()
     {
         cam = Camera.main.transform;
-        start = transform.position;
+
+        if (!anchored)
+            start = transform.position;
+
         camStart = cam.position;
     }
 

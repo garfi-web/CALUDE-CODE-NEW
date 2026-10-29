@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd387e0188f78443993b36840ab9744, type: 3}
+  m_Name: ch03
+  m_EditorClassIdentifier: Assembly-CSharp::SkyProfile
+  sky: {fileID: 21300000, guid: 9a5ea41d1b2d04f469298588411185f8, type: 3}
+  skyTint: {r: 1, g: 1, b: 1, a: 1}
+  skyWidth: 17
+  celestials:
+  - sprite: {fileID: 21300000, guid: 1f7b43a82016d8949be8a08a4c5f50a8, type: 3}
+    offset: {x: 2, y: 0.5}
+    width: 2.2
+    color: {r: 1, g: 0.75, b: 0.45, a: 1}
+    glow: 1.6
+    haloColor: {r: 1, g: 0.55, b: 0.3, a: 1}
+    haloScale: 3.5
+    haloPulse: 0.05
+    lightColor: {r: 1, g: 0.6, b: 0.35, a: 1}
+    lightIntensity: 0.9
+  clouds: {fileID: 21300000, guid: 45a25f778c5fe2a44b57a4d73495aa0a, type: 3}
+  cloudTint: {r: 1, g: 0.7, b: 0.6, a: 0.5}
+  cloudDrift: 0.12
+  neutralLandscape: 1
+  landscapeTint: {r: 0.55, g: 0.38, b: 0.38, a: 1}
+  fogColor: {r: 0.95, g: 0.6, b: 0.5, a: 1}
+  fogDrift: 0.35
+  horizonColor: {r: 1, g: 0.65, b: 0.45, a: 1}
+  frontFog: 0
+  aurora: 0
+  auroraColorA: {r: 0.2, g: 1, b: 0.55, a: 1}
+  auroraColorB: {r: 0.2, g: 0.55, b: 1, a: 1}
+  auroraIntensity: 1
+  auroraSpeed: 0.15
+  lightning: 0
+  lightningInterval: {x: 2.5, y: 6}
+  lightningColor: {r: 0.85, g: 0.9, b: 1, a: 1}
+  lightningFlash: 1.6
+  ashRate: 0
+  ashColor: {r: 0.6, g: 0.55, b: 0.56, a: 0.85}
+  emberRate: 3
+  rainRate: 0
+  rainColor: {r: 0.7, g: 0.75, b: 0.8, a: 0.35}
+  rainSpeed: 14
+  lightColor: {r: 1, g: 0.82, b: 0.7, a: 1}
+  lightIntensity: 1
+  rimColor: {r: 2, g: 0.9, b: 0.35, a: 1}
+  rimDirection: {x: 0.95, y: 0.3}
+  ambient: {r: 1, g: 0.9, b: 0.82, a: 1}
+  bloomTint: {r: 1, g: 0.75, b: 0.5, a: 1}
+  bloomIntensity: 1.3
+  colorFilter: {r: 1, g: 0.95, b: 0.9, a: 1}
+  postExposure: 0
+  contrast: 10
+  saturation: 8
+  vignetteColor: {r: 0.15, g: 0.05, b: 0.08, a: 1}
+  vignette: 0.35

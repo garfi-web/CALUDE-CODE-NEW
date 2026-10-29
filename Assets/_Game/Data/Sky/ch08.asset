@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd387e0188f78443993b36840ab9744, type: 3}
+  m_Name: ch08
+  m_EditorClassIdentifier: Assembly-CSharp::SkyProfile
+  sky: {fileID: 21300000, guid: 80cf8c87b745089478737e0f5023ebe6, type: 3}
+  skyTint: {r: 1, g: 1, b: 1, a: 1}
+  skyWidth: 17
+  celestials: []
+  clouds: {fileID: 21300000, guid: 45a25f778c5fe2a44b57a4d73495aa0a, type: 3}
+  cloudTint: {r: 0.6, g: 0.3, b: 0.7, a: 0.5}
+  cloudDrift: 0.2
+  neutralLandscape: 1
+  landscapeTint: {r: 0.35, g: 0.25, b: 0.45, a: 1}
+  fogColor: {r: 0.5, g: 0.25, b: 0.6, a: 1}
+  fogDrift: 0.35
+  horizonColor: {r: 0.9, g: 0.3, b: 0.8, a: 1}
+  frontFog: 0
+  aurora: 0
+  auroraColorA: {r: 0.2, g: 1, b: 0.55, a: 1}
+  auroraColorB: {r: 0.2, g: 0.55, b: 1, a: 1}
+  auroraIntensity: 1
+  auroraSpeed: 0.15
+  lightning: 0
+  lightningInterval: {x: 2.5, y: 6}
+  lightningColor: {r: 0.85, g: 0.9, b: 1, a: 1}
+  lightningFlash: 1.6
+  ashRate: 0
+  ashColor: {r: 0.6, g: 0.55, b: 0.56, a: 0.85}
+  emberRate: 0
+  rainRate: 0
+  rainColor: {r: 0.7, g: 0.75, b: 0.8, a: 0.35}
+  rainSpeed: 14
+  lightColor: {r: 0.75, g: 0.6, b: 0.9, a: 1}
+  lightIntensity: 0.9
+  rimColor: {r: 1.6, g: 0.4, b: 1.5, a: 1}
+  rimDirection: {x: -0.7, y: 0.7}
+  ambient: {r: 0.9, g: 0.82, b: 0.95, a: 1}
+  bloomTint: {r: 1, g: 0.5, b: 1, a: 1}
+  bloomIntensity: 1.4
+  colorFilter: {r: 0.95, g: 0.9, b: 1, a: 1}
+  postExposure: 0
+  contrast: 14
+  saturation: 15
+  vignetteColor: {r: 0.08, g: 0, b: 0.1, a: 1}
+  vignette: 0.4

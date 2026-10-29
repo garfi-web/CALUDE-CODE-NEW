@@ -3,12 +3,12 @@
 Choix, prompts, seeds, nombre d'essais et problèmes rencontrés, phase par phase.
 Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, animation, rendu toon) → spritesheets PNG → Unity.
 
-## État d'avancement (au 2026-10-28, sauvegarde de fin de session)
+## État d'avancement (au 2026-10-29)
 
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
-- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant terminé** (concept 14201, fusil à pompe, Nathan M4 et son fusil, corps pulvérisés, 60 FPS mesurés dans un build). **Prototype narratif en cours** : étape 1 validée, étape 2 (état de la partie et sauvegarde) en attente de validation (section « Prototype narratif » à la fin). **Plan des 10 chapitres validé** (`docs/SCENARIO.md`, boss du ch. 1 : le Chœur des rieurs) ; dialogues écrits par l’auteur dans `docs/source/dialogues/` ; étape 2 validée (doses payées par des actes) ; étape 3 commencée (module Mara V4 dans le jeu, Ink 2.0.0) ; **refonte de l’écran visual novel EN COURS** : portraits de Mara M-T0 générés, en attente de validation ; décors et police prêts ; interface pas commencée (dernière entrée du journal) (décisions de l’auteur du 2026-10-28 : seuils de Mara 0 / 1-2 / 3-4 / 5-6 / 7+, fin immorale de la section 11.1 du GDD v0.1) (consigne complète en tête de la section 8 de `docs/REPRISE.md`), étape par étape avec validation de l'auteur (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
+- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant terminé** (concept 14201, fusil à pompe, Nathan M4 et son fusil, corps pulvérisés, 60 FPS mesurés dans un build). **Prototype narratif en cours** : étape 1 validée, étape 2 (état de la partie et sauvegarde) en attente de validation (section « Prototype narratif » à la fin). **Plan des 10 chapitres validé** (`docs/SCENARIO.md`, boss du ch. 1 : le Chœur des rieurs) ; dialogues écrits par l’auteur dans `docs/source/dialogues/` ; étape 2 validée (doses payées par des actes) ; étape 3 commencée (module Mara V4 dans le jeu, Ink 2.0.0) ; **refonte de l’écran visual novel EN COURS** : portraits de Mara M-T0 corrigés (2e série), en attente du choix de l’auteur ; **ciels des 10 chapitres refaits** (lune rouge aux ch. 1 et 10 seulement, `SkyProfile`, F12), en attente de validation ; police prête ; interface pas commencée (dernière entrée du journal) (décisions de l’auteur du 2026-10-28 : seuils de Mara 0 / 1-2 / 3-4 / 5-6 / 7+, fin immorale de la section 11.1 du GDD v0.1) (consigne complète en tête de la section 8 de `docs/REPRISE.md`), étape par étape avec validation de l'auteur (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
 - TRANCHE VERTICALE terminée le 2026-10-27 (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
@@ -861,3 +861,50 @@ Demande de l'auteur : un vrai visual novel aux couleurs de RED MET (texte comple
    - police M PLUS Rounded 1c ;
    - l'Avocat dans sa propre surimpression déformée.
 3. Nœud `test_choix` (PROVISOIRE) après `ch01_mara_ouverture`, test de `ch01_mara_ouverture` et de `ch01_mara_fin` (de dos) en 1920 × 1080, captures avant/après (avant : `docs/captures/2026-10-28_mara_ch01_ouverture*.png`), 60 FPS, commit et push, puis attente de la validation de l'auteur.
+
+### 2026-10-29 — Portraits M-T0 corrigés et refonte des ciels des 10 chapitres (EN ATTENTE DE VALIDATION)
+
+**Portraits de Mara M-T0** (retour de l'auteur : corriger les sangles, la mèche blanche et la lame qui flotte ; relancer le dos pour les cheveux et l'épée) :
+- `vn_portraits.py` : sangles rouges pondérées (`(red straps:1.3)`, `(red crossed straps over chest:1.2)`), main serrée sur la poignée, lame rouge enflammée à garde noire, cheveux jusqu'aux hanches pour le dos ; négatif : cheveux blancs ou courts, lame flottante, garde dorée.
+- Face, graines 8502, 8521 et 8522 (`ArtSource/VN/Mara/T0/planche_expressions_v2_s*.png`) :
+  - **8521**, la meilleure : lame tenue dans les 5 expressions, sangles rouges, aucune mèche blanche. Elle ajoute une cape et un col rouges, et une épaulette grise sur la version méprisante.
+  - 8502 : petite épée grise à la hanche au lieu de la lame d'énergie.
+  - 8522 : tenue trop rouge.
+- Dos, graines 8531 à 8534 (`planche_dos_v2.png`) :
+  - **8531** : lame rouge et cheveux longs, en trois quarts dos ;
+  - **8532** : vrai dos avec harnais rouge et cheveux longs, mais lame sombre ;
+  - 8533 : artefact rouge ;
+  - 8534 : de face.
+- Pas encore détourés : à faire sur les graines choisies par l'auteur. Les bruts de la 1re série (graine 8502), dont viennent les portraits détourés actuels, sont gardés en `*_s8502_v1.png`.
+
+**Ciels** (consigne de l'auteur du 2026-10-29 : lune rouge réservée aux ch. 1 et 10, un ciel propre à chacun des ch. 2 à 9, identité Red Met par les fissures rouges du sol ; règle notée dans `docs/GDD.md`) :
+- **Code** :
+  - `SkyProfile` (ScriptableObject, `Data/Sky/ch01` à `ch10.asset`, créés par `Editor/SkyProfiles.cs` puis réglables dans l'asset) : ciel peint, jusqu'à 3 astres (halo, pulsation, lumière 2D), nuages qui dérivent, paysage (couches d'origine ou neutres teintées), brouillard (dont brouillard qui roule devant le plan de jeu), aurores, éclairs, cendres, braises, pluie, lumière globale 2D, liseré et ambiance des personnages, post-traitement.
+  - `SkyController` applique un profil sans rien créer ni détruire ; F12 passe au chapitre suivant (`GameInput.DebugSkyPressed`). Les éclairs suivent l'option des flashs : sans elle, un seul éclat doux, sans trait.
+  - Shaders :
+    - `RED MET/Sky Aurora` : rideaux calculés, sans texture ;
+    - `RED MET/Sprite Flash` : liseré et ambiance par variables globales du ciel, valeurs du matériau sans ciel ;
+    - `RED MET/Sprite Glow` : propriété `_Tint`.
+  - Piège Unity 6 : la couleur d'un SpriteRenderer n'arrive plus par les sommets dans nos shaders ; d'où `_Tint` par MaterialPropertyBlock. Un bloc relu depuis le renderer garde l'ancienne texture : il est vidé à chaque fois.
+  - `RedMoonDecor` construit les nouveaux objets et calcule les nouvelles images : Quad, deux éclairs, nuages doux, soleil, lune pâle. Halo, brume et brume d'horizon sont désormais blancs et teintés par le ciel ; le ch. 1 garde ses valeurs exactes.
+  - Correction d'un défaut ancien : les couches en mosaïque faisaient 4,17 m pour une image de 4,1667 m, et le mode Tiled ajoutait une ligne de l'image suivante en haut. Invisible sur le rouge sombre, visible sur les ciels clairs.
+  - `BenchmarkRunner` : mode `-redmet-benchmark-sky`.
+- **Images** (`tools/gen3d/skies.py`, ComfyUI + Animagine XL 4.0 ; les références Skyrim et inFAMOUS 2 de l'auteur ne sont pas des entrées) :
+  - ciels du jeu ch. 2 à 9, graines 7102 à 7109 (`Art/Backgrounds/Skies/chNN_sky.png`) ;
+  - versions neutres des couches de paysage de l'arène (gris, voiles semi-transparents retirés) ;
+  - soleil et lune pâle peints (graines 7201, 7202) rejetés (disque mécanique, grappe de quatre lunes), remplacés par des astres calculés.
+- **Décors du visual novel** ch. 2 à 9 refaits, avec les fissures rouges du sol dans le prompt ; ch. 1 et 10 inchangés :
+  - ch. 2, 3 et 8 : architecture gardée par ControlNet Union (contours canny du décor précédent, zones de la lune effacées, force 0,55, fin 0,6) ;
+  - ch. 4, 5, 6, 7 et 9 : nouvelles images ;
+  - ch. 3, 7 et 9 refaits une 2e fois avec des prompts pondérés (graines 6213, 6217, 6219 ; 1ers essais dans `ArtSource/VN/Backgrounds/rejets/`).
+- **Captures** :
+  - `docs/captures/2026-10-29_decors_vn_avant_apres.png` ;
+  - `docs/captures/2026-10-29_ciels_jeu_10_chapitres.png` ;
+  - `docs/captures/2026-10-29_ciel_jeu_ch03.jpg`, `ch04.jpg` et `ch05.jpg` (Nathan au départ de l'arène).
+- **60 FPS** (build Windows, `REDMET.exe -redmet-benchmark-sky`, 1920 × 1080, vsync coupée, démo de combo contre le mannequin, RTX 3070 Laptop) :
+  - orage du ch. 6 : 6 712 images, moyenne 2,23 ms, 99e centile 6,33 ms, pire 8,38 ms, aucune au-delà de 16,6 ms ;
+  - aurores du ch. 5 : 6 806 images, moyenne 2,20 ms, 99e centile 5,32 ms, pire 6,86 ms, aucune au-delà de 16,6 ms.
+- **Limites connues** :
+  - les couches de paysage de l'arène (ruines, arbres) ont été peintes pour la lune rouge. Sur les ciels clairs, leur haut fondu dessine encore une bande douce : chaque niveau aura ses propres couches de paysage ;
+  - les décors ch. 2, 4, 5, 6 et 8 du visual novel montrent peu ou pas de fissures rouges ;
+  - le ciel ne suit pas encore le chapitre de la partie (`SkyController.Apply(chapitre)` est prêt ; F12 en test).

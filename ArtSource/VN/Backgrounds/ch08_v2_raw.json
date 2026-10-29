@@ -1,0 +1,13 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "controlnet": "controlnet-union-sdxl-1.0-promax.safetensors (canny, 0.55, fin 0.6), contours de ch08_raw.png sans [(0.45, 0.05, 0.7, 0.45)]",
+  "prompt": "modern city street at night, wet asphalt, cracks in the walls glowing with red veins, grey blue buildings, toxic violet dusk sky, purple and magenta clouds, neon signs, glowing red cracks in the ground, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, wide shot, eye level, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, silhouette of person, red moon, blood moon, crimson sky, blood red sky, red clouds",
+  "seed": 6208,
+  "size": [
+    1344,
+    768
+  ],
+  "duration_s": 30.2
+}

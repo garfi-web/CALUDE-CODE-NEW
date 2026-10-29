@@ -132,10 +132,10 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 - **Modèles** : ControlNet Union SDXL de xinsir (Apache 2.0) et BiRefNet (MIT). Les deux sont téléchargés et figés dans `C:\RED MET\ai`, hors dépôt.
 - **Test des choix** : dans un nœud séparé `test_choix`, aux options marquées PROVISOIRE, joué après `ch01_mara_ouverture`. Jamais de choix ajouté dans les scènes de l'auteur.
 
-**Où on en est** (`docs/PRODUCTION.md`, dernière entrée) :
-- Portraits M-T0 générés et détourés, **à montrer à l'auteur** : 5 expressions de face (graine 8502), le dos (graine 8512) et le médaillon. Écarts à lui signaler : sangles rouges absentes, mèche blanche sur la version méprisante, cheveux du dos trop courts.
+**Où on en est** (`docs/PRODUCTION.md`, dernière entrée, 2026-10-29) :
+- Portraits M-T0 : 1re série montrée à l'auteur, qui a demandé de corriger les sangles, la mèche blanche et la lame qui flotte, et de relancer le dos. **2e série faite, en attente de son choix** : face graine 8521 conseillée, mais elle ajoute une cape et un col rouges (`planche_expressions_v2_s8521.png`) ; dos 8531 ou 8532 (`planche_dos_v2.png`). Détourer ensuite les graines choisies (`vn_cutout.py`) et refaire le médaillon.
 - Méthode : squelette OpenPose et ControlNet ; le rendu du maillage 3D est inutilisable (cheveux fusionnés aux bras).
-- Les 10 décors (`Assets/_Game/Art/Backgrounds/VN/`) sont à examiner.
+- **Ciels refaits sur demande de l'auteur (2026-10-29), en attente de validation** : lune rouge aux ch. 1 et 10 seulement, un ciel par chapitre de 2 à 9 (`SkyProfile`, `Data/Sky/`, F12 dans l'arène), décors du visual novel ch. 2 à 9 repeints, 60 FPS mesurés sur l'orage et les aurores. Planches : `docs/captures/2026-10-29_*`. Consigne complète : ci-dessous.
 - La police M PLUS Rounded 1c (OFL) est installée.
 - L'interface n'est pas commencée.
 
@@ -144,10 +144,29 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 "C:/RED MET/ai/ComfyUI/.venv/Scripts/python.exe" -I tools/gen3d/vn_portraits.py --stage T0 --seeds 8502
 "C:/RED MET/ai/BiRefNet/.venv/Scripts/python.exe" -I tools/gen3d/vn_cutout.py ArtSource/VN/Mara/T0/<brut>.png
 "C:/RED MET/ai/ComfyUI/.venv/Scripts/python.exe" -I tools/gen3d/vn_backgrounds.py ch01
+"C:/RED MET/ai/ComfyUI/.venv/Scripts/python.exe" -I tools/gen3d/skies.py sky ch05   # ciel du jeu (aussi : vn ch03, neutral)
+Builds/Windows/REDMET.exe -redmet-benchmark-sky                                  # 60 FPS orage et aurores (benchmark_sky.txt)
 ```
 Libérer la mémoire vidéo de ComfyUI avant BiRefNet : `curl -X POST http://127.0.0.1:8188/free -d '{"unload_models":true,"free_memory":true}'`.
 
-**Requête de l'auteur (texte complet)** :
+**Requête de l'auteur sur les ciels (2026-10-29, texte complet ; faite, en attente de validation)** :
+> Refonte des ciels des 10 niveaux du monde parallèle. Problème : avec une lune rouge partout, les joueurs croiront que c'est toujours le même décor avec seulement des bâtiments différents. Ce n'est pas l'effet recherché.
+>
+> 1. Règle
+> - La lune rouge est réservée au ch. 1 (première incursion) et au ch. 10 (dernier niveau, que Nathan soit devenu vampire en ayant pris la Red Met à chaque fois, ou qu'il se batte encore avec ses poings et ses pieds). Ces deux niveaux doivent se répondre.
+> - Les ch. 2 à 9 ont chacun leur propre ciel, sans lune rouge : ch. 2 : ciel nuageux lourd, gris-vert maladif, bruine (la peste) ; ch. 3 : coucher de soleil chaud et brumeux, orange et rose, dans l'esprit de la Nouvelle-Orléans d'inFAMOUS 2 ; ch. 4 : ciel dégagé, bleu lumineux, grand soleil, quelques nuages blancs ; ch. 5 : nuit avec aurores boréales vertes et bleues, et deux lunes pâles ; ch. 6 : orage violent, éclairs ; ch. 7 : aube blafarde, brouillard épais ; ch. 8 : crépuscule violet et toxique, néons de la ville réelle qui envahit le monde ; ch. 9 : ciel d'incendie, colonnes de fumée, pluie de cendres.
+> - L'identité Red Met reste visible dans tous les niveaux par un détail discret et constant : les fissures rouges lumineuses du sol, jamais par le ciel.
+>
+> 2. Technique
+> - Crée un profil de ciel par chapitre (ScriptableObject) : couches de ciel en parallaxe, astres (soleil, lunes), éléments animés (aurores qui ondulent, nuages qui dérivent, éclairs avec flash d'éclairage, reflets de soleil, brouillard qui roule, cendres), couleur et intensité de la lumière globale 2D, couleur du brouillard, réglages de post-traitement.
+> - La lumière des personnages s'accorde au ciel (liseré orange au coucher de soleil, bleu-vert sous les aurores, blanc sous le soleil) pour qu'ils restent lisibles, même sur un ciel clair.
+> - Peins les ciels avec ComfyUI et Animagine XL, en anime HD cohérent avec les décors existants. Mes images de référence (Skyrim, inFAMOUS 2) servent uniquement d'inspiration, pas d'entrée.
+> - Reprends les 10 fonds actuels : garde l'architecture quand elle est bonne, mais refais les ciels et les couleurs des ch. 2 à 9, qui sont aujourd'hui tous rouges.
+>
+> 3. Test
+> Montre-moi une planche comparative des 10 ciels (avant/après), puis une capture en jeu avec Nathan pour les ch. 3, 4 et 5. Vérifie les 60 FPS sur l'orage (éclairs) et les aurores. Commit et push, puis attends ma validation.
+
+**Requête de l'auteur sur l'écran visual novel (texte complet)** :
 > Refonte de l'écran visual novel : le résultat actuel ne me convient pas (concept en pose en T dans un cadre gris, posé sur l'écran de combat). Je veux un vrai visual novel, sur le modèle de mise en page des visual novels anime modernes, aux couleurs de RED MET (noir, rouge, touches de blanc). Ne reprends que la mise en page, pas le style des personnages du modèle : Mara reste une guerrière adulte avec ses tenues M-T0 à M-T4.
 >
 > 1. Mise en scène

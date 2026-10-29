@@ -1,0 +1,13 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "controlnet": "controlnet-union-sdxl-1.0-promax.safetensors (canny, 0.55, fin 0.6), contours de ch03_raw.png sans [(0.15, 0.0, 0.75, 0.5)]",
+  "prompt": "approach to a black stone fortress on a cliff, huge gate, burning braziers, warm hazy sunset, orange and pink sky, golden haze, glowing red cracks in the ground, no humans, scenery, dark fantasy, anime style, highly detailed background art, painterly, dramatic lighting, wide shot, eye level, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, silhouette of person, red moon, blood moon, crimson sky, blood red sky, red clouds",
+  "seed": 6203,
+  "size": [
+    1344,
+    768
+  ],
+  "duration_s": 28.3
+}

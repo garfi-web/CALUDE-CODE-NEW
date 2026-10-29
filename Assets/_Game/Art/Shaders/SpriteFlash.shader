@@ -4,6 +4,8 @@
 // matériau n'est dupliqué. La couleur du SpriteRenderer reste une teinte (annonces d'attaque).
 // Le liseré est calculé dans le monde (dérivées des UV rapportées à celles de la position) : il reste
 // du côté de la lune quel que soit le sens du personnage, retourné ou non, et quelle que soit la cible de rendu.
+// Le ciel du chapitre (SkyController) remplace la couleur et la direction du liseré et ajoute une teinte
+// d'ambiance, par des variables globales ; sans ciel (alpha ou w à 0), les valeurs du matériau s'appliquent.
 Shader "RED MET/Sprite Flash"
 {
     Properties
@@ -44,6 +46,11 @@ Shader "RED MET/Sprite Flash"
                 float4 _RimDirection;
             CBUFFER_END
 
+            // Variables globales du ciel du chapitre (hors CBUFFER : communes à tous les personnages).
+            float4 _SkyRimColor;
+            float4 _SkyRimDirection;
+            float4 _SkyAmbient;
+
             struct Attributes
             {
                 float4 positionOS : POSITION;
@@ -76,10 +83,13 @@ Shader "RED MET/Sprite Flash"
                 // UV par mètre dans le monde (le signe suit le retournement du sprite), puis test de
                 // l'opacité vers la lune : transparent à _RimWidth mètres = bord éclairé.
                 float2 uvPerMeter = float2(ddx(input.uv.x) / ddx(input.positionWS.x), ddy(input.uv.y) / ddy(input.positionWS.y));
-                float2 direction = normalize(_RimDirection.xy);
+                bool skyRim = _SkyRimDirection.w > 0.5;
+                float4 rimColor = skyRim ? _SkyRimColor : _RimColor;
+                float2 direction = normalize(skyRim ? _SkyRimDirection.xy : _RimDirection.xy);
                 float2 probe = input.uv + direction * uvPerMeter * _RimWidth;
                 half outside = 1.0h - step(0.5h, SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, probe).a);
-                color.rgb = lerp(color.rgb, _RimColor.rgb, outside * step(0.5h, color.a) * _RimColor.a);
+                color.rgb *= lerp(1.0, _SkyAmbient.rgb, _SkyAmbient.a);
+                color.rgb = lerp(color.rgb, rimColor.rgb, outside * step(0.5h, color.a) * rimColor.a);
 
                 color.rgb = lerp(color.rgb, _FlashColor.rgb, _Flash);
                 return color;

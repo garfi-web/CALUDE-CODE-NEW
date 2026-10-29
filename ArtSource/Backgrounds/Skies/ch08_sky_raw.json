@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "toxic violet dusk sky, purple and magenta clouds, sickly green tinge, neon glow from a city below lighting the clouds, cloudscape, only sky, no humans, scenery, anime style, highly detailed background art, painterly, dramatic lighting, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, ground, land, mountains, landscape, buildings, trees, horizon line, moon, planet, red moon, blood moon, crimson sky, blood red sky, red clouds",
+  "seed": 7108,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1344,
+    768
+  ],
+  "duration_s": 21.1
+}
