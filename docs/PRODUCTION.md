@@ -8,7 +8,7 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).
-- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant terminé** (concept 14201, fusil à pompe, Nathan M4 et son fusil, corps pulvérisés, 60 FPS mesurés dans un build). **Prototype narratif en cours** : étape 1 validée, étape 2 (état de la partie et sauvegarde) en attente de validation (section « Prototype narratif » à la fin). **Plan des 10 chapitres validé** (`docs/SCENARIO.md`, boss du ch. 1 : le Chœur des rieurs) ; dialogues écrits par l’auteur dans `docs/source/dialogues/` ; étape 2 validée (doses payées par des actes) ; étape 3 commencée (module Mara V4 dans le jeu, Ink 2.0.0) ; **refonte de l’écran visual novel EN COURS** : portraits de Mara M-T0 corrigés (2e série), en attente du choix de l’auteur ; **ciels des 10 chapitres refaits** (lune rouge aux ch. 1 et 10 seulement, `SkyProfile`, F12), en attente de validation ; police prête ; interface pas commencée (dernière entrée du journal) (décisions de l’auteur du 2026-10-28 : seuils de Mara 0 / 1-2 / 3-4 / 5-6 / 7+, fin immorale de la section 11.1 du GDD v0.1) (consigne complète en tête de la section 8 de `docs/REPRISE.md`), étape par étape avec validation de l'auteur (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
+- **PHASE C EN COURS (2026-10-27)** : Flic corrompu terminé (concept 13103, phase D faite, en sprites dans la vague 3). **Dealer lieutenant terminé** (concept 14201, fusil à pompe, Nathan M4 et son fusil, corps pulvérisés, 60 FPS mesurés dans un build). **Prototype narratif en cours** : étape 1 validée, étape 2 (état de la partie et sauvegarde) en attente de validation (section « Prototype narratif » à la fin). **Plan des 10 chapitres validé** (`docs/SCENARIO.md`, boss du ch. 1 : le Chœur des rieurs) ; dialogues écrits par l’auteur dans `docs/source/dialogues/` ; étape 2 validée (doses payées par des actes) ; étape 3 commencée (module Mara V4 dans le jeu, Ink 2.0.0) ; **refonte de l’écran visual novel EN COURS** : portraits de dos de Mara M-T0 en cours (base s8533 retenue par l’auteur, variantes s8551 à s8556 à vérifier), face 8521 proposée ; **ciels des 10 chapitres refaits** (lune rouge aux ch. 1 et 10 seulement, `SkyProfile`, F12), en attente de validation ; police prête ; interface pas commencée (dernière entrée du journal) (décisions de l’auteur du 2026-10-28 : seuils de Mara 0 / 1-2 / 3-4 / 5-6 / 7+, fin immorale de la section 11.1 du GDD v0.1) (consigne complète en tête de la section 8 de `docs/REPRISE.md`), étape par étape avec validation de l'auteur (voir la section « Phase C » à la fin). Tranche verticale terminée et décor validé par l'auteur ; sol redessiné et crochet allongé, vérifiés en Play le 2026-10-27.
 - TRANCHE VERTICALE terminée le 2026-10-27 (voir la section « Tranche verticale » plus bas : cel-shading renforcé, décor de la lune rouge, 60 FPS, captures, mode d'emploi dans le README), avant la phase C : 4 concepts du Voyou classique (l'auteur en choisit un) puis son modèle TripoSG ; Nathan M0 et ce Voyou riggés et animés (idle, course, saut, combo, lourd, lanceur, dash, esquive, coup reçu, mort), rendu toon en spritesheets, intégrés dans Unity ; décor final de l'arène de la lune rouge (parallaxe, sol texturé, éclairage URP 2D, post-traitement, cendres) ; Play, 60 FPS, captures, mode d'emploi. L'auteur valide le style sur cette tranche, puis la phase C reprend avec la même méthode.
 
 **Décisions prises**
@@ -908,3 +908,22 @@ Demande de l'auteur : un vrai visual novel aux couleurs de RED MET (texte comple
   - les couches de paysage de l'arène (ruines, arbres) ont été peintes pour la lune rouge. Sur les ciels clairs, leur haut fondu dessine encore une bande douce : chaque niveau aura ses propres couches de paysage ;
   - les décors ch. 2, 4, 5, 6 et 8 du visual novel montrent peu ou pas de fissures rouges ;
   - le ciel ne suit pas encore le chapitre de la partie (`SkyController.Apply(chapitre)` est prêt ; F12 en test).
+
+### 2026-10-29 — Portraits de dos de Mara M-T0 : base s8533 (EN COURS, sauvegarde de fin de session)
+Retour de l'auteur (texte complet dans `docs/REPRISE.md`, section 8) :
+- rejetées : s8531 (trois bras), s8534 (de face), s8532 (visage presque invisible) ;
+- base retenue : **s8533** ; cheveux à garder noirs avec mèches rouges ;
+- nouvelle règle : vérifier l'anatomie avant de montrer un portrait, relancer les échecs et dire combien ont été écartés.
+
+**Vérification de s8533** (pleine résolution) : deux bras et deux mains (gauche sur la hanche, droite sur la poignée), doigts gantés et repliés. Défauts : cadre rouge rectangulaire autour de l'épée, lame sombre, bas des cheveux rose-rouge.
+
+**Outil** (`tools/gen3d/vn_portraits.py`) :
+- vue `back2` avec un squelette relevé sur s8533 ;
+- cheveux `(black hair:1.3)` et négatif violet, bleu ou rose ;
+- `GUIDES` : second ControlNet (canny) sur la silhouette de s8533, sans la zone de l'épée et du cadre (force 0,5, fin 0,5), car le squelette seul ne tenait pas la vue de dos.
+
+**Essais** :
+- s8541 à s8546, squelette seul : 4 écartées (s8541, s8544 et s8545 de face ; s8543 avec une 2e épée qui flotte). s8542 et s8546 sont de dos mais l'épée est levée ;
+- s8551 à s8556, avec la silhouette : **générés, pas encore vérifiés**.
+
+**Reste à faire** : vérifier s8551 à s8556 et relancer les échecs, montrer 3 variantes avec le nombre d'écartées, attendre le choix de l'auteur ; puis la suite de la refonte du visual novel. Les ciels (entrée précédente) attendent la validation de l'auteur.

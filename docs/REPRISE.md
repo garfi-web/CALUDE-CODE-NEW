@@ -118,13 +118,38 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Ensuite, reprends la PROCHAINE ÉTAPE notée en tête de la section 8 de docs/REPRISE.md (refonte de l'écran visual novel) : relance ComfyUI, montre-moi les portraits de Mara M-T0 déjà générés (Assets/_Game/Art/Characters/Mara/VN/ et les planches de ArtSource/VN/Mara/T0/) et les 10 décors, puis arrête-toi pour que je les valide avant de produire M-T1 à M-T4 et de construire l'interface, en respectant CLAUDE.md.
+> Lis CLAUDE.md, docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET (scène Assets/_Game/Scenes/Arena.unity ouverte) et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Relance ComfyUI, puis reprends la PROCHAINE ÉTAPE en tête de la section 8 de docs/REPRISE.md : vérifie l'anatomie des portraits de dos s8551 à s8556, relance celles qui échouent, montre-moi 3 variantes de dos à partir de la pose de s8533 avec le nombre d'images écartées, et attends mon choix, en respectant CLAUDE.md.
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
 ## 8. Programme à venir (dans l'ordre)
 
-### PROCHAINE ÉTAPE : refonte de l'écran visual novel (demandée le 2026-10-28)
+### PROCHAINE ÉTAPE (sauvegarde du 2026-10-29) : tâches en attente, dans l'ordre
+
+1. **Portraits de dos de Mara M-T0** (retour de l'auteur du 2026-10-29, texte complet ci-dessous) :
+   - rejetées : s8531 (trois bras), s8534 (de face) ; s8532 rejetée aussi, car le visage ne se voit presque pas ;
+   - base retenue par l'auteur : **s8533**. Vérifiée en pleine résolution : deux bras et deux mains (gauche sur la hanche, droite sur la poignée), doigts gantés et repliés, donc non comptables. Défauts : cadre rouge rectangulaire autour de l'épée, lame sombre au lieu de la lame d'énergie rouge, bas des cheveux rose-rouge sous le contre-jour ;
+   - `vn_portraits.py`, vue `back2` : squelette relevé sur s8533 (`SKELETONS["back2"]`), cheveux noirs pondérés et négatif violet, bleu ou rose, plus un guidage canny par la silhouette de s8533 sans la zone de l'épée (`GUIDES["back2"]`, force 0,5, fin 0,5) ;
+   - 1er essai sans guidage (s8541 à s8546) : 4 écartées (s8541, s8544 et s8545 de face ; s8543 avec une 2e épée qui flotte). s8542 et s8546 sont de dos mais l'épée est levée, loin de la pose de s8533 ; anatomie non vérifiée en détail ;
+   - 2e essai avec guidage (**s8551 à s8556**) : généré, **PAS ENCORE VÉRIFIÉ**. À faire : contrôler chaque image en pleine résolution (2 bras, 2 mains, 5 doigts, aucun membre en trop ou fusionné, aucun objet qui traverse le corps, vraie vue de dos tête tournée, cheveux noirs à mèches rouges), relancer avec d'autres graines celles qui échouent, montrer **3 variantes** avec le nombre d'images écartées, puis attendre le choix de l'auteur ;
+   - ensuite : détourer (`vn_cutout.py`) la face choisie (8521 proposée) et le dos choisi, refaire le médaillon.
+2. **Suite de la refonte de l'écran visual novel** (demande du 2026-10-28, texte complet plus bas) : portraits M-T1 à M-T4 avec la même méthode et la même vérification d'anatomie, interface, décors branchés par scène, test, captures, 60 FPS, commit et push, puis attente de la validation.
+3. **Refonte des ciels des 10 niveaux** (lune rouge aux ch. 1 et 10 seulement, un ciel propre à chaque chapitre de 2 à 9) : **faite le 2026-10-29** (commit `7a53375`) et **en attente de la validation de l'auteur**. Planches : `docs/captures/2026-10-29_*`. Retouches possibles : fissures rouges sur les décors du visual novel des ch. 2, 4, 5, 6 et 8 ; bande douce en haut des couches de paysage de l'arène ; ciel qui suit le chapitre de la partie.
+
+**Règle de l'auteur (2026-10-29)** : avant de montrer un portrait, vérifier soi-même l'anatomie (2 bras, 2 mains, 5 doigts par main, aucun membre en trop ou fusionné, aucun objet qui traverse le corps), relancer avec une autre graine toute image qui échoue, et dire combien ont été écartées.
+
+**Requête de l'auteur sur les portraits de dos (2026-10-29, texte complet)** :
+> Retour sur la planche des portraits de dos (planche_dos_v2.png) :
+> - Image 1 (s8531) : Mara a TROIS bras (un bras ganté rouge sur la poitrine, un sur la hanche, un qui tient l'épée). À rejeter.
+> - Image 4 (s8534) : elle est de face, pas de dos. À rejeter pour la scène de fin.
+> - Image 2 (s8532) : on ne voit presque pas son visage, alors que la scène demande qu'elle regarde Nathan par-dessus l'épaule.
+> - Image 3 (s8533) : c'est la meilleure base (de dos, tête tournée, sourire moqueur, corset lacé, épée). Vérifie qu'elle a bien deux bras et deux mains complètes.
+> Les cheveux tirent parfois sur le violet (images 1 et 4) : garde le noir avec les mèches rouges du concept validé.
+>
+> À partir de maintenant, avant de me montrer un portrait, vérifie toi-même l'anatomie : 2 bras, 2 mains, 5 doigts par main, aucun membre en trop ou fusionné, aucun objet qui traverse le corps. Relance avec une autre seed toute image qui échoue, et indique-moi combien ont été écartées.
+> Propose-moi 3 nouvelles variantes de dos à partir de la pose de la 3 (s8533), puis attends mon choix.
+
+### Refonte de l'écran visual novel (demandée le 2026-10-28)
 
 **Ordre de travail** : 1) l'auteur valide les portraits de Mara M-T0 ; 2) portraits M-T1 à M-T4, même méthode ; 3) interface ; 4) décors branchés par scène ; 5) test, captures, 60 FPS, commit et push, puis attente de la validation.
 

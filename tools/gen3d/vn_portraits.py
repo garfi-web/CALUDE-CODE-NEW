@@ -29,8 +29,9 @@ SIZE = (832, 1216)
 CONTROLNET = "controlnet-union-sdxl-1.0-promax.safetensors"
 
 # Mara commune à toutes les tenues (docs/CHARACTERS.md), reprise du prompt du concept validé.
+# Cheveux noirs pondérés : la 2e série tirait parfois sur le violet (retour de l'auteur, 2026-10-29).
 MARA = ("1girl, solo, adult, mature female, 28 years old, mature face, tall, voluptuous, large breasts, narrow waist, "
-        "wide hips, very long hair, black hair, red streaks, streaked hair, multicolored hair, blunt bangs, red eyes")
+        "wide hips, very long hair, (black hair:1.3), red streaks, streaked hair, multicolored hair, blunt bangs, red eyes")
 
 # Tenues (docs/CHARACTERS.md, « Progression des tenues ») : seule M-T0 est produite avant validation.
 OUTFITS = {
@@ -50,6 +51,12 @@ POSES = {
             "(very long hair:1.3), (hair reaching hips:1.2), straight hair down back, "
             "hand on own hip, (hand gripping sword hilt:1.2), holding sword, glowing red energy sword, "
             "red flaming blade, black hilt, sword pointing down",
+    # Pose de la s8533, choisie par l'auteur comme base (2026-10-29) : de dos, tête tournée par-dessus l'épaule
+    # droite, sourire moqueur de profil, main gauche sur la hanche, épée tenue le long du corps à droite.
+    "back2": "cowboy shot, standing, from behind, back view, (looking back over shoulder:1.3), head turned, "
+             "face in profile, (very long hair:1.3), (hair reaching hips:1.2), straight hair down back, "
+             "left hand on own hip, right arm down, (hand gripping sword hilt:1.2), holding sword at side, "
+             "(glowing red energy sword:1.2), red flaming blade, black hilt, sword pointing down",
 }
 
 EXPRESSIONS = {
@@ -65,8 +72,9 @@ STYLE = ("anime coloring, cel shading, clean lineart, detailed face, dark fantas
 NEGATIVE = ("nsfw, nude, nipples, explicit, cleavage cutout, child, loli, young, petite, flat chest, aged down, "
             "baby face, male, t-pose, spread arms, arms outstretched, full body, feet, multiple views, logo, text, "
             "letters, watermark, signature, white hair, white streak, silver hair, grey hair, floating sword, "
-            "floating weapon, gold hilt, golden hilt, short hair, medium hair, bob cut, lowres, bad anatomy, bad hands, extra fingers, missing fingers, "
-            "extra limbs, extra arms, extra swords, cropped head, out of frame, chibi, big head, worst quality, "
+            "floating weapon, gold hilt, golden hilt, short hair, medium hair, bob cut, purple hair, blue hair, "
+            "pink hair, third arm, glowing frame, rectangle, from front, lowres, bad anatomy, bad hands, "
+            "extra fingers, missing fingers, extra limbs, extra arms, extra swords, cropped head, out of frame, chibi, big head, worst quality, "
             "low quality, low score, bad score, average score, blurry, white background, grey background, "
             "busy background, scenery")
 
@@ -91,7 +99,24 @@ SKELETONS = {
         (350, 770), (338, 1130), None,
         None, (372, 158), (466, 166), None,   # œil gauche visible, oreille droite visible
     ],
+    # Relevé sur Mara_T0_back_moqueuse_s8533.png.
+    "back2": [
+        (518, 168),  # nez : tête tournée par-dessus l'épaule droite (côté droit de l'image, de dos)
+        (420, 292),
+        (600, 332), (650, 520), (690, 600),   # bras droit le long du corps, main sur la poignée
+        (245, 332), (170, 520), (290, 670),   # bras gauche, main sur la hanche
+        (540, 750), (545, 1150), None,
+        (310, 750), (320, 1150), None,
+        (496, 140), None, None, (300, 146),   # œil droit visible, oreille gauche visible
+    ],
 }
+# Silhouette guide (ControlNet canny, en plus du squelette) : la pose seule ne tenait pas la vue de dos (4 sur 6 de
+# face ou avec une épée en trop, 2026-10-29). Image source, zones effacées (épée et cadre rouge de la s8533) en
+# fractions (x0, y0, x1, y1), force et fin du guidage.
+GUIDES = {
+    "back2": ("Mara_T0_back_moqueuse_s8533.png", [(0.76, 0.42, 1.0, 1.0)], 0.5, 0.5),
+}
+
 LIMBS = [(1, 2), (1, 5), (2, 3), (3, 4), (5, 6), (6, 7), (1, 8), (8, 9), (9, 10), (1, 11), (11, 12), (12, 13),
          (1, 0), (0, 14), (14, 16), (0, 15), (15, 17)]
 COLORS = [(255, 0, 0), (255, 85, 0), (255, 170, 0), (255, 255, 0), (170, 255, 0), (85, 255, 0), (0, 255, 0),
@@ -118,9 +143,31 @@ def draw_openpose(points, path):
     return path
 
 
-def workflow(cfg, prompt, negative, seed, pose_image, strength=0.9, end=0.8):
+def draw_edges(source, erase, path):
+    """Contours (Sobel) d'un portrait, sans les zones effacées, au format attendu par le ControlNet canny."""
+    import numpy as np
+    from PIL import ImageFilter
+
+    gray = Image.open(source).convert("L").resize(SIZE, Image.LANCZOS).filter(ImageFilter.GaussianBlur(1.2))
+    g = np.asarray(gray).astype(np.float32) / 255.0
+    gx = np.zeros_like(g)
+    gy = np.zeros_like(g)
+    gx[:, 1:-1] = g[:, 2:] - g[:, :-2]
+    gy[1:-1, :] = g[2:, :] - g[:-2, :]
+    magnitude = np.hypot(gx, gy)
+    lines = (magnitude > np.percentile(magnitude, 90)).astype(np.uint8) * 255
+    h, w = lines.shape
+
+    for x0, y0, x1, y1 in erase:
+        lines[int(y0 * h):int(y1 * h), int(x0 * w):int(x1 * w)] = 0
+
+    Image.fromarray(lines).convert("RGB").save(path)
+    return path
+
+
+def workflow(cfg, prompt, negative, seed, pose_image, strength=0.9, end=0.8, guide=None):
     width, height = SIZE
-    return {
+    graph = {
         "1": {"class_type": "CheckpointLoaderSimple", "inputs": {"ckpt_name": cfg["checkpoint"]}},
         "2": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["1", 1], "text": prompt}},
         "3": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["1", 1], "text": negative}},
@@ -140,8 +187,21 @@ def workflow(cfg, prompt, negative, seed, pose_image, strength=0.9, end=0.8):
         "7": {"class_type": "SaveImage", "inputs": {"images": ["6", 0], "filename_prefix": "redmet_vn"}},
     }
 
+    if guide is not None:
+        # Second guidage en chaîne : contours de la silhouette, après le squelette.
+        image, guide_strength, guide_end = guide
+        graph["14"] = {"class_type": "SetUnionControlNetType", "inputs": {"control_net": ["10", 0], "type": "canny/lineart/anime_lineart/mlsd"}}
+        graph["15"] = {"class_type": "LoadImage", "inputs": {"image": image}}
+        graph["16"] = {"class_type": "ControlNetApplyAdvanced", "inputs": {
+            "positive": ["13", 0], "negative": ["13", 1], "control_net": ["14", 0], "image": ["15", 0],
+            "strength": guide_strength, "start_percent": 0.0, "end_percent": guide_end, "vae": ["1", 2]}}
+        graph["5"]["inputs"]["positive"] = ["16", 0]
+        graph["5"]["inputs"]["negative"] = ["16", 1]
 
-def run(cfg, prompt, seed, pose_path, out_path):
+    return graph
+
+
+def run(cfg, prompt, seed, pose_path, out_path, guide=None):
     """Envoie le graphe et copie l'image (même attente que concept.generate)."""
     import shutil
     import time
@@ -151,7 +211,13 @@ def run(cfg, prompt, seed, pose_path, out_path):
 
     base = cfg["url"].rstrip("/")
     pose_name = concept.upload_image(base, pose_path)
-    graph = workflow(cfg, prompt, NEGATIVE, seed, pose_name)
+    guide_spec = None
+
+    if guide is not None:
+        edges_path, guide_strength, guide_end = guide
+        guide_spec = (concept.upload_image(base, edges_path), guide_strength, guide_end)
+
+    graph = workflow(cfg, prompt, NEGATIVE, seed, pose_name, guide=guide_spec)
     prompt_id = json.loads(concept._request(f"{base}/prompt", {"prompt": graph, "client_id": str(uuid.uuid4())}))["prompt_id"]
     start = time.time()
 
@@ -173,7 +239,12 @@ def run(cfg, prompt, seed, pose_path, out_path):
     with urllib.request.urlopen(f"{base}/view?{query}", timeout=60) as resp, open(out_path, "wb") as f:
         shutil.copyfileobj(resp, f)
 
-    info = {"tool": "ComfyUI", "checkpoint": cfg["checkpoint"], "controlnet": CONTROLNET + " (openpose, 0.9, fin 0.8)",
+    controlnet = CONTROLNET + " (openpose, 0.9, fin 0.8)"
+
+    if guide is not None:
+        controlnet += f" + canny ({Path(guide[0]).name}, {guide[1]}, fin {guide[2]})"
+
+    info = {"tool": "ComfyUI", "checkpoint": cfg["checkpoint"], "controlnet": controlnet,
             "pose": Path(pose_path).name, "prompt": prompt, "negative": NEGATIVE, "seed": seed,
             "steps": cfg.get("steps", 28), "cfg": cfg.get("cfg", 5.0), "size": SIZE, "duration_s": round(time.time() - start, 1)}
     Path(out_path).with_suffix(".json").write_text(json.dumps(info, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -205,7 +276,13 @@ def main():
         for view, expr in jobs:
             prompt = ", ".join([MARA, OUTFITS[args.stage], POSES[view], EXPRESSIONS[expr], STYLE]) + cfg.get("prompt_suffix", "")
             target = out / f"Mara_{args.stage}_{view}_{expr}_s{seed}.png"
-            info = run(cfg, prompt, seed, out / f"pose_{view}.png", target)
+            guide = None
+
+            if view in GUIDES:
+                source, erase, guide_strength, guide_end = GUIDES[view]
+                guide = (draw_edges(out / source, erase, out / f"guide_{view}.png"), guide_strength, guide_end)
+
+            info = run(cfg, prompt, seed, out / f"pose_{view}.png", target, guide)
             print(f"{target.name} ({info['duration_s']} s)", flush=True)
 
 
