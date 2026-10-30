@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : le poing fermé de Nathan M0 (main en poing dédiée ou ressource CC0, licence montrée avant téléchargement), montré seul de face, de 3/4 et de profil à côté d'une référence ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
+> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : comparer 3 méthodes de poing (A main CC0 Human Base Meshes, B poing stylisé anime, C poing 2D illustré), un exemple de chacune (face, 3/4, profil) à côté d'une photo de référence, et corriger la posture de repos ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
@@ -132,7 +132,30 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 - **Nathan M4 refait** (beaucoup plus massif et bestial, torse et dos nus, peau de pierre fissurée, veines rouges, voir `docs/CHARACTERS.md`) : 4 concepts Animagine, anatomie vérifiée, de face et de dos, **attendre le choix de l'auteur** avant le modèle 3D ; ensuite même méthode de qualité, en 3/4.
 - **Ordre** : 1) qualité Nathan M0 + Voyou et défauts, concepts de M4 → validation ; 2) unifier le code du combat de Nathan, convertir l'Acte I en 2,5D ; 3) reprendre les tâches en pause (portraits de dos de Mara, visual novel, ciels).
 
-### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30, retour de l'auteur sur l'étape 2) : POING FERMÉ, AVANT L'ÉTAPE 3 (TÊTE)
+### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30, 3e retour sur les mains) : 3 MÉTHODES DE POING À COMPARER, PUIS CHOIX DE L'AUTEUR
+
+**Retour de l'auteur** sur `docs/captures/2026-10-30_nathan_m0_v3_vetements_v2.png` : les poings sont fermés et compacts mais pas naturels :
+- effet « gants de boxe » (blocs ronds trop gros au bout des manches) ;
+- doigts en saucisses (4 boudins identiques, sans phalanges ni articulations) ;
+- pouce peu lisible ;
+- orientation fausse (face avant vers le spectateur au lieu de l'axe de l'avant-bras) ;
+- poignet absent (la main ne s'affine pas, raccord brutal) ;
+- bras raides et écartés comme un mannequin.
+
+**À garder** : ventre, manches, baskets (« vont dans le bon sens »).
+
+**Demande** (3e essai sur les mains) : avant de retoucher quoi que ce soit, proposer 2 ou 3 méthodes avec qualité attendue, temps et risques :
+- A) main CC0 de qualité (Human Base Meshes) avec vraie topologie de doigts, posée en poing d'après des photos ;
+- B) poings stylisés anime façon Dragon Ball FighterZ (phalanges en traits nets, articulations saillantes, pouce dessiné en travers, proportions un peu exagérées mais lisibles) ;
+- C) poings 2D illustrés posés sur les sprites, comme prévu pour les têtes.
+
+Pour chacune : un exemple rapide d'un seul poing (face, 3/4, profil) à côté d'une photo de référence d'un vrai poing, ouvert à l'écran ; **attendre le choix de l'auteur**.
+
+**Posture du repos à corriger aussi** : bras plus près du corps, épaules un peu rentrées, mains à moitié fermées (pas en poings) ; poings serrés seulement en garde et pendant les coups.
+
+Historique :
+
+### ÉTAPE PRÉCÉDENTE (2026-10-30, retour de l'auteur sur l'étape 2) : POING FERMÉ, AVANT L'ÉTAPE 3 (TÊTE)
 
 **Refus de l'auteur (deuxième refus sur les mains)**, sur la planche `docs/captures/2026-10-30_nathan_m0_v3_vetements.png` :
 
