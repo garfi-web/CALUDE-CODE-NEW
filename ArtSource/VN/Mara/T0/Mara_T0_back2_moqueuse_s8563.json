@@ -1,0 +1,16 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "controlnet": "controlnet-union-sdxl-1.0-promax.safetensors (openpose, 0.9, fin 0.8) + canny (guide_back2.png, 0.5, fin 0.5)",
+  "pose": "pose_back2.png",
+  "prompt": "1girl, solo, adult, mature female, 28 years old, mature face, tall, voluptuous, large breasts, narrow waist, wide hips, very long hair, (black hair:1.3), red streaks, streaked hair, multicolored hair, blunt bangs, red eyes, black bodysuit, latex bodysuit, shiny clothes, high collar, turtleneck, (red straps:1.3), (red crossed straps over chest:1.2), red leather harness, corset, buckles, long skirt, side slit, thigh boots, fully covered, cowboy shot, standing, from behind, back view, (looking back over shoulder:1.3), head turned, face in profile, (very long hair:1.3), (hair reaching hips:1.2), straight hair down back, left hand on own hip, right arm down, (hand gripping sword hilt:1.2), holding sword at side, (glowing red energy sword:1.2), red flaming blade, black hilt, sword pointing down, smirk, smug, teasing, one eyebrow raised, half-closed eyes, anime coloring, cel shading, clean lineart, detailed face, dark fantasy, dramatic rim light, simple background, black background, safe, masterpiece, high score, great score, absurdres",
+  "negative": "nsfw, nude, nipples, explicit, cleavage cutout, child, loli, young, petite, flat chest, aged down, baby face, male, t-pose, spread arms, arms outstretched, full body, feet, multiple views, logo, text, letters, watermark, signature, white hair, white streak, silver hair, grey hair, floating sword, floating weapon, gold hilt, golden hilt, short hair, medium hair, bob cut, purple hair, blue hair, pink hair, third arm, glowing frame, rectangle, from front, lowres, bad anatomy, bad hands, extra fingers, missing fingers, extra limbs, extra arms, extra swords, cropped head, out of frame, chibi, big head, worst quality, low quality, low score, bad score, average score, blurry, white background, grey background, busy background, scenery",
+  "seed": 8563,
+  "steps": 28,
+  "cfg": 5.0,
+  "size": [
+    832,
+    1216
+  ],
+  "duration_s": 37.2
+}

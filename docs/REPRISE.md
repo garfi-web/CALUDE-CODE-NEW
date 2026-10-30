@@ -124,6 +124,21 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 
 ## 8. Programme à venir (dans l'ordre)
 
+### PRIORITÉ ACTUELLE (2026-10-30) : étude et prototype beat'em up 2,5D
+
+Demande de l'auteur du 2026-10-30 : étude et prototype 2,5D (nouvelle scène `Assets/_Game/Scenes/Arena25D.unity`, composants nouveaux, rien de l'existant cassé), puis `docs/ETUDE_25D.md`, commit et push, et **attente de la décision de l'auteur** avant toute autre conversion. Une fois cette étude validée ou tranchée par l'auteur, reprendre les tâches en pause ci-dessous, dans l'ordre et là où elles ont été laissées.
+
+### TÂCHES EN PAUSE (mises en pause le 2026-10-30, à reprendre dans cet ordre)
+
+1. **Portraits de dos de Mara M-T0** : rejeter s8531 (trois bras) et s8534 (de face), proposer 3 variantes à partir de la pose de s8533 avec vérification de l'anatomie, puis attendre le choix de l'auteur. Laissé ici :
+   - **s8551 à s8556 vérifiées le 2026-10-30 : les 6 écartées.** Toutes ont 2 bras, mais aucune n'a les cheveux noirs à mèches rouges : s8551 et s8555 ont les cheveux gris, s8556 bruns, et s8553 et s8554 sont noires en haut mais blanc-lavande sur toute la moitié basse. s8552 a aussi la main droite fondue dans la flamme de l'épée. Chez s8553, la lame est tenue par le tranchant, sans poignée, et la main sur la hanche n'a pas de doigts visibles. Chez s8554, la main droite et la poignée ne forment qu'un bloc rouge illisible ;
+   - **s8561 à s8566 générées le 2026-10-30 (mêmes réglages, graines nouvelles), PAS ENCORE VÉRIFIÉES** : les vérifier en premier ;
+   - piste si les cheveux restent clairs : le bas des cheveux est éclairci par le contre-jour (`dramatic rim light` dans `STYLE`) et par le guidage canny de s8533, dont le bas des cheveux est déjà rose-rouge. Essayer de retirer le liseré pour la vue `back2` et d'effacer aussi la zone basse des cheveux dans `GUIDES["back2"]` ;
+   - nombre d'images écartées à annoncer à l'auteur : 6 (s8551 à s8556), plus celles de s8561 à s8566 qui échoueront ;
+   - ensuite : détourer la face (8521 proposée) et le dos choisis, puis refaire le médaillon.
+2. **Suite de la refonte de l'écran visual novel** : portraits M-T1 à M-T4 (même méthode, même vérification), interface, décors branchés par scène, test, captures, 60 FPS, commit et push, puis validation de l'auteur (détail plus bas).
+3. **Refonte des ciels des 10 niveaux** (lune rouge aux ch. 1 et 10 seulement) : faite (commit `7a53375`), **en attente de la validation de l'auteur** (détail au point 3 ci-dessous).
+
 ### PROCHAINE ÉTAPE (sauvegarde du 2026-10-29) : tâches en attente, dans l'ordre
 
 1. **Portraits de dos de Mara M-T0** (retour de l'auteur du 2026-10-29, texte complet ci-dessous) :
