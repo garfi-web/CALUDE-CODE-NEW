@@ -7,6 +7,10 @@ Jeu d'action 2D latéral (Unity 6, URP 2D, C#), dark fantasy et horreur psycholo
 - Avancer par petits paliers (essai minimal → essai en jeu sur une seule image → variantes → animation complète → autres personnages) ; à chaque palier : montrer le résultat, dire le temps et l'effort du palier suivant, et attendre un « OK » explicite.
 - Deux refus de suite sur une même méthode : arrêter et proposer une autre méthode (par exemple confier le travail à un illustrateur) au lieu d'insister.
 
+## Montrer un visuel à l'auteur (règle de l'auteur, 2026-10-30)
+- Le terminal n'affiche pas les images. Tout visuel montré à l'auteur est enregistré dans `docs/captures/` avec un nom clair (date + sujet, par exemple `2026-10-30_tete_nathan_essai1.png`), jamais dans un dossier temporaire.
+- L'ouvrir à l'écran avec PowerShell : `Start-Process "<chemin complet>"` (visionneuse de Windows), et donner aussi le chemin complet dans la réponse.
+
 ## Code
 - Tout le jeu vit dans `Assets/_Game/`. Les scripts sont dans `Scripts/<Domaine>/`, les outils d'éditeur dans `Editor/`.
 - Le gameplay ne dépend jamais des animations : l'Animator est piloté par `CharacterAnimator` via des événements (`AttackStarted`, `DodgeStarted`, `Health.Damaged`, `Health.Died`).
