@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : Nathan M0 complet (corps 3D, tête A, mains 2D de la planche de l'auteur), planche docs/captures/2026-10-30_nathan_m0_v3_complet.png ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
+> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : assemblage corrigé de Nathan M0 (cou, tête A redressée, bras jusqu'aux poings), planche docs/captures/2026-10-30_nathan_m0_v3_assemblage.png ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
@@ -132,7 +132,20 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 - **Nathan M4 refait** (beaucoup plus massif et bestial, torse et dos nus, peau de pierre fissurée, veines rouges, voir `docs/CHARACTERS.md`) : 4 concepts Animagine, anatomie vérifiée, de face et de dos, **attendre le choix de l'auteur** avant le modèle 3D ; ensuite même méthode de qualité, en 3/4.
 - **Ordre** : 1) qualité Nathan M0 + Voyou et défauts, concepts de M4 → validation ; 2) unifier le code du combat de Nathan, convertir l'Acte I en 2,5D ; 3) reprendre les tâches en pause (portraits de dos de Mara, visual novel, ciels).
 
-### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30) : NATHAN M0 COMPLET (CORPS 3D + TÊTE A + MAINS 2D) MONTRÉ, EN ATTENTE DU OK
+### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30) : ASSEMBLAGE DE NATHAN M0 CORRIGÉ, MONTRÉ, EN ATTENTE DU OK (avant expressions et animations)
+
+**Retour de l'auteur** : mains dessinées gardées ; assemblage refusé (tête sans cou, poings non reliés). Demandes : vrai cou 3D (même peau, ombre sous le menton), calques arrière capuche → cou et tête → avant capuche et col, pivot de la tête à la base du cou, tête A régénérée regard horizontal sans bord coupé ; avant-bras et manches 3D jusqu'au poignet dans toutes les poses, main 2D au bout du poignet dans l'axe, revers par-dessus, ombre au raccord, plus de bout de poignet 3D ; Nathan à 35 % de l'écran, mains de 70 à 80 px.
+
+**Fait** :
+- Tête : `tools/gen3d/head_level.py` (original s9104 tourné de -20°, inpainting des cheveux coupés et du cou nu, graine retenue 9163_2 ; détourage → `Nathan_M0/Heads/Nathan_M0_head_A_level.png` + `.json` avec la base du cou).
+- Corps : `redmet_compose_v3.py` rend deux couches par pose (« dessous » complet ; « dessus » percé par des volumes holdout tête/cou/mains) ; cou 3D gardé, peau `SKIN` recalée sur la tête A ; moitié basse de l'avant-bras 3D masquée ; manches allongées jusqu'au poignet (`redmet_clothes_v3.py`).
+- Montage : `tools/gen3d/compose_still.py` (dessous → ombre du menton → tête au pivot du cou → fond de manche, mains 2D avec ombre au poignet → dessus).
+- Planche : `docs/captures/2026-10-30_nathan_m0_v3_assemblage.png` ; captures en jeu `docs/captures/2026-10-30_nathan_m0_v3_jeu_<pose>.png`.
+- **Taille** : mesurée à 36 % de l'écran (~390 px, caméra 2,43 déjà réglée) ; poing ~33 px. 70-80 px demanderait Nathan à ~75 % : **question posée à l'auteur**, caméra non modifiée.
+
+Historique :
+
+### ÉTAPE PRÉCÉDENTE (2026-10-30) : NATHAN M0 COMPLET (CORPS 3D + TÊTE A + MAINS 2D) MONTRÉ, EN ATTENTE DU OK
 
 **Demande de l'auteur** : mains illustrées 2D tirées de sa planche générée par IA pour RED MET (`docs/references/planche_mains_redmet/planche_mains_redmet.png`, usage autorisé, `docs/LICENCES_TIERS.md`), rangée « DESSIN 2D » ; adaptées par personnage (M0 potelé, M2 plus gros et veiné, M4 pierre grise fissurée et veines rouges) ; poing de profil pour les coups tendus, poing de dos pour la garde, main ouverte pour la douleur et les projections, retournement pour l'autre côté ; au repos, mains de Nathan M0 dans la poche kangourou ; montrer Nathan M0 complet avec la tête A (repos, garde, coup tendu) en 3/4 et en jeu à côté d'un Voyou, attendre le OK.
 

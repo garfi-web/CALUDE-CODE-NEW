@@ -223,7 +223,7 @@ def make_hoodie(character):
     for s in "lr":
         a, b = bone_line(rig, f"lowerarm_{s}")
         d = (b - a).normalized()
-        wrists.append((b - d * 0.015, d, b))
+        wrists.append((b + d * 0.01, d, b))   # revers jusqu'au poignet : pas de peau entre la manche et la main 2D
 
     cut(bm, inv @ Vector((cx, 0, HOODIE_HEM)), Vector((0, 0, 1)))
     cut(bm, inv @ Vector((cx, 0, NECK_LINE)), Vector((0, 0, 1)))
@@ -642,7 +642,8 @@ def dress(character):
 
 # ------------------------------------------------------------------ Image fixe pour l'auteur
 
-SKIN = (0.93, 0.72, 0.6)
+# Peau réglée sur celle de la tête A (médiane mesurée sur le dessin, ramenée au ton éclairé de la rampe).
+SKIN = (0.908, 0.62, 0.384)
 
 
 def skin(character):
