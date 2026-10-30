@@ -143,6 +143,8 @@ Précisions du même retour : « Le gros plan ne montre pas un poing : les doigt
 - Taille de main cohérente avec un adulte enrobé (un peu plus grosse qu'aujourd'hui, style anime).
 - **Palier 1** : le poing seul en gros plan, de face, de 3/4 et de profil, **à côté d'une photo ou d'un dessin de référence de poing fermé**, ouvert à l'écran (`Start-Process`) ; attendre le OK.
 
+**Palier 1 fait (2026-10-30), en attente du OK** : poing modélisé à part, sans téléchargement (`tools/blender/redmet_fist_v3.py`, `build_fist()` : paume, 4 doigts repliés à plat, articulations alignées, pouce en travers devant l'index et le majeur, poignet dans l'axe ; pièces fondues par remaillage en voxels, environ 9 000 faces ; `render_views()` pour les 3 vues). Objet `RM_Poing_v3` (collection `RM_Poing_v3`, x = 60) dans `REDMET_personnages.blend`. Planche : `docs/captures/2026-10-30_poing_v3_palier1.png` (photo de référence « Clenched fist », Genusfotografen / Wikimedia Sverige, CC BY-SA 4.0, comparaison seulement). Palier suivant après le OK : poser le poing sur Nathan (main MPFB masquée, poing attaché à l'os de la main, raccord au poignet sous la manche), main gauche en miroir.
+
 **Ensuite, autres écarts avec le concept R0 à corriger** (même planche) :
 - Ventre : le ventre rond pousse le sweat et tombe un peu sur la ceinture, comme sur le concept (aujourd'hui le sweat descend droit).
 - Manches : plus d'effet de boudins segmentés (« Bibendum ») ; manches amples mais lisses, avec quelques plis.
