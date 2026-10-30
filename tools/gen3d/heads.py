@@ -42,7 +42,7 @@ STYLE = ("anime coloring, cel shading, clean lineart, detailed face, detailed ha
          "plain grey background, masterpiece, high score, great score, absurdres")
 VIEW = ("portrait, head only, (whole head in frame:1.1), close-up, (three-quarter view:1.3), face toward viewer, looking to the side, "
         "slightly from above, neck")
-NEGATIVE = ("from behind, back of head, bald, receding hairline, shaved head, face hidden, face covered, body, shoulders, chest, hands, arms, multiple views, extra eyes, asymmetrical eyes, deformed face, "
+NEGATIVE = ("collar, hoodie, shirt, clothes, looking down, head tilt, from behind, back of head, bald, receding hairline, shaved head, face hidden, face covered, body, shoulders, chest, hands, arms, multiple views, extra eyes, asymmetrical eyes, deformed face, "
             "bad anatomy, cropped head, out of frame, text, logo, watermark, signature, female, child, chibi, "
             "lowres, blurry, worst quality, low quality, low score, bad score, average score, nsfw")
 
@@ -51,7 +51,12 @@ CHARACTERS = {
     "Nathan_M0": (
         "1boy, solo, male focus, young adult man, 19 years old, chubby face, round cheeks, double chin, curly brown "
         "hair, messy hair, (thick curly brown hair on top of head:1.3), bangs, (thick black rectangular glasses:1.3), bifocal glasses, (acne:1.2), pimples on cheeks, "
-        "light stubble, brown eyes, pale skin, black hoodie collar",
+        "light stubble, brown eyes, pale skin, "
+        # Corrections de l'auteur sur la proposition B (2026-10-30) : tête redressée, sans col, joues plus rondes,
+        # acné bien visible (comme la A), tête entière dans le cadre.
+        # Poids adoucis : à 1,3 les visages tournaient à la caricature en boule (lot 9141 à 9148).
+        "(chubby round cheeks:1.12), (double chin:1.05), (visible acne on cheeks:1.2), adult face, "
+        "looking ahead, (chin visible:1.2), bare neck, no collar",
         # 9101 écartée (3 têtes sur 5 presque chauves, le crâne lisse de la tête 3D) : 9102.
         [("", 9102)], (51, 5, 8), (237, 194, 168)),
     "Voyou": (
@@ -77,7 +82,7 @@ def guide(character):
     return path
 
 
-def graph(cfg, prompt, negative, seed, image_name, strength=0.75, end=0.8):
+def graph(cfg, prompt, negative, seed, image_name, strength=0.6, end=0.7):
     return {
         "1": {"class_type": "CheckpointLoaderSimple", "inputs": {"ckpt_name": cfg["checkpoint"]}},
         "2": {"class_type": "CLIPTextEncode", "inputs": {"clip": ["1", 1], "text": prompt}},
@@ -123,7 +128,7 @@ def generate(names, seeds_override=None):
 
                 prompt = ", ".join(p for p in (description, variant, words, VIEW, STYLE) if p)
                 duration = background.run_workflow(cfg, graph(cfg, prompt, NEGATIVE, seed, uploaded), path)
-                info = {"tool": "ComfyUI", "checkpoint": cfg["checkpoint"], "controlnet": "union promax, normal, 0.75, fin 0.8",
+                info = {"tool": "ComfyUI", "checkpoint": cfg["checkpoint"], "controlnet": "union promax, normal, 0.6, fin 0.7",
                         "guide": f"{character}_head_guide.png", "prompt": prompt, "negative": NEGATIVE, "seed": seed,
                         "duration_s": duration}
                 path.with_suffix(".json").write_text(json.dumps(info, indent=2, ensure_ascii=False), encoding="utf-8")
