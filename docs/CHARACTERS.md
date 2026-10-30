@@ -37,7 +37,7 @@ Concepts : `Assets/_Game/Art/Characters/Nathan_R0/` … `Nathan_R4/`, dans `Conc
 | **M1 — L'éveil** | 1–2 | Musclé, posture droite | Barbe naissante, cheveux qui poussent, couteau | — |
 | **M2 — Le barbare** | 3–4 | **Colosse**, épaules massives | Longue chevelure brun-roux, barbe épaisse, fourrures, cicatrices | `nathan-redmet-barbare.webp`, `nathan-redmet-guerrier.webp` |
 | **M3 — Le seigneur de guerre** | 5–6 | Armure de plaques sombres | Peinture de guerre bleue, yeux rouges, armes lourdes | `nathan-redmet-guerrier.webp` |
-| **M4 — Le prédateur** | 7 et plus | Peau grise, comme de la **pierre fissurée** | **Veines rouges incandescentes** (la Red Met visible sous la peau), yeux rouges luminescents | `nathan-redmet-final-double.webp` |
+| **M4 — Le prédateur** | 7 et plus | **Beaucoup plus large et lourd que M2** (refonte de l'auteur, 2026-10-30) : épaules et trapèzes énormes, cou épais, dos large en V, bras et avant-bras surdimensionnés, mains énormes, posture voûtée et prédatrice, tête légèrement enfoncée dans les épaules. **Torse, dos, épaules et bras nus** (plus de peau de bête), muscles très dessinés, veines saillantes | Peau grise de **pierre fissurée**, **veines rouges incandescentes** qui suivent les muscles (la Red Met visible sous la peau), yeux rouges luminescents, cheveux et barbe sauvages. Seulement le strict nécessaire : ceinture, sangles, brassards, pantalon déchiré. **Air de famille avec Nathan** (forme du visage, regard). Mouvement : démarche lourde qui fait trembler le sol, respiration visible, coups plus amples et plus lents à l'armement, mais dévastateurs | `nathan-redmet-final-double.webp` ; concepts de la refonte : `docs/captures/2026-10-30_m4_v2_concepts.png` (choix de l'auteur attendu) |
 | **M5 — Le double** (boss du ch. 10) | — | Gigantesque, presque minéral | Les fissures rouges couvrent tout le corps ; un fragment des lunettes de R0 incrusté dans l'armure | `nathan-redmet-final-double.webp` |
 
 **Fil rouge visuel :** les **fissures rouges** apparaissent sur le double au stade M3, puis gagnent du terrain. Dans le monde réel, des marques rouges discrètes apparaissent aux mêmes endroits (avant-bras, cou) : le joueur doit pouvoir faire le lien.
@@ -56,9 +56,11 @@ R3: stylized anime 3D character, 18-year-old young man, emaciated, skin and bone
 M2: stylized anime 3D character, massive barbarian warrior, long reddish-brown hair,
     thick beard, fur cloak, leather straps, scars, bare muscular torso, T-pose, front view
 
-M4: stylized anime 3D character, giant dark warrior, grey cracked stone-like skin,
-    glowing red veins, glowing red eyes, curly black hair, beard, dark plate armor,
-    T-pose, front view, neutral background
+M4 (remplacé le 2026-10-30, voir le tableau et tools/gen3d/batches/2026-10-30_concepts_nathan_m4_v2.sh) :
+    hulking giant, massive trapezius, huge shoulders, thick neck, wide back, huge arms and hands,
+    hunched predatory stance, topless, bare back and arms, grey cracked stone skin, glowing red
+    veins, glowing red eyes, wild curly dark brown hair, thick wild beard, square jaw, leather
+    belt, straps, bracers, torn pants, boots
 ```
 
 ---

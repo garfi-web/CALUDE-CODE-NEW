@@ -28,14 +28,15 @@ public class Pickup25D : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatics() => Active.Clear();
 
-    public static Pickup25D Nearest(Vector2 ground, float range, Kind kind)
+    // anyDepth : sans la condition de bande de profondeur (banc d'essai qui cherche l'objet pour y aller).
+    public static Pickup25D Nearest(Vector2 ground, float range, Kind kind, bool anyDepth = false)
     {
         Pickup25D best = null;
         float bestDistance = range;
 
         foreach (Pickup25D pickup in Active)
         {
-            if (pickup.kind != kind || Mathf.Abs(pickup.Ground.y - ground.y) > pickup.depthTolerance)
+            if (pickup.kind != kind || (!anyDepth && Mathf.Abs(pickup.Ground.y - ground.y) > pickup.depthTolerance))
                 continue;
 
             float distance = Mathf.Abs(pickup.Ground.x - ground.x);

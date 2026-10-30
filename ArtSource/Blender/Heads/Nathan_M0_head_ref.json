@@ -1,0 +1,12 @@
+{
+  "character": "Nathan_M0",
+  "pose": "rest",
+  "size": 1024,
+  "ortho": 0.48,
+  "pixels_per_meter": 2133.3333333333335,
+  "angle": 0.0,
+  "pivot": [
+    0.5,
+    0.5
+  ]
+}

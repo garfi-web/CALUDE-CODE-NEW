@@ -24,12 +24,20 @@ public class Playfield25D : MonoBehaviour
     public float MinX => minX;
     public float MaxX => maxX;
 
-    private void Awake() => Instance = this;
+    private void Awake()
+    {
+        Instance = this;
+        // Le sang et les morceaux se posent à la profondeur de leur victime (CombatVfx).
+        CombatVfx.GroundOf = health => health != null && health.TryGetComponent(out Body25D body) ? (float?)body.Depth : null;
+    }
 
     private void OnDestroy()
     {
-        if (Instance == this)
-            Instance = null;
+        if (Instance != this)
+            return;
+
+        Instance = null;
+        CombatVfx.GroundOf = null;
     }
 
     public void SetX(float min, float max)

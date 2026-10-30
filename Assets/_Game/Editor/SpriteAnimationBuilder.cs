@@ -55,6 +55,8 @@ public static class SpriteAnimationBuilder
     {
         public AnimatorController Controller;
         public Sprite IdleSprite;
+        // Images de chaque clip, dans l'ordre (piste du visage de l'arène 2,5D).
+        public Dictionary<string, Sprite[]> Clips = new();
     }
 
     [MenuItem("RED MET/Importer les sprites des personnages")]
@@ -70,9 +72,13 @@ public static class SpriteAnimationBuilder
     }
 
     // enemy : l'attaque joue le clip EnemyAttackClips[ComboStep] (animationId de l'attaque).
-    public static Result Build(string character, bool enemy)
+    public static Result Build(string character, bool enemy) => Build(character, enemy, string.Empty);
+
+    // variant : rendu à part (« 25D » : vue de 3/4 de l'arène 2,5D), dans <Perso>/Sprites<variant> et
+    // Animations/<Perso><variant>, sans toucher aux sprites de l'arène latérale.
+    public static Result Build(string character, bool enemy, string variant)
     {
-        string sheetFolder = $"{CharactersRoot}/{character}/Sprites";
+        string sheetFolder = $"{CharactersRoot}/{character}/Sprites{variant}";
         string jsonPath = $"{sheetFolder}/sprites.json";
 
         if (!File.Exists(jsonPath))
@@ -85,38 +91,43 @@ public static class SpriteAnimationBuilder
         string prefix = Directory.GetFiles(sheetFolder, "*.png").Select(Path.GetFileNameWithoutExtension)
             .First(n => n.EndsWith("_idle")).Replace("_idle", string.Empty);
 
-        string animFolder = $"{AnimationsRoot}/{character}";
+        string animFolder = $"{AnimationsRoot}/{character}{variant}";
         Directory.CreateDirectory(animFolder);
         AssetDatabase.Refresh();
 
         var clips = new Dictionary<string, AnimationClip>();
+        var result = new Result();
         Sprite idleSprite = null;
 
         foreach (ClipInfo clip in info.clips)
         {
             string sheetPath = $"{sheetFolder}/{prefix}_{clip.name}.png";
-            Sprite[] sprites = SliceSheet(sheetPath, clip, info);
+            // Rendus en double résolution (vue de 3/4) : réduits à l'affichage, ils ont besoin de mipmaps pour ne pas être crénelés.
+            Sprite[] sprites = SliceSheet(sheetPath, clip, info, !string.IsNullOrEmpty(variant));
             clips[clip.name] = SaveClip($"{animFolder}/{clip.name}.anim", sprites, info.fps, clip.loop);
+            result.Clips[clip.name] = sprites;
 
             if (clip.name == "idle")
                 idleSprite = sprites[0];
         }
 
-        AnimatorController controller = BuildController($"{animFolder}/{character}.controller", clips, enemy);
+        AnimatorController controller = BuildController($"{animFolder}/{character}{variant}.controller", clips, enemy);
         AssetDatabase.SaveAssets();
-        Debug.Log($"[RED MET] {character} : {clips.Count} animations importées.");
-        return new Result { Controller = controller, IdleSprite = idleSprite };
+        Debug.Log($"[RED MET] {character}{variant} : {clips.Count} animations importées.");
+        result.Controller = controller;
+        result.IdleSprite = idleSprite;
+        return result;
     }
 
-    private static Sprite[] SliceSheet(string path, ClipInfo clip, SheetInfo info)
+    private static Sprite[] SliceSheet(string path, ClipInfo clip, SheetInfo info, bool mipmaps = false)
     {
         var importer = (TextureImporter)AssetImporter.GetAtPath(path);
         importer.textureType = TextureImporterType.Sprite;
         importer.spriteImportMode = SpriteImportMode.Multiple;
         importer.spritePixelsPerUnit = info.pixels_per_meter;
-        importer.mipmapEnabled = false;
+        importer.mipmapEnabled = mipmaps;
         importer.alphaIsTransparency = true;
-        importer.filterMode = FilterMode.Bilinear;
+        importer.filterMode = mipmaps ? FilterMode.Trilinear : FilterMode.Bilinear;
         importer.maxTextureSize = 8192;
         importer.textureCompression = TextureImporterCompression.CompressedHQ;
 

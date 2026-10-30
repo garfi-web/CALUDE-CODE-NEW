@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "1boy, solo, male focus, adult, mature male, giant, hulking, gigantic muscles, extremely muscular, (massive trapezius:1.3), (huge shoulders:1.3), (thick neck:1.2), wide back, v-taper, (huge arms:1.2), huge forearms, (huge hands:1.1), hunched posture, predatory stance, head between shoulders, square jaw, topless male, bare back, bare shoulders, bare arms, bare chest, detailed muscles, bulging veins, grey skin, (stone skin:1.2), (cracked skin:1.2), (glowing red veins:1.3), glowing red cracks, (glowing red eyes:1.2), wild hair, long messy curly dark brown hair, thick wild beard, leather belt, leather straps, bracers, torn pants, ripped trousers, boots, standing, full body, (reference sheet:1.2), multiple views, front view, back view, from behind, anime coloring, cel shading, clean lineart, simple background, plain grey background, safe, masterpiece, high score, great score, absurdres, masterpiece, high score, great score, absurdres",
+  "negative": "fur, fur cape, pelt, animal skin, cape, cloak, shoulder armor, pauldrons, chest armor, shirt, pink skin, tan skin, female, child, shota, aged down, nsfw, nude, genitals, text, logo, watermark, signature, lowres, bad anatomy, bad hands, extra fingers, missing fingers, fused fingers, extra limbs, extra arms, third arm, missing arm, cropped, out of frame, chibi, big head, worst quality, low quality, low score, bad score, average score, error, blurry",
+  "seed": 7706,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1536,
+    1024
+  ],
+  "duration_s": 30.4
+}

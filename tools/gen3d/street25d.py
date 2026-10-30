@@ -227,6 +227,17 @@ def generate(cfg, name, control):
     return path
 
 
+def ring(size=256):
+    """Repère au sol du joueur : anneau fin au bord doux (Nathan se retrouve dans la mêlée)."""
+    y, x = np.mgrid[0:size, 0:size]
+    r = np.hypot(x - (size - 1) / 2, y - (size - 1) / 2) / (size / 2)
+    alpha = np.clip(1.0 - np.abs(r - 0.86) / 0.07, 0, 1) ** 1.5
+    image = np.full((size, size, 4), 255, np.uint8)
+    image[..., 3] = (alpha * 255).astype(np.uint8)
+    Image.fromarray(image, "RGBA").save(OUT / "ring.png")
+    print("[rue] -> ring.png", flush=True)
+
+
 def shadow(size=128):
     """Ombre au sol : alpha plein au centre, bord doux sur le dernier tiers (le halo Dot.png était trop diffus)."""
     y, x = np.mgrid[0:size, 0:size]
@@ -246,6 +257,7 @@ def main():
 
     if "shadow" in names:
         shadow()
+        ring()
         names.remove("shadow")
 
     cfg = skies.config() if names else None

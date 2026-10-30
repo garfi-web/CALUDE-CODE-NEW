@@ -118,7 +118,8 @@ public class Enemy25D : MonoBehaviour, IAttackSource25D
     }
 
     // Prépare un ennemi de la réserve pour une nouvelle apparition (aucune instanciation pendant le combat).
-    public void Setup(EnemyArchetype enemyArchetype, Body25D enemyTarget)
+    // look : sprites en vue de 3/4 et visage, s'ils existent pour cet ennemi ; sinon les sprites de l'archétype.
+    public void Setup(EnemyArchetype enemyArchetype, Body25D enemyTarget, CharacterLook25D look = null)
     {
         archetype = enemyArchetype;
         target = enemyTarget;
@@ -136,7 +137,7 @@ public class Enemy25D : MonoBehaviour, IAttackSource25D
 
         if (body != null)
         {
-            body.sprite = archetype.sprite;
+            body.sprite = look != null && look.idle != null ? look.idle : archetype.sprite;
             body.color = archetype.bodyColor;
             body.enabled = true;
             SpriteFlash.Set(body, 0f, Color.white);
@@ -144,7 +145,7 @@ public class Enemy25D : MonoBehaviour, IAttackSource25D
 
         if (animator != null)
         {
-            animator.runtimeAnimatorController = archetype.animator;
+            animator.runtimeAnimatorController = look != null && look.animator != null ? look.animator : archetype.animator;
 
             if (characterAnimator != null)
                 characterAnimator.Rebind();
@@ -152,6 +153,9 @@ public class Enemy25D : MonoBehaviour, IAttackSource25D
 
         if (gibs != null)
             gibs.Configure(archetype.gibs, archetype.gibbable, archetype.bodySize.y);
+
+        if (TryGetComponent(out FaceLayer25D face))
+            face.SetLook(look);
 
         if (coneLine != null)
             coneLine.enabled = false;

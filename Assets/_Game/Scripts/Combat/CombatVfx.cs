@@ -50,6 +50,8 @@ public class CombatVfx : MonoBehaviour
     [SerializeField] private float deathSlowScale = 0.25f;
     [Tooltip("Ralenti quand un tir tue plusieurs ennemis.")]
     [SerializeField] private float multiKillSlowDuration = 0.35f;
+    [Tooltip("Délai minimal (s, temps réel) entre deux images d'impact : un tir qui tue plusieurs ennemis n'en enchaîne pas.")]
+    [SerializeField] private float flashCooldown = 0.35f;
 
     private static readonly Color HumanBlood = new(0.55f, 0.02f, 0.03f);
     private static readonly Color SparkColor = new(1f, 0.9f, 0.55f);
@@ -75,6 +77,17 @@ public class CombatVfx : MonoBehaviour
     private int nextChunk;
     private int stainsThisFrame;
     private int flashFramesLeft;
+    private float lastFlashTime = float.NegativeInfinity;
+
+    // Arène 2,5D : profondeur du sol sous un personnage (Playfield25D la fournit). Sans elle (arène latérale), le sang et
+    // les morceaux tombent jusqu'aux collisions du décor, comme avant.
+    public static System.Func<Health, float?> GroundOf;
+    // Sol du personnage touché pendant l'émission en cours (NaN : pas de sol simulé).
+    private float emitFloor = float.NaN;
+    private const int MaxPendingStains = 64;
+    private readonly float[] pendingStainTime = new float[MaxPendingStains];
+    private readonly Vector2[] pendingStainPoint = new Vector2[MaxPendingStains];
+    private int nextPendingStain;
 
     private class Ring
     {
@@ -103,7 +116,12 @@ public class CombatVfx : MonoBehaviour
         public float Lifetime;
         public bool Bleeds;
         public BoxCollider2D Box;
+        // Sol simulé (2,5D) : le morceau s'y pose au lieu de tomber hors de l'écran. NaN : collisions du décor.
+        public float FloorY = float.NaN;
     }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics() => GroundOf = null;
 
     private void Awake()
     {
@@ -261,6 +279,7 @@ public class CombatVfx : MonoBehaviour
         float direction = Mathf.Abs(info.Direction) > 0.01f ? Mathf.Sign(info.Direction) : 1f;
         float power = attack != null ? Mathf.InverseLerp(0f, 12f, attack.hitstop) : 0.3f;
         bool finisher = target.IsDead;
+        emitFloor = FloorOf(target);
 
         if (CameraFollow.Main != null)
         {
@@ -271,7 +290,7 @@ public class CombatVfx : MonoBehaviour
         }
 
         if (attack != null && attack.impactFlash && GameOptions.ImpactFlashes)
-            flashFramesLeft = 2;
+            Flash();
 
         // Étincelles et onde de choc au point de contact, plus fortes sur les gros coups.
         Emit(sparks, point, Mathf.RoundToInt(Mathf.Lerp(4, 16, power)), direction, 4f, 11f, 70f, 0.08f, 0.16f, SparkColor, 0.12f, 0.25f);
@@ -315,6 +334,23 @@ public class CombatVfx : MonoBehaviour
         // Mort instantanée (fusil à pompe à bout portant) : le corps explose dans le sens du tir.
         if (finisher && info.Lethal)
             Explode(target, point, direction);
+
+        emitFloor = float.NaN;
+    }
+
+    private static float FloorOf(Health target)
+    {
+        float? floor = GroundOf?.Invoke(target);
+        return floor ?? float.NaN;
+    }
+
+    private void Flash()
+    {
+        if (Time.unscaledTime - lastFlashTime < flashCooldown)
+            return;
+
+        lastFlashTime = Time.unscaledTime;
+        flashFramesLeft = 2;
     }
 
     // ------------------------------------------------------- Fusil à pompe
@@ -330,7 +366,7 @@ public class CombatVfx : MonoBehaviour
         if (player)
         {
             if (GameOptions.ImpactFlashes)
-                flashFramesLeft = 2;
+                Flash();
 
             GameTime.SlowMotion(deathSlowDuration, deathSlowScale);
         }
@@ -384,6 +420,8 @@ public class CombatVfx : MonoBehaviour
         chunk.Bleeds = bleeds;
         chunk.Lifetime = lifetime;
         chunk.Box.size = chunk.Renderer.sprite.bounds.size * 0.7f;
+        chunk.FloorY = float.IsNaN(emitFloor) ? float.NaN : emitFloor + Random.Range(-0.35f, 0.25f);
+        chunk.Body.simulated = true;
         chunk.Body.gameObject.SetActive(true);
         chunk.Body.position = position;
         chunk.Body.rotation = Random.Range(-30f, 30f);
@@ -500,8 +538,39 @@ public class CombatVfx : MonoBehaviour
             parameters.startSize = Random.Range(minSize, maxSize);
             parameters.startLifetime = Random.Range(minLife, maxLife);
             parameters.startColor = color;
+
+            if (system == blood && !float.IsNaN(emitFloor))
+                LandOnFloor(ref parameters, point, i);
+
             system.Emit(parameters, 1);
         }
+    }
+
+    // Goutte qui tombe vers le sol simulé : sa vie s'arrête quand elle l'atteint, une goutte sur trois y laisse une tache.
+    private void LandOnFloor(ref ParticleSystem.EmitParams parameters, Vector2 point, int index)
+    {
+        float floor = emitFloor + Random.Range(-0.25f, 0.15f);
+        float gravity = Physics.gravity.magnitude * blood.main.gravityModifier.constant;
+        Vector3 v = parameters.velocity;
+        float drop = point.y - floor;
+
+        if (drop <= 0f || gravity <= 0f)
+            return;
+
+        float time = (v.y + Mathf.Sqrt(v.y * v.y + 2f * gravity * drop)) / gravity;
+
+        if (time > parameters.startLifetime)
+            return;
+
+        parameters.startLifetime = time;
+
+        if (index % 3 != 0)
+            return;
+
+        int slot = nextPendingStain;
+        nextPendingStain = (nextPendingStain + 1) % MaxPendingStains;
+        pendingStainTime[slot] = Time.time + time;
+        pendingStainPoint[slot] = new Vector2(point.x + v.x * time, floor);
     }
 
     public void Dust(Vector2 point, int count)
@@ -594,7 +663,7 @@ public class CombatVfx : MonoBehaviour
         }
     }
 
-    private void SpawnStain(Vector2 point, bool wall, int limit)
+    private void SpawnStain(Vector2 point, bool wall, int limit, bool groundPlane = false)
     {
         Stain stain = stains[nextStain % limit];
         nextStain = (nextStain + 1) % limit;
@@ -602,7 +671,10 @@ public class CombatVfx : MonoBehaviour
         float size = Random.Range(0.12f, 0.3f);
         Transform t = stain.Renderer.transform;
         t.position = new Vector3(point.x, point.y, 0f);
-        t.localScale = wall ? new Vector3(0.07f, size * 1.4f, 1f) : new Vector3(size * 1.6f, 0.06f, 1f);
+        // Sol en 2,5D : tache ovale, vue en perspective.
+        t.localScale = wall ? new Vector3(0.07f, size * 1.4f, 1f)
+            : groundPlane ? new Vector3(size * 1.6f, size * 0.5f, 1f)
+            : new Vector3(size * 1.6f, 0.06f, 1f);
         stain.Color = new Color(0.4f, 0.01f, 0.02f, 0.9f);
         stain.Renderer.color = stain.Color;
         stain.Renderer.enabled = true;
@@ -624,6 +696,8 @@ public class CombatVfx : MonoBehaviour
         limb.Renderer.color = limb.Color;
         limb.Renderer.enabled = true;
         limb.Renderer.transform.localScale = new Vector3(0.22f, 0.6f, 1f);
+        limb.FloorY = float.IsNaN(emitFloor) ? float.NaN : emitFloor + Random.Range(-0.3f, 0.2f);
+        limb.Body.simulated = true;
         limb.Body.gameObject.SetActive(true);
         limb.Body.position = point + Vector2.up * 0.2f;
         limb.Body.rotation = Random.Range(0f, 360f);
@@ -641,6 +715,7 @@ public class CombatVfx : MonoBehaviour
         GameTime.Tick();
         stainsThisFrame = 0;
         float dt = Time.deltaTime;
+        SpawnPendingStains();
 
         UpdateFlash();
 
@@ -693,6 +768,21 @@ public class CombatVfx : MonoBehaviour
         UpdateDebris(chunks, dt);
     }
 
+    private void SpawnPendingStains()
+    {
+        int limit = GameOptions.Gore == GoreLevel.Reduced ? maxStainsReduced : maxStains;
+
+        for (int i = 0; i < MaxPendingStains; i++)
+        {
+            if (pendingStainTime[i] <= 0f || pendingStainTime[i] > Time.time || stainsThisFrame >= maxStainsPerFrame)
+                continue;
+
+            pendingStainTime[i] = 0f;
+            stainsThisFrame++;
+            SpawnStain(pendingStainPoint[i], false, limit, true);
+        }
+    }
+
     // Membres et morceaux : ils saignent en volant (traînée), puis s'estompent.
     private void UpdateDebris(Limb[] debris, float dt)
     {
@@ -703,8 +793,24 @@ public class CombatVfx : MonoBehaviour
 
             limb.Age += dt;
 
-            if (limb.Bleeds && limb.Age < 1.2f && Time.frameCount % 3 == 0)
+            // Sol simulé (2,5D) : le morceau se pose à la profondeur de sa victime et y laisse une tache.
+            if (!float.IsNaN(limb.FloorY) && limb.Body.simulated && limb.Body.position.y <= limb.FloorY && limb.Body.linearVelocity.y <= 0f)
+            {
+                limb.Body.position = new Vector2(limb.Body.position.x, limb.FloorY);
+                limb.Body.linearVelocity = Vector2.zero;
+                limb.Body.angularVelocity = 0f;
+                limb.Body.simulated = false;
+
+                if (limb.Bleeds && GameOptions.Gore != GoreLevel.Off)
+                    SpawnStain(limb.Body.position, false, GameOptions.Gore == GoreLevel.Reduced ? maxStainsReduced : maxStains, true);
+            }
+
+            if (limb.Bleeds && limb.Body.simulated && limb.Age < 1.2f && Time.frameCount % 3 == 0)
+            {
+                emitFloor = limb.FloorY;
                 Emit(blood, limb.Body.position, 1, -Mathf.Sign(limb.Body.linearVelocity.x), 0.2f, 1f, 30f, 0.05f, 0.1f, limb.BloodColor, 0.5f, 1f);
+                emitFloor = float.NaN;
+            }
 
             float fade = Mathf.InverseLerp(limb.Lifetime, limb.Lifetime - 1f, limb.Age);
             Color color = limb.Color;
@@ -744,6 +850,8 @@ public class CombatVfx : MonoBehaviour
     {
         foreach (Stain stain in stains)
             stain.Renderer.enabled = false;
+
+        System.Array.Clear(pendingStainTime, 0, MaxPendingStains);
 
         foreach (Limb limb in limbs)
             limb.Body.gameObject.SetActive(false);

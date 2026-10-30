@@ -140,7 +140,7 @@ public class Benchmark25D : MonoBehaviour
         Capture("12_fleche_go");
         GameInput.VerticalOverride = 0f;
 
-        while (player.Ground.x < 9f && Time.realtimeSinceStartup < end)
+        while (director.GoVisible && Time.realtimeSinceStartup < end)
         {
             Heal();
             GameInput.HorizontalOverride = 1f;
@@ -161,8 +161,9 @@ public class Benchmark25D : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         GameInput.VerticalOverride = 0f;
 
-        // Barre de fer de la zone 2.
-        var bar = new Vector2(11.5f, -0.5f);
+        // Barre de fer de la zone 2 (la plus proche encore au sol).
+        Pickup25D pickup = Pickup25D.Nearest(player.Ground, 30f, Pickup25D.Kind.Weapon, anyDepth: true);
+        Vector2 bar = pickup != null ? pickup.Ground : player.Ground;
 
         while ((player.Ground - bar).magnitude > 0.3f && Time.realtimeSinceStartup < end)
         {

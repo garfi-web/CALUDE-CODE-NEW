@@ -1,0 +1,194 @@
+{
+  "fps": 30,
+  "pixels_per_meter": 393.8461538461538,
+  "feet_from_bottom_m": 0.3489438444375992,
+  "clips": [
+    {
+      "name": "air1",
+      "frames": 9,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "air2",
+      "frames": 10,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "air3",
+      "frames": 12,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "cross",
+      "frames": 11,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "dash",
+      "frames": 6,
+      "columns": 6,
+      "rows": 1,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "death",
+      "frames": 15,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "dodge",
+      "frames": 7,
+      "columns": 7,
+      "rows": 1,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "enemy_punch",
+      "frames": 26,
+      "columns": 8,
+      "rows": 4,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "heavy",
+      "frames": 18,
+      "columns": 8,
+      "rows": 3,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "hook",
+      "frames": 16,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "hurt",
+      "frames": 6,
+      "columns": 6,
+      "rows": 1,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "idle",
+      "frames": 12,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": true
+    },
+    {
+      "name": "jab",
+      "frames": 10,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "jump",
+      "frames": 5,
+      "columns": 5,
+      "rows": 1,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "launcher",
+      "frames": 17,
+      "columns": 8,
+      "rows": 3,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    },
+    {
+      "name": "run",
+      "frames": 8,
+      "columns": 8,
+      "rows": 1,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": true
+    },
+    {
+      "name": "smash",
+      "frames": 15,
+      "columns": 8,
+      "rows": 2,
+      "size": [
+        1024,
+        1024
+      ],
+      "loop": false
+    }
+  ]
+}

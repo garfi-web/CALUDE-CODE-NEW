@@ -19,6 +19,14 @@ public class ArenaDirector25D : MonoBehaviour
         public EnemyArchetype[] enemies = Array.Empty<EnemyArchetype>();
     }
 
+    // Apparence en vue de 3/4 d'un archétype (les autres gardent leurs sprites de profil pour l'instant).
+    [Serializable]
+    public class Look
+    {
+        public EnemyArchetype archetype;
+        public CharacterLook25D look;
+    }
+
     [Serializable]
     public class Zone
     {
@@ -39,6 +47,7 @@ public class ArenaDirector25D : MonoBehaviour
     [SerializeField] private float halfView = 6.04f;
     [SerializeField] private float edgeMargin = 0.45f;
     [SerializeField] private HUD25D hud;
+    [SerializeField] private Look[] looks = Array.Empty<Look>();
 
     [Header("Arrivées")]
     [SerializeField] private int maxAlive = 8;
@@ -321,7 +330,7 @@ public class ArenaDirector25D : MonoBehaviour
             yield break;
 
         enemy.gameObject.SetActive(true);
-        enemy.Setup(archetype, player);
+        enemy.Setup(archetype, player, Array.Find(looks, l => l.archetype == archetype)?.look);
         enemy.BeginArrival(start, height, target, lift);
 
         if (height <= 0f)

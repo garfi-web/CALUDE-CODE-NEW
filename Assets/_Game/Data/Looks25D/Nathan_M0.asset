@@ -1,0 +1,1241 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae9c6ed89f8079844937df61448c98d6, type: 3}
+  m_Name: Nathan_M0
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterLook25D
+  animator: {fileID: 9100000, guid: 8f653787fd42d514ebd479849f3dec2c, type: 2}
+  idle: {fileID: -1827881136, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+  expressions:
+  - {fileID: 21300000, guid: 13799ff7795b5c647ad4cde9e6825263, type: 3}
+  - {fileID: 21300000, guid: 3ee86689608ff4d4590774f94ef84ac0, type: 3}
+  - {fileID: 21300000, guid: f8d32346b4e1f4642a9e7ec262850682, type: 3}
+  - {fileID: 21300000, guid: 1ab4d630edc9c1246bef8c801139d264, type: 3}
+  faceScale: 1.12
+  faceFrames:
+  - sprite: {fileID: -1761326396, guid: e3e8505f1b99f864991fed1d3c6dde55, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 194473657, guid: e3e8505f1b99f864991fed1d3c6dde55, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1991517279, guid: e3e8505f1b99f864991fed1d3c6dde55, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -777394599, guid: e3e8505f1b99f864991fed1d3c6dde55, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 555928512, guid: e3e8505f1b99f864991fed1d3c6dde55, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1160338665, guid: e3e8505f1b99f864991fed1d3c6dde55, type: 3}
+    position: {x: 0.64727, y: 0.65938}
+    angle: -30.43
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1249095215, guid: e3e8505f1b99f864991fed1d3c6dde55, type: 3}
+    position: {x: 0.62196, y: 0.67457}
+    angle: -22.31
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 317313970, guid: e3e8505f1b99f864991fed1d3c6dde55, type: 3}
+    position: {x: 0.58332, y: 0.68813}
+    angle: -11.34
+    scale: 0.691
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1350544173, guid: e3e8505f1b99f864991fed1d3c6dde55, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 224765653, guid: cdbc0b88540d3f649a3d4b613d577b11, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 765832272, guid: cdbc0b88540d3f649a3d4b613d577b11, type: 3}
+    position: {x: 0.56884, y: 0.64614}
+    angle: -11.38
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1843580153, guid: cdbc0b88540d3f649a3d4b613d577b11, type: 3}
+    position: {x: 0.55575, y: 0.60037}
+    angle: -13.91
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1560948351, guid: cdbc0b88540d3f649a3d4b613d577b11, type: 3}
+    position: {x: 0.55575, y: 0.60037}
+    angle: -13.91
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -986316695, guid: cdbc0b88540d3f649a3d4b613d577b11, type: 3}
+    position: {x: 0.55575, y: 0.60037}
+    angle: -13.91
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1895513221, guid: cdbc0b88540d3f649a3d4b613d577b11, type: 3}
+    position: {x: 0.55575, y: 0.60037}
+    angle: -13.91
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1273769761, guid: cdbc0b88540d3f649a3d4b613d577b11, type: 3}
+    position: {x: 0.56147, y: 0.61346}
+    angle: -13.53
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -752673752, guid: cdbc0b88540d3f649a3d4b613d577b11, type: 3}
+    position: {x: 0.56884, y: 0.64614}
+    angle: -11.38
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -2133167237, guid: cdbc0b88540d3f649a3d4b613d577b11, type: 3}
+    position: {x: 0.56659, y: 0.67918}
+    angle: -7.65
+    scale: 1.03
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1931694193, guid: cdbc0b88540d3f649a3d4b613d577b11, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 643522885, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1013127716, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.52796, y: 0.70878}
+    angle: 4.05
+    scale: 1.048
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -2097077025, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.49264, y: 0.71824}
+    angle: 13.16
+    scale: 1.134
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1002845612, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.49264, y: 0.71824}
+    angle: 13.16
+    scale: 1.134
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 178624447, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.49264, y: 0.71824}
+    angle: 13.16
+    scale: 1.134
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 371584997, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.49264, y: 0.71824}
+    angle: 13.16
+    scale: 1.134
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1336583308, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.49264, y: 0.71824}
+    angle: 13.16
+    scale: 1.134
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 615404190, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.49999, y: 0.71686}
+    angle: 11.3
+    scale: 1.119
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -2136447055, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.51754, y: 0.71232}
+    angle: 6.8
+    scale: 1.077
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 757812756, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.53828, y: 0.70465}
+    angle: 1.26
+    scale: 1.015
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1709772493, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.55523, y: 0.69642}
+    angle: -3.52
+    scale: 0.954
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1348139494, guid: d051910c1b3323e4bb71438db481b37e, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1938783707, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -754222191, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.56972, y: 0.65956}
+    angle: -12.12
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1972168942, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.55575, y: 0.60037}
+    angle: -13.91
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1807505436, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.55575, y: 0.60037}
+    angle: -13.91
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -797819762, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.55575, y: 0.60037}
+    angle: -13.91
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -731155751, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.55575, y: 0.60037}
+    angle: -13.91
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1886424769, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.55969, y: 0.60892}
+    angle: -13.7
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1726611045, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.56671, y: 0.63164}
+    angle: -12.52
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1786684375, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.56914, y: 0.66071}
+    angle: -9.94
+    scale: 1.132
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1373859457, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.56534, y: 0.68381}
+    angle: -6.98
+    scale: 0.997
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 770721799, guid: 875c5e3ae8211cc4dae2cba4d16357ec, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -2061706317, guid: 617903ac3760c5a44abc4cbba743b2ec, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1116007450, guid: 617903ac3760c5a44abc4cbba743b2ec, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1114639895, guid: 617903ac3760c5a44abc4cbba743b2ec, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -925234098, guid: 617903ac3760c5a44abc4cbba743b2ec, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1350362324, guid: 617903ac3760c5a44abc4cbba743b2ec, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1617671975, guid: 617903ac3760c5a44abc4cbba743b2ec, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1087218935, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.43803, y: 0.72648}
+    angle: 35.58
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 295009637, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.43797, y: 0.72409}
+    angle: 34.2
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -2047632512, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.43496, y: 0.71522}
+    angle: 31.54
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1560089493, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.42472, y: 0.69725}
+    angle: 29.78
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -430261951, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.40343, y: 0.66758}
+    angle: 31.19
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -48371274, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.36829, y: 0.62144}
+    angle: 38.07
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1978317033, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.3301, y: 0.55585}
+    angle: 48.44
+    scale: 1.088
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -2058563120, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.30168, y: 0.48116}
+    angle: 58.39
+    scale: 0.974
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -629200624, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.2833, y: 0.40927}
+    angle: 67.3
+    scale: 0.848
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1780153531, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.27342, y: 0.35271}
+    angle: 74.16
+    scale: 0.742
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -2080242720, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.26961, y: 0.32354}
+    angle: 77.77
+    scale: 0.684
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1114489795, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.26852, y: 0.3145}
+    angle: 78.99
+    scale: 0.664
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1243063863, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.268, y: 0.30985}
+    angle: 79.62
+    scale: 0.654
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 111494246, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.26781, y: 0.30813}
+    angle: 79.85
+    scale: 0.65
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1406464313, guid: 82013be44027921458b87c7d442f5adf, type: 3}
+    position: {x: 0.26779, y: 0.30788}
+    angle: 79.88
+    scale: 0.65
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -924648, guid: 3d0b5a404e872c44b997e87acb5902cc, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1736400102, guid: 3d0b5a404e872c44b997e87acb5902cc, type: 3}
+    position: {x: 0.51121, y: 0.71416}
+    angle: 8.44
+    scale: 1.094
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1125279271, guid: 3d0b5a404e872c44b997e87acb5902cc, type: 3}
+    position: {x: 0.45904, y: 0.72061}
+    angle: 21.54
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 202647984, guid: 3d0b5a404e872c44b997e87acb5902cc, type: 3}
+    position: {x: 0.45904, y: 0.72061}
+    angle: 21.54
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1264248659, guid: 3d0b5a404e872c44b997e87acb5902cc, type: 3}
+    position: {x: 0.45904, y: 0.72061}
+    angle: 21.54
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1008795812, guid: 3d0b5a404e872c44b997e87acb5902cc, type: 3}
+    position: {x: 0.51121, y: 0.71416}
+    angle: 8.44
+    scale: 1.094
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1362723188, guid: 3d0b5a404e872c44b997e87acb5902cc, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1139714174, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1627508547, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.5607, y: 0.69318}
+    angle: -5.2
+    scale: 0.947
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1092062599, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.55672, y: 0.69493}
+    angle: -4.24
+    scale: 1.002
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -79512770, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.55089, y: 0.69736}
+    angle: -2.88
+    scale: 1.081
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1278469593, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.54385, y: 0.70006}
+    angle: -1.28
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1218825702, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.53634, y: 0.70267}
+    angle: 0.36
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -976725098, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.52909, y: 0.70493}
+    angle: 1.9
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 187029948, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.52292, y: 0.70667}
+    angle: 3.17
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1629995158, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.51862, y: 0.70778}
+    angle: 4.04
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -987742991, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.51701, y: 0.70817}
+    angle: 4.36
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 2123613144, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.51701, y: 0.70817}
+    angle: 4.36
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1627946757, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.51701, y: 0.70817}
+    angle: 4.36
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1049696841, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1117171859, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -305311019, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 519969544, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.6534, y: 0.65399}
+    angle: -32.79
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1054165327, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.65069, y: 0.65652}
+    angle: -31.71
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 717814524, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.64582, y: 0.6605}
+    angle: -29.91
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1996632703, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.63834, y: 0.66566}
+    angle: -27.38
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1989523793, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.62807, y: 0.67155}
+    angle: -24.15
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 2033580381, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.61532, y: 0.67753}
+    angle: -20.36
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1653087921, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.60102, y: 0.68294}
+    angle: -16.27
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 241672036, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.5867, y: 0.68726}
+    angle: -12.27
+    scale: 0.649
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -100235562, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.5742, y: 0.69025}
+    angle: -8.84
+    scale: 0.798
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 154322110, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.56543, y: 0.69195}
+    angle: -6.45
+    scale: 0.893
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1078149316, guid: 6f727e22d0ef9fe458aa9641775b7bd2, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -858500558, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -2115308097, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.54689, y: 0.70069}
+    angle: -1.14
+    scale: 0.986
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1932532563, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.51625, y: 0.71271}
+    angle: 7.13
+    scale: 1.081
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -8672243, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.49185, y: 0.71837}
+    angle: 13.36
+    scale: 1.136
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 937347035, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.4825, y: 0.71964}
+    angle: 15.7
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1099678432, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.4825, y: 0.71964}
+    angle: 15.7
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -676019460, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.4825, y: 0.71964}
+    angle: 15.7
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 705938453, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.4825, y: 0.71964}
+    angle: 15.7
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1033484359, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.4825, y: 0.71964}
+    angle: 15.7
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1761147765, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.48526, y: 0.71931}
+    angle: 15.01
+    scale: 1.147
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1757093976, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.49268, y: 0.71823}
+    angle: 13.15
+    scale: 1.134
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1818591544, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.50347, y: 0.7161}
+    angle: 10.42
+    scale: 1.112
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1025804683, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.51626, y: 0.71271}
+    angle: 7.13
+    scale: 1.081
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -379407094, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.52962, y: 0.70816}
+    angle: 3.6
+    scale: 1.043
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1292819224, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.54215, y: 0.70293}
+    angle: 0.19
+    scale: 1.002
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -61291178, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.55253, y: 0.69785}
+    angle: -2.74
+    scale: 0.965
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1187739365, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.55957, y: 0.69401}
+    angle: -4.79
+    scale: 0.937
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1356219050, guid: c0b910ef2a1c70245822aac7332eb579, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1959975741, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -14892819, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.51701, y: 0.70817}
+    angle: 4.36
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1984026552, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.60324, y: 0.68764}
+    angle: -16.97
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -2010148798, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.64868, y: 0.6592}
+    angle: -31.09
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -2104167004, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.64557, y: 0.6623}
+    angle: -30.14
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -991821469, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.64507, y: 0.66274}
+    angle: -30
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1903703315, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.64446, y: 0.66346}
+    angle: -29.68
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -2052921775, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.64236, y: 0.66554}
+    angle: -28.73
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1106063129, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.63799, y: 0.66893}
+    angle: -27.05
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 371763136, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.6305, y: 0.67342}
+    angle: -24.56
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1568398032, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.6195, y: 0.67853}
+    angle: -21.24
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 2079187556, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.60557, y: 0.6835}
+    angle: -17.29
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -927404466, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.59035, y: 0.68761}
+    angle: -13.12
+    scale: 0.561
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 62618177, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.57628, y: 0.69045}
+    angle: -9.33
+    scale: 0.756
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -637377749, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.56606, y: 0.69202}
+    angle: -6.6
+    scale: 0.882
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -980109370, guid: 4decc1c6bba4b834e9de59ac5aceb9a9, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -349535246, guid: fc042b6dbe8e3264c83617b79d47de51, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1406812759, guid: fc042b6dbe8e3264c83617b79d47de51, type: 3}
+    position: {x: 0.43803, y: 0.72648}
+    angle: 35.58
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1737775889, guid: fc042b6dbe8e3264c83617b79d47de51, type: 3}
+    position: {x: 0.45129, y: 0.72712}
+    angle: 30.94
+    scale: 1.15
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -139617760, guid: fc042b6dbe8e3264c83617b79d47de51, type: 3}
+    position: {x: 0.48088, y: 0.72437}
+    angle: 20.71
+    scale: 1.15
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1830388451, guid: fc042b6dbe8e3264c83617b79d47de51, type: 3}
+    position: {x: 0.5101, y: 0.71605}
+    angle: 10.26
+    scale: 1.11
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1902813169, guid: fc042b6dbe8e3264c83617b79d47de51, type: 3}
+    position: {x: 0.52296, y: 0.71056}
+    angle: 5.38
+    scale: 1.062
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1827881136, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1303610637, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.563, y: 0.69185}
+    angle: -5.98
+    scale: 0.921
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1218802338, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.56505, y: 0.69018}
+    angle: -7.04
+    scale: 0.906
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 514609661, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.56769, y: 0.68797}
+    angle: -8.42
+    scale: 0.886
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 438292868, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.5703, y: 0.68571}
+    angle: -9.82
+    scale: 0.866
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1484692512, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.57227, y: 0.68394}
+    angle: -10.9
+    scale: 0.85
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 538493027, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.57305, y: 0.68322}
+    angle: -11.34
+    scale: 0.843
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1127226351, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.57227, y: 0.68394}
+    angle: -10.9
+    scale: 0.85
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1133320371, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.5703, y: 0.68571}
+    angle: -9.82
+    scale: 0.866
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 735575856, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.56769, y: 0.68797}
+    angle: -8.42
+    scale: 0.886
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1664417527, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.56505, y: 0.69018}
+    angle: -7.04
+    scale: 0.906
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 370946440, guid: 8ca3cf79571d18143aec6ad721befd90, type: 3}
+    position: {x: 0.563, y: 0.69185}
+    angle: -5.98
+    scale: 0.921
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1260123956, guid: c7feeb2ce144e424eaa3027953dad974, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1113839772, guid: c7feeb2ce144e424eaa3027953dad974, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1806513367, guid: c7feeb2ce144e424eaa3027953dad974, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1351054466, guid: c7feeb2ce144e424eaa3027953dad974, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1780449164, guid: c7feeb2ce144e424eaa3027953dad974, type: 3}
+    position: {x: 0.65428, y: 0.6531}
+    angle: -33.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1403235995, guid: c7feeb2ce144e424eaa3027953dad974, type: 3}
+    position: {x: 0.64991, y: 0.65721}
+    angle: -31.41
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1864108018, guid: c7feeb2ce144e424eaa3027953dad974, type: 3}
+    position: {x: 0.63457, y: 0.66796}
+    angle: -26.17
+    scale: 0.55
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -266701217, guid: c7feeb2ce144e424eaa3027953dad974, type: 3}
+    position: {x: 0.60684, y: 0.68089}
+    angle: -17.92
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1823353232, guid: c7feeb2ce144e424eaa3027953dad974, type: 3}
+    position: {x: 0.57646, y: 0.68976}
+    angle: -9.46
+    scale: 0.772
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1779859587, guid: c7feeb2ce144e424eaa3027953dad974, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1056764124, guid: 27fd5643a55adf04f9ceb44c61523cbe, type: 3}
+    position: {x: 0.58678, y: 0.67587}
+    angle: -13.31
+    scale: 0.813
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1752460743, guid: 27fd5643a55adf04f9ceb44c61523cbe, type: 3}
+    position: {x: 0.56533, y: 0.69062}
+    angle: -6.51
+    scale: 0.913
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1700004889, guid: 27fd5643a55adf04f9ceb44c61523cbe, type: 3}
+    position: {x: 0.54283, y: 0.70262}
+    angle: 0
+    scale: 1
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1485769520, guid: 27fd5643a55adf04f9ceb44c61523cbe, type: 3}
+    position: {x: 0.54283, y: 0.70262}
+    angle: 0
+    scale: 1
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1715044675, guid: 27fd5643a55adf04f9ceb44c61523cbe, type: 3}
+    position: {x: 0.54283, y: 0.70262}
+    angle: 0
+    scale: 1
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 328432003, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 459073242, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.58077, y: 0.68035}
+    angle: -11.34
+    scale: 0.843
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 438245276, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.59843, y: 0.66627}
+    angle: -17.35
+    scale: 0.75
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1386752926, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.50952, y: 0.71461}
+    angle: 8.87
+    scale: 1.098
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 897720958, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.50565, y: 0.71559}
+    angle: 9.86
+    scale: 1.107
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -905889500, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.50364, y: 0.71606}
+    angle: 10.38
+    scale: 1.111
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 71624616, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.50289, y: 0.71623}
+    angle: 10.57
+    scale: 1.113
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1952992210, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.50277, y: 0.71625}
+    angle: 10.6
+    scale: 1.113
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1789078616, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.50485, y: 0.71578}
+    angle: 10.07
+    scale: 1.109
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 2138426537, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.51042, y: 0.71437}
+    angle: 8.64
+    scale: 1.095
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -1356524749, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.51847, y: 0.71203}
+    angle: 6.55
+    scale: 1.075
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 1641653284, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.52797, y: 0.70878}
+    angle: 4.04
+    scale: 1.048
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 16458450, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.53789, y: 0.70481}
+    angle: 1.36
+    scale: 1.017
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: 215733212, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.5472, y: 0.70054}
+    angle: -1.23
+    scale: 0.985
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1112349174, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.55494, y: 0.69657}
+    angle: -3.44
+    scale: 0.956
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 941121072, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.56022, y: 0.69364}
+    angle: -4.98
+    scale: 0.935
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 77873879, guid: a01bc9983db2f0e4bb6f01c647aaa372, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -252797005, guid: 1f7ecd1d60fe02343bda7af6e31da260, type: 3}
+    position: {x: 0.58677, y: 0.67587}
+    angle: -13.31
+    scale: 0.813
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1143543650, guid: 1f7ecd1d60fe02343bda7af6e31da260, type: 3}
+    position: {x: 0.58677, y: 0.67587}
+    angle: -13.31
+    scale: 0.813
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1313836479, guid: 1f7ecd1d60fe02343bda7af6e31da260, type: 3}
+    position: {x: 0.58677, y: 0.67587}
+    angle: -13.31
+    scale: 0.813
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1032242355, guid: 1f7ecd1d60fe02343bda7af6e31da260, type: 3}
+    position: {x: 0.58677, y: 0.67587}
+    angle: -13.31
+    scale: 0.813
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1939638554, guid: 1f7ecd1d60fe02343bda7af6e31da260, type: 3}
+    position: {x: 0.58677, y: 0.67587}
+    angle: -13.31
+    scale: 0.813
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1848804313, guid: 1f7ecd1d60fe02343bda7af6e31da260, type: 3}
+    position: {x: 0.58677, y: 0.67587}
+    angle: -13.31
+    scale: 0.813
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1919625242, guid: 1f7ecd1d60fe02343bda7af6e31da260, type: 3}
+    position: {x: 0.58677, y: 0.67587}
+    angle: -13.31
+    scale: 0.813
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -473650158, guid: 1f7ecd1d60fe02343bda7af6e31da260, type: 3}
+    position: {x: 0.58677, y: 0.67587}
+    angle: -13.31
+    scale: 0.813
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -114248803, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1587048994, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.50277, y: 0.71625}
+    angle: 10.6
+    scale: 1.113
+    visible: 0
+    flipped: 0
+  - sprite: {fileID: -196905537, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.57166, y: 0.68663}
+    angle: -8.45
+    scale: 0.886
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 2111635754, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1017175896, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -447105556, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1188707743, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1428587306, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1619850258, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.63016, y: 0.633}
+    angle: -30.12
+    scale: 0.55
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1765130251, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.62583, y: 0.63829}
+    angle: -28.18
+    scale: 0.574
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 2037458042, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.61441, y: 0.651}
+    angle: -23.39
+    scale: 0.653
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -2082761599, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.59843, y: 0.66627}
+    angle: -17.35
+    scale: 0.75
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: -1835625122, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.5814, y: 0.6799}
+    angle: -11.54
+    scale: 0.84
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 644209554, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.56774, y: 0.68914}
+    angle: -7.24
+    scale: 0.903
+    visible: 1
+    flipped: 0
+  - sprite: {fileID: 1171354922, guid: f3f55fcc41048574bb7c0a9ed83cf785, type: 3}
+    position: {x: 0.56217, y: 0.69251}
+    angle: -5.56
+    scale: 0.927
+    visible: 1
+    flipped: 0

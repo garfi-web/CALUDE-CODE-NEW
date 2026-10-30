@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -22,15 +23,22 @@ public static class Arena25DBuilder
     private const string Archetypes = Root + "/Data/Enemies";
     private const string SoundFolder = Root + "/Audio/Voice";
 
-    // Sol : bord avant et bord arrière (pied des façades). Caméra : 6,8 m de haut, centrée à 1,2 m.
-    private const float Front = -2.1f;
+    // Caméra : personnages à environ 35 % de la hauteur de l'écran, comme dans Streets of Rage 4 (demande de l'auteur,
+    // 2026-10-30) : 1,7 m sur 4,86 m de vue, soit une taille orthographique de 2,43 (8,64 m de large en 16:9).
+    private const float CameraSize = 2.43f;
+    private const float HalfView = CameraSize * 16f / 9f;
+    // Sol : bord avant et bord arrière (pied des façades), 1,6 m de profondeur ; bas de l'écran 0,25 m sous le bord avant.
+    private const float Front = -1.5f;
     private const float Back = 0.1f;
-    private const float CameraY = 1.2f;
-    // Façades : 16 m peints (96 px/m), affichés à 0,8 (au fond de la rue) : 12,8 m de large.
-    private const float FacadeScale = 0.8f;
+    private const float CameraY = Front - 0.25f + CameraSize;
+    // Façades : 16 m peints (96 px/m), affichés à 0,72 (au fond de la rue) : 11,52 m de large, porte de 1,73 m.
+    private const float FacadeScale = 0.72f;
     private const float FacadeWidth = 16f * FacadeScale;
-    private static readonly float[] FacadeX = { -6.4f, 6.4f };
-    private static readonly float[] ZoneX = { 0f, 13f };
+    private static readonly float[] FacadeX = { -FacadeWidth / 2f, FacadeWidth / 2f };
+    private static readonly float[] ZoneX = { 0f, FacadeWidth };
+    private const string LookFolder = Root + "/Data/Looks25D";
+    // Visages : 256 px pour 0,26 m (tools/gen3d/faces.py).
+    private const float FacePixelsPerMeter = 256f / 0.26f;
     private const int PoolSize = 10;
 
     private const int SkyOrder = -3000;
@@ -66,7 +74,9 @@ public static class Arena25DBuilder
         var telegraphs = new GameObject("Annonces").transform;
 
         List<SpawnPoint25D>[] entrances = BuildDecor(square);
-        Body25D player = BuildPlayer(flash, dot, shadows);
+        CharacterLook25D nathanLook = BuildLook("Nathan_M0", false);
+        CharacterLook25D voyouLook = BuildLook("Voyou", true);
+        Body25D player = BuildPlayer(flash, dot, shadows, nathanLook);
         Enemy25D[] pool = BuildEnemyPool(flash, dot, shadows, telegraphs, lineMaterial);
         BuildProps(dot, shadows);
 
@@ -97,6 +107,9 @@ public static class Arena25DBuilder
         SetObject(director, "cameraFollow", camera.GetComponent<CameraFollow>());
         SetObject(director, "cameraAnchor", anchor);
         SetFloat(director, "cameraY", CameraY);
+        SetFloat(director, "halfView", HalfView);
+        SetFloat(director, "edgeMargin", 0.35f);
+        SetLooks(director, voyouLook, "01_Voyou_MainsNues", "01_Voyou_Barre", "01_Voyou_Couteau");
         SetObject(director, "hud", hud);
         SetObjects(director, "pool", pool.Cast<UnityEngine.Object>().ToArray());
         SetObjects(director, "dropShadows", Enumerable.Range(0, 3)
@@ -138,6 +151,7 @@ public static class Arena25DBuilder
         ImportSprite(ArtFolder + "/food.png", 1700f, new Vector2(0.5f, 0.3f));
         // Ombre ovale (générée par script : disque plein, bord doux), 1 m de large.
         ImportSprite(ArtFolder + "/shadow.png", 128f, new Vector2(0.5f, 0.5f));
+        ImportSprite(ArtFolder + "/ring.png", 256f, new Vector2(0.5f, 0.5f));
     }
 
     private static void ImportSprite(string path, float pixelsPerUnit, Vector2 pivot)
@@ -178,7 +192,7 @@ public static class Arena25DBuilder
         var root = new GameObject("Décor").transform;
 
         Sprite sky = AssetDatabase.LoadAssetAtPath<Sprite>(Root + "/Art/Backgrounds/Skies/ch03_sky.png");
-        GameObject skyGo = CreateSprite("Ciel ch3", root, sky, Color.white, new Vector3(6.5f, 3.4f), Vector3.one, SkyOrder);
+        GameObject skyGo = CreateSprite("Ciel ch3", root, sky, Color.white, new Vector3(6f, CameraY + 1.6f), Vector3.one, SkyOrder);
         float skyScale = 26f / sky.bounds.size.x;
         skyGo.transform.localScale = new Vector3(skyScale, skyScale, 1f);
         SetVector2(skyGo.AddComponent<ParallaxLayer>(), "factor", new Vector2(0.85f, 0f));
@@ -200,10 +214,10 @@ public static class Arena25DBuilder
                 new Vector3(i % 2 == 0 ? 1f : -1f, scaleY), FloorOrder);
         }
 
-        CreateSprite("Premier plan gravats", root, Art("foreground_rubble"), Color.white, new Vector3(-4.6f, Front - 0.75f), Vector3.one, ForegroundOrder);
-        CreateSprite("Premier plan lampadaire", root, Art("foreground_post"), Color.white, new Vector3(4.9f, Front - 0.7f), Vector3.one, ForegroundOrder);
-        CreateSprite("Premier plan gravats 2", root, Art("foreground_rubble"), Color.white, new Vector3(18.2f, Front - 0.8f), new Vector3(-1f, 1f), ForegroundOrder);
-        CreateSprite("Premier plan lampadaire 2", root, Art("foreground_post"), Color.white, new Vector3(15.6f, Front - 0.7f), new Vector3(-1f, 1f), ForegroundOrder);
+        CreateSprite("Premier plan gravats", root, Art("foreground_rubble"), Color.white, new Vector3(-3.3f, Front - 0.75f), Vector3.one, ForegroundOrder);
+        CreateSprite("Premier plan lampadaire", root, Art("foreground_post"), Color.white, new Vector3(3.5f, Front - 0.7f), Vector3.one, ForegroundOrder);
+        CreateSprite("Premier plan gravats 2", root, Art("foreground_rubble"), Color.white, new Vector3(14.8f, Front - 0.8f), new Vector3(-1f, 1f), ForegroundOrder);
+        CreateSprite("Premier plan lampadaire 2", root, Art("foreground_post"), Color.white, new Vector3(12.9f, Front - 0.7f), new Vector3(-1f, 1f), ForegroundOrder);
 
         // Entrées peintes sur les façades (positions de tools/gen3d/street25d.py, en mètres peints × 0,8).
         var entrances = new List<SpawnPoint25D>[ZoneX.Length];
@@ -249,16 +263,26 @@ public static class Arena25DBuilder
 
     // ------------------------------------------------------------ Personnages
 
-    private static Body25D BuildPlayer(Material flash, Sprite dot, Transform shadows)
+    private static Body25D BuildPlayer(Material flash, Sprite dot, Transform shadows, CharacterLook25D look)
     {
-        var controller = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(Root + "/Animations/Nathan_M0/Nathan_M0.controller");
-        GameObject go = CreateFighter("Nathan", Body25D.Team.Player, new Vector2(-3f, -1f), controller, flash, dot, shadows,
+        RuntimeAnimatorController controller = look != null ? look.animator
+            : AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(Root + "/Animations/Nathan_M0/Nathan_M0.controller");
+        GameObject go = CreateFighter("Nathan", Body25D.Team.Player, new Vector2(-2f, -0.7f), controller, flash, dot, shadows,
             out SpriteRenderer body, out Body25D body25);
+
+        if (look != null && look.idle != null)
+            body.sprite = look.idle;
+
+        // Repère au sol propre au joueur : anneau rouge discret sous Nathan.
+        GameObject ring = CreateSprite("Nathan (repère)", shadows, Art("ring"), new Color(0.85f, 0.12f, 0.1f, 0.55f), Vector3.zero,
+            new Vector3(1.05f, 0.36f), ShadowOrder + 1);
+        SetObject(body25, "marker", ring.GetComponent<SpriteRenderer>());
+        AddFace(go, body, look);
 
         var health = go.GetComponent<Health>();
         SetInt(health, "maxHealth", 100);
 
-        var weapon = CreateSprite("Barre tenue", body.transform, Art("bar"), Color.white, new Vector3(0.3f, 1.05f), Vector3.one * 0.9f, 1);
+        var weapon = CreateSprite("Barre tenue", body.transform, Art("bar"), Color.white, new Vector3(0.3f, 1.05f), Vector3.one * 0.9f, 2);
 
         var brawler = go.AddComponent<Brawler25D>();
         SetObject(brawler, "spriteRenderer", body);
@@ -318,6 +342,11 @@ public static class Arena25DBuilder
 
             go.AddComponent<CharacterAnimator25D>();
             SetObject(go.GetComponent<CharacterAnimator25D>(), "animator", body.GetComponent<Animator>());
+            AddFace(go, body, null);
+            // Encerclement resserré : la vue ne fait plus que 8,6 m de large.
+            SetFloat(enemy, "orbitRadius", 2.2f);
+            SetFloat(enemy, "orbitDepthRadius", 0.6f);
+            SetFloat(enemy, "rangedOrbitRadius", 3.4f);
 
             // En réserve : inactif, et son ombre aussi (elle n'est pas un enfant du personnage).
             go.GetComponent<Body25D>().Shadow.enabled = false;
@@ -393,10 +422,10 @@ public static class Arena25DBuilder
     private static void BuildProps(Sprite dot, Transform shadows)
     {
         var root = new GameObject("Objets").transform;
-        Pickup(root, "Barre de fer", Pickup25D.Kind.Weapon, 8, Art("bar"), new Vector2(-2.2f, -1.4f), true);
-        Pickup(root, "Barre de fer 2", Pickup25D.Kind.Weapon, 8, Art("bar"), new Vector2(11.5f, -0.5f), true);
-        Crate(root, "Caisse", new Vector2(3.6f, -0.4f), dot, shadows);
-        Crate(root, "Caisse 2", new Vector2(16.4f, -1.6f), dot, shadows);
+        Pickup(root, "Barre de fer", Pickup25D.Kind.Weapon, 8, Art("bar"), new Vector2(-1.6f, -0.8f), true);
+        Pickup(root, "Barre de fer 2", Pickup25D.Kind.Weapon, 8, Art("bar"), new Vector2(9.4f, -0.3f), true);
+        Crate(root, "Caisse", new Vector2(2.6f, -0.2f), dot, shadows);
+        Crate(root, "Caisse 2", new Vector2(13.9f, -1.1f), dot, shadows);
     }
 
     private static Pickup25D Pickup(Transform parent, string name, Pickup25D.Kind kind, int amount, Sprite sprite, Vector2 position, bool active)
@@ -563,6 +592,120 @@ public static class Arena25DBuilder
         return attack;
     }
 
+    // ------------------------------------------------------- Apparences 3/4
+
+    // Sprites en vue de 3/4 (Sprites25D, rendus par tools/blender/redmet_quality.py), visages et piste du visage.
+    private static CharacterLook25D BuildLook(string character, bool enemy)
+    {
+        string sheetFolder = $"{Root}/Art/Characters/{character}/Sprites25D";
+
+        if (!File.Exists($"{sheetFolder}/sprites.json"))
+            return null;
+
+        SpriteAnimationBuilder.Result sprites = SpriteAnimationBuilder.Build(character, enemy, "25D");
+
+        if (sprites == null)
+            return null;
+
+        if (!AssetDatabase.IsValidFolder(LookFolder))
+            AssetDatabase.CreateFolder(Root + "/Data", "Looks25D");
+
+        string path = $"{LookFolder}/{character}.asset";
+        var look = AssetDatabase.LoadAssetAtPath<CharacterLook25D>(path);
+
+        if (look == null)
+        {
+            look = ScriptableObject.CreateInstance<CharacterLook25D>();
+            AssetDatabase.CreateAsset(look, path);
+        }
+
+        look.animator = sprites.Controller;
+        look.idle = sprites.IdleSprite;
+        look.faceScale = enemy ? 1.3f : 1.12f;
+        look.expressions = new[] { "neutral", "effort", "pain", "rage" }
+            .Select(e => FaceSprite($"{Root}/Art/Characters/{character}/Face/{character}_face_{e}.png")).ToArray();
+
+        var frames = new List<CharacterLook25D.FaceFrame>();
+        var json = JsonUtility.FromJson<FaceJson>(File.ReadAllText($"{sheetFolder}/face.json"));
+
+        foreach (FaceClip clip in json.clips)
+        {
+            if (!sprites.Clips.TryGetValue(clip.name, out Sprite[] clipSprites))
+                continue;
+
+            for (int i = 0; i < clipSprites.Length && (i + 1) * json.values_per_frame <= clip.data.Length; i++)
+            {
+                int k = i * json.values_per_frame;
+                frames.Add(new CharacterLook25D.FaceFrame
+                {
+                    sprite = clipSprites[i],
+                    position = new Vector2(clip.data[k], clip.data[k + 1]),
+                    angle = clip.data[k + 2],
+                    scale = clip.data[k + 3],
+                    visible = clip.data[k + 4] > 0.5f,
+                    flipped = clip.data[k + 5] > 0.5f,
+                });
+            }
+        }
+
+        look.faceFrames = frames.ToArray();
+        EditorUtility.SetDirty(look);
+        AssetDatabase.SaveAssets();
+        return look;
+    }
+
+    [Serializable]
+    private class FaceJson
+    {
+        public int values_per_frame = 6;
+        public FaceClip[] clips;
+    }
+
+    [Serializable]
+    private class FaceClip
+    {
+        public string name;
+        public float[] data;
+    }
+
+    private static Sprite FaceSprite(string path)
+    {
+        ImportSprite(path, FacePixelsPerMeter, new Vector2(0.5f, 0.5f));
+        return AssetDatabase.LoadAssetAtPath<Sprite>(path);
+    }
+
+    // Calque de visage : un sprite enfant du visuel, au-dessus du corps et sous l'arme tenue.
+    private static void AddFace(GameObject go, SpriteRenderer body, CharacterLook25D look)
+    {
+        GameObject face = CreateSprite("Visage", body.transform, null, Color.white, Vector3.zero, Vector3.one, 1);
+        face.GetComponent<SpriteRenderer>().enabled = false;
+        // Matériau du corps (voile de flash) : FaceLayer25D lui recopie le voile du corps.
+        face.GetComponent<SpriteRenderer>().sharedMaterial = body.sharedMaterial;
+        var layer = go.AddComponent<FaceLayer25D>();
+        SetObject(layer, "body", body);
+        SetObject(layer, "face", face.GetComponent<SpriteRenderer>());
+        SetObject(layer, "look", look);
+    }
+
+    private static void SetLooks(ArenaDirector25D director, CharacterLook25D look, params string[] archetypes)
+    {
+        if (look == null)
+            return;
+
+        var so = new SerializedObject(director);
+        SerializedProperty list = so.FindProperty("looks");
+        list.arraySize = archetypes.Length;
+
+        for (int i = 0; i < archetypes.Length; i++)
+        {
+            SerializedProperty entry = list.GetArrayElementAtIndex(i);
+            entry.FindPropertyRelative("archetype").objectReferenceValue = Archetype(archetypes[i]);
+            entry.FindPropertyRelative("look").objectReferenceValue = look;
+        }
+
+        so.ApplyModifiedPropertiesWithoutUndo();
+    }
+
     // ------------------------------------------------------------- Caméra, HUD
 
     private static Camera BuildCamera(Transform anchor)
@@ -572,7 +715,7 @@ public static class Arena25DBuilder
         go.transform.position = new Vector3(ZoneX[0], CameraY, -10f);
         var camera = go.AddComponent<Camera>();
         camera.orthographic = true;
-        camera.orthographicSize = 3.4f;
+        camera.orthographicSize = CameraSize;
         camera.clearFlags = CameraClearFlags.SolidColor;
         camera.backgroundColor = new Color(0.12f, 0.08f, 0.1f);
         go.AddComponent<AudioListener>();

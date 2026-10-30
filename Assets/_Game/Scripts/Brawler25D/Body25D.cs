@@ -24,6 +24,8 @@ public class Body25D : MonoBehaviour
     [SerializeField] private Transform visual;
     [Tooltip("Ombre ovale, hors du personnage : elle reste au sol, sous tous les personnages.")]
     [SerializeField] private SpriteRenderer shadow;
+    [Tooltip("Repère au sol propre au joueur (anneau discret), pour le retrouver dans la mêlée.")]
+    [SerializeField] private SpriteRenderer marker;
     [SerializeField] private SortingGroup sortingGroup;
     [SerializeField] private float gravity = 45f;
     [SerializeField] private float bodyHeight = 1.7f;
@@ -84,6 +86,9 @@ public class Body25D : MonoBehaviour
 
         if (shadow != null)
             shadow.enabled = true;
+
+        if (marker != null)
+            marker.enabled = true;
     }
 
     private void OnDisable()
@@ -92,6 +97,9 @@ public class Body25D : MonoBehaviour
 
         if (shadow != null)
             shadow.enabled = false;
+
+        if (marker != null)
+            marker.enabled = false;
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -174,6 +182,9 @@ public class Body25D : MonoBehaviour
 
         if (sortingGroup != null)
             sortingGroup.sortingOrder = Playfield25D.SortingOrder(transform.position.y);
+
+        if (marker != null)
+            marker.transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
 
         if (shadow == null)
             return;
