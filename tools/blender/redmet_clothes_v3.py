@@ -19,8 +19,8 @@ from mathutils import Vector
 HOODIE_HEM = 0.90
 NECK_LINE = 1.45
 PANTS_TOP = 1.00
-PANTS_HEM = 0.07
-SHOE_TOP = 0.115
+PANTS_HEM = 0.1
+SHOE_TOP = 0.16
 
 ARM_BONES = ("clavicle", "upperarm", "lowerarm")
 HAND_BONES = ("hand", "thumb", "index", "middle", "ring", "pinky")
@@ -248,20 +248,45 @@ def make_hoodie(character):
     inner = [v for v in bm.verts if not v.is_boundary]
     smooth(bm, inner, 0.5, 10)
 
+    # Manches amples mais lisses (retour de l'auteur : pas de boudins « Bibendum ») : rayon continu de l'épaule au
+    # poignet, plus faible en haut pour une épaule tombante et arrondie, resserré au bord-côte.
     def sleeve(bone, t):
         if bone.startswith("upperarm"):
-            return 0.078 - 0.006 * t
-        return 0.072 - 0.022 * max(0.0, (t - 0.75) / 0.25)   # resserré au poignet (bord-côte)
+            return 0.066 * (0.8 + 0.2 * min(1.0, t / 0.35))
+        return (0.064 - 0.004 * t) - 0.02 * max(0.0, (t - 0.8) / 0.2)
 
-    widen(bm, obj, rig, [f"{b}_{s}" for b in ("upperarm", "lowerarm") for s in "lr"], sleeve)
+    arm_bones = [f"{b}_{s}" for b in ("upperarm", "lowerarm") for s in "lr"]
+    widen(bm, obj, rig, arm_bones, sleeve)
+    arm = weights(obj, bm, tuple(b + "_" for b in ("upperarm", "lowerarm")))
+    smooth(bm, [v for v in bm.verts if not v.is_boundary and arm[v] > 0.2], 0.5, 14)
+
+    def shoulder(p):
+        """0 à 1 sur le haut des épaules (hors cou)."""
+        return max(0.0, min(1.0, (p.z - 1.32) / 0.06)) * max(0.0, min(1.0, (abs(p.x - cx) - 0.09) / 0.06))
 
     def offset(v):
-        z = (mw @ v.co).z
-        hem = max(0.0, 1.0 - (z - HOODIE_HEM) / 0.06)           # bord-côte du bas plus près du corps
-        return 0.03 - 0.012 * hem
+        p = mw @ v.co
+        hem = max(0.0, 1.0 - (p.z - HOODIE_HEM) / 0.06)          # bord-côte du bas plus près du corps
+        return 0.028 - 0.016 * hem - 0.006 * shoulder(p)   # jamais moins de 2 cm : la peau ne traverse pas
 
     inflate(bm, offset)
-    smooth(bm, [v for v in bm.verts if not v.is_boundary], 0.4, 4)
+
+    # Ventre rond qui pousse le sweat vers l'avant et retombe un peu sur la ceinture ; épaules tombantes.
+    for v in bm.verts:
+        p = mw @ v.co
+        dx = (p.x - cx) / 0.2
+        front = max(0.0, -v.normal.y)
+
+        if front > 0.2 and abs(dx) < 1.0:
+            bulge = math.exp(-((p.z - 1.0) / 0.09) ** 2) * (1 - dx * dx) * front
+            tuck = max(0.0, 1.0 - (p.z - HOODIE_HEM) / 0.035)    # le bord-côte rentre sous le ventre
+            p.y -= 0.08 * bulge
+            p.z -= 0.012 * bulge * (1 - tuck)
+            p.y += 0.012 * tuck * (1 - dx * dx) * front
+
+        v.co = inv @ p
+
+    smooth(bm, [v for v in bm.verts if not v.is_boundary], 0.4, 6)
     bm.to_mesh(obj.data)
     bm.free()
 
@@ -395,37 +420,120 @@ def cargo_pocket(character, rig, pants, side):
     return pieces[0]
 
 
+def _hull(points):
+    """Enveloppe convexe 2D (chaîne monotone)."""
+    pts = sorted(set(points))
+
+    def half(seq):
+        out = []
+        for q in seq:
+            while len(out) >= 2 and (out[-1][0] - out[-2][0]) * (q[1] - out[-2][1]) - (out[-1][1] - out[-2][1]) * (q[0] - out[-2][0]) <= 0:
+                out.pop()
+            out.append(q)
+        return out
+
+    lower, upper = half(pts), half(reversed(pts))
+    return lower[:-1] + upper[:-1]
+
+
 def make_shoes(character):
-    """Baskets sombres usées : semelle et bout blancs, lacets blancs (peints)."""
-    obj, body, rig, bm = region(character, f"{character}_v3_Baskets", None, SHOE_TOP, lambda p, v: True)
+    """Baskets montantes du concept R0 : tige sombre en volume lisse (enveloppe convexe du pied, sans orteils), bout
+    blanc arrondi, semelle blanche nette et débordante (pièce à part), lacets blancs peints."""
+    obj, body, rig, bm = region(character, f"{character}_v3_Baskets", 0.018, SHOE_TOP, lambda p, v: True)
     mw = obj.matrix_world
-    smooth(bm, [v for v in bm.verts if not v.is_boundary], 0.6, 30)   # orteils fondus en un bout rond
-    inflate(bm, lambda v: 0.02)
-    # Semelle : le dessous est aplati au sol et un peu débordant.
     inv = mw.inverted()
+    cx = body.matrix_world.translation.x
+    pts = [mw @ v.co for v in bm.verts]
+    bm.free()
+    bm = bmesh.new()
 
-    for v in bm.verts:
-        p = mw @ v.co
+    for side in "lr":
+        foot = [p for p in pts if (p.x > cx) == (side == "l")]
+        verts = [bm.verts.new(inv @ p) for p in foot]
+        bmesh.ops.convex_hull(bm, input=verts)
 
-        if p.z < 0.03:
-            p.z = max(p.z - 0.012, 0.0)
-            v.co = inv @ p
-
+    loose = [v for v in bm.verts if not v.link_faces]
+    bmesh.ops.delete(bm, geom=loose, context='VERTS')
     bm.to_mesh(obj.data)
     bm.free()
-    obj.data.materials.append(flat_material("RM_Basket", (0.13, 0.14, 0.2)))
+    # Maillage régulier (voxels) appliqué par copie du résultat évalué, puis léger gonflement (épaisseur de la toile)
+    # et ouverture du col de la tige.
+    remesh = obj.modifiers.new("Regulier", 'REMESH')
+    remesh.mode = 'VOXEL'
+    remesh.voxel_size = 0.004
+    dg = bpy.context.evaluated_depsgraph_get()
+    mesh = bpy.data.meshes.new_from_object(obj.evaluated_get(dg))
+    obj.modifiers.remove(remesh)
+    old, obj.data = obj.data, mesh
+    bpy.data.meshes.remove(old)
+    mesh.name = obj.name
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    smooth(bm, bm.verts[:], 0.5, 3)
+    inflate(bm, lambda v: 0.008)
+    kill = [v for v in bm.verts if (mw @ v.co).z > SHOE_TOP - 0.004]
+    bmesh.ops.delete(bm, geom=kill, context='VERTS')
+    bm.to_mesh(obj.data)
+    bm.free()
+    obj.vertex_groups.clear()
+    obj.data.materials.append(flat_material("RM_Basket", (0.07, 0.08, 0.13)))
     obj.data.materials.append(flat_material("RM_Semelle", (0.9, 0.9, 0.88)))
 
     for poly in obj.data.polygons:
         p = mw @ poly.center
-        foot = rig.matrix_world @ rig.data.bones["ball_" + ("l" if p.x > body.matrix_world.translation.x else "r")].head_local
-        toe = p.y < foot.y - 0.045 and p.z < 0.05
-        poly.material_index = 1 if p.z < 0.024 or toe else 0
+        ball = rig.matrix_world @ rig.data.bones["ball_" + ("l" if p.x > cx else "r")].head_local
+        poly.material_index = 1 if p.y < ball.y - 0.03 and p.z < 0.055 else 0      # bout en caoutchouc blanc
         poly.use_smooth = True
+
+    # Chaque basket suit l'os de son pied.
+    for side in "lr":
+        group = obj.vertex_groups.new(name=f"foot_{side}")
+        group.add([v.index for v in obj.data.vertices if ((mw @ v.co).x > cx) == (side == "l")], 1.0, 'REPLACE')
 
     bind(obj, rig)
     obj.modifiers.new("Lisse", 'SUBSURF').levels = 1
     outline(obj)
+    soles = [make_sole(character, obj, side) for side in "lr"]
+    return obj, soles
+
+
+def make_sole(character, shoe, side):
+    """Semelle : contour du pied vu de dessus, élargi, extrudé sur 2,6 cm, arêtes arrondies."""
+    rig = bpy.data.objects[f"{character}_v3_Rig"]
+    name = f"{character}_v3_Semelle_{side}"
+    _fresh(name)
+    cx = shoe.matrix_world.translation.x
+    dg = bpy.context.evaluated_depsgraph_get()
+    mesh = shoe.evaluated_get(dg).to_mesh()
+    mw = shoe.matrix_world
+    pts = [(mw @ v.co) for v in mesh.vertices]
+    pts = [p for p in pts if p.z < 0.06 and ((p.x > cx) == (side == "l"))]
+    shoe.evaluated_get(dg).to_mesh_clear()
+    centre = sum(pts, Vector()) / len(pts)
+    ring = _hull([(round(p.x, 4), round(p.y, 4)) for p in pts])
+    bm = bmesh.new()
+    verts = []
+
+    for x, y in ring:
+        d = Vector((x - centre.x, y - centre.y, 0))
+        q = Vector((x, y, 0)) + d.normalized() * 0.006
+        verts.append(bm.verts.new((q.x, q.y, 0.0)))
+
+    face = bm.faces.new(verts)
+    ext = bmesh.ops.extrude_face_region(bm, geom=[face])
+    top = [e for e in ext["geom"] if isinstance(e, bmesh.types.BMVert)]
+    bmesh.ops.translate(bm, vec=Vector((0, 0, 0.026)), verts=top)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    bmesh.ops.bevel(bm, geom=[e for e in bm.edges if e.is_manifold and abs(e.calc_face_angle(0)) > 0.8],
+                    offset=0.005, segments=3, affect='EDGES', profile=0.5)
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me)
+    bm.free()
+    obj = bpy.data.objects.new(name, me)
+    bpy.data.collections[f"{character}_v3"].objects.link(obj)
+    me.materials.append(bpy.data.materials["RM_Semelle"])
+    bind(obj, rig, f"foot_{side}")
+    outline(obj, 0.004)
     return obj
 
 
@@ -526,10 +634,10 @@ def make_drawstrings(character, hoodie):
 def dress(character):
     hoodie = make_hoodie(character)
     pants, pockets = make_pants(character)
-    shoes = make_shoes(character)
+    shoes, soles = make_shoes(character)
     hood = make_hood(character, hoodie)
     strings = make_drawstrings(character, hoodie)
-    return [hoodie, pants, shoes, hood, *pockets, *strings]
+    return [hoodie, pants, shoes, hood, *soles, *pockets, *strings]
 
 
 # ------------------------------------------------------------------ Image fixe pour l'auteur
@@ -871,10 +979,10 @@ def paint_shoes(character, folder):
     for s in "lr":
         a = rig.matrix_world @ rig.data.bones[f"foot_{s}"].head_local
         b = rig.matrix_world @ rig.data.bones[f"ball_{s}"].head_local
-        for k in range(4):
-            t0 = 0.15 + k * 0.17
+        for k in range(5):
+            t0 = 0.05 + k * 0.15
             c = a.lerp(b, t0)
-            c.z = 0.105 - k * 0.012
+            c.z = 0.13 - k * 0.016
             side = Vector((0.025, 0, 0))
             p.stroke([c - side + Vector((0, 0.012, 0)), c + side - Vector((0, 0.012, 0))], 3.5, lace, taper=False, samples=8)
             p.stroke([c + side + Vector((0, 0.012, 0)), c - side - Vector((0, 0.012, 0))], 3.5, lace, taper=False, samples=8)

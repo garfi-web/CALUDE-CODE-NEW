@@ -1,6 +1,6 @@
 """RED MET — poing fermé modélisé à part (2026-10-30, après le deuxième refus des mains MPFB pliées).
 
-Un seul poing pour tous les humains (main droite ; la gauche est son miroir), à l'échelle d'un adulte un peu enrobé
+Un seul poing pour tous les humains (main gauche ; la droite est son miroir, Blender gère l'échelle négative), à l'échelle d'un adulte un peu enrobé
 style anime (un peu plus gros que nature). Repère du poing : Y vers l'avant (du poignet vers les phalanges), Z vers
 le dos de la main, X du côté du pouce. Construction :
 - paume et dos de la main : bloc arrondi, phalanges (articulations) alignées en une ligne nette sur le dessus ;
@@ -199,3 +199,65 @@ def render_views(fist, out_dir, size=900):
         o.hide_render = h
 
     return paths
+
+
+def attach_fists(character, fist_name="RM_Poing_v3", scale_up=1.12):
+    """Remplace les mains MPFB par le poing modélisé : main du corps masquée, un poing par côté (le modèle est une
+    main gauche, la droite est son miroir) attaché à l'os de la main, moignon du poignet caché dans l'avant-bras."""
+    from mathutils import Matrix
+
+    body = bpy.data.objects[f"{character}_v3_Corps"]
+    rig = bpy.data.objects[f"{character}_v3_Rig"]
+    src = bpy.data.objects[fist_name]
+    hand = {g.index for g in body.vertex_groups if g.name.split("_")[0] in ("hand", "thumb", "index", "middle", "ring", "pinky")}
+    group = body.vertex_groups.get("Main_MPFB") or body.vertex_groups.new(name="Main_MPFB")
+    group.remove(range(len(body.data.vertices)))
+    group.add([v.index for v in body.data.vertices if sum(x.weight for x in v.groups if x.group in hand) > 0.5], 1.0, 'REPLACE')
+    mask = body.modifiers.get("Sans main") or body.modifiers.new("Sans main", 'MASK')
+    mask.vertex_group = group.name
+    mask.invert_vertex_group = True
+
+    with bpy.context.temp_override(object=body, active_object=body):
+        bpy.ops.object.modifier_move_to_index(modifier=mask.name, index=len(body.modifiers) - 2)
+
+    bpy.context.view_layer.update()
+    mw = rig.matrix_world
+    made = []
+
+    for side in "lr":
+        P = lambda n, tail=False: mw @ (rig.pose.bones[f"{n}_{side}"].tail if tail else rig.pose.bones[f"{n}_{side}"].head)
+        wrist = P("hand")
+        fwd = (P("middle_01") - wrist).normalized()
+        palm = P("middle_03", True) - P("middle_01")              # les doigts pliés vont vers la paume
+        back = -(palm - fwd * palm.dot(fwd)).normalized()
+        thumb = P("index_01") - P("pinky_01")
+        thumb = (thumb - fwd * thumb.dot(fwd) - back * thumb.dot(back)).normalized()
+        knuckles = (P("index_01") - P("pinky_01")).length
+        k = knuckles / 0.064 * scale_up                           # 0,064 m : largeur des articulations du modèle
+        name = f"{character}_v3_Poing_{side}"
+
+        if name in bpy.data.objects:
+            bpy.data.objects.remove(bpy.data.objects[name])
+
+        obj = src.copy()
+        obj.data = src.data.copy()
+        obj.name = name
+        obj.modifiers.clear()
+        bpy.data.collections[f"{character}_v3"].objects.link(obj)
+        # Colonnes : X modèle → côté du pouce, Y → avant, Z → dos de la main (le miroir de la main droite en découle).
+        basis = Matrix((thumb, fwd, back)).transposed() * k
+        world = Matrix.Translation(wrist - fwd * 0.004 * k) @ basis.to_4x4()
+        obj.parent = rig
+        obj.parent_type = 'BONE'
+        obj.parent_bone = f"hand_{side}"
+        bpy.context.view_layer.update()
+        obj.matrix_world = world
+
+        line = obj.modifiers.new("Outline", 'SOLIDIFY')
+        line.thickness = 0.0042 / k
+        line.offset = 1.0
+        line.use_flip_normals = True
+        line.material_offset = 1
+        made.append(obj)
+
+    return made

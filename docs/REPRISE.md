@@ -145,7 +145,13 @@ Précisions du même retour : « Le gros plan ne montre pas un poing : les doigt
 
 **Palier 1 fait (2026-10-30), en attente du OK** : poing modélisé à part, sans téléchargement (`tools/blender/redmet_fist_v3.py`, `build_fist()` : paume, 4 doigts repliés à plat, articulations alignées, pouce en travers devant l'index et le majeur, poignet dans l'axe ; pièces fondues par remaillage en voxels, environ 9 000 faces ; `render_views()` pour les 3 vues). Objet `RM_Poing_v3` (collection `RM_Poing_v3`, x = 60) dans `REDMET_personnages.blend`. Planche : `docs/captures/2026-10-30_poing_v3_palier1.png` (photo de référence « Clenched fist », Genusfotografen / Wikimedia Sverige, CC BY-SA 4.0, comparaison seulement). Palier suivant après le OK : poser le poing sur Nathan (main MPFB masquée, poing attaché à l'os de la main, raccord au poignet sous la manche), main gauche en miroir.
 
-**Ensuite, autres écarts avec le concept R0 à corriger** (même planche) :
+**Poing validé par l'auteur (« oui », 2026-10-30).** Fait ensuite, montré, **en attente du OK avant l'étape 3** : planche `docs/captures/2026-10-30_nathan_m0_v3_vetements_v2.png`.
+- Poing posé sur Nathan : `attach_fists("Nathan_M0")` (`redmet_fist_v3.py`) masque la main MPFB (groupe `Main_MPFB`, modificateur « Sans main ») et attache une copie du poing à l'os `hand_l` / `hand_r` (miroir pour l'autre main), contour à 4,2 mm comme les mains.
+- `redmet_clothes_v3.py` : ventre qui pousse le sweat et bord-côte rentré dessous ; manches lisses (rayon continu, lissage des bras) ; épaules plus tombantes ; baskets refaites (enveloppe convexe du pied remaillée, sans orteils, bout blanc, semelle blanche à part `make_sole`), bas du pantalon à 10 cm.
+- Ordre pour tout recréer : `stance(rig)`, `dress`, `skin`, `attach_fists`, `paint`, `still(..., close=("hand_l", "poing"))`.
+- Points faibles signalés à l'auteur : baskets encore trop basses et lisses (lacets peu visibles, limite du bout blanc en escalier) ; ventre encore moins rond que sur le concept.
+
+Rappel du retour, **ensuite, autres écarts avec le concept R0 à corriger** (même planche) :
 - Ventre : le ventre rond pousse le sweat et tombe un peu sur la ceinture, comme sur le concept (aujourd'hui le sweat descend droit).
 - Manches : plus d'effet de boudins segmentés (« Bibendum ») ; manches amples mais lisses, avec quelques plis.
 - Épaules : plus tombantes et arrondies, moins carrées et moins larges.
