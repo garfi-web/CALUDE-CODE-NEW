@@ -651,7 +651,7 @@ def skin(character):
     body.data.materials[0] = flat_material("RM_Peau_v3", SKIN)
 
 
-def still(character, out_dir, size=1200, close=None):
+def still(character, out_dir, size=1200, close=None, shots=None):
     """Rendus de face et en 3/4 de jeu (18° de hauteur, 30° de côté), seulement la collection du personnage."""
     scene = bpy.context.scene
     coll = bpy.data.collections[f"{character}_v3"]
@@ -659,7 +659,8 @@ def still(character, out_dir, size=1200, close=None):
     hidden = {o: o.hide_render for o in scene.objects}
 
     for o in scene.objects:
-        o.hide_render = o not in keep and o.type != 'LIGHT'
+        if o not in keep and o.type != 'LIGHT':   # les objets du personnage gardent leur réglage (poings cachés)
+            o.hide_render = True
 
     body = bpy.data.objects[f"{character}_v3_Corps"]
     target = body.matrix_world.translation + Vector((0, 0, 0.86))
@@ -698,7 +699,9 @@ def still(character, out_dir, size=1200, close=None):
     scene.render.film_transparent = True
     paths = []
 
-    shots = [("face", 0.0, 90.0, target, 1.95), ("34", 18.0, 60.0, target, 1.95)]
+    # shots : (nom, hauteur en degrés, lacet en degrés, point visé, largeur du cadre en m). Par défaut face et 3/4
+    # « portrait » ; le jeu utilise le lacet 30° (place_camera de redmet_quality.py : personnage tourné vers la droite).
+    shots = list(shots) if shots else [("face", 0.0, 90.0, target, 1.95), ("34", 18.0, 60.0, target, 1.95)]
 
     if close is not None:   # gros plan (os, nom) : par exemple le poing gauche, vu de 3/4 côté extérieur
         rig = bpy.data.objects[f"{character}_v3_Rig"]

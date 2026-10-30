@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : comparer 3 méthodes de poing (A main CC0 Human Base Meshes, B poing stylisé anime, C poing 2D illustré), un exemple de chacune (face, 3/4, profil) à côté d'une photo de référence, et corriger la posture de repos ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
+> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : Nathan M0 complet (corps 3D, tête A, mains 2D de la planche de l'auteur), planche docs/captures/2026-10-30_nathan_m0_v3_complet.png ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
@@ -132,7 +132,21 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 - **Nathan M4 refait** (beaucoup plus massif et bestial, torse et dos nus, peau de pierre fissurée, veines rouges, voir `docs/CHARACTERS.md`) : 4 concepts Animagine, anatomie vérifiée, de face et de dos, **attendre le choix de l'auteur** avant le modèle 3D ; ensuite même méthode de qualité, en 3/4.
 - **Ordre** : 1) qualité Nathan M0 + Voyou et défauts, concepts de M4 → validation ; 2) unifier le code du combat de Nathan, convertir l'Acte I en 2,5D ; 3) reprendre les tâches en pause (portraits de dos de Mara, visual novel, ciels).
 
-### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30, 3e retour sur les mains) : 3 MÉTHODES DE POING À COMPARER, PUIS CHOIX DE L'AUTEUR
+### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30) : NATHAN M0 COMPLET (CORPS 3D + TÊTE A + MAINS 2D) MONTRÉ, EN ATTENTE DU OK
+
+**Demande de l'auteur** : mains illustrées 2D tirées de sa planche générée par IA pour RED MET (`docs/references/planche_mains_redmet/planche_mains_redmet.png`, usage autorisé, `docs/LICENCES_TIERS.md`), rangée « DESSIN 2D » ; adaptées par personnage (M0 potelé, M2 plus gros et veiné, M4 pierre grise fissurée et veines rouges) ; poing de profil pour les coups tendus, poing de dos pour la garde, main ouverte pour la douleur et les projections, retournement pour l'autre côté ; au repos, mains de Nathan M0 dans la poche kangourou ; montrer Nathan M0 complet avec la tête A (repos, garde, coup tendu) en 3/4 et en jeu à côté d'un Voyou, attendre le OK.
+
+**Fait** :
+- `tools/gen3d/hands2d.py cut` : 5 mains découpées (BiRefNet, ×3) dans `Assets/_Game/Art/Characters/Hands/Hand_<pose>.png` ; `adapt` : `<Perso>/Hands/<Perso>_hand_<pose>.png` pour Nathan_M0, Nathan_M2, Nathan_M4 (planche `docs/captures/2026-10-30_mains_2d_par_personnage.png`).
+- `tools/blender/redmet_compose_v3.py` : poses par cinématique inverse (repos poche, garde, coup tendu du bras droit), tête, cou et mains MPFB masqués (groupe `Cache_2D`), rendu au cadrage des sprites (1024 px / 2,6 m, 3/4 18°/30°), positions écrites dans `<dossier>/Nathan_M0_poses.json`.
+- `tools/gen3d/compose_still.py` : tête A (redressée de 30°, remontée de 6 cm pour dégager le menton de la capuche) glissée sous le col, mains 2D sur les poignets dans l'axe des avant-bras, contour du corps ; sorties `Assets/_Game/Art/Characters/Nathan_M0/Stills/Nathan_M0_v3_<pose>.png`.
+- Unity : **RED MET → Capturer Nathan M0 refait (repos, garde, coup)** (`Editor/NathanV3StillCapture25D.cs`) → `docs/captures/2026-10-30_nathan_m0_v3_jeu_<pose>.png`.
+- Planche montrée : `docs/captures/2026-10-30_nathan_m0_v3_complet.png`.
+- Points faibles signalés : mains 2D petites à l'échelle du jeu (~55 px), bord gauche de la tête A coupé net, poignets 3D visibles entre manche et main ; aucune pose manquante (rien généré dans ComfyUI).
+
+Historique :
+
+### ÉTAPE PRÉCÉDENTE (2026-10-30, 3e retour sur les mains) : 3 MÉTHODES DE POING À COMPARER, PUIS CHOIX DE L'AUTEUR
 
 **Retour de l'auteur** sur `docs/captures/2026-10-30_nathan_m0_v3_vetements_v2.png` : les poings sont fermés et compacts mais pas naturels :
 - effet « gants de boxe » (blocs ronds trop gros au bout des manches) ;

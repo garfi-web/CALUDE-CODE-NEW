@@ -34,6 +34,15 @@ commercial, licence montrée à l'auteur avant tout téléchargement.
 Animagine XL 4.0, ComfyUI, TripoSG, ControlNet Union SDXL, BiRefNet, police M PLUS Rounded 1c : voir `docs/PRODUCTION.md`
 (décisions et licences, phase 0 et refonte du visual novel).
 
+## Planche de mains de l'auteur (utilisée dans le jeu)
+
+| Élément | Valeur |
+|---|---|
+| Fichier | `docs/references/planche_mains_redmet/planche_mains_redmet.png` (1312 × 1199) |
+| Provenance | **Générée par IA par l'auteur du projet, pour RED MET** (communiqué le 2026-10-30). |
+| Licence / usage | **Utilisation autorisée par l'auteur**, y compris directement dans le jeu. |
+| Usage | Rangée « DESSIN 2D » découpée (BiRefNet) : `Assets/_Game/Art/Characters/Hands/Hand_*.png`, puis adaptée par personnage (`tools/gen3d/hands2d.py`). |
+
 ## Images de référence (comparaison seulement, jamais dans le jeu)
 
 | Image | Licence | Usage |
