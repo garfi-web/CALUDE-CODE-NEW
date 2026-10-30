@@ -35,7 +35,24 @@ public static class NathanV3StillCapture25D
         Debug.Log("[RED MET] Nathan M0 refait : captures dans " + folder);
     }
 
-    private static void Stage(Sprite nathanSprite)
+    // Essai de direction artistique « roman graphique » (2026-10-30) : Nathan et le Voyou rendus en BD dans Blender
+    // (tools/blender/redmet_bd.py), en garde, face à face. Les décors ne sont pas modifiés.
+    [MenuItem("RED MET/Capturer l'essai BD (Nathan et Voyou en garde)")]
+    public static void CaptureComic()
+    {
+        string folder = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "docs", "captures"));
+        string nathan = $"{Characters}/Nathan_M0/Stills/Nathan_M0_BD_garde.png";
+        string voyou = $"{Characters}/Voyou/Stills/Voyou_BD_garde.png";
+        Import(nathan);
+        Import(voyou);
+        EditorSceneManager.OpenScene(ScenePath);
+        Stage(AssetDatabase.LoadAssetAtPath<Sprite>(nathan), voyou);
+        Render(Camera.main, Path.Combine(folder, "2026-10-30_essai_bd_jeu.png"));
+        EditorSceneManager.OpenScene(ScenePath);
+        Debug.Log("[RED MET] Essai BD : capture dans " + folder);
+    }
+
+    private static void Stage(Sprite nathanSprite, string voyouStill = VoyouStill)
     {
         GameObject nathan = GameObject.Find("Nathan");
         nathan.transform.position = new Vector3(-0.9f, -0.75f, 0f);
@@ -63,7 +80,7 @@ public static class NathanV3StillCapture25D
         voyou.transform.localScale = new Vector3(-1f, 1f, 1f);
         SpriteRenderer voyouBody = voyou.transform.Find("Visual").GetComponent<SpriteRenderer>();
         voyouBody.GetComponent<Animator>().enabled = false;
-        voyouBody.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(VoyouStill);
+        voyouBody.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(voyouStill);
         voyouBody.color = Color.white;
 
         GameObject props = GameObject.Find("Objets");

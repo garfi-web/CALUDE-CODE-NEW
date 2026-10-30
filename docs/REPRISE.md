@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : assemblage corrigé de Nathan M0 (cou, tête A redressée, bras jusqu'aux poings), planche docs/captures/2026-10-30_nathan_m0_v3_assemblage.png ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
+> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : décision de l'auteur sur l'essai roman graphique, planche docs/captures/2026-10-30_essai_bd_comparaison.png ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
@@ -132,7 +132,17 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 - **Nathan M4 refait** (beaucoup plus massif et bestial, torse et dos nus, peau de pierre fissurée, veines rouges, voir `docs/CHARACTERS.md`) : 4 concepts Animagine, anatomie vérifiée, de face et de dos, **attendre le choix de l'auteur** avant le modèle 3D ; ensuite même méthode de qualité, en 3/4.
 - **Ordre** : 1) qualité Nathan M0 + Voyou et défauts, concepts de M4 → validation ; 2) unifier le code du combat de Nathan, convertir l'Acte I en 2,5D ; 3) reprendre les tâches en pause (portraits de dos de Mara, visual novel, ciels).
 
-### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30) : ASSEMBLAGE DE NATHAN M0 CORRIGÉ, MONTRÉ, EN ATTENTE DU OK (avant expressions et animations)
+### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30) : ESSAI « ROMAN GRAPHIQUE » MONTRÉ, EN ATTENTE DE LA DÉCISION DE L'AUTEUR (ne rien produire d'autre)
+
+**Demande de l'auteur** : tester un rendu façon roman graphique (esprit The Darkness II) au lieu de l'anime ; tout le personnage vient d'un seul modèle 3D rendu en BD (plus de tête ni de mains 2D collées). Essai limité à ~2 h, sur Nathan M0 et un Voyou, une image fixe en garde chacun, sans rien supprimer ; comparaison anime / BD en gros plan et en jeu ; **attendre sa décision**.
+
+**Fait** : `tools/blender/redmet_bd.py` (matériau BD : aplats sourds, ombres noires au seuil, hachures simples et croisées en coordonnées d'écran ; contour pinceau en coque inversée d'épaisseur bruitée ; `render_bd` au cadrage des sprites, soleil de côté avec ombres portées, traits intérieurs par passe de normales ; `make_hair` boucles 3D fondues ; `make_eyes` globes oculaires ; `paint_face` visage peint à l'encre sur la texture de peau : sourcils, yeux, lunettes, double foyer, nez, bouche, double menton, acné, barbe naissante ; `apply_bd`). `tools/gen3d/bd_post.py` (grain de papier, palette sourde). Stills : `Nathan_M0/Stills/Nathan_M0_BD_garde.png`, `Voyou/Stills/Voyou_BD_garde.png`. Unity : **RED MET → Capturer l'essai BD**. Planche : `docs/captures/2026-10-30_essai_bd_comparaison.png`, capture `docs/captures/2026-10-30_essai_bd_jeu.png`.
+- Le fichier Blender a maintenant les matériaux BD sur Nathan_M0_v3 et Voyou_M (les matériaux anime existent toujours ; l'anime se recrée par `dress` / `skin` / `paint`, et le Voyou par `set_head_holdout` + `RM_Toon4_Voyou`). Aucun fichier anime supprimé.
+- Règle permanente ajoutée (GDD, CLAUDE.md) : aucune onomatopée à l'écran.
+
+Historique :
+
+### ÉTAPE PRÉCÉDENTE (2026-10-30) : ASSEMBLAGE DE NATHAN M0 CORRIGÉ, MONTRÉ, EN ATTENTE DU OK (avant expressions et animations)
 
 **Retour de l'auteur** : mains dessinées gardées ; assemblage refusé (tête sans cou, poings non reliés). Demandes : vrai cou 3D (même peau, ombre sous le menton), calques arrière capuche → cou et tête → avant capuche et col, pivot de la tête à la base du cou, tête A régénérée regard horizontal sans bord coupé ; avant-bras et manches 3D jusqu'au poignet dans toutes les poses, main 2D au bout du poignet dans l'axe, revers par-dessus, ombre au raccord, plus de bout de poignet 3D ; Nathan à 35 % de l'écran, mains de 70 à 80 px.
 
