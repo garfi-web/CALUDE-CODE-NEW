@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE en tête de la section 8 de docs/REPRISE.md : les têtes illustrées de Nathan M0, palier 1, 2e essai (planche docs/captures/2026-10-30_tete_nathan_essai2.png) ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
+> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE en tête de la section 8 de docs/REPRISE.md : les têtes illustrées de Nathan M0, palier 2 (captures docs/captures/2026-10-30_tete_nathan_palier2_jeu.png et _grosplan.png) ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
@@ -132,7 +132,11 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 - **Nathan M4 refait** (beaucoup plus massif et bestial, torse et dos nus, peau de pierre fissurée, veines rouges, voir `docs/CHARACTERS.md`) : 4 concepts Animagine, anatomie vérifiée, de face et de dos, **attendre le choix de l'auteur** avant le modèle 3D ; ensuite même méthode de qualité, en 3/4.
 - **Ordre** : 1) qualité Nathan M0 + Voyou et défauts, concepts de M4 → validation ; 2) unifier le code du combat de Nathan, convertir l'Acte I en 2,5D ; 3) reprendre les tâches en pause (portraits de dos de Mara, visual novel, ciels).
 
-### PROCHAINE ÉTAPE (sauvegarde du 2026-10-30) : têtes illustrées de Nathan M0, PALIER 1 EN ATTENTE DE L'AUTEUR
+### PROCHAINE ÉTAPE (2026-10-30) : têtes illustrées de Nathan M0, PALIER 2 MONTRÉ, EN ATTENTE DE L'AUTEUR
+
+**Palier 1 validé : l'auteur a choisi A (s9104)** (« c'est le mieux »). Palier 2 fait : tête A nettoyée (col effacé, bords coupés des cheveux arrondis), calée sur la tête 3D et traitée comme le corps (`tools/gen3d/heads.py`, `Assets/_Game/Art/Characters/Nathan_M0/Heads/Nathan_M0_head_neutral.png`), posée sur l'image 0 du repos par la piste de l'os de la tête, à côté d'un Voyou (encore avec sa tête 3D, image fixe `Voyou/Stills/`). Outil : **RED MET → Capturer l'essai de tête (palier 2)** (`Editor/HeadStillCapture25D.cs`, ne modifie pas la scène). Captures : `docs/captures/2026-10-30_tete_nathan_palier2_jeu.png` (1920×1080) et `..._grosplan.png`. Palier 3 (autres expressions de Nathan) seulement après le « OK » de l'auteur.
+
+Historique du palier 1 :
 
 **Règle de l'auteur (2026-10-30, aussi dans CLAUDE.md) : VALIDER AVANT DE PRODUIRE.** Petits paliers, un « OK » explicite à chacun, temps et effort du palier suivant annoncés ; deux refus de suite : arrêter et proposer une autre méthode (par exemple un illustrateur).
 

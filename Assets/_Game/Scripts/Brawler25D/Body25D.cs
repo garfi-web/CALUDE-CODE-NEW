@@ -175,7 +175,8 @@ public class Body25D : MonoBehaviour
 
     private void LateUpdate() => UpdatePresentation();
 
-    private void UpdatePresentation()
+    // Aussi appelé hors du jeu (captures de l'éditeur), quand LateUpdate ne tourne pas.
+    public void UpdatePresentation()
     {
         if (visual != null)
             visual.localPosition = new Vector3(0f, Height, 0f);

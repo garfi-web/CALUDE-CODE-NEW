@@ -209,6 +209,11 @@ def toon(rgba, outline_rgb, skin_rgb):
 
     # Contour : même épaisseur que la coque du corps, même couleur, derrière la tête.
     ring = dilate(inside, OUTLINE_PX) & ~inside
+    # Pas de contour sous la coupe du cou : la tête s'y raccorde au corps (qui passe devant), sans trait.
+    rows = np.where(inside.any(axis=1))[0]
+
+    if len(rows):
+        ring[rows.max() - OUTLINE_PX:, :] = False
     out = np.zeros((SIZE, SIZE, 4), np.float32)
     out[ring, :3] = np.array(outline_rgb, dtype=np.float32) / 255.0
     out[ring, 3] = 1.0
