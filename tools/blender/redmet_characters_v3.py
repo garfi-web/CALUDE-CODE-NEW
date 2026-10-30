@@ -67,3 +67,62 @@ def create_body(character):
 
     bpy.context.view_layer.update()
     return body
+
+
+# ------------------------------------------------------------------ Squelette et poings
+
+def add_rig(character):
+    """Squelette « game_engine » de MPFB (doigts compris), réaligné sur le corps : MPFB le crée environ 0,8 m trop bas
+    quand le corps a été posé au sol ; on le remonte de la médiane des écarts os / sommets qu'ils déforment."""
+    import numpy as np
+    from mathutils import Vector
+
+    body = bpy.data.objects[f"{character}_v3_Corps"]
+    rig = HumanService.add_builtin_rig(body, "game_engine", import_weights=True)
+    rig.name = f"{character}_v3_Rig"
+    acc = {}
+
+    for v in body.data.vertices:
+        p = body.matrix_world @ v.co
+        for g in v.groups:
+            name = body.vertex_groups[g.group].name
+            if g.weight > 0.6 and name in rig.pose.bones:
+                acc.setdefault(name, []).append(p)
+
+    diffs = []
+    for name, pts in acc.items():
+        if len(pts) > 20:
+            pb = rig.pose.bones[name]
+            diffs.append(tuple(sum(pts, Vector()) / len(pts) - rig.matrix_world @ pb.head.lerp(pb.tail, 0.5)))
+
+    offset = float(np.median(np.array(diffs), axis=0)[2])
+    world = body.matrix_world.copy()
+    body.parent = None
+    body.matrix_world = world
+    rig.location.z += offset
+
+    # Lissage correctif après le squelette : moins de pincements aux jointures (poings).
+    smooth = body.modifiers.new("CorrectiveSmooth", 'CORRECTIVE_SMOOTH')
+    smooth.iterations = 12
+    smooth.smooth_type = 'LENGTH_WEIGHTED'
+    smooth.rest_source = 'ORCO'
+    with bpy.context.temp_override(object=body, active_object=body):
+        bpy.ops.object.modifier_move_to_index(modifier=smooth.name, index=1)
+
+    for pb in rig.pose.bones:
+        pb.rotation_mode = 'XYZ'
+
+    return rig
+
+
+def fist(rig, side):
+    """Poing fermé (essais du 2026-10-30) : phalanges pliées autour de leur axe Z, léger écart des doigts, pouce replié
+    devant l'index et le majeur (variante « e1 »)."""
+    import math
+
+    for finger, spread in (("index", -4), ("middle", 0), ("ring", 3), ("pinky", 6)):
+        for i, angle in zip((1, 2, 3), (72, 88, 62)):
+            rig.pose.bones[f"{finger}_0{i}_{side}"].rotation_euler = (0, math.radians(spread) if i == 1 else 0, math.radians(angle))
+
+    for i, angle in zip((1, 2, 3), (-25, -50, -45)):
+        rig.pose.bones[f"thumb_0{i}_{side}"].rotation_euler = (0, 0, math.radians(angle))
