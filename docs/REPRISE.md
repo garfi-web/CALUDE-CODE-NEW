@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE en tête de la section 8 de docs/REPRISE.md : Nathan M0 en 3D propre, étape 2 (vêtements et poings, planche docs/captures/2026-10-30_nathan_m0_v3_vetements.png) ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
+> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : le poing fermé de Nathan M0 (main en poing dédiée ou ressource CC0, licence montrée avant téléchargement), montré seul de face, de 3/4 et de profil à côté d'une référence ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
@@ -132,7 +132,25 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 - **Nathan M4 refait** (beaucoup plus massif et bestial, torse et dos nus, peau de pierre fissurée, veines rouges, voir `docs/CHARACTERS.md`) : 4 concepts Animagine, anatomie vérifiée, de face et de dos, **attendre le choix de l'auteur** avant le modèle 3D ; ensuite même méthode de qualité, en 3/4.
 - **Ordre** : 1) qualité Nathan M0 + Voyou et défauts, concepts de M4 → validation ; 2) unifier le code du combat de Nathan, convertir l'Acte I en 2,5D ; 3) reprendre les tâches en pause (portraits de dos de Mara, visual novel, ciels).
 
-### PROCHAINE ÉTAPE (2026-10-30) : NATHAN M0 EN 3D PROPRE, ÉTAPE 2 (VÊTEMENTS) MONTRÉE, EN ATTENTE DU OK
+### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30, retour de l'auteur sur l'étape 2) : POING FERMÉ, AVANT L'ÉTAPE 3 (TÊTE)
+
+**Refus de l'auteur (deuxième refus sur les mains)**, sur la planche `docs/captures/2026-10-30_nathan_m0_v3_vetements.png` :
+
+> « Gros problème sur l'image des poings fermés : ce n'est pas du tout bon. Un poing doit être compact et solide : les 4 doigts repliés à plat contre la paume, les phalanges alignées en une ligne nette sur le dessus, le pouce replié en travers devant l'index et le majeur, sans creux au milieu, sans doigt qui dépasse, et le poignet dans l'axe de l'avant-bras. Il doit se lire comme un poing au premier coup d'œil, de face, de 3/4 et de profil. Montre-moi d'abord le poing seul en gros plan sous ces 3 angles, et attends mon OK. C'est le deuxième refus sur les mains : si tu ne peux pas atteindre ce résultat en déformant la main MPFB, propose-moi une autre méthode avant d'insister (par exemple une main en poing modélisée à part, ou tirée d'une ressource CC0, comme celles des Human Base Meshes). »
+
+Précisions du même retour : « Le gros plan ne montre pas un poing : les doigts sont à moitié repliés comme une main qui attrape, le pouce pend vers le bas, le centre est creux ; sur le corps, les mains ressemblent à des griffes molles. »
+- **N'essaie plus de plier la main MPFB** : modéliser une main en poing dédiée, ou partir d'une ressource CC0 (par exemple les mains des Human Base Meshes), réutilisable pour tous les humains ; **vérifier et montrer la licence avant tout téléchargement** (`docs/LICENCES_TIERS.md`).
+- Taille de main cohérente avec un adulte enrobé (un peu plus grosse qu'aujourd'hui, style anime).
+- **Palier 1** : le poing seul en gros plan, de face, de 3/4 et de profil, **à côté d'une photo ou d'un dessin de référence de poing fermé**, ouvert à l'écran (`Start-Process`) ; attendre le OK.
+
+**Ensuite, autres écarts avec le concept R0 à corriger** (même planche) :
+- Ventre : le ventre rond pousse le sweat et tombe un peu sur la ceinture, comme sur le concept (aujourd'hui le sweat descend droit).
+- Manches : plus d'effet de boudins segmentés (« Bibendum ») ; manches amples mais lisses, avec quelques plis.
+- Épaules : plus tombantes et arrondies, moins carrées et moins larges.
+- Baskets : de vraies baskets montantes avec lacets et une semelle nette, comme sur le concept (pas des chaussons ni des sabots).
+- Puis montrer la planche corrigée (concept, face, 3/4, poing) ouverte à l'écran et **attendre le OK avant l'étape 3 (tête)**.
+
+### ÉTAPE 2 (2026-10-30) : NATHAN M0 EN 3D PROPRE, ÉTAPE 2 (VÊTEMENTS) MONTRÉE, REFUSÉE (VOIR CI-DESSUS)
 
 **Où reprendre exactement** : étape 1 (corps nu) validée par l'auteur (« silhouette validée »). Étape 2 faite et montrée : planche `docs/captures/2026-10-30_nathan_m0_v3_vetements.png` (concept R0 s4303, face, 3/4 du jeu, gros plan du poing). **En attente du OK ou des corrections de l'auteur.**
 - Tout se recrée par script dans Blender : `exec` de `tools/blender/redmet_characters_v3.py` puis de `tools/blender/redmet_clothes_v3.py` ; `stance(rig)` (bras baissés, poings), `dress("Nathan_M0")` (hoodie, capuche baissée, cordons, cargo à poches, baskets, chacun copié du corps au repos, donc avec ses poids), `skin("Nathan_M0")`, `paint("Nathan_M0", "ArtSource/Blender/Textures/Nathan_M0_v3")` (plis peints en texture : poche kangourou, bord-côte, coudes, aisselles, entrejambe, genoux, chevilles, lacets), `still("Nathan_M0", <dossier>, 1400, close=("middle_02_l", "poing"))`.
