@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "ruined city street in a dark fantasy parallel world, row of abandoned old stone and brick building facades seen straight from the front, a large closed wooden double door at street level, broken windows on the upper floors, a narrow dark alley between two buildings, rubble at the foot of the walls, sunset sky above the roofs, flat front view, eye level, wide panorama, no humans, scenery, anime style, highly detailed background art, painterly, dark fantasy, warm hazy sunset light, orange and pink sky, faint glowing red cracks, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, moon, red moon, night",
+  "seed": 25301,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1536,
+    768
+  ],
+  "duration_s": 27.2
+}

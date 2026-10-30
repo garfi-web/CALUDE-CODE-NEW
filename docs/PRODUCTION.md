@@ -5,6 +5,8 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 
 ## État d'avancement (au 2026-10-29)
 
+**PRIORITÉ DU 2026-10-30 : étude beat'em up 2,5D faite, en attente de la décision de l'auteur** (`docs/ETUDE_25D.md`, scène `Arena25D.unity`, 8 ennemis à 0,66 ms de thread principal). Les chantiers ci-dessous sont **en pause** (liste exacte et ordre de reprise : `docs/REPRISE.md`, section 8).
+
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
 - **Bestiaire** : phases A et B terminées. **Phase Combat dynamique terminée** (voir sa section plus bas).

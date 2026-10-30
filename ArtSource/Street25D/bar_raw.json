@@ -1,0 +1,10 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "controlnet": "controlnet-union-sdxl-1.0-promax.safetensors (canny, 0.55, fin 0.6)",
+  "control": "bar_guide.png",
+  "prompt": "rusty iron bar, steel pipe weapon, isolated object, black background, game item, no humans, anime style, highly detailed background art, painterly, dark fantasy, ruined, abandoned, warm sunset light from the left, long shadows, faint glowing red cracks",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, moon, red moon, night, perspective, fisheye",
+  "seed": 25317,
+  "duration_s": 12.1
+}

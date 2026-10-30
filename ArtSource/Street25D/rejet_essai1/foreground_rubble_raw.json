@@ -1,0 +1,15 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "prompt": "pile of broken concrete blocks and bricks with twisted rebar, isolated object, simple black background, dark silhouette lit from behind by sunset, no humans, scenery, anime style, highly detailed background art, painterly, dark fantasy, warm hazy sunset light, orange and pink sky, faint glowing red cracks, masterpiece, high score, great score, absurdres",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, moon, red moon, night",
+  "seed": 25303,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "euler_ancestral",
+  "size": [
+    1024,
+    1024
+  ],
+  "duration_s": 19.2
+}

@@ -51,6 +51,13 @@ public class CameraFollow : MonoBehaviour
             Main = null;
     }
 
+    // Bornes du suivi en X (zone de combat bloquée de l'arène 2,5D, puis ouverte vers la suivante).
+    public void SetBounds(float min, float max)
+    {
+        minX = min;
+        maxX = Mathf.Max(min, max);
+    }
+
     public void Shake(float amount)
     {
         trauma = Mathf.Clamp01(trauma + amount);

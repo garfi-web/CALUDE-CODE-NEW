@@ -128,6 +128,12 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 
 Demande de l'auteur du 2026-10-30 : étude et prototype 2,5D (nouvelle scène `Assets/_Game/Scenes/Arena25D.unity`, composants nouveaux, rien de l'existant cassé), puis `docs/ETUDE_25D.md`, commit et push, et **attente de la décision de l'auteur** avant toute autre conversion. Une fois cette étude validée ou tranchée par l'auteur, reprendre les tâches en pause ci-dessous, dans l'ordre et là où elles ont été laissées.
 
+**État (2026-10-30) : fait, EN ATTENTE DE LA DÉCISION DE L'AUTEUR.** Tout est dans `docs/ETUDE_25D.md` (recommandation, mesures, ce que coûterait la conversion). Deux décisions attendues :
+- cadrage des sprites (planche `docs/captures/2026-10-30_25d_comparaison_profil_3q.png` : profil, profil surélevé de 18°, ou 3/4 surélevé de 18° et tourné de 30°, conseillé). **Aucune animation n'est rendue avant ce choix** ;
+- convertir ou non (conseil : oui, l'Acte I d'abord, après unification du code de combat).
+
+Pour rejouer : **RED MET → Construire l'arène 2,5D (étude)**, puis Play dans `Arena25D.unity` ; ou **RED MET → Build Windows (arène 2,5D)** puis `Builds/Windows25D/REDMET25D.exe` (arguments `-redmet-benchmark-25d`, `-redmet-capture-25d`, `-redmet-showcase-25d`). En arrière-plan, l'éditeur Unity reste figé en mode Play (image 1) : tester avec la fenêtre au premier plan ou par le build. Bruits restant à générer (limite par minute du forfait gratuit d'ElevenLabs) : toit, réception, caisse (`SFX_Toit`, `SFX_Reception`, `SFX_Caisse`).
+
 ### TÂCHES EN PAUSE (mises en pause le 2026-10-30, à reprendre dans cet ordre)
 
 1. **Portraits de dos de Mara M-T0** : rejeter s8531 (trois bras) et s8534 (de face), proposer 3 variantes à partir de la pose de s8533 avec vérification de l'anatomie, puis attendre le choix de l'auteur. Laissé ici :

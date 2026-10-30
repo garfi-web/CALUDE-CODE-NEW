@@ -53,19 +53,28 @@ public static class Shotgun
             if (!inFront || (distance > attack.closeRange && !inCone))
                 continue;
 
-            AttackData hit = distance > attack.midRange && attack.farHit != null ? attack.farHit : attack;
-            bool lethal = distance <= attack.closeRange && attack.lethalAtCloseRange && CanBeGibbed(target);
-
-            if (!Combat.Strike(shooter, target, hit, point, facing, DamageKind.Ranged, true, DamageType.Bullet, lethal))
-                continue;
-
-            result.Hits++;
-
-            if (target.IsDead)
-                result.Kills++;
+            StrikeTarget(shooter, target, attack, point, distance, facing, ref result);
         }
 
         return result;
+    }
+
+    // Coup d'une cible dans le cône selon sa distance au canon (commun au tir latéral et au tir en 2,5D).
+    public static bool StrikeTarget(GameObject shooter, Health target, AttackData attack, Vector2 point, float distance,
+        float facing, ref Result result)
+    {
+        AttackData hit = distance > attack.midRange && attack.farHit != null ? attack.farHit : attack;
+        bool lethal = distance <= attack.closeRange && attack.lethalAtCloseRange && CanBeGibbed(target);
+
+        if (!Combat.Strike(shooter, target, hit, point, facing, DamageKind.Ranged, true, DamageType.Bullet, lethal))
+            return false;
+
+        result.Hits++;
+
+        if (target.IsDead)
+            result.Kills++;
+
+        return true;
     }
 
     // Seuls les humains de l'Acte I (et Nathan) sont pulvérisés : les surnaturels et les boss encaissent.

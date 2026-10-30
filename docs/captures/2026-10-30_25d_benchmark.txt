@@ -1,0 +1,5 @@
+RED MET — banc d'essai (2026-10-30 10:36)
+Matériel : AMD Ryzen 7 5800H with Radeon Graphics  ; NVIDIA GeForce RTX 3070 Laptop GPU ; 1920×1080
+Scène : arène 2,5D, combat encerclé : 8 ennemis demandés, à l'écran 4 à 9 (moyenne 7,4), Nathan se bat seul, gore complet, 30 s, vsync coupée
+Thread principal (CPU) : 15910 images ; moyenne 0,66 ms ; 99e centile 1,11 ms ; pire 3,13 ms ; au-delà de 16,6 ms : 0
+Durée d'image : 15910 images ; moyenne 1,89 ms ; 99e centile 3,52 ms ; pire 5,76 ms ; au-delà de 16,6 ms : 0

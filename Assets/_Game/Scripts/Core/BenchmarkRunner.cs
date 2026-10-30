@@ -179,7 +179,8 @@ public class BenchmarkRunner : MonoBehaviour
         return best;
     }
 
-    private static string Report(List<double> cpu, List<double> frame, string scene)
+    // Aussi utilisé par le banc d'essai de l'arène 2,5D (Benchmark25D).
+    public static string Report(List<double> cpu, List<double> frame, string scene)
     {
         string Stats(List<double> values)
         {

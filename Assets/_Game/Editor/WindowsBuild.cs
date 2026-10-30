@@ -8,6 +8,7 @@ using UnityEngine;
 public static class WindowsBuild
 {
     public const string OutputPath = "Builds/Windows/REDMET.exe";
+    public const string Output25DPath = "Builds/Windows25D/REDMET25D.exe";
 
     [MenuItem("RED MET/Build Windows")]
     public static void Build()
@@ -26,5 +27,25 @@ public static class WindowsBuild
         BuildSummary summary = report.summary;
         Debug.Log($"[RED MET] Build Windows : {summary.result}, {summary.totalSize / (1024 * 1024)} Mo, " +
                   $"{summary.totalTime.TotalSeconds:F0} s, {summary.totalErrors} erreur(s) → {OutputPath}");
+    }
+
+    // Étude 2,5D : build de l'arène 2,5D seule (Arena25D.unity), avec son banc d'essai (Benchmark25D,
+    // arguments -redmet-benchmark-25d, -redmet-capture-25d, -redmet-showcase-25d).
+    [MenuItem("RED MET/Build Windows (arène 2,5D)")]
+    public static void Build25D()
+    {
+        PlayerSettings.enableFrameTimingStats = true;
+
+        var options = new BuildPlayerOptions
+        {
+            scenes = new[] { "Assets/_Game/Scenes/Arena25D.unity" },
+            locationPathName = Output25DPath,
+            target = BuildTarget.StandaloneWindows64,
+            options = BuildOptions.None,
+        };
+
+        BuildSummary summary = BuildPipeline.BuildPlayer(options).summary;
+        Debug.Log($"[RED MET] Build Windows 2,5D : {summary.result}, {summary.totalSize / (1024 * 1024)} Mo, " +
+                  $"{summary.totalTime.TotalSeconds:F0} s, {summary.totalErrors} erreur(s) → {Output25DPath}");
     }
 }

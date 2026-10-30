@@ -43,6 +43,9 @@ public class AttackData : ScriptableObject
     public Vector2 hitboxSize = new(1.2f, 0.9f);
     [Tooltip("Pas en avant (m) pendant le démarrage et l'actif : le coup « avale » la distance et garde l'ennemi à portée.")]
     public float step = 0.3f;
+    [Tooltip("Beat'em up 2,5D : écart de profondeur maximal (m) entre l'attaquant et la cible pour que le coup touche " +
+             "(même bande de profondeur). Fusil à pompe : largeur du cône au canon, qui s'élargit ensuite avec la distance.")]
+    public float depthTolerance = 0.35f;
 
     // Vitesse qui parcourt le pas pendant le démarrage et l'actif.
     public float StepSpeed => step * FrameRate / (startup + active);

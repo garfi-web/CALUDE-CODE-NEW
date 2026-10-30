@@ -1,0 +1,10 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "controlnet": "controlnet-union-sdxl-1.0-promax.safetensors (canny, 0.55, fin 0.6)",
+  "control": "facade_a_guide.png",
+  "prompt": "row of old stone and brick building facades seen straight from the front, flat front elevation, orthographic, ground floor and one upper floor, broken roofs, large wooden double door, broken upper window, boarded window, narrow dark alley between buildings, shop with torn shutter, rubble at the foot of the walls, no humans, anime style, highly detailed background art, painterly, dark fantasy, ruined, abandoned, warm sunset light from the left, long shadows, faint glowing red cracks",
+  "negative": "1girl, 1boy, person, people, character, text, watermark, signature, logo, frame, border, lowres, blurry, jpeg artifacts, worst quality, low quality, moon, red moon, night, perspective, fisheye",
+  "seed": 25311,
+  "duration_s": 34.3
+}
