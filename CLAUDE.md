@@ -11,6 +11,9 @@ Jeu d'action 2D latéral (Unity 6, URP 2D, C#), dark fantasy et horreur psycholo
 - Le terminal n'affiche pas les images. Tout visuel montré à l'auteur est enregistré dans `docs/captures/` avec un nom clair (date + sujet, par exemple `2026-10-30_tete_nathan_essai1.png`), jamais dans un dossier temporaire.
 - L'ouvrir à l'écran avec PowerShell : `Start-Process "<chemin complet>"` (visionneuse de Windows), et donner aussi le chemin complet dans la réponse.
 
+## Aucune onomatopée (règle permanente de l'auteur, 2026-10-30)
+- Aucun texte d'onomatopée à l'écran (« BLAM », « KRAK »…), ni en combat, ni dans les cinématiques, quel que soit le style graphique.
+
 ## Code
 - Tout le jeu vit dans `Assets/_Game/`. Les scripts sont dans `Scripts/<Domaine>/`, les outils d'éditeur dans `Editor/`.
 - Le gameplay ne dépend jamais des animations : l'Animator est piloté par `CharacterAnimator` via des événements (`AttackStarted`, `DodgeStarted`, `Health.Damaged`, `Health.Died`).
