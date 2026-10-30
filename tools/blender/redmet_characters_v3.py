@@ -103,7 +103,7 @@ def add_rig(character):
 
     # Lissage correctif après le squelette : moins de pincements aux jointures (poings).
     smooth = body.modifiers.new("CorrectiveSmooth", 'CORRECTIVE_SMOOTH')
-    smooth.iterations = 12
+    smooth.iterations = 25
     smooth.smooth_type = 'LENGTH_WEIGHTED'
     smooth.rest_source = 'ORCO'
     with bpy.context.temp_override(object=body, active_object=body):
@@ -112,17 +112,40 @@ def add_rig(character):
     for pb in rig.pose.bones:
         pb.rotation_mode = 'XYZ'
 
+    # Contour aminci sur les mains (35 %) : un contour épais entre les doigts repliés fait des taches sombres.
+    group = body.vertex_groups.get("Outline_Poids") or body.vertex_groups.new(name="Outline_Poids")
+    hand = {g.index for g in body.vertex_groups if g.name.split("_")[0] in ("hand", "thumb", "index", "middle", "ring", "pinky")}
+
+    for v in body.data.vertices:
+        group.add([v.index], 0.0 if sum(x.weight for x in v.groups if x.group in hand) > 0.5 else 1.0, 'REPLACE')
+
+    line = body.modifiers.get("Outline")
+
+    if line is not None:
+        line.vertex_group = group.name
+        line.thickness_vertex_group = 0.35
+
     return rig
 
 
 def fist(rig, side):
     """Poing fermé (essais du 2026-10-30) : phalanges pliées autour de leur axe Z, léger écart des doigts, pouce replié
-    devant l'index et le majeur (variante « e1 »)."""
+    sur l'index et le majeur."""
     import math
 
     for finger, spread in (("index", -4), ("middle", 0), ("ring", 3), ("pinky", 6)):
-        for i, angle in zip((1, 2, 3), (72, 88, 62)):
+        for i, angle in zip((1, 2, 3), (90, 100, 70)):   # serrés contre la paume, sans trou
             rig.pose.bones[f"{finger}_0{i}_{side}"].rotation_euler = (0, math.radians(spread) if i == 1 else 0, math.radians(angle))
 
-    for i, angle in zip((1, 2, 3), (-25, -50, -45)):
-        rig.pose.bones[f"thumb_0{i}_{side}"].rotation_euler = (0, 0, math.radians(angle))
+    for i, xyz in zip((1, 2, 3), ((10, 20, -20), (20, 0, -45), (10, 0, -45))):
+        rig.pose.bones[f"thumb_0{i}_{side}"].rotation_euler = tuple(math.radians(a) for a in xyz)
+
+
+def stance(rig):
+    """Pose de l'image fixe : bras un peu baissés le long du corps, avant-bras tournés pour montrer les poings."""
+    import math
+
+    for side, k in (("l", 1), ("r", -1)):
+        rig.pose.bones[f"upperarm_{side}"].rotation_euler = (0, 0, math.radians(-22 * k))
+        rig.pose.bones[f"lowerarm_{side}"].rotation_euler = (0, math.radians(-50 * k), 0)
+        fist(rig, side)

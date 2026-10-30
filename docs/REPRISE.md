@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE en tête de la section 8 de docs/REPRISE.md : les têtes illustrées de Nathan M0, Nathan M0 en 3D propre, étape 1 (corps nu, planche docs/captures/2026-10-30_nathan_m0_v3_corps_nu.png) ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
+> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE en tête de la section 8 de docs/REPRISE.md : Nathan M0 en 3D propre, étape 2 (vêtements et poings, planche docs/captures/2026-10-30_nathan_m0_v3_vetements.png) ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
@@ -132,7 +132,17 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 - **Nathan M4 refait** (beaucoup plus massif et bestial, torse et dos nus, peau de pierre fissurée, veines rouges, voir `docs/CHARACTERS.md`) : 4 concepts Animagine, anatomie vérifiée, de face et de dos, **attendre le choix de l'auteur** avant le modèle 3D ; ensuite même méthode de qualité, en 3/4.
 - **Ordre** : 1) qualité Nathan M0 + Voyou et défauts, concepts de M4 → validation ; 2) unifier le code du combat de Nathan, convertir l'Acte I en 2,5D ; 3) reprendre les tâches en pause (portraits de dos de Mara, visual novel, ciels).
 
-### PROCHAINE ÉTAPE (2026-10-30) : NATHAN M0 EN 3D PROPRE, ÉTAPE 1 (CORPS NU) MONTRÉE, EN ATTENTE DU OK
+### PROCHAINE ÉTAPE (2026-10-30) : NATHAN M0 EN 3D PROPRE, ÉTAPE 2 (VÊTEMENTS) MONTRÉE, EN ATTENTE DU OK
+
+**Où reprendre exactement** : étape 1 (corps nu) validée par l'auteur (« silhouette validée »). Étape 2 faite et montrée : planche `docs/captures/2026-10-30_nathan_m0_v3_vetements.png` (concept R0 s4303, face, 3/4 du jeu, gros plan du poing). **En attente du OK ou des corrections de l'auteur.**
+- Tout se recrée par script dans Blender : `exec` de `tools/blender/redmet_characters_v3.py` puis de `tools/blender/redmet_clothes_v3.py` ; `stance(rig)` (bras baissés, poings), `dress("Nathan_M0")` (hoodie, capuche baissée, cordons, cargo à poches, baskets, chacun copié du corps au repos, donc avec ses poids), `skin("Nathan_M0")`, `paint("Nathan_M0", "ArtSource/Blender/Textures/Nathan_M0_v3")` (plis peints en texture : poche kangourou, bord-côte, coudes, aisselles, entrejambe, genoux, chevilles, lacets), `still("Nathan_M0", <dossier>, 1400, close=("middle_02_l", "poing"))`.
+- Matériaux : aplats à 4 tons nets (`flat_material`), soleil seul sans ombres portées, rendu « Standard » ; contour en coque inversée, aminci à 35 % sur les mains (groupe `Outline_Poids`).
+- Point faible signalé à l'auteur : le poing (doigts serrés, pouce replié sur l'index et le majeur) se lit de côté mais reste mou de 3/4 (creux visible, petit doigt qui dépasse) : les mains de MPFB plient mal en poing. Pistes proposées : modéliser une main-poing dédiée (maillage fermé, échangé avec la main ouverte) ou corriger la forme par une cible de forme sculptée.
+- Tête MPFB provisoire sur la planche ; elle est remplacée à l'étape 3 (tête 3D + visage A en texture).
+
+Historique de l'étape 1 :
+
+### ÉTAPE 1 (2026-10-30) : NATHAN M0 EN 3D PROPRE, ÉTAPE 1 (CORPS NU) MONTRÉE, EN ATTENTE DU OK
 
 **Où reprendre exactement** : l'auteur a validé MPFB 2 (ressources de base CC0 seulement ; tête stylisée de Human Base Meshes, CC0, seulement si celle de MPFB est trop réaliste). MPFB 2.0.18 est installé dans Blender (copie du paquet : `C:\RED METi\downloads\mpfb`, empreinte dans `docs/LICENCES_TIERS.md`). Étape 1 faite : corps nu de Nathan M0 (`Nathan_M0_v3_Corps`, collection `Nathan_M0_v3`, x = 50, dans `ArtSource/Blender/REDMET_personnages.blend`), recréable par `tools/blender/redmet_characters_v3.py` (`create_body("Nathan_M0")` : homme, 19 ans, poids 1,0, muscle 0,25, ventre 0,35, 1,70 m). Planche ouverte à l'auteur : `docs/captures/2026-10-30_nathan_m0_v3_corps_nu.png`. **En attente de son OK ou de ses corrections.**
 Étapes suivantes, chacune montrée (ouverte à l'écran, `Start-Process`) et validée avant la suivante : 2) vêtements modélisés (sweat noir, cargo gris, baskets d'après le concept R0), plis peints dans la texture, vraies mains (poings fermés nets) ; 3) tête 3D et visage en texture anime d'après la tête A (s9104), une texture par expression ; 4) image fixe de Nathan M0 (face, 3/4, en jeu à côté d'un Voyou). **Rien au-delà de l'image fixe sans l'accord de l'auteur.** Sauvegarde (Blender, Unity, docs, commit, push) à la fin de chaque étape et avant chaque tâche longue. Le prototype jouable reste tel quel en parallèle.
