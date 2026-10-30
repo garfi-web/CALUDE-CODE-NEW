@@ -1,0 +1,10 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "controlnet": "union promax, normal, 0.75, fin 0.8",
+  "guide": "Voyou_head_guide.png",
+  "prompt": "1boy, solo, male focus, adult man, 30 years old, hard face, tough, thug, (navy blue hoodie:1.2), (hood up:1.3), hood shadow on forehead only, (face fully visible:1.3), eyes visible, mouth visible, stubble, dark skin, thick eyebrows, small earring, determined, focused, furrowed brows, clenched teeth, gritted teeth, portrait, head only, (whole head in frame:1.1), close-up, (three-quarter view:1.3), face toward viewer, looking to the side, slightly from above, neck, anime coloring, cel shading, clean lineart, detailed face, detailed hair, highres, simple background, plain grey background, masterpiece, high score, great score, absurdres",
+  "negative": "from behind, back of head, bald, receding hairline, shaved head, face hidden, face covered, body, shoulders, chest, hands, arms, multiple views, extra eyes, asymmetrical eyes, deformed face, bad anatomy, cropped head, out of frame, text, logo, watermark, signature, female, child, chibi, lowres, blurry, worst quality, low quality, low score, bad score, average score, nsfw",
+  "seed": 9404,
+  "duration_s": 33.2
+}

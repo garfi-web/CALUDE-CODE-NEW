@@ -5,7 +5,7 @@ Pipeline visé : génération 3D locale → Blender (nettoyage, squelette, anima
 
 ## État d'avancement (au 2026-10-29)
 
-**PRIORITÉ DU 2026-10-30 : étude beat'em up 2,5D faite, en attente de la décision de l'auteur** (`docs/ETUDE_25D.md`, scène `Arena25D.unity`, 8 ennemis à 0,66 ms de thread principal). Les chantiers ci-dessous sont **en pause** (liste exacte et ordre de reprise : `docs/REPRISE.md`, section 8).
+**ÉTAT AU 2026-10-30 (soir) : têtes illustrées de Nathan M0, palier 1 montré, en attente du choix de l'auteur** (règle « valider avant de produire », détail en tête de la section 8 de `docs/REPRISE.md`). Décisions de l'auteur : 2,5D en vue de 3/4 (18°, 30°), conversion de l'Acte I après validation des personnages, nouveau M4 = s7705 ; calque de visage 2D rejeté. Avant : **PRIORITÉ DU 2026-10-30 : étude beat'em up 2,5D faite, en attente de la décision de l'auteur** (`docs/ETUDE_25D.md`, scène `Arena25D.unity`, 8 ennemis à 0,66 ms de thread principal). Les chantiers ci-dessous sont **en pause** (liste exacte et ordre de reprise : `docs/REPRISE.md`, section 8).
 
 **Phase en cours** : deux chantiers en parallèle.
 - **Prototype jouable, phase 1 (modèles 3D)** : modèles bruts générés, nettoyage dans Blender pas encore commencé.
@@ -929,3 +929,12 @@ Retour de l'auteur (texte complet dans `docs/REPRISE.md`, section 8) :
 - s8551 à s8556, avec la silhouette : **générés, pas encore vérifiés**.
 
 **Reste à faire** : vérifier s8551 à s8556 et relancer les échecs, montrer 3 variantes avec le nombre d'écartées, attendre le choix de l'auteur ; puis la suite de la refonte du visual novel. Les ciels (entrée précédente) attendent la validation de l'auteur.
+
+
+### 2026-10-30 — Qualité des personnages en 3/4, puis têtes illustrées
+
+- Décisions de l'auteur sur l'étude 2,5D : cadrage 3/4 surélevé de 18° et tourné de 30° ; conversion de l'Acte I d'abord, après unification du code du combat de Nathan ; qualité des personnages avant tout rendu complet.
+- Fait : texture projetée depuis les concepts validés (de face seulement : aucun profil validé n'existe) et cuite sur un dépliage UV, 4 aplats, double résolution (1024 px pour 2,6 m), caméra à 35 % de l'écran ; liseré rouge sombre et anneau au sol propres à Nathan ; sang et morceaux posés au sol en 2,5D (`CombatVfx.GroundOf`) ; flash d'impact limité (0,35 s entre deux). Banc d'essai : 2,03 ms par image, aucune au-delà de 16,6 ms ; build de 1,5 Go (à recadrer en atlas).
+- Calque de visage 2D (dessiné en traits, `tools/gen3d/faces.py`) : **rejeté par l'auteur**. Remplacé par des têtes illustrées complètes (Animagine XL + ControlNet Union « normal » sur la tête 3D, BiRefNet), par paliers validés. Palier 1 : 11 têtes neutres de Nathan générées, 8 écartées, 3 proposées.
+- Nathan M4 refait : 9 planches face + dos (graines 7701 à 7709), 3 écartées (7702 bras remplacé par une planche, 7704 troisième main, 7703 peau blanche et main douteuse) ; **l'auteur retient s7705**.
+- Règle « valider avant de produire » ajoutée dans CLAUDE.md.

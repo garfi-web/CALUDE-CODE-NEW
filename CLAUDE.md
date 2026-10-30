@@ -2,6 +2,11 @@
 
 Jeu d'action 2D latéral (Unity 6, URP 2D, C#), dark fantasy et horreur psychologique. Le design est dans `docs/GDD.md`, le bestiaire dans `docs/BESTIARY.md` et les fiches techniques des ennemis dans `docs/ENEMIES.md`.
 
+## Méthode de travail : VALIDER AVANT DE PRODUIRE (règle de l'auteur, 2026-10-30)
+- Ne jamais engager beaucoup de travail (animations complètes, rendu de toutes les images, application à plusieurs personnages) sur une méthode ou un rendu que l'auteur n'a pas validé.
+- Avancer par petits paliers (essai minimal → essai en jeu sur une seule image → variantes → animation complète → autres personnages) ; à chaque palier : montrer le résultat, dire le temps et l'effort du palier suivant, et attendre un « OK » explicite.
+- Deux refus de suite sur une même méthode : arrêter et proposer une autre méthode (par exemple confier le travail à un illustrateur) au lieu d'insister.
+
 ## Code
 - Tout le jeu vit dans `Assets/_Game/`. Les scripts sont dans `Scripts/<Domaine>/`, les outils d'éditeur dans `Editor/`.
 - Le gameplay ne dépend jamais des animations : l'Animator est piloté par `CharacterAnimator` via des événements (`AttackStarted`, `DodgeStarted`, `Health.Damaged`, `Health.Died`).
