@@ -10,7 +10,7 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 
-def paper(src, dst, seed=7, grain=0.07, warmth=(1.03, 1.0, 0.92)):
+def paper(src, dst, seed=7, grain=0.035, warmth=(1.0, 1.0, 1.0)):
     img = Image.open(src).convert("RGBA")
     a = np.asarray(img).astype(np.float32) / 255.0
     h, w = a.shape[:2]
@@ -21,7 +21,7 @@ def paper(src, dst, seed=7, grain=0.07, warmth=(1.03, 1.0, 0.92)):
     noise = (fine * 0.6 + fibres * 2.0) * grain
     rgb = a[..., :3]
     lum = rgb.mean(axis=2, keepdims=True)
-    rgb = lum + (rgb - lum) * 0.8                      # palette sourde
+    rgb = lum + (rgb - lum) * 1.0                      # couleurs du rendu gardées (réglage du 2026-10-30)
     rgb = rgb * np.array(warmth, np.float32)           # papier chaud
     rgb = np.clip(rgb + noise[..., None] * (0.35 + lum), 0, 1)
     out = np.dstack([rgb, a[..., 3]])

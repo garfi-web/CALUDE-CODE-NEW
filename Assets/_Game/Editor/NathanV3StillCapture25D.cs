@@ -47,7 +47,15 @@ public static class NathanV3StillCapture25D
         Import(voyou);
         EditorSceneManager.OpenScene(ScenePath);
         Stage(AssetDatabase.LoadAssetAtPath<Sprite>(nathan), voyou);
-        Render(Camera.main, Path.Combine(folder, "2026-10-30_essai_bd_jeu.png"));
+
+        // L'éclairage et le contour sont dans l'image : matériau non éclairé, sans le liseré coloré des personnages.
+        var unlit = new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default"));
+
+        foreach (string who in new[] { "Nathan" })
+            GameObject.Find(who).transform.Find("Visual").GetComponent<SpriteRenderer>().sharedMaterial = unlit;
+
+        GameObject.Find("Réserve d'ennemis").transform.GetChild(0).Find("Visual").GetComponent<SpriteRenderer>().sharedMaterial = unlit;
+        Render(Camera.main, Path.Combine(folder, "2026-10-30_essai_bd2_jeu.png"));
         EditorSceneManager.OpenScene(ScenePath);
         Debug.Log("[RED MET] Essai BD : capture dans " + folder);
     }

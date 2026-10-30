@@ -118,7 +118,7 @@ L'historique des conversations reste sur ce PC (`~/.claude/projects/`).
 
 **Phrase à taper pour reprendre là où on s'est arrêté :**
 
-> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : décision de l'auteur sur l'essai roman graphique, planche docs/captures/2026-10-30_essai_bd_comparaison.png ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
+> Lis CLAUDE.md (règle « valider avant de produire »), docs/REPRISE.md (sections 7 et 8) et la section « État d’avancement » de docs/PRODUCTION.md. Vérifie que le MCP Unity est connecté au projet REDMET et que la console compile, puis que le MCP Blender répond (fichier ArtSource/Blender/REDMET_personnages.blend ouvert). Reprends la PROCHAINE ÉTAPE PRIORITAIRE en tête de la section 8 de docs/REPRISE.md : décision de l'auteur sur le réglage BD façon The Darkness II (un seul modèle 3D encré, aucune onomatopée), planche docs/captures/2026-10-30_essai_bd2_comparaison.png ; je te donne mon choix ou mes corrections, et tu ne passes au palier suivant qu'après mon « OK ».
 
 L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches **1 à 8** choisissent la vague (8 : Nathan M4 et le fusil à pompe), F1 à F4 le debug, F5 à F9 l'état de la partie (détail dans le `README.md`).
 
@@ -132,7 +132,29 @@ L'arène de test se lance avec **Play** (mannequin au lancement) ; les touches *
 - **Nathan M4 refait** (beaucoup plus massif et bestial, torse et dos nus, peau de pierre fissurée, veines rouges, voir `docs/CHARACTERS.md`) : 4 concepts Animagine, anatomie vérifiée, de face et de dos, **attendre le choix de l'auteur** avant le modèle 3D ; ensuite même méthode de qualité, en 3/4.
 - **Ordre** : 1) qualité Nathan M0 + Voyou et défauts, concepts de M4 → validation ; 2) unifier le code du combat de Nathan, convertir l'Acte I en 2,5D ; 3) reprendre les tâches en pause (portraits de dos de Mara, visual novel, ciels).
 
-### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30) : ESSAI « ROMAN GRAPHIQUE » MONTRÉ, EN ATTENTE DE LA DÉCISION DE L'AUTEUR (ne rien produire d'autre)
+### PROCHAINE ÉTAPE PRIORITAIRE (2026-10-30, fin de session) : RÉGLAGE BD « THE DARKNESS II » MONTRÉ, EN ATTENTE DE LA DÉCISION DE L'AUTEUR
+
+**NOUVELLE DIRECTION ARTISTIQUE (décision de l'auteur, 2026-10-30)** : rendu façon roman graphique, dans l'esprit de **The Darkness II**, au lieu de l'anime. **Un seul modèle 3D encré par personnage** : plus de tête ni de mains 2D collées (la méthode hybride est abandonnée ; ses fichiers restent dans le dépôt). **Aucune onomatopée** à l'écran (règle permanente, GDD et CLAUDE.md).
+
+**Fait (réglage n° 2, ~1 h 30)**, d'après le retour de l'auteur sur l'essai n° 1 (couleurs délavées, contour orangé, trame façon journal, visage peu lisible, éclairage non accordé au décor) :
+- `tools/blender/redmet_bd.py`, `bd_material` réécrit : couleurs des concepts saturées (×1,25) teintées par une lumière chaude de coucher de soleil, grandes ombres d'encre noire froide (seuil 0,30, aucun gris), une seule bande de hachures nettes à 45° dans la transition (0,30 → 0,52, traits plus épais vers l'ombre), liseré chaud fin seulement côté lumière. Encre `INK` presque noire. Soleil de côté, tourné vers le visage (`render_bd`).
+- Visage de Nathan peint plus épais (`Painter(scale=1.7)`), cheveux bruns plus sombres, ombre des cheveux sur le visage coupée.
+- `tools/gen3d/bd_post.py` : grain de papier allégé, plus de désaturation.
+- Unity : **RED MET → Capturer l'essai BD** utilise un matériau de sprite non éclairé (plus de liseré orangé autour des personnages) → `docs/captures/2026-10-30_essai_bd2_jeu.png`.
+- Planche avant/après : `docs/captures/2026-10-30_essai_bd2_comparaison.png` (essai 1 / réglage 2, gros plans, visage ×3, en jeu).
+
+**Reste à corriger (signalé à l'auteur)** :
+- visage de Nathan encore petit en jeu (tête d'environ 40 px de large) : lunettes et yeux se lisent à peine ; pistes : tête un peu plus grosse (proportions BD), traits du visage encore plus épais, éclairage du visage prioritaire ;
+- hachures encore régulières (mécaniques) : à remplacer par des traits dessinés (texture de hachures peinte, longueurs et épaisseurs variées) ;
+- cheveux en boules : boucles à sculpter ou encrer ;
+- décor encore en style anime (à traiter en BD pour juger l'ensemble) ;
+- ensuite seulement : autres poses, animation, autres personnages.
+
+**Où reprendre exactement** : attendre la décision de l'auteur sur la planche `docs/captures/2026-10-30_essai_bd2_comparaison.png`. Recréer l'état dans Blender : `exec` de `redmet_characters_v3.py`, `redmet_clothes_v3.py`, `redmet_compose_v3.py`, `redmet_fist_v3.py`, `redmet_hand_hbm.py`, `redmet_bd.py` ; `attach_fists("Nathan_M0")`, `set_pose("Nathan_M0", "garde")`, `make_hair`, `make_eyes(depth=-0.141, radius=0.011)`, `paint_face`, `apply_bd("Nathan_M0")`, puis `render_bd(...)` ; Voyou : `Voyou_M` au frame 1 de `Voyou_idle`, matériau `RM_BD_Voyou` aussi sur les emplacements `RM_Holdout`. Le fichier `REDMET_personnages.blend` est enregistré dans cet état (matériaux BD posés).
+
+Historique :
+
+### ÉTAPE PRÉCÉDENTE (2026-10-30) : ESSAI « ROMAN GRAPHIQUE » MONTRÉ, EN ATTENTE DE LA DÉCISION DE L'AUTEUR (ne rien produire d'autre)
 
 **Demande de l'auteur** : tester un rendu façon roman graphique (esprit The Darkness II) au lieu de l'anime ; tout le personnage vient d'un seul modèle 3D rendu en BD (plus de tête ni de mains 2D collées). Essai limité à ~2 h, sur Nathan M0 et un Voyou, une image fixe en garde chacun, sans rien supprimer ; comparaison anime / BD en gros plan et en jeu ; **attendre sa décision**.
 

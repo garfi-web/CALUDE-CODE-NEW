@@ -14,13 +14,17 @@ import math
 import bpy
 from mathutils import Vector
 
-INK = (0.02, 0.018, 0.02)
+INK = (0.008, 0.008, 0.014)
 PAPER = (0.86, 0.82, 0.74)
 
 
-def bd_material(name, color=None, image=None, desaturate=0.55, hatch_scale=170.0):
-    """Matériau BD : lumière = couleur sourde ; pénombre = hachures simples ; ombre = hachures croisées ; ombre
-    profonde = noir. Les hachures suivent l'écran (comme un dessin), pas la surface."""
+def bd_material(name, color=None, image=None, saturation=1.25, hatch_scale=85.0, warm=(1.08, 0.93, 0.78),
+                shadow=(0.003, 0.0035, 0.008), rim=(1.0, 0.62, 0.3)):
+    """Matériau BD façon The Darkness II (réglage du 2026-10-30, retour de l'auteur) :
+    - lumière : couleur riche du concept, teintée par la lumière chaude du coucher de soleil ;
+    - ombre : grandes zones d'encre noire froide (clair-obscur), aucun gris intermédiaire ;
+    - transition : une seule bande de hachures nettes à l'encre (lignes en coordonnées d'écran, à 45°) ;
+    - liseré lumineux fin, seulement sur le bord tourné vers la lumière."""
     mat = bpy.data.materials.get(name) or bpy.data.materials.new(name)
     mat.use_nodes = True
     nt = mat.node_tree
@@ -33,7 +37,6 @@ def bd_material(name, color=None, image=None, desaturate=0.55, hatch_scale=170.0
     value = n("ShaderNodeRGBToBW")
     link(value.inputs[0], to_rgb.outputs[0])
 
-    # Couleur de base (aplat ou texture), désaturée vers une palette sourde.
     if image is not None:
         uv = n("ShaderNodeUVMap")
         uv.uv_map = "UVMap"
@@ -47,60 +50,62 @@ def bd_material(name, color=None, image=None, desaturate=0.55, hatch_scale=170.0
         base = rgb.outputs[0]
 
     hsv = n("ShaderNodeHueSaturation")
-    hsv.inputs["Saturation"].default_value = 1.0 - desaturate
+    hsv.inputs["Saturation"].default_value = saturation
     link(hsv.inputs["Color"], base)
+    lit = n("ShaderNodeMix")
+    lit.data_type = 'RGBA'
+    lit.blend_type = 'MULTIPLY'
+    lit.inputs[0].default_value = 1.0
+    link(lit.inputs[6], hsv.outputs[0])
+    lit.inputs[7].default_value = (*warm, 1)
 
-    # Hachures : bandes fines sur les coordonnées d'écran, tournées de +45° et -45°.
     coords = n("ShaderNodeTexCoord")
+    mapping = n("ShaderNodeMapping")
+    mapping.inputs["Rotation"].default_value = (0, 0, math.radians(-50))
+    mapping.inputs["Scale"].default_value = (hatch_scale * 16 / 9, hatch_scale, 1)
+    link(mapping.inputs[0], coords.outputs["Window"])
+    sep = n("ShaderNodeSeparateXYZ")
+    link(sep.inputs[0], mapping.outputs[0])
+    frac = n("ShaderNodeMath")
+    frac.operation = 'FRACT'
+    link(frac.inputs[0], sep.outputs[0])
 
-    def hatch(angle):
-        mapping = n("ShaderNodeMapping")
-        mapping.inputs["Rotation"].default_value = (0, 0, math.radians(angle))
-        mapping.inputs["Scale"].default_value = (hatch_scale * 16 / 9, hatch_scale, 1)
-        link(mapping.inputs[0], coords.outputs["Window"])
-        sep = n("ShaderNodeSeparateXYZ")
-        link(sep.inputs[0], mapping.outputs[0])
-        frac = n("ShaderNodeMath")
-        frac.operation = 'FRACT'
-        link(frac.inputs[0], sep.outputs[0])
-        line = n("ShaderNodeMath")
-        line.operation = 'LESS_THAN'          # 1 sur le trait (28 % de la période)
-        line.inputs[1].default_value = 0.28
-        link(line.inputs[0], frac.outputs[0])
-        return line.outputs[0]
-
-    h1, h2 = hatch(45), hatch(-45)
-
-    def below(threshold):
+    def math_node(op, a, b=None, value_b=None):
         m = n("ShaderNodeMath")
-        m.operation = 'LESS_THAN'
-        m.inputs[1].default_value = threshold
-        link(m.inputs[0], value.outputs[0])
-        return m.outputs[0]
-
-    def mul(a, b):
-        m = n("ShaderNodeMath")
-        m.operation = 'MULTIPLY'
+        m.operation = op
         link(m.inputs[0], a)
-        link(m.inputs[1], b)
+        if b is not None:
+            link(m.inputs[1], b)
+        else:
+            m.inputs[1].default_value = value_b
         return m.outputs[0]
 
-    def maximum(a, b):
-        m = n("ShaderNodeMath")
-        m.operation = 'MAXIMUM'
-        link(m.inputs[0], a)
-        link(m.inputs[1], b)
-        return m.outputs[0]
+    # Bande de transition 0,30 → 0,52 : traits plus épais près de l'ombre (de 8 % à 32 % de la période).
+    t = math_node('MULTIPLY', math_node('SUBTRACT', value.outputs[0], value_b=0.30), value_b=1 / 0.22)
+    t = math_node('MINIMUM', math_node('MAXIMUM', t, value_b=0.0), value_b=1.0)
+    width = math_node('SUBTRACT', math_node('MULTIPLY', t, value_b=-0.24), value_b=-0.32)
+    hatch = math_node('MULTIPLY', math_node('LESS_THAN', frac.outputs[0], width), math_node('LESS_THAN', value.outputs[0], value_b=0.52))
+    ink = math_node('MAXIMUM', math_node('LESS_THAN', value.outputs[0], value_b=0.30), hatch)
 
-    # Encre = ombre profonde, ou hachure 1 dans la pénombre, ou hachure 2 en plus dans l'ombre.
-    ink = maximum(below(0.2), maximum(mul(below(0.62), h1), mul(below(0.42), h2)))
     mix = n("ShaderNodeMix")
     mix.data_type = 'RGBA'
     link(mix.inputs[0], ink)
-    link(mix.inputs[6], hsv.outputs[0])
-    mix.inputs[7].default_value = (*INK, 1)
+    link(mix.inputs[6], lit.outputs[2])
+    mix.inputs[7].default_value = (*shadow, 1)
+
+    # Liseré : bord de la silhouette (fresnel) ET éclairé.
+    fresnel = n("ShaderNodeLayerWeight")
+    fresnel.inputs[0].default_value = 0.08
+    edge = math_node('GREATER_THAN', fresnel.outputs["Facing"], value_b=0.82)
+    lit_side = math_node('GREATER_THAN', value.outputs[0], value_b=0.75)
+    rim_on = math_node('MULTIPLY', edge, lit_side)
+    final = n("ShaderNodeMix")
+    final.data_type = 'RGBA'
+    link(final.inputs[0], rim_on)
+    link(final.inputs[6], mix.outputs[2])
+    final.inputs[7].default_value = (*rim, 1)
     emission = n("ShaderNodeEmission")
-    link(emission.inputs[0], mix.outputs[2])
+    link(emission.inputs[0], final.outputs[2])
     out = n("ShaderNodeOutputMaterial")
     link(out.inputs[0], emission.outputs[0])
     return mat
@@ -262,7 +267,7 @@ def paint_face(character, folder, size=4096):
     rnd = random.Random(5)
     body = bpy.data.objects[f"{character}_v3_Corps"]
     rest = rest_object(body)
-    p = Painter(rest, srgb(SKIN), size=size, scale=1.0)
+    p = Painter(rest, srgb(SKIN), size=size, scale=1.7)   # traits épais : visage lisible en jeu
     dg = bpy.context.evaluated_depsgraph_get()
     inv = rest.matrix_world.inverted()
     ox, oz = body.matrix_world.translation.x, body.matrix_world.translation.z
@@ -402,6 +407,9 @@ def apply_bd(character):
             rgb = next((n.outputs[0].default_value[:3] for n in m.node_tree.nodes if n.type == 'RGB'), (0.5, 0.5, 0.5))
             obj.material_slots[i].material = bd_material(f"RM_BD_{m.name}", color=rgb, image=image)
 
+            if "Cargo" in m.name:   # cargo gris chaud du concept
+                obj.material_slots[i].material = bd_material(f"RM_BD_{m.name}", color=(0.42, 0.37, 0.3), image=image)
+
         brush_outline(obj, 0.011 if obj.name.endswith(("_Corps", "_Hoodie", "_Pantalon", "_Cheveux")) else 0.006)
 
 
@@ -445,7 +453,7 @@ def render_bd(objects, feet, out_png, size=1024, ortho=2.6, center_z=1.0):
     # Lumière dure de côté et d'en haut (source à droite de l'image, un peu vers la caméra) : une moitié éclairée, l'autre
     # dans l'ombre (noir et hachures), façon roman graphique.
     side = Vector((-math.sin(y), math.cos(y), 0))
-    source = -side * 0.7 - d * 0.6 + Vector((0, 0, 0.9))   # côté du visage (le personnage regarde vers la droite)
+    source = -side * 0.55 - d * 0.8 + Vector((0, 0, 0.8))   # côté du visage (le personnage regarde vers la droite)
     sun.rotation_euler = (-source).to_track_quat('-Z', 'Y').to_euler()
     sun.data.use_shadow = True
     sun.data.energy = 3.0
