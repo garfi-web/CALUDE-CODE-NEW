@@ -26,10 +26,16 @@ commercial, licence montrée à l'auteur avant tout téléchargement.
 | Version | 1.4.1 (49 Mo, Blender 4.2 LTS et plus) |
 | Source | https://www.blender.org/download/demo-files/ (section « Asset Bundles ») |
 | Licence | **CC0** (indiquée sur la page officielle de Blender) |
-| Statut | **Non téléchargé** (2026-10-30) : à n'utiliser que si la tête de MPFB ne convient pas au style anime. |
+| Statut | **Téléchargé le 2026-10-30** pour la méthode A des poings (main stylisée « Hand - Stylized »), depuis le miroir officiel `https://mirror.blender.org/demo/asset-bundles/human-base-meshes/human-base-meshes-bundle-v1.4.1.zip` (50 643 039 octets, SHA-256 `811f43accbb31a88266d932f8f5563b2d13586fca0ba2693aad1f5fe582b3515`), copie hors dépôt : `C:\RED MET\ai\downloads\human_base_meshes`. |
 | Vérifié le | 2026-10-30 |
 
 ## Autres outils et modèles déjà recensés ailleurs
 
 Animagine XL 4.0, ComfyUI, TripoSG, ControlNet Union SDXL, BiRefNet, police M PLUS Rounded 1c : voir `docs/PRODUCTION.md`
 (décisions et licences, phase 0 et refonte du visual novel).
+
+## Images de référence (comparaison seulement, jamais dans le jeu)
+
+| Image | Licence | Usage |
+|---|---|---|
+| « Clenched fist », Genusfotografen (Tomas Gunnarsson) / Wikimedia Sverige, https://commons.wikimedia.org/wiki/File:Clenched_fist.jpg | CC BY-SA 4.0 (attribution sur les planches) | Photo de référence à côté des poings 3D (`docs/captures/2026-10-30_poing*.png`) ; non copiée dans le dépôt. |

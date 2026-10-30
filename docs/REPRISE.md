@@ -153,6 +153,12 @@ Pour chacune : un exemple rapide d'un seul poing (face, 3/4, profil) à côté d
 
 **Posture du repos à corriger aussi** : bras plus près du corps, épaules un peu rentrées, mains à moitié fermées (pas en poings) ; poings serrés seulement en garde et pendant les coups.
 
+**Fait (2026-10-30), en attente du choix de l'auteur** : planche `docs/captures/2026-10-30_poings_3_methodes.png` (photo de référence + face, 3/4, profil pour A, B, C) et posture de repos `docs/captures/2026-10-30_nathan_m0_v3_posture_repos.png`.
+- A : main « Hand - Stylized » des Human Base Meshes (CC0, téléchargée, `docs/LICENCES_TIERS.md`), squelette posé automatiquement (`tools/blender/redmet_hand_hbm.py` : `rig_hand`, `fist_pose`, pouce réglé par recherche : thumb_01 (-10, 0, 40), thumb_02 70, thumb_03 85 ; doigts 90 / 105 / 75). Objet `Hand - Stylized ` et `Hand - Stylized_Rig` (collection `HBM_Mains`, x = 70).
+- B : copie `Poing_B` (articulations bombées) + traits d'encre calculés depuis une passe de normales (`render_normals`, `ink`) ; Freestyle ne rend rien dans ce Blender.
+- C : `tools/gen3d/fists.py`, Animagine + ControlNet lineart sur les traits de B ; graines 9501 et 9502, retenues : face s9502, 3/4 s9501, profil s9501 (`ArtSource/Blender/Hands/raw/`).
+- Posture : `rest_stance(rig)` dans `redmet_characters_v3.py` (épaules rentrées, bras près du corps, mains MPFB à moitié fermées, poings cachés). Les mains au repos dépendront de la méthode choisie.
+
 Historique :
 
 ### ÉTAPE PRÉCÉDENTE (2026-10-30, retour de l'auteur sur l'étape 2) : POING FERMÉ, AVANT L'ÉTAPE 3 (TÊTE)
@@ -193,7 +199,7 @@ Historique de l'étape 1 :
 
 ### ÉTAPE 1 (2026-10-30) : NATHAN M0 EN 3D PROPRE, ÉTAPE 1 (CORPS NU) MONTRÉE, EN ATTENTE DU OK
 
-**Où reprendre exactement** : l'auteur a validé MPFB 2 (ressources de base CC0 seulement ; tête stylisée de Human Base Meshes, CC0, seulement si celle de MPFB est trop réaliste). MPFB 2.0.18 est installé dans Blender (copie du paquet : `C:\RED METi\downloads\mpfb`, empreinte dans `docs/LICENCES_TIERS.md`). Étape 1 faite : corps nu de Nathan M0 (`Nathan_M0_v3_Corps`, collection `Nathan_M0_v3`, x = 50, dans `ArtSource/Blender/REDMET_personnages.blend`), recréable par `tools/blender/redmet_characters_v3.py` (`create_body("Nathan_M0")` : homme, 19 ans, poids 1,0, muscle 0,25, ventre 0,35, 1,70 m). Planche ouverte à l'auteur : `docs/captures/2026-10-30_nathan_m0_v3_corps_nu.png`. **En attente de son OK ou de ses corrections.**
+**Où reprendre exactement** : l'auteur a validé MPFB 2 (ressources de base CC0 seulement ; tête stylisée de Human Base Meshes, CC0, seulement si celle de MPFB est trop réaliste). MPFB 2.0.18 est installé dans Blender (copie du paquet : `C:\RED MET\ai\downloads\mpfb`, empreinte dans `docs/LICENCES_TIERS.md`). Étape 1 faite : corps nu de Nathan M0 (`Nathan_M0_v3_Corps`, collection `Nathan_M0_v3`, x = 50, dans `ArtSource/Blender/REDMET_personnages.blend`), recréable par `tools/blender/redmet_characters_v3.py` (`create_body("Nathan_M0")` : homme, 19 ans, poids 1,0, muscle 0,25, ventre 0,35, 1,70 m). Planche ouverte à l'auteur : `docs/captures/2026-10-30_nathan_m0_v3_corps_nu.png`. **En attente de son OK ou de ses corrections.**
 Étapes suivantes, chacune montrée (ouverte à l'écran, `Start-Process`) et validée avant la suivante : 2) vêtements modélisés (sweat noir, cargo gris, baskets d'après le concept R0), plis peints dans la texture, vraies mains (poings fermés nets) ; 3) tête 3D et visage en texture anime d'après la tête A (s9104), une texture par expression ; 4) image fixe de Nathan M0 (face, 3/4, en jeu à côté d'un Voyou). **Rien au-delà de l'image fixe sans l'accord de l'auteur.** Sauvegarde (Blender, Unity, docs, commit, push) à la fin de chaque étape et avant chaque tâche longue. Le prototype jouable reste tel quel en parallèle.
 
 Décision précédente :

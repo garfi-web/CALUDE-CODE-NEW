@@ -149,3 +149,24 @@ def stance(rig):
         rig.pose.bones[f"upperarm_{side}"].rotation_euler = (0, 0, math.radians(-22 * k))
         rig.pose.bones[f"lowerarm_{side}"].rotation_euler = (0, math.radians(-50 * k), 0)
         fist(rig, side)
+
+
+def rest_stance(rig):
+    """Repos de Nathan (retour de l'auteur, 2026-10-30) : posture fermée et mal à l'aise. Bras près du corps, épaules
+    un peu rentrées vers l'avant, mains à moitié fermées (les poings serrés sont réservés à la garde et aux coups)."""
+    import math
+
+    r = math.radians
+
+    for side, k in (("l", 1), ("r", -1)):
+        rig.pose.bones[f"clavicle_{side}"].rotation_euler = (r(12), 0, r(-4 * k))
+        rig.pose.bones[f"upperarm_{side}"].rotation_euler = (0, 0, r(-28 * k))
+        # Avant-bras presque tendu (X négatif déplie le coude), main tournée vers la cuisse.
+        rig.pose.bones[f"lowerarm_{side}"].rotation_euler = (r(-45), r(-25 * k), 0)
+
+        for finger, spread in (("index", -3), ("middle", 0), ("ring", 2), ("pinky", 4)):
+            for i, angle in zip((1, 2, 3), (32, 45, 28)):
+                rig.pose.bones[f"{finger}_0{i}_{side}"].rotation_euler = (0, r(spread) if i == 1 else 0, r(angle))
+
+        for i, xyz in zip((1, 2, 3), ((5, 10, -10), (5, 0, -15), (0, 0, -15))):
+            rig.pose.bones[f"thumb_0{i}_{side}"].rotation_euler = tuple(r(a) for a in xyz)

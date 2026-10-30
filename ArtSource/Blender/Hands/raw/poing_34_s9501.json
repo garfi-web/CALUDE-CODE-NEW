@@ -1,0 +1,10 @@
+{
+  "tool": "ComfyUI",
+  "checkpoint": "animagine-xl-4.0-opt.safetensors",
+  "controlnet": "union promax, lineart, 0.75, fin 0.8",
+  "guide": "poing_lineart_34.png",
+  "prompt": "no humans, (clenched fist:1.4), (single hand:1.3), close-up, male hand, adult hand, (four fingers curled:1.2), (thumb across fingers:1.2), knuckles, wrist, fair skin, anime coloring, cel shading, clean lineart, simple background, plain grey background, highres, masterpiece, high score, great score, absurdres",
+  "negative": "(extra fingers:1.4), (missing fingers:1.3), six fingers, fused fingers, extra hands, two hands, arm, sleeve, glove, boxing glove, open hand, pointing, face, person, body, text, logo, watermark, signature, bad anatomy, bad hands, lowres, blurry, worst quality, low quality, low score, bad score, average score",
+  "seed": 9501,
+  "duration_s": 30.2
+}
